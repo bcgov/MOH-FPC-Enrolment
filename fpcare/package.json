@@ -24,7 +24,7 @@
     "test-version": "npm version minor -m 'TEST build: %s'",
     "prod-version": "npm version major -m 'PROD build: %s'",
     "push-version": "git push --follow-tags",
-    "lint": "ng lint",
+    "lint": "ng lint"
   },
   "dependencies": {
     "@angular/animations": "8.2.3",
@@ -63,7 +63,7 @@
     "typescript": "~3.5.3",
     "xlsx": "^0.14.1",
     "zlib": "^1.0.5",
-    "zone.js": "~0.9.1",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.23",
@@ -87,5 +87,5 @@
     "engines": {
     "node": ">=8.0.0"
   },
-  "private": false,
+  "private": false
 }
