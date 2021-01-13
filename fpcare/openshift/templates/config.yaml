@@ -216,6 +216,9 @@ parameters:
   - description: FPC_ENV
     name: FPC_ENV
     required: true
+  - description: FPC_VERSION
+    name: FPC_VERSION
+    required: true
   - description: SOURCE_IMAGE_TAG
     name: SOURCE_IMAGE_TAG
     required: true
