@@ -1,0 +1,120 @@
+<common-page-framework layout='default'>
+
+  <h1>Mailing Address</h1>
+  <div class="p-md-2">
+    We use your address to mail Fair PharmaCare letters to you.
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="p-md-2 col-md-6">
+      <div class="form-group">
+          <common-postal-code [(value)]="applicant.address.postal"
+                              label="Mailing Postal Code"
+                              (valueChange)="checkPostal()"
+                              [required]="true"></common-postal-code>
+          <div *ngIf="!isPostalMatch" 
+                class='error-container' 
+                role="alert" 
+                aria-live="assertive">
+            <div class="text-danger">The mailing address does not match our records.</div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Displays when Postal Code does not match FPCare records -->
+    <div *ngIf="!isPostalMatch">
+      <h2 class="border-bottom">
+        Update Your Mailing Address
+      </h2>
+      <p>
+        Please provide your current mailing address.
+      </p>
+      <div class="p-md-2 col-md-6">
+        <div class="form-group">
+          <common-address-validator *ngIf='isAddressValidatorEnabled'
+                                 label='(optional) Address Lookup'
+                                 [(address)]='applicant.updAddress'
+                                 (addressChange)='onGeoLookup()'
+                                 (select)='onAddressSelected($event)'></common-address-validator>
+          <fpcare-geocoder-input *ngIf='!isAddressValidatorEnabled'
+                                 label='(optional) Address Lookup'
+                                 [(address)]='applicant.updAddress'
+                                 (addressChange)='onGeoLookup()'></fpcare-geocoder-input>
+        </div>
+        <div class="form-group">
+          <label for="street">Street address, rural route or PO Box</label>
+          <input class="form-control"
+                 type="text"
+                 id="street"
+                 name="street"
+                 [maxlength]="streetMaxLength"
+                 fpcareRequired
+                 [ngModel]="applicant.updAddress?.street"
+                 (ngModelChange)="applicant.updAddress.street=$event"
+                 autocomplete="off" />
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input class="form-control"
+                 type="text"
+                 id="city"
+                 name="city"
+                 [maxlength]="cityMaxLength"
+                 fpcareRequired
+                 [ngModel]="applicant.updAddress?.city"
+                 (ngModelChange)="applicant.updAddress.city=$event" 
+                 autocomplete="off"/>
+        </div>
+        <div class="form-group">
+          <label for="province">Province</label>
+          <select class="form-control"
+                  [ngModel]="applicant.updAddress?.province"
+                  (ngModelChange)="applicant.updAddress.province=$event"
+                  id="province"
+                  name="province"
+                  fpcareRequired>
+            <option *ngFor="let prov of provinceName; let i = index;"
+                    value="{{getProvinceID(i)}}">{{ prov }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <common-postal-code [value]="updatePostalCode" 
+                              [label]="'Mailing Postal Code (as entered above)'"
+                              [disabled]="true">
+          </common-postal-code>
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input class="form-control"
+                 type="text"
+                 id="country"
+                 name="country"
+                 disabled
+                 [ngModel]="countryName" />
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <aside>
+      <p class="h5">Postal Code</p>
+      <p>
+          We ask for your postal code so we can check the address information we have is correct. If 
+          your current postal code does not match, you will be asked to update your address. We need 
+          your address to mail you Fair PharmaCare letters.
+      </p>
+
+      <p class="h5">Address Lookup</p>
+      <p>
+        The system will suggest addresses when you begin typing.  Pick your address from the list or enter it manually
+        if not listed.  For apartments and suites, first enter the suite number followed by a space or two dashes (--)
+        to find the exact match.
+      </p>
+  </aside>
+
+  <common-form-action-bar
+          [canContinue]="canContinue()"
+          (btnClick)="continue()">
+  </common-form-action-bar>
+
+</common-page-framework>

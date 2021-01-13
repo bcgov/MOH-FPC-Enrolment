@@ -1,0 +1,55 @@
+<div class='line-item'>
+  <div class="line-item--text">Total Family Income</div>
+  <div class="line-item--value">${{incomeDisplay}}</div>
+</div>
+
+<hr class='line-item-break'>
+
+<p class='line-item-title'>Deductions</p>
+
+<div class="line-item">
+  <div class="line-item--text">Family Registered Disability Savings Plan</div>
+  <div class="line-item--value">${{disabilityDisplay}}</div>
+</div>
+
+<div class='line-item'>
+  <div class="line-item--text">Total Deductions</div>
+  <div class="line-item--value">${{disabilityDisplay}}</div>
+</div>
+
+<hr class='line-item-break'>
+
+<div class='line-item'>
+  <div class="line-item--text">Adjusted Income</div>
+  <div class="line-item--value">${{adjustedIncomeDisplay}}</div>
+</div>
+
+<hr class="line-item-break">
+
+<div *ngIf='!isLoadingData; else loadingSpinner' [@growVertical] >
+
+  <p>
+    The information you entered indicates you would be eligible for the level of 
+    coverage below.  Coverage is temporary until we verify your income with CRA.
+  </p>
+
+  <fpcare-annual-deductible
+    [familyNetIncome]="adjustedIncomeAmount"
+    [bornBefore1939]="bornBefore1939">
+  </fpcare-annual-deductible>
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="text-center" *ngIf="!errorLoadingData; else errorMessage">
+    <p class='font-italic text-muted'>Loading Pharmacare data...</p>
+    <i class="fa fa-spinner fa-3x fa-pulse fa-fw"></i>
+  </div>
+</ng-template>
+
+<ng-template #errorMessage>
+  <div class="text-center text-danger">
+    <p class='font-italic text-danger mb-0'>Unable to load Pharmacare data. </p>
+    <p class='font-italic text-danger'>Please reload or try again later.</p>
+    <i class="fa fa-exclamation-triangle text-danger fa-3x "></i>
+  </div>
+</ng-template>

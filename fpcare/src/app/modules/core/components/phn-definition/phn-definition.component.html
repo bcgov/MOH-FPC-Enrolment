@@ -1,0 +1,9 @@
+<div class="pb-md-2">
+  <p class="h5">Personal Health Number (PHN)</p>
+  <div>
+    {{phnDefinition}}
+    <div *ngFor="let image of imageList" class="phn-sample--row">
+      <img class="phn-sample--image" id="image_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
+    </div>
+  </div>
+</div>

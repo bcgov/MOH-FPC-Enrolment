@@ -1,0 +1,133 @@
+<common-page-framework layout='default'>
+
+  <!-- Information for completing this section -->
+  <div>
+    <h1>Family Information</h1>
+    <p>
+       Enter each person's name as it appears on the income tax return. If your name is different on your BC Services
+       Card, continue with this Fair PharmaCare registration, but notify either
+       <a target="_blank" href="{{links.MSP}}">Medical Services Plan</a> or the
+       <a target="_blank" href="{{links.CRA}}">Canada Revenue Agency</a> of the difference as soon as possible.
+    </p>
+  </div>
+
+
+  <form #formRef="ngForm" novalidate>
+
+    <!-- Information required to complete this section -->
+    <h2 class="border-bottom">Your Information</h2>
+
+    <div class="p-md-2 col-md-6">
+
+      <div class="form-group">
+         <fpcare-name
+           [label]="labelGivenName"
+           [nameMaxLen]="maxLenGivenName"
+           [(value)]="applicant.firstName">
+         </fpcare-name>
+      </div>
+      <div class="form-group">
+         <fpcare-name
+           [label]="labelSurname"
+           [nameMaxLen]="maxLenSurname"
+           [(value)]="applicant.lastName">
+         </fpcare-name>
+      </div>
+      <div class="form-group">
+         <fpcare-sin
+             [(value)]="applicant.sin">
+         </fpcare-sin>
+      </div>
+      <div class="form-group">
+        <!-- DOB ready only field - set in previous page -->
+        <label for="ap_dob">Birthdate</label>
+        <input class="form-control"
+               id="ap_dob"
+               name="ap_dob"
+               disabled
+               [value]="getApplicantDob()"/>
+      </div>
+      <div class="form-group">
+        <!-- PHN ready only field - set in previous page -->
+         <fpcare-phn
+             [value]="applicant.phn"
+             [disabled]="'true'">
+         </fpcare-phn>
+      </div>
+    </div>
+
+    <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
+    <div *ngIf="hasSpouse">
+      <h2 class="border-bottom">Spouse/Common-law Partner Information</h2>
+      <div class="p-md-2 col-md-6">
+        <div class="form-group">
+           <fpcare-name
+               [label]="labelGivenName"
+               [nameMaxLen]="maxLenGivenName"
+               [(value)]="spouse.firstName">
+           </fpcare-name>
+        </div>
+        <div class="form-group">
+           <fpcare-name
+               [label]="labelSurname"
+               [nameMaxLen]="maxLenSurname"
+               [(value)]="spouse.lastName">
+           </fpcare-name>
+        </div>
+        <div class="form-group">
+           <fpcare-sin
+               [(value)]="spouse.sin"
+               [sinList]="familySinList"
+               (uniqueSinError)="uniqueSinError=$event">
+           </fpcare-sin>
+        </div>
+        <div class="form-group">
+          <!-- DOB ready only field - set in previous page -->
+          <label for="sp_dob">Birthdate</label>
+          <input class="form-control"
+                 id="sp_dob"
+                 name="sp_dob"
+                 disabled
+                 [value]="getSpouseDob()"/>
+        </div>
+        <div class="form-group">
+         <!-- PHN ready only field - set in previous page -->
+         <fpcare-phn
+            [value]="spouse.phn"
+            [disabled]="'true'">
+         </fpcare-phn>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <aside>
+     <div>
+      <p class="h5">A family can be a: </p>
+        <ul>
+           <li>single person</li>
+           <li>married or common-law couple</li>
+           <li>single person with children</li>
+           <li>couple with children</li>
+        </ul>
+     </div>
+
+     <fpcare-phn-definition></fpcare-phn-definition>
+
+     <div>
+        <p class="h5">Social Insurance Number</p>
+        <div>This information is used only to check your income with the Canada Revenue Agency.
+           <div *ngFor="let image of imageList" class="sin-sample--row">
+              <img class="sin-sample--image" id="image_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
+           </div>
+        </div>
+     </div>
+
+  </aside>
+
+  <common-form-action-bar
+        [canContinue]="canContinue()"
+        (btnClick)="continue()">
+  </common-form-action-bar>
+
+</common-page-framework>

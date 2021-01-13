@@ -1,0 +1,54 @@
+<fpcare-consent-modal
+        #consentModal
+        (onConsented)="onAccept($event)">
+</fpcare-consent-modal>
+
+<common-page-framework layout='default'>
+
+  <div>
+    <ng-content select="[title]"></ng-content>
+
+    <ng-content></ng-content>
+  </div>
+
+  <div>
+    <h2 class="border-bottom">Your Information</h2>
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="row mx-lg-0">
+      <div class="bg-light p-lg-2 col-lg-6">
+        <div class="form-group">
+          <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
+        </div>
+
+        <div class="form-group">
+          <fpcare-date
+                  [useCurrentDate]="false"
+                  [date]="applicant.dateOfBirth"
+                  [restrictDate]="'past'"
+                  [label]="'Birthdate'">
+          </fpcare-date>
+        </div>
+
+        <div class="form-group">
+            <common-postal-code [(value)]="applicant.address.postal"
+                                label="Mailing Postal Code" 
+                                [required]="true"></common-postal-code>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <aside>
+    <fpcare-phn-definition></fpcare-phn-definition>
+  </aside>
+
+  <common-form-action-bar
+          [submitLabel]="data.label"
+          [canContinue]="canContinue()"
+          (btnClick)="continue()"
+          [isLoading]="loading">
+  </common-form-action-bar>
+
+</common-page-framework>
