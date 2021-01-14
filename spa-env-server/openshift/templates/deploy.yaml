@@ -152,6 +152,20 @@ objects:
                   value: ${SPA_ENV_FPC_TIME_FORMAT}
                 - name: SPA_ENV_FPC_MAINTENANCE_MESSAGE
                   value: ${SPA_ENV_FPC_MAINTENANCE_MESSAGE}
+                - name: SPA_ENV_FPIR_TIME_FORMAT
+                  value: ${SPA_ENV_FPIR_TIME_FORMAT}
+                - name: SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR
+                  value: ${SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR}
+                - name: SPA_ENV_FPIR_MAINTENANCE_START
+                  value: ${SPA_ENV_FPIR_MAINTENANCE_START}
+                - name: DEBUG
+                  value: ${DEBUG}
+                - name: SPA_ENV_FPIR_MAINTENANCE_END
+                  value: ${SPA_ENV_FPIR_MAINTENANCE_END}
+                - name: SPA_ENV_FPIR_MAINTENANCE_FLAG
+                  value: ${SPA_ENV_FPIR_MAINTENANCE_FLAG}
+                - name: SPA_ENV_FPIR_MAINTENANCE_MESSAGE
+                  value: ${SPA_ENV_FPIR_MAINTENANCE_MESSAGE}
               resources:
                 limits:
                   cpu: 200m
@@ -289,3 +303,25 @@ parameters:
     description: The IP address this service will bind to.
     displayName: SERVICE_IP
     value: "0.0.0.0"
+  - name: SPA_ENV_FPIR_TIME_FORMAT
+    description: 
+    required: false
+    value: YYYY-MM-DD h:mm:ss A
+  - name: SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR
+    description: Address validator flag
+    required: true
+  - name: SPA_ENV_FPIR_MAINTENANCE_START
+    description: FPCare Income Review maintenance start time
+    required: false
+  - name: DEBUG
+    description: general debug
+    required: false
+  - name: SPA_ENV_FPIR_MAINTENANCE_END
+    description: FPCare Income Review maintenance end time
+    required: false
+  - name: SPA_ENV_FPIR_MAINTENANCE_FLAG
+    description: FPCare Income Review maintenance flag
+    required: false
+  - name: SPA_ENV_FPIR_MAINTENANCE_MESSAGE
+    description: FPCare Income Review maintenance message
+    required: false

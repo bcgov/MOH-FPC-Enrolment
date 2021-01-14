@@ -164,12 +164,13 @@ oc process -f fpcare/openshift/templates/build.yaml | \
 
 10. The deployment for the `fpcare` component is straight forward as it has little to no environment variables. The first step in the deploument is to create a `ConfigMap` with the necessary NGINX config:
 
+make sure you're in the dev project.
+
 ```console
 oc process -f config.yaml --param-file=params-dev.txt | \
   oc create -f -
 ```
 
-make sure you're in the dev project.
 
 Once created deploy the web application:
 
