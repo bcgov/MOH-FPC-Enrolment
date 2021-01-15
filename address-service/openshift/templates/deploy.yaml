@@ -105,6 +105,26 @@ objects:
                   value: ${MUTUAL_TLS_PEM_CERT}
                 - name: ADDRESS_VALIDATOR_URL
                   value: ${ADDRESS_VALIDATOR_URL}
+                - name: TARGET_URL
+                  value: ${TARGET_URL}
+                - name: TARGET_USERNAME_PASSWORD
+                  value: ${TARGET_USERNAME_PASSWORD}
+                - name: MUTUAL_TLS_PEM_KEY_PASSPHRASE
+                  value: ${MUTUAL_TLS_PEM_KEY_PASSPHRASE}
+                - name: SECURE_MODE
+                  value: ${SECURE_MODE}
+                - name: USE_MUTUAL_TLS
+                  value: ${USE_MUTUAL_TLS}
+                - name: AUTH_TOKEN_KEY
+                  value: ${AUTH_TOKEN_KEY}
+                - name: USE_AUTH_TOKEN
+                  value: ${USE_AUTH_TOKEN}
+                - name: LOGGER_HOST
+                  value: ${LOGGER_HOST}
+                - name: LOGGER_PORT
+                  value: ${LOGGER_PORT}
+                - name: SPLUNK_AUTH_TOKEN
+                  value: ${SPLUNK_AUTH_TOKEN}
               resources:
                 limits:
                   cpu: 200m
@@ -159,4 +179,50 @@ parameters:
   - name: ADDRESS_VALIDATOR_URL
     description: ADDRESS_VALIDATOR_URL
     displayName: ADDRESS_VALIDATOR_URL
+    required: true
+  - name: TARGET_URL
+    description: TARGET_URL
+    displayName: TARGET_URL
+    required: true
+    value: "https://d2mspde.maximusbc.ca"
+  - name: TARGET_USERNAME_PASSWORD
+    description: TARGET_USERNAME_PASSWORD
+    displayName: TARGET_USERNAME_PASSWORD
+    required: true
+  - name: MUTUAL_TLS_PEM_KEY_PASSPHRASE
+    description: MUTUAL_TLS_PEM_KEY_PASSPHRASE
+    displayName: MUTUAL_TLS_PEM_KEY_PASSPHRASE
+    required: false
+  - name: SECURE_MODE
+    description: SECURE_MODE
+    displayName: SECURE_MODE
+    required: true
+    value: "false"
+  - name: USE_MUTUAL_TLS
+    description: USE_MUTUAL_TLS
+    displayName: USE_MUTUAL_TLS
+    required: true
+    value: "false"
+  - name: AUTH_TOKEN_KEY
+    description: AUTH_TOKEN_KEY
+    displayName: AUTH_TOKEN_KEY
+    required: true
+  - name: USE_AUTH_TOKEN
+    description: USE_AUTH_TOKEN
+    displayName: USE_AUTH_TOKEN
+    required: true
+    value: "false"
+  - name: LOGGER_HOST
+    description: LOGGER_HOST
+    displayName: LOGGER_HOST
+    required: true
+    value: "splunk-forwarder"
+  - name: LOGGER_PORT
+    description: LOGGER_PORT
+    displayName: LOGGER_PORT
+    required: true
+    value: "8080"
+  - name: SPLUNK_AUTH_TOKEN
+    description: SPLUNK_AUTH_TOKEN
+    displayName: APLUNK_AUTH_TOKEN
     required: true

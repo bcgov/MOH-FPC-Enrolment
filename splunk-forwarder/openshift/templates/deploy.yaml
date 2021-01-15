@@ -256,11 +256,12 @@ parameters:
     description: Use Splunk?
     displayName: USE_SPLUNK
     required: false
-    value: "false"
+    value: "true"
   - name: SPLUNK_URL
     description: remote splunk URL
     displayName: SPLUNK_URL
     required: false
+    value: "https://d1splunkservices.maximusbc.ca/services/collector/event"
   - name: SPLUNK_AUTH_TOKEN
     description: Splunk Auth Token
     displayName: SPLUNK_AUTH_TOKEN
