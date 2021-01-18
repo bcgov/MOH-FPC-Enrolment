@@ -123,6 +123,18 @@ objects:
                   value: ${LOGGER_PORT}
                 - name: SPLUNK_AUTH_TOKEN
                   value: ${SPLUNK_AUTH_TOKEN}
+                - name: CACHE_FILE_PATH
+                  value: ${CACHE_FILE_PATH}
+                - name: CACHE_URLS_CSV
+                  value: ${CACHE_URLS_CSV}
+                - name: CACHE_REQ_USE_PROCESSDATE
+                  value: ${CACHE_REQ_USE_PROCESSDATE}
+                - name: CACHE_IN_MEMORY
+                  value: ${CACHE_IN_MEMORY}
+                - name: BYPASS_MSP_CHECK
+                  value: ${BYPASS_MSP_CHECK}
+                - name: CRON_EXPRESSION
+                  value: ${CRON_EXPRESSION}
               resources:
                 limits:
                   cpu: 200m
@@ -228,4 +240,30 @@ parameters:
     description: SPLUNK_AUTH_TOKEN
     displayName: SPLUNK_AUTH_TOKEN
     required: true
+  - name: CACHE_FILE_PATH
+    description: CACHE_FILE_PATH
+    displayName: CACHE_FILE_PATH
+    required: true
+  - name: CACHE_URLS_CSV
+    description: CACHE_URLS_CSV
+    displayName: CACHE_URLS_CSV
+    required: true
+  - name: CACHE_REQ_USE_PROCESSDATE
+    description: CACHE_REQ_USE_PROCESSDATE
+    displayName: CACHE_REQ_USE_PROCESSDATE
+    required: true
     value: "true"
+  - name: CACHE_IN_MEMORY
+    description: CACHE_IN_MEMORY
+    displayName: CACHE_IN_MEMORY
+    required: true
+    value: "true"
+  - name: BYPASS_MSP_CHECK
+    description: BYPASS_MSP_CHECK
+    displayName: BYPASS_MSP_CHECK
+    required: true
+    value: "true"
+  - name: CRON_EXPRESSION
+    description: CRON_EXPRESSION
+    displayName: CRON_EXPRESSION
+    required: true
