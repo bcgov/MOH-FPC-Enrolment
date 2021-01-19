@@ -222,7 +222,6 @@ parameters:
     description: |
       Username to login to /monitor route via HTTP Basic Authentication
     displayName: MONITOR_USERNAME
-    value: ""
   - name: MONITOR_PASSWORD
     description: |
       Password to login to /monitor route via HTTP Basic Authentication
@@ -261,7 +260,6 @@ parameters:
     description: remote splunk URL
     displayName: SPLUNK_URL
     required: false
-    value: "https://d1splunkservices.maximusbc.ca/services/collector/event"
   - name: SPLUNK_AUTH_TOKEN
     description: Splunk Auth Token
     displayName: SPLUNK_AUTH_TOKEN

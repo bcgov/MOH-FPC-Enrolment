@@ -176,7 +176,6 @@ parameters:
     description: LOG_LEVEL
     displayName: LOG_LEVEL
     required: true
-    value: "info"
   - name: BYPASS_ANSWER
     description: BYPASS_ANSWER
     displayName: BYPASS_ANSWER

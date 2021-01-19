@@ -211,7 +211,6 @@ parameters:
     description: USE_AUTH_TOKEN
     displayName: USE_AUTH_TOKEN
     required: true
-    value: "false"
   - name: LOGGER_HOST
     description: LOGGER_HOST
     displayName: LOGGER_HOST

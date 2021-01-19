@@ -218,7 +218,6 @@ parameters:
     description: Use Audit logs
     displayName: USE_AUDIT_LOGS
     required: true
-    value: "false"
   - name: LOG_DIR_NAME
     description: |
       Directory and name of File logs (will be prepended with 
@@ -239,7 +238,6 @@ parameters:
     description: |
       Username to login to /monitor route via HTTP Basic Authentication
     displayName: MONITOR_USERNAME
-    value: ""
   - name: MONITOR_PASSWORD
     description: |
       Password to login to /monitor route via HTTP Basic Authentication
@@ -277,14 +275,12 @@ parameters:
       for the specified Current Local Timezone
     displayName: SPA_ENV_FPC_MAINTENANCE_START
     required: false
-    value: ""
   - name: SPA_ENV_FPC_MAINTENANCE_END
     description: |
       End time for maintenance window in the specified Time Format and for
       the specified Current Local Timezone
     displayName: SPA_ENV_FPC_MAINTENANCE_END
     required: false
-    value: ""
   - name: SPA_ENV_FPC_TIME_FORMAT
     description: Format of DateTime specified for Maintenance tasks
     displayName: SPA_ENV_FPC_TIME_FORMAT
@@ -294,7 +290,6 @@ parameters:
     description: Maintenance message to be displayed
     displayName: SPA_ENV_FPC_MAINTENANCE_MESSAGE
     required: false
-    value: System will be done from time A to time B
   - name: SERVICE_PORT
     description: The port this service will sisten on.
     displayName: SERVICE_PORT
@@ -309,7 +304,7 @@ parameters:
     value: YYYY-MM-DD h:mm:ss A
   - name: SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR
     description: Address validator flag
-    required: true
+    required: false
   - name: SPA_ENV_FPIR_MAINTENANCE_START
     description: FPCare Income Review maintenance start time
     required: false
