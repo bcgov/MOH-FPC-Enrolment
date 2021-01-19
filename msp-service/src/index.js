@@ -1,3 +1,5 @@
+const { logSplunkInfo, logSplunkError } = require("./logSplunk");
+
 var https = require('https'),
     http = require('http'),
     util = require('util'),
@@ -12,6 +14,9 @@ var https = require('https'),
     moment = require('moment');
     proxy = require('http-proxy-middleware');
 
+const cache = require('./cache');
+const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
+
 // verbose replacement
 function logProvider(provider) {
     var logger = winston;
@@ -25,10 +30,6 @@ function logProvider(provider) {
     }
     return myCustomProvider;
 }
-
-// winston.add(winston.transports.Console, {
-//    timestamp: true
-// });
 
 //
 // Generate token for monitoring apps
@@ -54,10 +55,15 @@ app.get('/status', function (req, res) {
     res.send("OK");
 });
 
-// health and readiness check
-app.get('/hello', function (req, res) {
-    res.status(200).end();
-});
+//
+// Cache service
+//
+// only enable if there are URLs to cache
+if (process.env.CACHE_URLS_CSV && process.env.CACHE_URLS_CSV.length){ 
+    cache.updateCache();
+    cache.setupCron();
+    app.use('/', cache.cacheMiddleware);
+}
 
 //
 // CAPTCHA Authorization, ALWAYS first
@@ -65,8 +71,6 @@ app.get('/hello', function (req, res) {
 app.use('/', function (req, res, next) {
     // Log it
     // logSplunkInfo("incoming: ", req.method, req.headers.host, req.url, res.statusCode, req.headers["x-authorization"]);
-    logSplunkInfo("incoming: " + req.url);
-	// logSplunkInfo(" x-authorization: " + req.headers["x-authorization"]);
 
     // Get authorization from browser
     var authHeaderValue = req.headers["x-authorization"];
@@ -110,53 +114,31 @@ app.use('/', function (req, res, next) {
             return;
         }
 
-        // Check against the resource URL
-        // typical URL:
-        //    /MSPDESubmitApplication/2ea5e24c-705e-f7fd-d9f0-eb2dd268d523?programArea=enrolment
-        var pathname = url.parse(req.url).pathname;
-        var pathnameParts = pathname.split("/");
+        if (!BYPASS_MSP_CHECK){
+            // Check against the resource URL
+            // typical URL:
+            //    /MSPDESubmitApplication/2ea5e24c-705e-f7fd-d9f0-eb2dd268d523?programArea=enrolment
+            var pathname = url.parse(req.url).pathname;
+            var pathnameParts = pathname.split("/");
 
-        // find the noun(s)
-        var nounIndex = pathnameParts.indexOf("MSPDESubmitAttachment");
-        if (nounIndex < 0) {
-            nounIndex = pathnameParts.indexOf("MSPDESubmitApplication") ;
-        }
-        if (nounIndex < 0) {
-            nounIndex = pathnameParts.indexOf("submit-attachment") ;
-        }
-        if (nounIndex < 0) {
-            nounIndex = pathnameParts.indexOf("submit-application") ;
-        }
-        if (nounIndex < 0) {
-            nounIndex = pathnameParts.indexOf("accLetterIntegration") ;
-        }
-        if (nounIndex < 0) {
-            nounIndex = pathnameParts.indexOf("siteregIntegration");
-        }
-		if (nounIndex < 0) {                                                                                                                          
-            nounIndex = pathnameParts.indexOf("fpcare");                                                                                  
-        } 
+            // find the noun(s)
+            var nounIndex = pathnameParts.indexOf("MSPDESubmitAttachment");
+            if (nounIndex < 0) {
+                nounIndex = pathnameParts.indexOf("MSPDESubmitApplication");
+            }
 
-        if (nounIndex < 0 ||
-            pathnameParts.length < nounIndex + 2) {
-            denyAccess("missing noun or resource id", res, req);
-            return;
-        }
+            if (nounIndex < 0 ||
+                pathnameParts.length < nounIndex + 2) {
+                denyAccess("missing noun or resource id", res, req);
+                return;
+            }
 
-		// check to see if not accLetterIntegration/suppbenefit
-		if (pathnameParts.indexOf("suppbenefit") > 0 || pathnameParts.indexOf("siteregIntegration") > 0) {
-			if (pathnameParts[nounIndex + 2] != decoded.data.nonce) {                                                                                 
-                denyAccess("resource id and nonce are not equal: " + pathnameParts[nounIndex + 2] + "; " + decoded.data.nonce, res, req);             
-                return;                                                                                                                            
-            } 
-		}
-		else {
-			// Finally, check that resource ID against the nonce
-			if (pathnameParts[nounIndex + 1] != decoded.data.nonce) {
-				denyAccess("resource id and nonce are not equal: " + pathnameParts[nounIndex + 1] + "; " + decoded.data.nonce, res, req);
-				return;
-			}
-		}
+            // Finally, check that resource ID against the nonce
+            if (pathnameParts[nounIndex + 1] != decoded.data.nonce) {
+                denyAccess("resource id and nonce are not equal: " + pathnameParts[nounIndex + 1] + "; " + decoded.data.nonce, res, req);
+                return;
+            }
+        }
     }
     // OK its valid let it pass thru this event
     next(); // pass control to the next handler
@@ -167,9 +149,9 @@ app.use('/', function (req, res, next) {
 if (process.env.USE_MUTUAL_TLS &&
     process.env.USE_MUTUAL_TLS == "true") {
     var httpsAgentOptions = {
-        key: new Buffer(process.env.MUTUAL_TLS_PEM_KEY_BASE64, 'base64'),
+        key: Buffer.from(process.env.MUTUAL_TLS_PEM_KEY_BASE64, 'base64'),
         passphrase: process.env.MUTUAL_TLS_PEM_KEY_PASSPHRASE,
-        cert: new Buffer(process.env.MUTUAL_TLS_PEM_CERT, 'base64')
+        cert:  Buffer.from(process.env.MUTUAL_TLS_PEM_CERT, 'base64')
     };
 
     var myAgent = new https.Agent(httpsAgentOptions);
@@ -235,103 +217,11 @@ app.listen(8080);
  */
 function denyAccess(message, res, req) {
 
-    logSplunkError(message + " - access denied: url: " + stringify(req.originalUrl) + "  request: " + stringify(req.headers));
+    logSplunkError(message + " - access denied.  request: " + stringify(req.headers));
 
     res.writeHead(401);
     res.end();
 }
 
-function logSplunkError (message) {
-
-    // log locally
-    winston.error(message);
-
-    var body = JSON.stringify({
-        message: message
-    })
-
-
-    var options = {
-        hostname: process.env.LOGGER_HOST,
-        port: process.env.LOGGER_PORT,
-        path: '/log',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Splunk ' + process.env.SPLUNK_AUTH_TOKEN,
-            'Content-Length': Buffer.byteLength(body),
-            'logsource': process.env.HOSTNAME,
-            'timestamp': moment().format('DD-MMM-YYYY'),
-            'program': 'msp-service',
-            'serverity': 'error'
-        }
-    };
-
-    var req = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log("Body chunk: " + JSON.stringify(chunk));
-        });
-        res.on('end', function () {
-            console.log('End of chunks');
-        });
-    });
-
-    req.on('error', function (e) {
-        console.error("error sending to splunk-forwarder: " + e.message);
-    });
-
-    // write data to request body
-    req.write(body);
-    req.end();
-}
-
-function logSplunkInfo (message) {
-
-    // log locally
-    winston.info(message);
-
-    var body = JSON.stringify({
-        message: message
-    })
-
-    var options = {
-        hostname: process.env.LOGGER_HOST,
-        port: process.env.LOGGER_PORT,
-        path: '/log',
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Splunk ' + process.env.SPLUNK_AUTH_TOKEN,
-            'Content-Length': Buffer.byteLength(body),
-            'logsource': process.env.HOSTNAME,
-            'timestamp': moment().format('DD-MMM-YYYY'),
-            'method': 'MSP-Service - Pass Through',
-            'program': 'msp-service',
-            'serverity': 'info'
-        }
-    };
-
-    var req = http.request(options, function (res) {
-        res.setEncoding('utf8');
-        res.on('data', function (chunk) {
-            console.log("Body chunk: " + JSON.stringify(chunk));
-        });
-        res.on('end', function () {
-            console.log('End of chunks');
-        });
-    });
-
-    req.on('error', function (e) {
-        console.error("error sending to splunk-forwarder: " + e.message);
-    });
-
-    // write data to request body
-    req.write(body);
-    req.end();
-}
-
-logSplunkInfo('msp-service server started on port 8080');
-
-
+logSplunkInfo('MyGovBC-MSP-Service server started on port 8080');
 
