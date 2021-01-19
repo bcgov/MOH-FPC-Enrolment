@@ -1,0 +1,19 @@
+@import 'income-review.scss';
+
+.financial--container {
+  display: block;
+  margin-top: 0.5rem;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  background-color: $gray;
+}
+
+.support-doc--tip-area {
+  background-color: $gray;
+  padding: 1rem;
+}
+
+.support-doc--tip-title {
+  font-weight: bold;
+  text-transform: uppercase;
+}

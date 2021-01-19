@@ -1,0 +1,36 @@
+<ng-container>
+  <div class="row financial-input--row" role="input">
+    <label for="{{ _name }}" class="col-md-5 financial-input--text">
+      <ng-content select="[label]"></ng-content>
+    </label>
+    <div class="col-sm-4 input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text">$</span>
+      </div>
+      <ng-container *ngIf="!disabled; else DisplayDisabled">
+        <input
+          type="text"
+          [id]="_name"
+          [value]="_value"
+          (input)="_value = $event.target.value; _onChange($event.target.value)"
+          (blur)="_onTouched()"
+          [textMask]="_textMask"
+          [attr.tabIndex]="tabIndex"
+          autocomplete="off"
+        />
+      </ng-container>
+    </div>
+    <div class="financial-input--text">
+      <ng-content select="[rowId]"></ng-content>
+    </div>
+  </div>
+</ng-container>
+<common-error-container [displayError]="isErrors">
+  <ng-content select="[errors]"></ng-content>
+</common-error-container>
+
+<ng-template #DisplayDisabled>
+  <div class="financial-input--disabled">
+    {{ _value }}
+  </div>
+</ng-template>

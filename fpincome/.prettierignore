@@ -1,0 +1,9 @@
+# Files to ignore when run prettier command
+dist/*
+schema/*
+openshift/*
+
+.prettier
+.gitignore
+.editorconfig
+.commitlintrc.js

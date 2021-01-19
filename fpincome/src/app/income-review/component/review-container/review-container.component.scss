@@ -1,0 +1,41 @@
+@import 'income-review.scss';
+
+.review--heading {
+  margin-left: 0px;
+  margin-right: auto;
+  margin-bottom: 0.5rem;
+
+  padding-left: 0px;
+  word-wrap: break-word;
+}
+
+.review--icon {
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: 0px;
+  padding-right: 0px;
+  text-align: right;
+  align-items: right;
+}
+
+.review--row > div {
+  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.review--background-color {
+  background-color: $gray;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  padding-left: 2rem;
+}
+
+@media print {
+  :host .review--container {
+    page-break-inside: avoid;
+  }
+}
+
+.review--key {
+  text-align: right;
+}

@@ -1,0 +1,46 @@
+<div *ngIf="reviewObject" class="review--container">
+  <!-- Section: Heading -->
+  <div class="row review--heading border-bottom">
+    <div class="col-md-10 pl-0 ml-0">
+      <h2>{{ reviewObject.heading }}</h2>
+    </div>
+    <div *ngIf="!reviewObject.isPrintView" class="col-md-2 review--icon">
+      <button class="btn btn-edit" (click)="redirectURL()" aria-label="Edit">
+        Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
+      </button>
+    </div>
+  </div>
+
+  <div class="review--background-color">
+    <ng-container *ngIf="!reviewObject?.isFinancialData; else FinancialDisplay">
+      <div *ngFor="let item of reviewObject.sectionItems; let idx = index">
+        <div class="row review--row">
+          <div class="col-md-5 review--key" [innerHTML]="item.label"></div>
+          <div [innerHTML]="item.value"></div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #FinancialDisplay>
+  <div *ngFor="let item of reviewObject.sectionItems; let idx = index">
+    <fpir-financial-input
+      value="{{ item.value }}"
+      [moneyMask]="item?.extraInfo?.mask"
+      disabled="true"
+    >
+      <div
+        label
+        class="{{
+          item?.extraInfo?.isTotal
+            ? 'finance-bold-text--format'
+            : 'finance-text--format'
+        }}"
+      >
+        {{ item.label }}
+      </div>
+      <div rowId>{{ item?.extraInfo?.lineNo }}</div>
+    </fpir-financial-input>
+  </div>
+</ng-template>

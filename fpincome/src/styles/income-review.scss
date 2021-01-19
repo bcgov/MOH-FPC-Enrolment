@@ -1,0 +1,26 @@
+@import 'variables.scss';
+
+// Styles that are used in multiple places
+
+@mixin captialize-first-leter() {
+  &:first-letter {
+    text-transform: uppercase;
+  }
+}
+
+.finance-text--format {
+  text-align: right;
+  font-weight: normal !important;
+  @include captialize-first-leter();
+}
+
+.finance-error--format {
+  text-align: center;
+  @include captialize-first-leter();
+}
+
+.finance-bold-text--format {
+  text-align: right;
+  font-weight: bold !important;
+  @include captialize-first-leter();
+}
