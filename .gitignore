@@ -109,3 +109,6 @@ params-*.txt
 lib
 build/
 dist/
+
+#backup files - TOBE REMOVE AFTER UPDATE
+*.bak
