@@ -275,12 +275,14 @@ parameters:
       for the specified Current Local Timezone
     displayName: SPA_ENV_FPC_MAINTENANCE_START
     required: false
+    value: "2018-11-26 9:00:00 PM"
   - name: SPA_ENV_FPC_MAINTENANCE_END
     description: |
       End time for maintenance window in the specified Time Format and for
       the specified Current Local Timezone
     displayName: SPA_ENV_FPC_MAINTENANCE_END
     required: false
+    value: "2018-11-26 10:00:00 PM"
   - name: SPA_ENV_FPC_TIME_FORMAT
     description: Format of DateTime specified for Maintenance tasks
     displayName: SPA_ENV_FPC_TIME_FORMAT
@@ -290,6 +292,7 @@ parameters:
     description: Maintenance message to be displayed
     displayName: SPA_ENV_FPC_MAINTENANCE_MESSAGE
     required: false
+    value: "Please be advised that HIBC will be performing a RAPID deployment associated with BC Services Card Monday, November 26, 2018 from 9:00pm until 10:00pm that will impact Fair PharmaCare.  Fair PharmaCare and its related applications and systems will be unavailable November 26th 9:00PM until 10:00PM."
   - name: SERVICE_PORT
     description: The port this service will sisten on.
     displayName: SERVICE_PORT
@@ -305,18 +308,23 @@ parameters:
   - name: SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR
     description: Address validator flag
     required: false
+    value: "true"
   - name: SPA_ENV_FPIR_MAINTENANCE_START
     description: FPCare Income Review maintenance start time
     required: false
+    value: "2020-06-15 4:05:00 PM"
   - name: DEBUG
     description: general debug
     required: false
   - name: SPA_ENV_FPIR_MAINTENANCE_END
     description: FPCare Income Review maintenance end time
     required: false
+    value: "2020-06-15 4:10:00 PM"
   - name: SPA_ENV_FPIR_MAINTENANCE_FLAG
     description: FPCare Income Review maintenance flag
     required: false
+    value: "false"
   - name: SPA_ENV_FPIR_MAINTENANCE_MESSAGE
     description: FPCare Income Review maintenance message
     required: false
+    value: "Fair PharmaCare Income Review is unavailable."
