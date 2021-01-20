@@ -45,9 +45,6 @@ objects:
           server_tokens off;
           underscores_in_headers on;
 
-          # additional real ip from rules
-          ${AdditionalRealIpFromRules}
-
           # ip filtering
           ${IpFilterRules}
 
@@ -206,9 +203,6 @@ objects:
 parameters:
   - description: RealIpFrom
     name: RealIpFrom
-    required: true
-  - description: AdditionalRealIpFromRules
-    name: AdditionalRealIpFromRules
     required: true
   - description: IpFilterRules
     name: IpFilterRules
