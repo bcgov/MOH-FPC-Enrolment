@@ -125,8 +125,6 @@ objects:
                 value: ${RealIpFrom}
               - name: IpFilterRules
                 value: ${IpFilterRules}
-              - name: AdditionalRealIpFromRules
-                value: ${AdditionalRealIpFromRules}
               - name: USE_SPLUNK_FORWARDER
                 value: ${USE_SPLUNK_FORWARDER}
               - name: HTTP_BASIC
@@ -199,10 +197,6 @@ parameters:
   name: RealIpFrom
   value: "142.34.194.118"
   required: true
-- description: AdditionalRealIpFromRules
-  name: AdditionalRealIpFromRules
-  value: ""
-  required: false
 - description: IpFilterRules
   name: IpFilterRules
   value: "allow 0.0.0.0/0; deny all;"
