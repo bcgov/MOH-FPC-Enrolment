@@ -24,14 +24,7 @@ oc process -f nsp-fpcareweb-to-all.yaml \
   oc apply -f -
 ```
 
-4. apply the internal NSPs:
-```console
-oc process -f nsp-fpcareweb-to-all.yaml \
-  -p NAMESPACE=$(oc project --short) | \
-  oc apply -f -
-```
-
-5. allow the dev project to pull from tools:
+4. allow the dev project to pull from tools:
    Go to the dev project (oc project 3f9283-dev).
 ```console
 oc policy add-role-to-user system:image-puller system:serviceaccount:$(oc project --short):default -n 3f9283-tools

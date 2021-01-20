@@ -160,6 +160,10 @@ oc process -f fpcare/openshift/templates/build.yaml | \
   oc create -f -
 ```
 
+**NOTE**
+
+Make sure you are in the tools environment when you are doing a build. Switch to dev/test/prod environment if you are going to deploy.
+
 ### Deploy
 
 10. The deployment for the `fpcare` component is straight forward as it has little to no environment variables. The first step in the deploument is to create a `ConfigMap` with the necessary NGINX config:
