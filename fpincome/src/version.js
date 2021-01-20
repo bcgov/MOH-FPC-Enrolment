@@ -41,7 +41,7 @@ export const buildTime = '${buildTime}';
 export const projectVersion = '${projectVersion}';
 /** Human readable message  */
 export const message = 'Canonical Version: ${trimmed} - ${buildTime} (v${projectVersion})' +
-'\\nhttps://github.com/bcgov/moh-fpincome/commits/${trimmed}';
+'\\nhttps://github.com/bcgov/MOH-FPC-Enrolment/commits/${trimmed}';
 /** If true, other values should be present. */
 export const success = ${success};
 `;
