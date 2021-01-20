@@ -45,6 +45,9 @@ objects:
           server_tokens off;
           underscores_in_headers on;
 
+          # additional real ip from rules
+          ${AdditionalRealIpFromRules}
+
           # ip filtering
           ${IpFilterRules}
 
@@ -204,6 +207,9 @@ parameters:
   - description: RealIpFrom
     name: RealIpFrom
     required: true
+  - description: AdditionalRealIpFromRules
+    name: AdditionalRealIpFromRules
+    required: true
   - description: IpFilterRules
     name: IpFilterRules
     required: true
@@ -240,4 +246,7 @@ parameters:
   - description: USE_SPLUNK_FORWARDER
     name: USE_SPLUNK_FORWARDER
     value: "true"
+    required: false
+  - description: JWT_SIGN_EXPIRY
+    name: JWT_SIGN_EXPIRY
     required: false

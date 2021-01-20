@@ -236,3 +236,6 @@ parameters:
 - description: NAMESPACE
   name: NAMESPACE
   required: false
+- description: JWT_SIGN_EXPIRY
+  name: JWT_SIGN_EXPIRY
+  required: false
