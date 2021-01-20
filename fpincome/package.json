@@ -19,6 +19,7 @@
     "test": "ng test",
     "test-headless": "ng test --watch=false --browsers=ChromeHeadless",
     "test-headless-firefox": "ng test --watch=false --browsers=FirefoxHeadless",
+    "test:coverage": "ng test --watch=false --code-coverage --browsers=ChromeHeadless",
     "dev": "ng serve --host=0.0.0.0 -o",
     "prebuild": "node src/version.js",
     "lint": "ng lint",
