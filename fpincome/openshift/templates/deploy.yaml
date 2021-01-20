@@ -147,6 +147,10 @@ objects:
                 value: ${ROUTER_DEFAULT_SERVER_TIMEOUT}
               - name: ROUTER_DEFAULT_CLIENT_TIMEOUT
                 value: ${ROUTER_DEFAULT_CLIENT_TIMEOUT}
+              - name: NAMESPACE
+                value: ${NAMESPACE}
+              - name: JWT_SIGN_EXPIRY
+                value: ${JWT_SIGN_EXPIRY}
             resources:
               limits:
                 cpu: 300m
@@ -216,6 +220,9 @@ parameters:
 - description: FPC_ENV
   name: FPC_ENV
   required: true
+- description: FPC_VERSION
+  name: FPC_VERSION
+  required: true
 - description: ROUTER_DEFAULT_SERVER_TIMEOUT
   name: ROUTER_DEFAULT_SERVER_TIMEOUT
   value: "60s"
@@ -228,3 +235,12 @@ parameters:
   name: LOG_LEVEL
   value: "info"
   required: true
+- description: NAMESPACE
+  name: NAMESPACE
+  required: false
+- description: JWT_SIGN_EXPIRY
+  name: JWT_SIGN_EXPIRY
+  required: false
+- description: NAMESPACE
+  name: NAMESPACE
+  required: false
