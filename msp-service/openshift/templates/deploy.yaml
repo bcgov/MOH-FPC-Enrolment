@@ -243,27 +243,24 @@ parameters:
   - name: CACHE_FILE_PATH
     description: CACHE_FILE_PATH
     displayName: CACHE_FILE_PATH
-    required: true
+    required: false
   - name: CACHE_URLS_CSV
     description: CACHE_URLS_CSV
     displayName: CACHE_URLS_CSV
-    required: true
+    required: false
   - name: CACHE_REQ_USE_PROCESSDATE
     description: CACHE_REQ_USE_PROCESSDATE
     displayName: CACHE_REQ_USE_PROCESSDATE
-    required: true
-    value: "true"
+    required: false
   - name: CACHE_IN_MEMORY
     description: CACHE_IN_MEMORY
     displayName: CACHE_IN_MEMORY
-    required: true
-    value: "true"
+    required: false
   - name: BYPASS_MSP_CHECK
     description: BYPASS_MSP_CHECK
     displayName: BYPASS_MSP_CHECK
-    required: true
-    value: "true"
+    required: false
   - name: CRON_EXPRESSION
     description: CRON_EXPRESSION
     displayName: CRON_EXPRESSION
-    required: true
+    required: false
