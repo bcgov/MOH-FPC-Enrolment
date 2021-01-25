@@ -1,6 +1,6 @@
 const https = require('https');
 const stringify = require('json-stringify-safe');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const {timestamp} = require('./timestamp');
 const { logSplunkInfo, logSplunkError } = require("./logSplunk");
 
@@ -18,9 +18,9 @@ if (TARGET_URL && TARGET_URL.length){
 if (process.env.USE_MUTUAL_TLS &&
     process.env.USE_MUTUAL_TLS == "true") {
     var httpsAgentOptions = {
-        key: new Buffer(process.env.MUTUAL_TLS_PEM_KEY_BASE64, 'base64'),
+        key:  Buffer.from(process.env.MUTUAL_TLS_PEM_KEY_BASE64, 'base64'),
         passphrase: process.env.MUTUAL_TLS_PEM_KEY_PASSPHRASE,
-        cert: new Buffer(process.env.MUTUAL_TLS_PEM_CERT, 'base64')
+        cert:  Buffer.from(process.env.MUTUAL_TLS_PEM_CERT, 'base64')
     };
 
     var myAgent = new https.Agent(httpsAgentOptions);
