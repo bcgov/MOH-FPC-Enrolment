@@ -142,11 +142,16 @@ objects:
                 requests:
                   cpu: 100m
                   memory: 92Mi
-              # volumeMounts:
+              volumeMounts:
+                - mountPath: /var/fpc-cache
+                  name: fpc-cache
               #   - name: config-vol
               #     mountPath: /opt/app-root/src/build/config/config.json
               #     subPath: config.json
-          # volumes:
+          volumes:
+            - name: fpc-cache
+              persistentVolumeClaim:
+                claimName: fpc-cache
           #   - name: config-vol
           #     configMap:
           #       name: registry-api-config
