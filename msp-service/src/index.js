@@ -59,20 +59,20 @@ app.get('/status', function (req, res) {
 // Cache service
 //
 // only enable if there are URLs to cache
-// TODO: Add back in later
-//if (process.env.CACHE_URLS_CSV && process.env.CACHE_URLS_CSV.length){ 
-//    cache.updateCache();
-//    cache.setupCron();
-//    app.use('/', cache.cacheMiddleware);
-//}
+if (process.env.CACHE_URLS_CSV && process.env.CACHE_URLS_CSV.length){ 
+    cache.updateCache();
+    cache.setupCron();
+    app.use('/', cache.cacheMiddleware);
+}
 
 //
 // CAPTCHA Authorization, ALWAYS first
 //
 app.use('/', function (req, res, next) {
     // Log it
-    logSplunkInfo("incoming: ", req.method, req.headers.host, req.url, res.statusCode, req.headers["x-authorization"]);
-
+    logSplunkInfo("incoming: " + req.url);
+    logSplunkInfo(" x-authorization: " + req.headers["x-authorization"]);
+    
     // Get authorization from browser
     var authHeaderValue = req.headers["x-authorization"];
 
