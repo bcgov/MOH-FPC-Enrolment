@@ -51,7 +51,7 @@ if (process.env.USE_AUTH_TOKEN &&
 var app = express();
 
 // Add status endpoint
-app.get('/status', function (req, res) {
+app.get('/hello', function (req, res) {
     res.send("OK");
 });
 
