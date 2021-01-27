@@ -1,6 +1,6 @@
 import { ReprintLettersModule } from './reprint-letters.module';
 
-fdescribe('ReprintLettersModule', () => {
+describe('ReprintLettersModule', () => {
   let reprintLettersModule: ReprintLettersModule;
 
   beforeEach(() => {
