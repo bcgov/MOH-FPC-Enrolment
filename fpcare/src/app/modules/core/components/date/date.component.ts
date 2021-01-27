@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 import * as moment from 'moment';
 import { SimpleDate } from './simple-date.interface';
 

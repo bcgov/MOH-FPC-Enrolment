@@ -1,4 +1,4 @@
-import {Injectable, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {PersonInterface, PersonType} from '../models/api.model';
 import {FinanceService} from '../modules/financial-calculator/finance.service';
 import * as Md5 from 'js-md5';

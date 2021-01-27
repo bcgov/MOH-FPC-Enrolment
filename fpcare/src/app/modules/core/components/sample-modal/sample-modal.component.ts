@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap/modal';
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 import {ImageInterface} from '../../../../models/image-interface';
 
 @Component({

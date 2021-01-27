@@ -1,4 +1,4 @@
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 
 
 /** Main class for the active user's session. */

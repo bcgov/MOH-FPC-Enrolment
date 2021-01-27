@@ -63,7 +63,7 @@ describe('EligibilityComponent - Single Applicant', () => {
   });
 
   it('missing PHN cannot continue', (done) => {
-    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
 
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
@@ -74,7 +74,7 @@ describe('EligibilityComponent - Single Applicant', () => {
 
   it('required data populated can continue', (done) => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
 
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeTruthy();
@@ -126,7 +126,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   it('missing applicant birthdate cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
-    component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.spouse.sDateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';
 
     fixture.whenStable().then(() => {
@@ -138,8 +138,8 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   it('missing applicant phn cannot continue', (done) => {
     component.spouse.phn = '9999 999 998';
-    component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
-    component.applicant.dateOfBirth = { year: 1990, month: 5, day: 30 };
+    component.spouse.sDateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1990, month: 5, day: 30 };
 
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
@@ -150,7 +150,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   it('missing spouse birthdate cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';
 
     fixture.whenStable().then(() => {
@@ -162,7 +162,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   it('missing spouse phn cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
 
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
@@ -173,9 +173,9 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   it('required data populated can continue', (done) => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';
-    component.spouse.dateOfBirth = { year: 1990, month: 5, day: 30 };
+    component.spouse.sDateOfBirth = { year: 1990, month: 5, day: 30 };
 
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeTruthy();

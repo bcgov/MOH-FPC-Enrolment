@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from './components/alert/alert.component';
-import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-bootstrap';
+import { AlertModule } from 'ngx-bootstrap/alert';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
@@ -26,14 +29,14 @@ import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
-import { AddressValidatorComponent } from './components/address-validator/address-validator.component';
+// import { AddressValidatorComponent } from './components/address-validator/address-validator.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
 import { CaptchaModule } from 'moh-common-lib/captcha';
 import { SharedCoreModule } from 'moh-common-lib';
-import { TypeaheadModule } from 'ngx-bootstrap';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 const componentList = [
-  AddressValidatorComponent,
+  // AddressValidatorComponent,
   AlertComponent,
   FPCareToggleComponent,
   PhnComponent,
