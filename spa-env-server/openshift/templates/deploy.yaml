@@ -173,6 +173,13 @@ objects:
                 requests:
                   cpu: 100m
                   memory: 92Mi
+              volumeMounts:
+                - mountPath: /var/logs
+                  name: spa-env-log
+          volumes:
+            - name: spa-env-log
+              persistentVolumeClaim:
+                claimName: spa-env-log
               # volumeMounts:
               #   - name: config-vol
               #     mountPath: /opt/app-root/src/build/config/config.json
