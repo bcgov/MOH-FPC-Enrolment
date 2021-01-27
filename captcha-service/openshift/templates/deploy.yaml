@@ -179,7 +179,7 @@ parameters:
   - name: BYPASS_ANSWER
     description: BYPASS_ANSWER
     displayName: BYPASS_ANSWER
-    required: false
+    required: true
   - name: CORS_ALLOW_ALL
     description: CORS_ALLOW_ALL
     displayName: CORS_ALLOW_ALL
@@ -188,4 +188,4 @@ parameters:
   - name: JWT_SIGN_EXPIRY
     description: JWT_SIGN_EXPIRY
     displayName: JWT_SIGN_EXPIRY
-    required: false
+    required: true
