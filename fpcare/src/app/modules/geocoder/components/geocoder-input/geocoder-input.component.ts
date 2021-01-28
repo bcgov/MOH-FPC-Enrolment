@@ -7,18 +7,15 @@ import {
   EventEmitter,
   SimpleChanges,
 } from '@angular/core';
-import { GeocoderService } from 'moh-common-lib/services';
-import { GeoAddressResult } from 'moh-common-lib/services/geocoder.service';
-import { Base } from 'moh-common-lib/models';
+import { GeocoderService, GeoAddressResult, Base} from 'moh-common-lib';
 import { Subject, Observable, of } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  tap,
   catchError,
 } from 'rxjs/operators';
-import { TypeaheadMatch } from 'ngx-bootstrap';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { FPCAddress } from '../../../../models/address.model';
 import {
   defaultCountry,
@@ -51,9 +48,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
   private searchText$ = new Subject<string>();
 
   constructor(
-    private geocoderService: GeocoderService,
-    private cd: ChangeDetectorRef
-  ) {
+    private geocoderService: GeocoderService  ) {
     super();
   }
 
@@ -64,7 +59,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
       // Trigger the network request, get results
       switchMap((searchPhrase) => this.geocoderService.lookup(searchPhrase)),
       // tap(log => console.log('taplog', log)),
-      catchError((err) => this.onError(err))
+      catchError((err) => this.onError())
     );
   }
 
@@ -78,7 +73,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
     }
   }
 
-  onError(err): Observable<GeoAddressResult[]> {
+  onError(): Observable<GeoAddressResult[]> {
     this.hasError = true;
     // Empty array simulates no result response, nothing for typeahead to iterate over
     return of([]);

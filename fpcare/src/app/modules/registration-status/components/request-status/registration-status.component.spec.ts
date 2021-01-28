@@ -72,7 +72,7 @@ describe('RegistrationStatusComponent', () => {
   it('disables reg number when a dob field is filled out', () => {
     expect(component.disableRegNum()).toBeFalsy();
 
-    component.applicant.dateOfBirth = { year: null, day: 11, month: null };
+    component.applicant.sDateOfBirth = { year: null, day: 11, month: null };
 
     expect(component.disableRegNum()).toBeTruthy();
     expect(component.disablePhn()).toBeFalsy();
@@ -115,7 +115,7 @@ describe('RegistrationStatusComponent', () => {
 
   it('required PHN', (done) => {
     component.applicant.address.postal = 'V1D3G4';
-    component.applicant.dateOfBirth = { month: 1, day: 2, year: 1989 };
+    component.applicant.sDateOfBirth = { month: 1, day: 2, year: 1989 };
 
     fixture.whenStable().then(() => {
       expect(component.form.valid).toBe(false);
@@ -132,7 +132,7 @@ describe('RegistrationStatusComponent', () => {
 
   it('requires Postal Code', (done) => {
     component.applicant.phn = '9999999998';
-    component.applicant.dateOfBirth = { month: 1, day: 2, year: 1989 };
+    component.applicant.sDateOfBirth = { month: 1, day: 2, year: 1989 };
 
     fixture.whenStable().then(() => {
       expect(component.form.valid).toBe(false);

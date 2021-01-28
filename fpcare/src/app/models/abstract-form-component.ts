@@ -1,5 +1,5 @@
 import {Router} from '@angular/router';
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 import {NgForm} from '@angular/forms';
 import {QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FPCareDateComponent} from '../modules/core/components/date/date.component';

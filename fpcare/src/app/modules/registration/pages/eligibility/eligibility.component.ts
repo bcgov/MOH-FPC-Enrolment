@@ -159,8 +159,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
          * ST17390
          */
         this.fpcareDataService.bornBefore1939 =
-            ((this.applicant.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR ) ||
-             (this.hasSpouse && this.spouse.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR )) ? true : false;
+            ((this.applicant.sDateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR ) ||
+             (this.hasSpouse && this.spouse.sDateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR )) ? true : false;
 
         this.logger.log({
           event: 'eligibilityCheck',

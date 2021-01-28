@@ -1,4 +1,4 @@
-import { AbstractHttpService } from 'moh-common-lib/services';
+import { AbstractHttpService } from 'moh-common-lib';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from 'environments/environment';

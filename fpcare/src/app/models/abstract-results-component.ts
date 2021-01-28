@@ -1,4 +1,4 @@
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 import {DisplayIcon} from '../modules/core/components/results-framework/results-framework.component';
 import {ServerPayload} from './api.model';
 

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } 
 import { FinanceService } from '../../finance.service';
 import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
 import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Base } from 'moh-common-lib/models';
+import { Base } from 'moh-common-lib';
 import { growVertical } from '../../../../animations/animations';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 

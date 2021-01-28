@@ -16,7 +16,7 @@ import {
 import {ValidationService} from '../../../../services/validation.service';
 import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import { Address } from 'moh-common-lib/models/public_api';
+import { Address } from 'moh-common-lib';
 import { SpaEnvService } from '../../../../services/spa-env.service';
 
 @Component({

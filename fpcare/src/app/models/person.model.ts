@@ -1,4 +1,4 @@
-import { Person } from 'moh-common-lib/models';
+import { Person, SimpleDate } from 'moh-common-lib';
 import { FPCAddress } from './address.model';
 
 /**
@@ -21,11 +21,30 @@ export class FPCPerson extends Person {
   public address: FPCAddress = new FPCAddress();
   public updAddress: FPCAddress = new FPCAddress();
 
+  // Simple date, keep functionality of app with new library
+  private _sDateOfBirth = {year: null, month: null, day: null};
+
   constructor() {
     super();
 
     // Set date of birth string format for read only fields
     this.dobFormat = 'MMMM DD, YYYY';
+  }
+
+  // Wrapper
+  set sDateOfBirth(dob: SimpleDate) {
+    this._sDateOfBirth = dob;
+    // All value must numbers
+    if (!isNaN(this._sDateOfBirth.year) &&
+        (!isNaN(this._sDateOfBirth.month) && this._sDateOfBirth.month > 1) &&
+        !isNaN(this._sDateOfBirth.day)) {
+        this.dateOfBirth = new Date(this._sDateOfBirth.year,
+                                    this._sDateOfBirth.month - 1,
+                                    this._sDateOfBirth.day);
+    }
+  }
+  get sDateOfBirth(): SimpleDate {
+      return this._sDateOfBirth;
   }
 
   /**

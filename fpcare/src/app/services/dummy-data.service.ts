@@ -40,7 +40,7 @@ export class DummyDataService {
     const result: FPCPerson = new FPCPerson;
 
     result.name = this.generatePersonName();
-    result.dateOfBirth = this.generateDateOfBirth();
+    result.sDateOfBirth = this.generateDateOfBirth();
     result.phn = this.generatePHN();
     result.sin = this.generateSIN();
 
@@ -64,7 +64,7 @@ export class DummyDataService {
     for (let index = 0; index < count; index++) {
       const person = new FPCPerson();
       person.name = this.generatePersonName();
-      person.dateOfBirth = this.generateDateOfBirth( 1, 19 );
+      person.sDateOfBirth = this.generateDateOfBirth( 1, 19 );
       person.phn = this.generatePHN();
       result.push(person);
     }
@@ -148,7 +148,7 @@ export class DummyDataService {
     const result: FPCPerson = new FPCPerson;
 
     result.name = this.generatePersonName();
-    result.dateOfBirth = dob;
+    result.sDateOfBirth = dob;
     result.phn = phn;
     result.sin = this.generateSIN();
 
@@ -164,7 +164,7 @@ export class DummyDataService {
 
     if ( dob && postalCode ) {
       result.phn = value;
-      result.dateOfBirth = dob;
+      result.sDateOfBirth = dob;
       result.address.postal = postalCode;
     } else {
       result.fpcRegNumber = value;

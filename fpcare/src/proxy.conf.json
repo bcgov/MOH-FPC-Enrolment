@@ -1,6 +1,6 @@
 {
     "/fpcare/api/": {
-        "target": "https://moh-fpcare-dev.pathfinder.gov.bc.ca/",
+        "target": "https://fpcare-web-3f9283-dev.apps.silver.devops.gov.bc.ca/",
         "changeOrigin": true,
         "secure": false,
         "logLevel": "debug"

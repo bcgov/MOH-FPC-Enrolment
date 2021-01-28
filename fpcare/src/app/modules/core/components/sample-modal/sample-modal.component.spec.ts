@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SampleModalComponent } from './sample-modal.component';
 import {BsModalService, ModalModule} from 'ngx-bootstrap/modal';
-import {FormsModule} from '@angular/forms';
 
 describe('SampleModalComponent', () => {
   let component: SampleModalComponent;
