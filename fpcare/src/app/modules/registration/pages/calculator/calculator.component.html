@@ -146,15 +146,6 @@
     ></fpcare-financial-calculator>
   </aside>
 
-   <common-form-action-bar
-       *ngIf="!standalone"
-       [submitLabel]="buttonText"
-       [defaultColor]="false"
-       [canContinue]="canContinue()"
-       (btnClick)="continue()">
-   </common-form-action-bar>
-
-
    <fpcare-sample-modal
        #taxDocuments
        [title]="'Tax Documents'"
@@ -162,3 +153,11 @@
    </fpcare-sample-modal>
 
 </common-page-framework>
+
+<common-form-action-bar
+    *ngIf="!standalone"
+    [submitLabel]="buttonText"
+    [defaultColor]="false"
+    [canContinue]="canContinue()"
+    (btnClick)="continue()">
+</common-form-action-bar>

@@ -18,7 +18,7 @@
         <fpcare-date
                 id="ap_dob"
                 [useCurrentDate]="false"
-                [(date)]="applicant.dateOfBirth"
+                [(date)]="applicant.sDateOfBirth"
                 [restrictDate]="'past'"
                 [label]="'Birthdate'">
         </fpcare-date>
@@ -39,7 +39,7 @@
           <fpcare-date
                   id="sp_dob"
                   [useCurrentDate]="false"
-                  [(date)]="spouse.dateOfBirth"
+                  [(date)]="spouse.sDateOfBirth"
                   [restrictDate]="'past'"
                   [label]="'Birthdate'">
           </fpcare-date>
@@ -58,10 +58,10 @@
     <fpcare-phn-definition></fpcare-phn-definition>
   </aside>
 
-  <common-form-action-bar
+</common-page-framework>
+
+<common-form-action-bar
     [canContinue]="canContinue()"
     (btnClick)="continue()"
     [isLoading]="loading">
-  </common-form-action-bar>
-
-</common-page-framework>
+</common-form-action-bar>

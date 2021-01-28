@@ -67,10 +67,12 @@
     </p>
   </div>
 
-  <common-form-action-bar
-          [submitLabel]="buttonLabel"
-          [canContinue]="canContinue()"
-          (btnClick)="continue()"
-          [isLoading]="loading">
-  </common-form-action-bar>
 </common-page-framework>
+
+
+<common-form-action-bar
+    [submitLabel]="buttonLabel"
+    [canContinue]="canContinue()"
+    (btnClick)="continue()"
+    [isLoading]="loading">
+</common-form-action-bar>
