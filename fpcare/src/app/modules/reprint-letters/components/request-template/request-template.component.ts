@@ -98,7 +98,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     // Setup the request
     const subscription = this.apiService.reprintLetter({
         phn: this.applicant.getNonFormattedPhn(),
-        dob: this.applicant.dateOfBirthShort,
+        dob: this.applicant.sDateOfBirthShort,
         postalCode: this.applicant.getNonFormattedPostalCode(),
         letterType: this.data.letterType
       });

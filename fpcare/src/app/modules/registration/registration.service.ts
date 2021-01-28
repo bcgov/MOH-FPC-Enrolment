@@ -106,7 +106,7 @@ export class RegistrationService {
       famMember = {
         perType: personType,
         phn: person.getNonFormattedPhn(),
-        dateOfBirth: person.dateOfBirthShort,
+        dateOfBirth: person.sDateOfBirthShort,
         givenName: person.firstName,
         surname: person.lastName,
         sin : person.getNonFormattedSin(),
@@ -117,7 +117,7 @@ export class RegistrationService {
       famMember = {
         perType: personType,
         phn: person.getNonFormattedPhn(),
-        dateOfBirth: person.dateOfBirthShort,
+        dateOfBirth: person.sDateOfBirthShort,
         givenName: person.firstName,
         surname: person.lastName,
       };

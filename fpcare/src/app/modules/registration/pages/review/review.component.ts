@@ -132,7 +132,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.applicant.formatDateOfBirth;
+    return this.applicant.sFormatDateOfBirth;
   }
 
   /**
@@ -140,7 +140,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.spouse.formatDateOfBirth;
+    return this.spouse.sFormatDateOfBirth;
   }
 
   /**
@@ -149,7 +149,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getChildDob( child: FPCPerson ): string {
-    return child.formatDateOfBirth;
+    return child.sFormatDateOfBirth;
   }
 
   /**

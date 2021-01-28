@@ -125,12 +125,12 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         persons: [
           { perType: PersonType.applicantType,
             phn: this.applicant.getNonFormattedPhn(),
-            dateOfBirth: this.applicant.dateOfBirthShort,
+            dateOfBirth: this.applicant.sDateOfBirthShort,
             postalCode: ''
           },
           { perType: PersonType.spouseType,
             phn: this.spouse.getNonFormattedPhn(),
-            dateOfBirth: this.spouse.dateOfBirthShort,
+            dateOfBirth: this.spouse.sDateOfBirthShort,
             postalCode: ''
           }
         ]
@@ -140,7 +140,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         persons: [
           {perType: PersonType.applicantType,
             phn: this.applicant.getNonFormattedPhn(),
-            dateOfBirth: this.applicant.dateOfBirthShort,
+            dateOfBirth: this.applicant.sDateOfBirthShort,
             postalCode: ''
           }
         ]

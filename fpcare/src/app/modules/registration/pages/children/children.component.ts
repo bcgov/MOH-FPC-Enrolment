@@ -16,7 +16,6 @@ import {
   PersonInterface,
   PersonType
 } from '../../../../models/api.model';
-import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
 @Component({
   selector: 'fpcare-children',
@@ -244,7 +243,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   private correctDob(): boolean {
 
     return this.children.map(child =>
-        this.isDobCorrect(child.getNonFormattedPhn(), child.dateOfBirthShort))
+        this.isDobCorrect(child.getNonFormattedPhn(), child.sDateOfBirthShort))
         .filter(x => x !== true).length === 0;
   }
 }

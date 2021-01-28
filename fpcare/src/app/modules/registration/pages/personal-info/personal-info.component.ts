@@ -86,7 +86,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.applicant.formatDateOfBirth;
+    return this.applicant.sFormatDateOfBirth;
   }
 
   /**
@@ -94,7 +94,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.spouse.formatDateOfBirth;
+    return this.spouse.sFormatDateOfBirth;
   }
 
   /**

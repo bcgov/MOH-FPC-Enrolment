@@ -82,8 +82,8 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   disableRegNum(): boolean {
 
     // Check to see if any of the fields for DOB have data
-    const hasDateOfBirth = Object.keys( this.applicant.dateOfBirth )
-        .map(key => this.applicant.dateOfBirth [key])
+    const hasDateOfBirth = Object.keys( this.applicant.sDateOfBirth )
+        .map(key => this.applicant.sDateOfBirth [key])
         .filter(x => x) // Filter out null/undefined
         .length !== 0;
     return !!this.applicant.phn || hasDateOfBirth || !!this.applicant.address.postal;
@@ -123,7 +123,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
         phn: this.applicant.getNonFormattedPhn(),
-        dob: this.applicant.dateOfBirthShort,
+        dob: this.applicant.sDateOfBirthShort,
         postalCode: this.applicant.getNonFormattedPostalCode()
       });
     }

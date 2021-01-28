@@ -22,7 +22,7 @@ export class FPCPerson extends Person {
   public updAddress: FPCAddress = new FPCAddress();
 
   // Simple date, keep functionality of app with new library
-  private _sDateOfBirth = {year: null, month: null, day: null};
+  sDateOfBirth = {year: null, month: null, day: null};
 
   constructor() {
     super();
@@ -31,20 +31,33 @@ export class FPCPerson extends Person {
     this.dobFormat = 'MMMM DD, YYYY';
   }
 
-  // Wrapper
-  set sDateOfBirth(dob: SimpleDate) {
-    this._sDateOfBirth = dob;
+  // Wrapper - TODO: Figure out how to get date to convert to date form - may need to create new method - AM 
+  // project
+  get sDateOfBirthShort() {
+ 
     // All value must numbers
-    if (!isNaN(this._sDateOfBirth.year) &&
-        (!isNaN(this._sDateOfBirth.month) && this._sDateOfBirth.month > 1) &&
-        !isNaN(this._sDateOfBirth.day)) {
-        this.dateOfBirth = new Date(this._sDateOfBirth.year,
-                                    this._sDateOfBirth.month - 1,
-                                    this._sDateOfBirth.day);
+    if (this.isNumeric(this.sDateOfBirth.year) &&
+        (this.isNumeric(this.sDateOfBirth.month) && this.sDateOfBirth.month > 0) &&
+        this.isNumeric(this.sDateOfBirth.day)) {
+        console.log('set sDateOfBirth - build Date');
+        this.dateOfBirth = new Date(this.sDateOfBirth.year,
+                                    this.sDateOfBirth.month - 1,
+                                    this.sDateOfBirth.day);
     }
+    return this.dateOfBirthShort;
   }
-  get sDateOfBirth(): SimpleDate {
-      return this._sDateOfBirth;
+
+  get sFormatDateOfBirth() {
+    // All value must numbers
+    if (this.isNumeric(this.sDateOfBirth.year) &&
+    (this.isNumeric(this.sDateOfBirth.month) && this.sDateOfBirth.month > 0) &&
+    this.isNumeric(this.sDateOfBirth.day)) {
+    console.log('set sDateOfBirth - build Date');
+    this.dateOfBirth = new Date(this.sDateOfBirth.year,
+                                this.sDateOfBirth.month - 1,
+                                this.sDateOfBirth.day);
+    }
+    return this.formatDateOfBirth;
   }
 
   /**
@@ -81,5 +94,10 @@ export class FPCPerson extends Person {
 
     return (value ? value.replace(/ /g, '') : null);
   }
+
+  private isNumeric(val: number): boolean {
+    return val !== null && val !== undefined ? !isNaN(val) : false;
+  }
+
 }
 

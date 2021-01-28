@@ -41,7 +41,7 @@
         <div class="form-group">
           <fpcare-date
                   [useCurrentDate]="false"
-                  [date]="applicant.dateOfBirth"
+                  [date]="applicant.sDateOfBirth"
                   [restrictDate]="'past'"
                   [disabled]="disablePhn()"
                   [label]="'Birthdate'">
@@ -88,10 +88,10 @@
 
   </aside>
 
-  <common-form-action-bar
-          [canContinue]="canContinue()"
-          (btnClick)="continue()"
-          [isLoading]="loading">
-  </common-form-action-bar>
-
 </common-page-framework>
+
+<common-form-action-bar
+    [canContinue]="canContinue()"
+    (btnClick)="continue()"
+    [isLoading]="loading">
+</common-form-action-bar>
