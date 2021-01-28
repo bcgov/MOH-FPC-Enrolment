@@ -28,7 +28,7 @@ export class FPCPerson extends Person {
     super();
 
     // Set date of birth string format for read only fields
-    this.dobFormat = 'MMMM DD, YYYY';
+    this.dobFormat = 'MMMM dd, yyyy';
   }
 
   // Wrapper - TODO: Figure out how to get date to convert to date form - may need to create new method - AM 
