@@ -5,9 +5,7 @@ import { CoreModule } from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FormsModule} from '@angular/forms';
-import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {RegistrationService} from '../../registration.service';
-import { GeocoderModule } from '../../../geocoder/geocoder.module';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MailingAddressComponent', () => {
@@ -22,7 +20,7 @@ describe('MailingAddressComponent', () => {
         CoreModule,
         RouterTestingModule,
         FormsModule,
-        GeocoderModule,
+        CoreModule,
         HttpClientTestingModule
       ],
       providers: [
