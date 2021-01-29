@@ -18,6 +18,7 @@ import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import { Address } from 'moh-common-lib';
 import { SpaEnvService } from '../../../../services/spa-env.service';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -25,6 +26,7 @@ import { SpaEnvService } from '../../../../services/spa-env.service';
   styleUrls: ['./mailing-address.component.scss']
 })
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
+  readonly addressValidatorUrl = environment.addressUrl;
 
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
 
@@ -174,11 +176,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   get streetMaxLength(): number {
     return ValidationService.MAX_STREET_LENGTH;
-  }
-
-  get isAddressValidatorEnabled(): boolean {
-    const envs = this.spaEnvService.getValues();
-    return envs && envs.SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
   /**

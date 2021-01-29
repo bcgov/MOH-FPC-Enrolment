@@ -29,7 +29,6 @@ import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
-// import { AddressValidatorComponent } from './components/address-validator/address-validator.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
 import { CaptchaModule } from 'moh-common-lib/captcha';
 import { SharedCoreModule } from 'moh-common-lib';
