@@ -195,7 +195,6 @@ parameters:
   value: apps.silver.devops.gov.bc.ca
 - description: RealIpFrom for nginx
   name: RealIpFrom
-  value: "142.34.194.118"
   required: true
 - description: IpFilterRules
   name: IpFilterRules
@@ -234,7 +233,4 @@ parameters:
   required: false
 - description: JWT_SIGN_EXPIRY
   name: JWT_SIGN_EXPIRY
-  required: false
-- description: NAMESPACE
-  name: NAMESPACE
   required: false
