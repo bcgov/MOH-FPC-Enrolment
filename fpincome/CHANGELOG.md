@@ -1,3 +1,12 @@
+## 2.0.4 (2021-01-29)
+
+### Bug Fixes
+
+- add method covert simple date to Date ([c925953](https://github.com/bcgov/MOH-FPC-Enrolment/commit/c9259536d1f5833c01b996a864786903804cbbeb))
+- add missing dependencies, replace depreciated method ([5fc8a2a](https://github.com/bcgov/MOH-FPC-Enrolment/commit/5fc8a2a5d6bfcbdb05af8cad65c483aca73afa1d))
+- correct date variable, move bar outside page-frame ([07a8334](https://github.com/bcgov/MOH-FPC-Enrolment/commit/07a83344551a3b4f31269722d1fdabac61402dbe))
+- form action bar ([acf9817](https://github.com/bcgov/MOH-FPC-Enrolment/commit/acf9817657a0f92f1634a50e4aa6ecdbdbc40d40))
+
 ## [2.0.3](https://github.com/bcgov/moh-fpincome/compare/v2.0.2...v2.0.3) (2021-01-08)
 
 ### Bug Fixes
