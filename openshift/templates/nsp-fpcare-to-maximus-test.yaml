@@ -37,6 +37,7 @@ objects:
         specify a custom external network that can be
         referenced by name. ie. t1splunkservices.maximusbc.ca
       entries:
+        - "142.31.59.212/32"
         - "142.31.59.210/32"
       servicePorts:
         - "tcp/80"
