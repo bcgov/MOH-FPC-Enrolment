@@ -179,7 +179,8 @@ parameters:
   - name: BYPASS_ANSWER
     description: BYPASS_ANSWER
     displayName: BYPASS_ANSWER
-    required: true
+    required: false
+    value: ""
   - name: CORS_ALLOW_ALL
     description: CORS_ALLOW_ALL
     displayName: CORS_ALLOW_ALL
