@@ -21,7 +21,7 @@ require('child_process').exec('git rev-parse --short HEAD', function(err, stdout
     // Checking we have a realistic response
     let success = false;
     let content;
-    if (trimmed.length && buildTime.length && projectVersion.length) {
+    if (buildTime.length && projectVersion.length) {
         success = true;
     }
 
@@ -34,7 +34,8 @@ export const buildTime = '${ buildTime }';
 /** App version retrieved from package.json. */
 export const projectVersion = '${projectVersion}';
 /** Human readable message  */
-export const message = 'Canonical Version: ${ trimmed } - ${ buildTime } (v${projectVersion}) \\nhttp://github.com/bcgov/moh-fpcare/commits/${ trimmed }';
+export const message = 'Canonical Version: ${ trimmed } - ${ buildTime } (v${projectVersion}) ' +
+'\\nhttp://github.com/bcgov/moh-fpcare/commits/${ trimmed }';
 /** If true, other values should be present. */
 export const success = ${success};
 `
