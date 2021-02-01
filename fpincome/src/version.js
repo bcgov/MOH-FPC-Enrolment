@@ -28,7 +28,7 @@ require('child_process').exec('git rev-parse --short HEAD', function (
   // Checking we have a realistic response
   let success = false;
   let content;
-  if (trimmed.length && buildTime.length && projectVersion.length) {
+  if (buildTime.length && projectVersion.length) {
     success = true;
   }
 
