@@ -60,7 +60,7 @@ app.get('/hello', function (req, res) {
 //
 // only enable if there are URLs to cache
 if (process.env.CACHE_URLS_CSV && process.env.CACHE_URLS_CSV.length){ 
-    console.log('debugging (index.js): enable cache');
+    // console.log('debugging (index.js): enable cache');
     cache.updateCache();
     cache.setupCron();
     app.use('/', cache.cacheMiddleware);
@@ -70,7 +70,7 @@ if (process.env.CACHE_URLS_CSV && process.env.CACHE_URLS_CSV.length){
 // CAPTCHA Authorization, ALWAYS first
 //
 app.use('/', function (req, res, next) {
-    console.log('debugging (index.js): incoming request is: ', req);
+    // console.log('debugging (index.js): incoming request is: ', req);
     // Log it
     logSplunkInfo("incoming: " + req.url);
     logSplunkInfo(" x-authorization: " + req.headers["x-authorization"]);

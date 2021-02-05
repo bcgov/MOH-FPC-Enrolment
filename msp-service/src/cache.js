@@ -34,7 +34,7 @@ function updateCache() {
  * Middleware that checks if a URL has a cached resource, and if so, returns that resource.
  */
 async function cacheMiddleware(req, res, next) {
-    console.log('debgging (cache.js): cache middleware');
+    // console.log('debgging (cache.js): cache middleware');
 
     let url = req.originalUrl;
     url = url.replace('//', '/'); //Fix issue of duplicate slashes at beginning after routing through nginx
