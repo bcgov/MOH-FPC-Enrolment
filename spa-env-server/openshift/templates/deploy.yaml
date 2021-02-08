@@ -314,7 +314,7 @@ parameters:
     value: "YYYY-MM-DD h:mm:ss A"
   - name: SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR
     description: Address validator flag
-    required: false
+    required: true
     value: "true"
   - name: SPA_ENV_FPIR_MAINTENANCE_START
     description: FPCare Income Review maintenance start time
