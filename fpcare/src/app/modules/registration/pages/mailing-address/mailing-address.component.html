@@ -32,11 +32,13 @@
       </p>
       <div class="p-md-2 col-md-6">
         <div class="form-group">
+          <ng-container  *ngIf="isAddressValidatorEnabled; else UseGeoCoder">
           <common-address-validator label='(optional) Address Lookup'
-                                    [(address)]='applicant.updAddress'
+                                    [(address)]='applicant.ls'
                                     (addressChange)='onGeoLookup()'
                                     [serviceUrl] = 'addressValidatorUrl'
                                     (select)='onAddressSelected($event)'></common-address-validator>
+          </ng-container>
         </div>
         <div class="form-group">
           <label for="street">Street address, rural route or PO Box</label>
@@ -114,3 +116,11 @@
     [canContinue]="canContinue()"
     (btnClick)="continue()">
 </common-form-action-bar>
+
+<ng-template #UseGeoCoder>
+    <fpcare-geocoder-input
+        label='(optional) Address Lookup'
+        [(address)]='applicant.updAddress'
+        (addressChange)='onGeoLookup()'>
+    </fpcare-geocoder-input>
+</ng-template>
