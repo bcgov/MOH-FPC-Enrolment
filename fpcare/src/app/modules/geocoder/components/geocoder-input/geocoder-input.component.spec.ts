@@ -7,9 +7,9 @@ import {
 } from '@angular/core/testing';
 
 import { GeocoderInputComponent } from './geocoder-input.component';
-import { GeocoderService } from 'moh-common-lib/services/';
+import { GeocoderService } from 'moh-common-lib';
 import { FormsModule } from '@angular/forms';
-import { TypeaheadModule } from 'ngx-bootstrap';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
 import { FPCAddress } from '../../../../models/address.model';
