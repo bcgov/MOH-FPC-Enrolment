@@ -103,11 +103,11 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   }
 
   get incomeLabel() {
-    return this.incomeReviewDataService.incomeLabel;
+    return this.incomeReviewDataService.incomeLabel();
   }
 
   get spouseIncomeLabel() {
-    return this.incomeReviewDataService.spouseIncomeLabel;
+    return this.incomeReviewDataService.spouseIncomeLabel();
   }
 
   get incomeTotalLabel() {
@@ -115,11 +115,11 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   }
 
   get rdspIncomeLabel() {
-    return this.incomeReviewDataService.rdspIncomeLabel;
+    return this.incomeReviewDataService.rdspIncomeLabel();
   }
 
   get spouseRdspIncomeLabel() {
-    return `spouse's ${this.incomeReviewDataService.rdspIncomeLabel}`;
+    return this.incomeReviewDataService.rdspIncomeLabel();
   }
 
   get rdspIncomeTotalLabel() {
