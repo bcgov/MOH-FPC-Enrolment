@@ -64,18 +64,16 @@ export class IncomeReviewDataService {
   // Current Year's income field headings
   readonly currentYearIncome = `This Year's Gross Income`;
   readonly grossIncomeLabel = 'gross income for this year:';
-  readonly grossIncomeTotalLabel = 'total gross income (lines 1 + 2):';
+  readonly grossIncomeTotalLabel = 'total gross income:';
 
   // Last Year's income field headings - TODO css  => p.capitalize {text-transform: capitalize};
   readonly lastYearIncome = `Last Year's Net Income`;
-  readonly netIncomeLabel = 'net income for last year (from line 23600):';
+  readonly netIncomeLabel =
+    'net income for last year (from line 23600 of your Notice of Assessment):';
   readonly rdspIncomeLabel = 'RDSP income (from line 12500):';
-  readonly rdspIncomeTotalLabel = 'Total RDSP income (lines 4 + 5):';
-  readonly netIncomeMinusRdspLabel =
-    'Net income minus RDSP payments (lines 1 - 2):';
-  readonly spouseNetIncomeMinusRdspLabel =
-    'Net income minus RDSP payments (lines 3 - 6):';
-  readonly netIncomeTotalLabel = 'total net income (lines 1 + 2):';
+  readonly rdspIncomeTotalLabel = 'Total RDSP income:';
+  readonly netIncomeMinusRdspLabel = 'Net income minus RDSP payments:';
+  readonly netIncomeTotalLabel = 'total net income:';
 
   // Labels for personal info, review, and confirmation pages
   readonly applFirstNameLabel = 'First name';
@@ -224,9 +222,11 @@ export class IncomeReviewDataService {
   }
 
   get spouseIncomeLabel() {
-    return this.isLastYearIncome === true
-      ? `spouse's ${this.netIncomeLabel}`
-      : `spouse's ${this.grossIncomeLabel}`;
+    if (this.isLastYearIncome === true) {
+      const label = this.netIncomeLabel.replace('your', `spouse's`);
+      return `spouse's ${label}`;
+    }
+    return `spouse's ${this.grossIncomeLabel}`;
   }
 
   get incomeTotalLabel() {
@@ -235,9 +235,7 @@ export class IncomeReviewDataService {
       : this.grossIncomeTotalLabel;
   }
   get totalNetIncomeLabel() {
-    return this.hasSpouse
-      ? this.spouseNetIncomeMinusRdspLabel
-      : this.netIncomeMinusRdspLabel;
+    return this.netIncomeMinusRdspLabel;
   }
 
   get incomeInputMask() {

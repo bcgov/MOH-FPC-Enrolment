@@ -33,7 +33,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
     `<a href="${this.incomeStmt}" target="_blank" rel="noopener noreferrer">proof of income statement</a> ` +
     `for last year.</div>` +
     `<div>Haven't filed your taxes yet? If you are applying after June 1, you must provide your CRA Notice ` +
-    `of Assessment. If you are applying before June 1, provide T-slips and other income records.</div>`;
+    `of Assessment. If you are applying before June 1, provide tax slips and other income records.</div>`;
 
   readonly grossIncomeInstruct =
     '<p><strong>Estimate your gross income for the current calendar year.</strong></p>' +
