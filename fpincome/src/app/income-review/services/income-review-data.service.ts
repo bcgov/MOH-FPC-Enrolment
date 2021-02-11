@@ -64,18 +64,15 @@ export class IncomeReviewDataService {
   // Current Year's income field headings
   readonly currentYearIncome = `This Year's Gross Income`;
   readonly grossIncomeLabel = 'gross income for this year:';
-  readonly grossIncomeTotalLabel = 'total gross income (lines 1 + 2):';
+  readonly grossIncomeTotalLabel = 'total gross income:';
 
   // Last Year's income field headings - TODO css  => p.capitalize {text-transform: capitalize};
   readonly lastYearIncome = `Last Year's Net Income`;
   readonly netIncomeLabel = 'net income for last year (from line 23600):';
-  readonly rdspIncomeLabel = 'RDSP income (from line 12500):';
-  readonly rdspIncomeTotalLabel = 'Total RDSP income (lines 4 + 5):';
-  readonly netIncomeMinusRdspLabel =
-    'Net income minus RDSP payments (lines 1 - 2):';
-  readonly spouseNetIncomeMinusRdspLabel =
-    'Net income minus RDSP payments (lines 3 - 6):';
-  readonly netIncomeTotalLabel = 'total net income (lines 1 + 2):';
+  readonly rdspLabel = 'RDSP income (from line 12500):';
+  readonly rdspIncomeTotalLabel = 'Total RDSP income:';
+  readonly netIncomeMinusRdspLabel = 'Net income minus RDSP payments:';
+  readonly netIncomeTotalLabel = 'total net income:';
 
   // Labels for personal info, review, and confirmation pages
   readonly applFirstNameLabel = 'First name';
@@ -217,27 +214,13 @@ export class IncomeReviewDataService {
       : this.currentYearIncome;
   }
 
-  get incomeLabel() {
-    return this.isLastYearIncome === true
-      ? this.netIncomeLabel
-      : this.grossIncomeLabel;
-  }
-
-  get spouseIncomeLabel() {
-    return this.isLastYearIncome === true
-      ? `spouse's ${this.netIncomeLabel}`
-      : `spouse's ${this.grossIncomeLabel}`;
-  }
-
   get incomeTotalLabel() {
     return this.isLastYearIncome === true
       ? this.netIncomeTotalLabel
       : this.grossIncomeTotalLabel;
   }
   get totalNetIncomeLabel() {
-    return this.hasSpouse
-      ? this.spouseNetIncomeMinusRdspLabel
-      : this.netIncomeMinusRdspLabel;
+    return this.netIncomeMinusRdspLabel;
   }
 
   get incomeInputMask() {
@@ -249,6 +232,52 @@ export class IncomeReviewDataService {
   }
 
   constructor() {}
+
+  incomeLabel(isReview: boolean = false) {
+    if (this.isLastYearIncome === true) {
+      return isReview === true
+        ? this.netIncomeLabel
+        : this.netIncomeLabel.replace(')', ' of your Notice of Assessment)');
+    }
+
+    return this.grossIncomeLabel;
+  }
+
+  spouseIncomeLabel(isReview: boolean = false) {
+    const tag = `spouse's `;
+
+    if (this.isLastYearIncome === true) {
+      return tag.concat(
+        isReview === true
+          ? this.netIncomeLabel
+          : this.netIncomeLabel.replace(
+              ')',
+              ` of spouse's Notice of Assessment)`
+            )
+      );
+    }
+
+    return tag.concat(this.grossIncomeLabel);
+  }
+
+  rdspIncomeLabel(isReview: boolean = false) {
+    if (this.hasSpouse) {
+      const tag = `spouse's `;
+
+      return tag.concat(
+        isReview === true
+          ? this.netIncomeLabel
+          : this.netIncomeLabel.replace(
+              ')',
+              ` of spouse's Notice of Assessment)`
+            )
+      );
+    }
+
+    return isReview === true
+      ? this.netIncomeLabel
+      : this.netIncomeLabel.replace(')', ` of your Notice of Assessment)`);
+  }
 
   formatIncomeTotal(value: number) {
     return this._currencyFormat(value, this._incomeTotalMask);
@@ -302,7 +331,7 @@ export class IncomeReviewDataService {
       redirectPath: INCOME_REVIEW_PAGES.INCOME.fullpath,
       sectionItems: [
         {
-          label: this.incomeLabel,
+          label: this.incomeLabel(true),
           value: this.applicant.incomeStr,
           extraInfo: {
             lineNo: `${count}`,
@@ -316,7 +345,7 @@ export class IncomeReviewDataService {
     if (this.hasSpouse) {
       obj.sectionItems = obj.sectionItems.concat([
         {
-          label: this.spouseIncomeLabel,
+          label: this.spouseIncomeLabel(true),
           value: this.spouse.incomeStr,
           extraInfo: {
             lineNo: `${(count += 1)}`,
@@ -339,7 +368,7 @@ export class IncomeReviewDataService {
     if (this.isLastYearIncome === true && this.hasRdspIncome === true) {
       obj.sectionItems = obj.sectionItems.concat([
         {
-          label: this.rdspIncomeLabel,
+          label: this.rdspIncomeLabel(true),
           value: this.applicant.rdspIncomeStr,
           extraInfo: {
             lineNo: `${(count += 1)}`,
@@ -352,7 +381,7 @@ export class IncomeReviewDataService {
       if (this.hasSpouse) {
         obj.sectionItems = obj.sectionItems.concat([
           {
-            label: `spouse's ${this.rdspIncomeLabel}`,
+            label: this.rdspIncomeLabel(true),
             value: this.spouse.rdspIncomeStr,
             extraInfo: {
               lineNo: `${(count += 1)}`,
