@@ -119,7 +119,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   }
 
   get spouseRdspIncomeLabel() {
-    return this.incomeReviewDataService.rdspIncomeLabel();
+    return this.incomeReviewDataService.spouseRdspIncomeLabel();
   }
 
   get rdspIncomeTotalLabel() {

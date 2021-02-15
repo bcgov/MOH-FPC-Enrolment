@@ -261,19 +261,19 @@ export class IncomeReviewDataService {
   }
 
   rdspIncomeLabel(isReview: boolean = false) {
-    if (this.hasSpouse) {
-      const tag = `spouse's `;
-
-      return tag.concat(
-        isReview === true
-          ? this.rdspLabel
-          : this.rdspLabel.replace(')', ` of spouse's Notice of Assessment)`)
-      );
-    }
-
     return isReview === true
       ? this.rdspLabel
       : this.rdspLabel.replace(')', ` of your Notice of Assessment)`);
+  }
+
+  spouseRdspIncomeLabel(isReview: boolean = false) {
+    const tag = `spouse's `;
+
+    return tag.concat(
+      isReview === true
+        ? this.rdspLabel
+        : this.rdspLabel.replace(')', ` of spouse's Notice of Assessment)`)
+    );
   }
 
   formatIncomeTotal(value: number) {
@@ -378,7 +378,7 @@ export class IncomeReviewDataService {
       if (this.hasSpouse) {
         obj.sectionItems = obj.sectionItems.concat([
           {
-            label: this.rdspIncomeLabel(true),
+            label: this.spouseRdspIncomeLabel(true),
             value: this.spouse.rdspIncomeStr,
             extraInfo: {
               lineNo: `${(count += 1)}`,
