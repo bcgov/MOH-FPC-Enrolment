@@ -266,17 +266,14 @@ export class IncomeReviewDataService {
 
       return tag.concat(
         isReview === true
-          ? this.netIncomeLabel
-          : this.netIncomeLabel.replace(
-              ')',
-              ` of spouse's Notice of Assessment)`
-            )
+          ? this.rdspLabel
+          : this.rdspLabel.replace(')', ` of spouse's Notice of Assessment)`)
       );
     }
 
     return isReview === true
-      ? this.netIncomeLabel
-      : this.netIncomeLabel.replace(')', ` of your Notice of Assessment)`);
+      ? this.rdspLabel
+      : this.rdspLabel.replace(')', ` of your Notice of Assessment)`);
   }
 
   formatIncomeTotal(value: number) {
