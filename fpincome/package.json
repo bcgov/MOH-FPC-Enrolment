@@ -24,8 +24,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "version": "npm run build && npm run changelog",
-    "postversion": "git add . && git commit -m \"chore: commit version file and changelog\""
+    "version": "npm run changelog",
+    "postversion": "git add . && git commit -m \"chore: commit changelog\""
   },
   "private": true,
   "dependencies": {
