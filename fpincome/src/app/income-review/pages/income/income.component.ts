@@ -355,6 +355,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
 
   resetRsdpIncome() {
     const apRsdpIncome = this.formGroup.controls.rdspIncome;
+
     apRsdpIncome.reset(null);
 
     this.formGroup.controls.rdspIncomeTotal.reset(null);
@@ -367,6 +368,8 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
       apRsdpIncome.clearValidators();
     }
 
+    apRsdpIncome.updateValueAndValidity();
+
     if (this.hasSpouse) {
       const spRsdpIncome = this.formGroup.controls.spouseRdspIncome;
       spRsdpIncome.reset(null);
@@ -376,10 +379,14 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
       } else {
         spRsdpIncome.clearValidators();
       }
+      spRsdpIncome.updateValueAndValidity();
     }
+
+    this.formGroup.updateValueAndValidity({ onlySelf: false });
   }
 
   resetIncome() {
+    const rdsp = this.formGroup.controls.hasRdspIncome;
     // Reset flags on control
     this.formGroup.controls.income.reset(null);
 
@@ -390,11 +397,18 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
     }
 
     // RDSP
-    this.formGroup.controls.hasRdspIncome.reset();
+    rdsp.reset();
     this.resetRsdpIncome();
+    if (this.isLastYearIncome) {
+      rdsp.setValidators(Validators.required);
+    } else {
+      rdsp.clearValidators();
+    }
+    rdsp.updateValueAndValidity();
 
     // Clear support documents
     this.incomeReviewDataService.incomeSupportDocs = [];
+    this.formGroup.updateValueAndValidity({ onlySelf: false });
   }
 
   handleError(error: CommonImage) {
