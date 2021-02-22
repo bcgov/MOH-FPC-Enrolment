@@ -6,10 +6,11 @@
 **Make sure you're in -tools**
 
 ```console
-oc process -f openshift/templates/nsp-tools.yaml \
-  -p NAMESPACE=$(oc project --short) | \
-  oc create -f -
+  oc process -f openshift/templates/quickstart.yaml \
+    NAMESPACE_PREFIX=3f9283 -p ENVIRONMENT=tools | \
+    oc create -f -
 ```
+**Note: Command updated due to switch from Apporeto to Kubernetes network policy (Feb 22, 2021)**
 
 2. Next, create a service account that GitHub can use to run `oc` commands on the cluster. This service account has very limited access to trigger builds, list images, and create tags:
 
@@ -218,3 +219,43 @@ The final step is to create a GitHub workflow:
 1) Copy the file `spa-env-server.yml` in the `.github/workflows` directory to a new file representing the new component.
 2) Update the paths and build names according to what you changed in `build.yaml`.
 3) Consider adding a manual trigger for testing purposes.
+
+
+**Switch Apporeto to Kubernetes network policy (Feb 22, 2021)**
+These are the steps for updating the network policies:
+a) Make sure you are in tools
+b) Run command to find network policies and end points
+```console
+    oc get nsp
+```
+
+And obtain name (such as builder-to-internet), and delete it, i.e.
+```console
+oc delete nsp builder-to-internet
+oc get en
+```
+
+And obtain names, then delete, ie:
+```console
+oc delete en all-things-external
+```
+
+c) Apply the quickstart (for tools, make sure your default oc project is tools):
+
+```console
+oc process -f openshift/templates/quickstart.yaml \
+    NAMESPACE_PREFIX=f0463d -p ENVIRONMENT=tools | \
+    oc apply -f -
+```
+
+Verify that 3 network policies nad 2 network security policies were created:
+```console
+oc get nsp
+oc get networkpolicy
+```
+
+To look more in detail, for example:
+```console
+oc describe nsp/any-to-any
+oc describe networkpolicy/allow-all-internal
+```
