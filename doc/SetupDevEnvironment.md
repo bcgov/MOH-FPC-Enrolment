@@ -8,7 +8,8 @@
 oc project ...-dev
 ```
 
-2. create ./openshift/templates/nsp-fpcare-to-maximus-dev.yaml  (copy from -dev.yaml)
+
+2. **TOBE UPDATED** create ./openshift/templates/nsp-fpcare-to-maximus-dev.yaml  (copy from -dev.yaml)
    change the IP of proxy to dev proxy
    the apply using:
 ```console
@@ -96,3 +97,49 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-dev.txt | oc a
 5. check secrets
    oc get secrets
 
+
+**Switch Apporeto to Kubernetes network policy (Feb 22, 2021)**
+These are the steps for updating the network policies:
+a) Make sure you are in dev
+b) Run command to find network policies and end points
+```console
+    oc get nsp
+```
+
+And obtain names, and delete it, i.e.
+```console
+oc delete nsp address-service-to-address-doctor fpcare-to-address-service \ 
+    fpcare-to-captcha-service fpcare-to-msp-service fpcare-to-spa-env-server \
+    fpcare-to-splunk-forwarder fpincome-to-address-service fpincome-to-captcha-service \
+    fpincome-to-msp-service fpincome-to-spa-env-server fpincome-to-splunk-forwarder \
+    msp-service-to-cloudflare msp-service-to-maximus-servers msp-service-to-splunk-forwarder \
+    splunk-forwarder-to-cloudflare splunk-forwarder-to-maximus-servers
+
+oc get en
+```
+
+And obtain names, then delete, ie:
+```console
+oc delete en addressdoctor cloudflare maximus-servers   39d
+
+```
+
+c) Apply the quickstart, apps can access all (for dev, make sure your default oc project is dev):
+
+```console
+oc process -f openshift/templates/quickstart.yaml \
+    NAMESPACE_PREFIX=f0463d -p ENVIRONMENT=dev | \
+    oc apply -f -
+```
+
+Verify that 3 network policies nad 2 network security policies were created:
+```console
+oc get nsp
+oc get networkpolicy
+```
+
+To look more in detail, for example:
+```console
+oc describe nsp/any-to-any
+oc describe networkpolicy/allow-all-internal
+```
