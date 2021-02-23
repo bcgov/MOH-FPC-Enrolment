@@ -120,7 +120,7 @@ oc get en
 
 And obtain names, then delete, ie:
 ```console
-oc delete en addressdoctor cloudflare maximus-servers   39d
+oc delete en addressdoctor cloudflare maximus-servers
 
 ```
 
@@ -128,7 +128,7 @@ c) Apply the quickstart, apps can access all (for dev, make sure your default oc
 
 ```console
 oc process -f openshift/templates/quickstart.yaml \
-    NAMESPACE_PREFIX=f0463d -p ENVIRONMENT=dev | \
+    NAMESPACE_PREFIX=3f9283 -p ENVIRONMENT=dev | \
     oc apply -f -
 ```
 
