@@ -244,7 +244,7 @@ c) Apply the quickstart (for tools, make sure your default oc project is tools):
 
 ```console
 oc process -f openshift/templates/quickstart.yaml \
-    NAMESPACE_PREFIX=f0463d -p ENVIRONMENT=tools | \
+    NAMESPACE_PREFIX=3f9283 -p ENVIRONMENT=tools | \
     oc apply -f -
 ```
 
