@@ -17,7 +17,7 @@ oc process -f nsp-fpcare-to-maximus-test.yaml \
   oc apply -f -
 ```
 
-3. apply the internal NSPs:
+3. **TOBE UPDATED** apply the internal NSPs:
 ```console
 oc process -f nsp-fpcareweb-to-all.yaml \
   -p NAMESPACE=$(oc project --short) | \

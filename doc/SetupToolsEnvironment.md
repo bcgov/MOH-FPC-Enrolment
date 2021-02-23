@@ -14,7 +14,7 @@
 
 2. Next, create a service account that GitHub can use to run `oc` commands on the cluster. This service account has very limited access to trigger builds, list images, and create tags:
 
-```consoleoc 
+```console 
 oc process -f openshift/templates/cicd.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc create -f -
