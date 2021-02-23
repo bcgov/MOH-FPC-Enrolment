@@ -12,6 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+#
+# FILE TO BE REMOVED - network policy change from Apporeto to Kubernetes
+# K.Reed
+#
+
 ---
 apiVersion: template.openshift.io/v1
 kind: Template

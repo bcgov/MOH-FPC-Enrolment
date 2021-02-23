@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# FILE TO BE REMOVED - network policy change from Apporeto to Kubernetes
+# K.Reed
+#
 ---
 apiVersion: template.openshift.io/v1
 kind: Template
@@ -20,7 +23,7 @@ metadata:
     description: |
       The Network Security Policies (NSP) for the associated
       Platform Services registry application.
-  name: nsp-fpincomeweb-to-all
+  name: nsp-fpcareweb-to-all
 objects:
   - apiVersion: security.devops.gov.bc.ca/v1alpha1
     kind: ExternalNetwork
@@ -35,10 +38,9 @@ objects:
       # the `name` field in metadata above.
       description: |
         specify a custom external network that can be
-        referenced by name. ie. t1splunkservices.maximusbc.ca
+        referenced by name. ie. d1splunkservices.maximusbc.ca
       entries:
-        - "142.31.59.212/32"
-        - "142.31.59.210/32"
+        - "142.31.59.209/32"
       servicePorts:
         - "tcp/80"
         - "tcp/443"
@@ -49,7 +51,7 @@ objects:
       # `oc get externalnetwork` or `kubctl get externalnetwork`.
       name: addressdoctor
       labels:
-        app: fpincome-web
+        app: fpcare-web
     spec:
       # This name will be used internally by Aporeto; it should match
       # the `name` field in metadata above.
