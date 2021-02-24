@@ -69,7 +69,7 @@ oc process -f openshift/templates/config.yaml --param-file=params-prod.txt | oc 
 oc process -f openshift/templates/deploy.yaml --param-file=params-prod.txt | oc apply -f -
 ```
 
-## some checks in the new prod environment (and compare with dev):
+## some checks in the new prod environment (and compare with test):
 
 1. check the dc's
    oc get dc
@@ -122,7 +122,7 @@ oc delete en addressdoctor cloudflare maximus-servers
 
 ```
 
-c) Apply the quickstart, apps can access all (for dev, make sure your default oc project is dev):
+c) Apply the quickstart, apps can access all (for prod, make sure your default oc project is prod):
 
 ```console
 oc process -f openshift/templates/quickstart.yaml \
@@ -140,4 +140,15 @@ To look more in detail, for example:
 ```console
 oc describe nsp/any-to-any
 oc describe networkpolicy/allow-all-internal
+```
+
+d) Apply the quickfpcare-to-all and quickfpincome-to-all to setup one-to-one access to pods
+```console
+oc process -f openshift/templates/quickfpcare-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
+
+oc process -f openshift/templates/quickfpincome-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
 ```
