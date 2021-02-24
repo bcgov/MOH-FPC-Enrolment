@@ -91,14 +91,15 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-dev.txt | oc a
    in cases of not working, delete the objects and recreate.
 
 4. check the external networks
-   oc get ne
-   oc get ns ... -o yaml
+   oc get en
+   oc get ne ... -o yaml
 
 5. check secrets
    oc get secrets
 
 
 **Switch Apporeto to Kubernetes network policy (Feb 22, 2021)**
+**Note: Supports both Apporeto and Kubernetes in the interim**
 These are the steps for updating the network policies:
 a) Make sure you are in dev
 b) Run command to find network policies and end points
@@ -132,7 +133,7 @@ oc process -f openshift/templates/quickstart.yaml \
     oc apply -f -
 ```
 
-Verify that 3 network policies nad 2 network security policies were created:
+Verify that 3 network policies (Keburnetes) and 2 network security policies (Apporeto) were created:
 ```console
 oc get nsp
 oc get networkpolicy
