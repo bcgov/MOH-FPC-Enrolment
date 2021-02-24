@@ -18,7 +18,7 @@ oc process -f nsp-fpcare-to-maximus-dev.yaml \
   oc apply -f -
 ```
 
-3. apply the internal NSPs:
+3. **TOBE UPDATED** apply the internal NSPs:
 ```console
 oc process -f nsp-fpcareweb-to-all.yaml \
   -p NAMESPACE=$(oc project --short) | \
@@ -91,14 +91,15 @@ oc process -f openshift/templates/deploy.yaml --param-file=params-dev.txt | oc a
    in cases of not working, delete the objects and recreate.
 
 4. check the external networks
-   oc get ne
-   oc get ns ... -o yaml
+   oc get en
+   oc get ne ... -o yaml
 
 5. check secrets
    oc get secrets
 
 
 **Switch Apporeto to Kubernetes network policy (Feb 22, 2021)**
+**Note: Supports both Apporeto and Kubernetes in the interim**
 These are the steps for updating the network policies:
 a) Make sure you are in dev
 b) Run command to find network policies and end points
@@ -132,7 +133,7 @@ oc process -f openshift/templates/quickstart.yaml \
     oc apply -f -
 ```
 
-Verify that 3 network policies nad 2 network security policies were created:
+Verify that 3 network policies (Keburnetes) and 2 network security policies (Apporeto) were created:
 ```console
 oc get nsp
 oc get networkpolicy
@@ -142,4 +143,14 @@ To look more in detail, for example:
 ```console
 oc describe nsp/any-to-any
 oc describe networkpolicy/allow-all-internal
+```
+d) Apply the quickfpcare-to-all and quickfpincome-to-all to setup one-to-one access to pods
+```console
+oc process -f openshift/templates/quickfpcare-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
+
+oc process -f openshift/templates/quickfpincome-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
 ```

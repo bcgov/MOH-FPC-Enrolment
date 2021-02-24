@@ -14,7 +14,7 @@
 
 2. Next, create a service account that GitHub can use to run `oc` commands on the cluster. This service account has very limited access to trigger builds, list images, and create tags:
 
-```consoleoc 
+```console 
 oc process -f openshift/templates/cicd.yaml \
   -p NAMESPACE=$(oc project --short) | \
   oc create -f -
@@ -222,6 +222,7 @@ The final step is to create a GitHub workflow:
 
 
 **Switch Apporeto to Kubernetes network policy (Feb 22, 2021)**
+**Note: Supports both Apporeto and Kubernetes in the interim**
 These are the steps for updating the network policies:
 a) Make sure you are in tools
 b) Run command to find network policies and end points
@@ -248,7 +249,7 @@ oc process -f openshift/templates/quickstart.yaml \
     oc apply -f -
 ```
 
-Verify that 3 network policies nad 2 network security policies were created:
+Verify that 3 network policies (Keburnetes) and 2 network security policies (Apporeto) were created:
 ```console
 oc get nsp
 oc get networkpolicy
