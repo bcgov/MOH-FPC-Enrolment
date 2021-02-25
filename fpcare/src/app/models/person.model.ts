@@ -39,7 +39,7 @@ export class FPCPerson extends Person {
     if (this.isNumeric(this.sDateOfBirth.year) &&
         (this.isNumeric(this.sDateOfBirth.month) && this.sDateOfBirth.month > 0) &&
         this.isNumeric(this.sDateOfBirth.day)) {
-        console.log('set sDateOfBirth - build Date');
+        // console.log('set sDateOfBirth - build Date');
         this.dateOfBirth = new Date(this.sDateOfBirth.year,
                                     this.sDateOfBirth.month - 1,
                                     this.sDateOfBirth.day);
@@ -52,7 +52,7 @@ export class FPCPerson extends Person {
     if (this.isNumeric(this.sDateOfBirth.year) &&
     (this.isNumeric(this.sDateOfBirth.month) && this.sDateOfBirth.month > 0) &&
     this.isNumeric(this.sDateOfBirth.day)) {
-    console.log('set sDateOfBirth - build Date');
+    // console.log('set sDateOfBirth - build Date');
     this.dateOfBirth = new Date(this.sDateOfBirth.year,
                                 this.sDateOfBirth.month - 1,
                                 this.sDateOfBirth.day);
