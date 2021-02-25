@@ -260,3 +260,14 @@ To look more in detail, for example:
 oc describe nsp/any-to-any
 oc describe networkpolicy/allow-all-internal
 ```
+
+d) Apply the quickfpcare-to-all and quickfpincome-to-all to setup one-to-one access to pods
+```console
+oc process -f openshift/templates/quickfpcare-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
+
+oc process -f openshift/templates/quickfpincome-to-all.yaml \
+    -p NAMESPACE=$(oc project --short) | \
+    oc apply -f -
+```
