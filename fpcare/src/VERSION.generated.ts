@@ -1,10 +1,10 @@
 //DO NOT DELETE OR APP WILL FAIL TO COMPILE! Generated from version.js
-export const gitCommit = 'f4e4f58';
-export const buildTime = '2/25/2021 at 10:55:13 AM';
+export const gitCommit = 'ddfec1d';
+export const buildTime = '2/26/2021 at 11:56:29 AM';
 /** App version retrieved from package.json. */
-export const projectVersion = '4.1.0';
+export const projectVersion = '4.1.1';
 /** Human readable message  */
-export const message = 'Canonical Version: f4e4f58 - 2/25/2021 at 10:55:13 AM (v4.1.0) ' +
-'\nhttp://github.com/bcgov/moh-fpcare/commits/f4e4f58';
+export const message = 'Canonical Version: ddfec1d - 2/26/2021 at 11:56:29 AM (v4.1.1) ' +
+'\nhttps://github.com/bcgov/MOH-FPC-Enrolment/commits/ddfec1d';
 /** If true, other values should be present. */
 export const success = true;
