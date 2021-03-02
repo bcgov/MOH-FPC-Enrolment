@@ -31,10 +31,10 @@ export class FPCPerson extends Person {
     this.dobFormat = 'MMMM dd, yyyy';
   }
 
-  // Wrapper - TODO: Figure out how to get date to convert to date form - may need to create new method - AM 
+  // Wrapper - TODO: Figure out how to get date to convert to date form - may need to create new method - AM
   // project
   get sDateOfBirthShort() {
- 
+
     // All value must numbers
     if (this.isNumeric(this.sDateOfBirth.year) &&
         (this.isNumeric(this.sDateOfBirth.month) && this.sDateOfBirth.month > 0) &&
