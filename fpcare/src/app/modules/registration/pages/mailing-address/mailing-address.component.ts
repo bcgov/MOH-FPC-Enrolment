@@ -19,7 +19,6 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
 import { Address } from 'moh-common-lib';
 import { SpaEnvService } from '../../../../services/spa-env.service';
 import { environment } from '../../../../../environments/environment';
-import { allowedNodeEnvironmentFlags } from 'process';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -147,6 +146,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   onAddressSelected(address: Address) {
+    // console.log( 'onAddressSelected: ', address );
+
     if (address &&
         address.street &&
         address.city &&
