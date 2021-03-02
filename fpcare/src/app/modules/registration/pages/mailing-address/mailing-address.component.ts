@@ -146,7 +146,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   onAddressSelected(address: Address) {
-    console.log( 'onAddressSelected: ', address );
+    // console.log( 'onAddressSelected: ', address );
 
     if (address &&
         address.street &&
