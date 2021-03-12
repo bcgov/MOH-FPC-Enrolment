@@ -30,10 +30,10 @@
       aria-required="true"
     ></common-radio>
 
-    <aside aria-labelledby="isLastYearIncome">
+    <div aside aria-labelledby="isLastYearIncome">
       Haven't filed last year's taxes yet? Consider applying with this year's
       gross income.
-    </aside>
+    </div>
   </common-page-section>
 
   <ng-container *ngIf="showSection">
@@ -201,7 +201,11 @@
           {{ errorMessage }}
         </common-error-container>
 
-        <aside class="support-doc--tip-area" aria-labelledby="supportDocuments">
+        <div
+          aside
+          class="support-doc--tip-area"
+          aria-labelledby="supportDocuments"
+        >
           <ng-container *ngIf="isLastYearIncome === true; else GrossIncomeTip">
             <p class="support-doc--tip-title">{{ netIncomeTipTitle }}</p>
             <ul>
@@ -236,7 +240,7 @@
               file your income tax by the CRA deadline.
             </p>
           </ng-container>
-        </aside>
+        </div>
       </common-page-section>
 
       <ng-container *ngIf="isLastYearIncome === false">
