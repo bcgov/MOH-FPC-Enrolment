@@ -32,6 +32,12 @@ export class BaseForm extends AbstractReactForm
     this._subscription = this.containerService.$continueBtn.subscribe((obs) => {
       this.continue();
     });
+
+    // Set focus to top of page
+    const pageElmts = document.getElementById('content');
+    console.log('pageElments - content: ', pageElmts);
+    pageElmts.tabIndex = -1;
+    pageElmts.focus();
   }
 
   ngOnDestroy() {
