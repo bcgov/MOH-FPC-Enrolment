@@ -20,7 +20,7 @@ import { INCOME_REVIEW_PAGES } from './income-review.constants';
 import { ConsentComponent } from './pages/consent/consent.component';
 import { CollectionNoticeComponent } from './component/collection-notice/collection-notice.component';
 import { CollectionNoticeDirective } from './component/collection-notice/collection-notice.directive';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReviewContainerComponent } from './component/review-container/review-container.component';
 import { PersonalInfoComponent } from './pages/personal-info/personal-info.component';
