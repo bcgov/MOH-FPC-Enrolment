@@ -6,8 +6,14 @@ export class AppPage {
   }
 
   getTitleText() {
-    return element(by.css('fpir-root .content span')).getText() as Promise<
+    return element(by.css('fpir-root #content h1')).getText() as Promise<
       string
     >;
+  }
+
+  getModalTitle() {
+    return element(
+      by.css('fpir-root #content fpir-collection-notice h2')
+    ).getText() as Promise<string>;
   }
 }
