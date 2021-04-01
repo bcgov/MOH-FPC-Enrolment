@@ -22,7 +22,8 @@
     "dev": "ng serve --host=0.0.0.0 -o",
     "prebuild": "node src/version.js",
     "lint": "ng lint",
-    "e2e": "ng e2e",
+    "pree2e": "webdriver-manager update --versions.chrome=88.0.4324.150",
+    "e2e": "ng e2e --webdriver-update=false",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "version": "npm run changelog",
     "postversion": "git add . && git commit -m \"chore: commit changelog\""
@@ -49,7 +50,6 @@
     "moment": "^2.29.1",
     "mygovbc-bootstrap-theme": "^0.4.1",
     "ngx-bootstrap": "~5.1.2",
-    "ngx-mydatepicker": "^2.4.11",
     "pdfjs-dist": "~2.3.200",
     "rxjs": "~6.4.0",
     "sha1": "^1.1.1",
