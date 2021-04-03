@@ -119,4 +119,14 @@ export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
       this.navigate(INCOME_REVIEW_PAGES.PERSONAL_INFO.fullpath);
     }
   }
+
+  setFocus() {
+    // Set focus to main html tag identified by id=content
+    const mainContent = document.getElementById('content');
+    // Headless tests fail if null not checked for
+    if (mainContent) {
+      mainContent.tabIndex = -1;
+      mainContent.focus();
+    }
+  }
 }

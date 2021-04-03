@@ -19,7 +19,6 @@ import { environment } from '../../environments/environment';
 import { INCOME_REVIEW_PAGES } from './income-review.constants';
 import { ConsentComponent } from './pages/consent/consent.component';
 import { CollectionNoticeComponent } from './component/collection-notice/collection-notice.component';
-import { CollectionNoticeDirective } from './component/collection-notice/collection-notice.directive';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReviewContainerComponent } from './component/review-container/review-container.component';
@@ -36,7 +35,6 @@ import { FinancialInputComponent } from './component/financial-input/financial-i
     ConfirmationComponent,
     ConsentComponent,
     CollectionNoticeComponent,
-    CollectionNoticeDirective,
     ReviewContainerComponent,
     PersonalInfoComponent,
     IncomeComponent,

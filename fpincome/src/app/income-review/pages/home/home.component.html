@@ -1,5 +1,9 @@
 <!-- INFORAMTION COLLECTION NOTICE DIALOG BOX -->
-<fpir-collection-notice #infoCollectionModal [isDisabled]="!hasConsent">
+<fpir-collection-notice
+  #infoCollectionModal
+  [isDisabled]="!hasConsent"
+  (onHide)="setFocus()"
+>
   <h2 collectModalTitle>Information Collection Notice</h2>
   <div collectModalBody>
     <p>
