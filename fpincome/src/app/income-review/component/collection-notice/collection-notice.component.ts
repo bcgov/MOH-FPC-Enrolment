@@ -78,7 +78,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
   constructor(private el: ElementRef) {}
 
   ngAfterViewInit() {
-    console.log('el: ', this.el);
+    // console.log('el: ', this.el);
     this.onHide$ = this.collectionNoticeModal.onHide.subscribe(() => {
       this.onHide.emit();
       this.unsubscribe$.next();
