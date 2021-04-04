@@ -46,7 +46,7 @@
     "bootstrap": "^4.5.3",
     "date-fns": "^2.16.1",
     "font-awesome": "^4.7.0",
-    "moh-common-lib": "^4.0.0-alpha.3",
+    "moh-common-lib": "^4.0.0",
     "moment": "^2.29.1",
     "mygovbc-bootstrap-theme": "^0.4.1",
     "ngx-bootstrap": "~5.1.2",
