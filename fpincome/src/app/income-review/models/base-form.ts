@@ -32,6 +32,14 @@ export class BaseForm extends AbstractReactForm
     this._subscription = this.containerService.$continueBtn.subscribe((obs) => {
       this.continue();
     });
+
+    // Set focus to main html tag identified by id=content
+    const mainContent = document.getElementById('content');
+    // Headless tests fail if null not checked for
+    if (mainContent) {
+      mainContent.tabIndex = -1;
+      mainContent.focus();
+    }
   }
 
   ngOnDestroy() {
