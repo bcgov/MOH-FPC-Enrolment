@@ -25,6 +25,7 @@
     "pree2e": "webdriver-manager update --versions.chrome=88.0.4324.150",
     "e2e": "ng e2e --webdriver-update=false",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "preversion": "node src/version.js",
     "version": "npm run changelog",
     "postversion": "git add . && git commit -m \"chore: commit changelog\""
   },
