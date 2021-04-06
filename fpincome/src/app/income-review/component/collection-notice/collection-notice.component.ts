@@ -86,12 +86,13 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
     });
 
     this.onShow$ = this.collectionNoticeModal.onShow.subscribe(() => {
-      const tabElments = this.getElements();
-      tabElments[0].focus();
       this.keyDown$.pipe(takeUntil(this.unsubscribe$)).subscribe();
       this.onFocusIn$.pipe(takeUntil(this.unsubscribe$)).subscribe();
       // this.onFocusOut$.pipe(takeUntil(this.unsubscribe$)).subscribe();
     });
+
+    const tabElments = this.getElements();
+    tabElments[0].focus();
   }
 
   ngOnDestroy() {
