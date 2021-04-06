@@ -44,7 +44,7 @@
       <div class="financial--container">
         <fpir-financial-input
           formControlName="income"
-          [attr.aria-labelledby]="ariaLabelIncome"
+          [attr.aria-label]="ariaLabelIncome"
           [moneyMask]="moneyMask"
           aria-required="true"
         >
@@ -58,7 +58,7 @@
         <ng-container *ngIf="hasSpouse">
           <fpir-financial-input
             formControlName="spouseIncome"
-            aria-labelledby="ariaLabelSpouseIncome"
+            aria-label="ariaLabelSpouseIncome"
             [moneyMask]="moneyMask"
             [attr.aria-required]="hasSpouse"
           >
@@ -73,7 +73,7 @@
 
           <fpir-financial-input
             formControlName="incomeTotal"
-            aria-labelledby="IncomeTotal"
+            aria-label="IncomeTotal"
             [moneyMask]="moneyTotalMask"
           >
             <div label class="finance-bold-text--format">
@@ -102,7 +102,7 @@
           <div class="financial--container">
             <fpir-financial-input
               formControlName="rdspIncome"
-              aria-labelledby="RdspIncome"
+              aria-label="RdspIncome"
               [moneyMask]="moneyMask"
               [attr.aria-required]="hasRdspIncome"
             >
@@ -118,7 +118,7 @@
             <ng-container *ngIf="hasSpouse">
               <fpir-financial-input
                 formControlName="spouseRdspIncome"
-                aria-labelledby="SpouseRdspIncome"
+                aria-label="SpouseRdspIncome"
                 [moneyMask]="moneyMask"
                 [attr.aria-required]="hasSpouse && hasRdspIncome"
               >
@@ -133,7 +133,7 @@
 
               <fpir-financial-input
                 formControlName="rdspIncomeTotal"
-                aria-labelledby="RdspIncomeTotal"
+                aria-label="RdspIncomeTotal"
                 [moneyMask]="moneyTotalMask"
               >
                 <div label class="finance-bold-text--format">
@@ -145,7 +145,7 @@
 
             <fpir-financial-input
               formControlName="netIncomeMinusRdsp"
-              aria-labelledby="NetIncomeMinusRdsp"
+              aria-label="NetIncomeMinusRdsp"
               [moneyMask]="moneyTotalMask"
             >
               <div label class="finance-bold-text--format">
@@ -201,11 +201,7 @@
           {{ errorMessage }}
         </common-error-container>
 
-        <div
-          aside
-          class="support-doc--tip-area"
-          aria-labelledby="supportDocuments"
-        >
+        <div aside class="support-doc--tip-area" aria-label="supportDocuments">
           <ng-container *ngIf="isLastYearIncome === true; else GrossIncomeTip">
             <p class="support-doc--tip-title">{{ netIncomeTipTitle }}</p>
             <ul>
