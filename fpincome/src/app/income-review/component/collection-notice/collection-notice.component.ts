@@ -36,17 +36,14 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
       if (event.key === 'Tab') {
         if (event.shiftKey) {
-          if (
-            event.target.hasAttribute('tabIndex') &&
-            event.target.tabIndex === 1
-          ) {
+          if (tabElements.length > 0 && tabElements[0] === event.target) {
             tabElements[tabElements.length - 1].focus();
             event.preventDefault();
           }
         } else {
           if (
-            event.target.hasAttribute('tabIndex') &&
-            event.target.tabIndex === tabElements.length
+            tabElements.length > 0 &&
+            tabElements[tabElements.length - 1] == event.target
           ) {
             tabElements[0].focus();
             event.preventDefault();
@@ -86,12 +83,13 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
     });
 
     this.onShow$ = this.collectionNoticeModal.onShow.subscribe(() => {
-      const tabElments = this.getElements();
-      tabElments[0].focus();
       this.keyDown$.pipe(takeUntil(this.unsubscribe$)).subscribe();
       this.onFocusIn$.pipe(takeUntil(this.unsubscribe$)).subscribe();
       // this.onFocusOut$.pipe(takeUntil(this.unsubscribe$)).subscribe();
     });
+
+    const tabElments = this.getElements();
+    tabElments[0].focus();
   }
 
   ngOnDestroy() {
@@ -121,10 +119,6 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
     const _tabElements = Array.prototype.slice.call(
       this.el.nativeElement.querySelectorAll(focusElmts)
     );
-
-    _tabElements.forEach((x, idx) => {
-      x.tabIndex = idx + 1;
-    });
 
     // console.log( 'tab elements: ', _tabElements);
     return _tabElements;
