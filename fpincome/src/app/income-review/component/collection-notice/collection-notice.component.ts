@@ -26,7 +26,6 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
   public collectionNoticeModal: ModalDirective;
 
   private onHide$: Subscription;
-  private onShow$: Subscription;
   private unsubscribe$ = new Subject<void>();
 
   keyDown$ = defer(() => fromEvent(document, 'keydown')).pipe(
@@ -55,7 +54,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
   onFocusIn$ = defer(() => fromEvent(document, 'focusin')).pipe(
     tap((event: any) => {
-      // console.log('document focus in: ', event.target);
+      console.log('document focus in: ', event.target);
       const tabElements = this.getElements();
 
       if (!tabElements.find((x) => x === event.target)) {
@@ -78,20 +77,17 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
     // console.log('el: ', this.el);
     this.onHide$ = this.collectionNoticeModal.onHide.subscribe(() => {
       this.onHide.emit();
-      this.unsubscribe$.next();
-      this.unsubscribe$.complete();
     });
 
-    this.onShow$ = this.collectionNoticeModal.onShow.subscribe(() => {
-      this.keyDown$.pipe(takeUntil(this.unsubscribe$)).subscribe();
-      this.onFocusIn$.pipe(takeUntil(this.unsubscribe$)).subscribe();
-      // this.onFocusOut$.pipe(takeUntil(this.unsubscribe$)).subscribe();
-    });
+    this.keyDown$.pipe(takeUntil(this.unsubscribe$)).subscribe();
+    this.onFocusIn$.pipe(takeUntil(this.unsubscribe$)).subscribe();
   }
 
   ngOnDestroy() {
     this.onHide$.unsubscribe();
-    this.onShow$.unsubscribe();
+
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   public openModal(): void {
