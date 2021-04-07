@@ -1,3 +1,38 @@
+## 2.1.3 (2021-04-07)
+
+### Bug Fixes
+
+- add geocoder and env back to code ([e08a680](https://github.com/bcgov/MOH-FPC-Enrolment/commit/e08a6808090c020e30121631ec5e57bcb32059a0))
+- add geocoder and env back to code ([acba86b](https://github.com/bcgov/MOH-FPC-Enrolment/commit/acba86b6a603dcb23f59c31977e5b54094d1b571))
+- add method covert simple date to Date ([c925953](https://github.com/bcgov/MOH-FPC-Enrolment/commit/c9259536d1f5833c01b996a864786903804cbbeb))
+- add missing dependencies, replace depreciated method ([5fc8a2a](https://github.com/bcgov/MOH-FPC-Enrolment/commit/5fc8a2a5d6bfcbdb05af8cad65c483aca73afa1d))
+- add set focus when modal shows ([bef99bc](https://github.com/bcgov/MOH-FPC-Enrolment/commit/bef99bc444c467e947e6e9590827ac510186dd83))
+- add set focus when modal shows ([fcfe00a](https://github.com/bcgov/MOH-FPC-Enrolment/commit/fcfe00a537f9d279e534ecf530b9be55b5b785f9))
+- address doctor validation ([1768035](https://github.com/bcgov/MOH-FPC-Enrolment/commit/176803596d5a407e0fb66cf17bb593d468d3e992))
+- clear validator when not required ([8123021](https://github.com/bcgov/MOH-FPC-Enrolment/commit/8123021ee1c570fee3ded0a5074f269739f09c76))
+- correct date variable, move bar outside page-frame ([07a8334](https://github.com/bcgov/MOH-FPC-Enrolment/commit/07a83344551a3b4f31269722d1fdabac61402dbe))
+- form action bar ([acf9817](https://github.com/bcgov/MOH-FPC-Enrolment/commit/acf9817657a0f92f1634a50e4aa6ecdbdbc40d40))
+- github link, remove debugs ([5a26e53](https://github.com/bcgov/MOH-FPC-Enrolment/commit/5a26e53991e1ac597bbbee9715fdea2706d7faf0))
+- internet explorer support ([6889d74](https://github.com/bcgov/MOH-FPC-Enrolment/commit/6889d74a87385c062dad4350f2f9c416ea10788b))
+- landmark confirmation page ([df7eaf9](https://github.com/bcgov/MOH-FPC-Enrolment/commit/df7eaf9ad2464f4cace72a2deda850df1c1668b4))
+- landmark issue with tips resolved ([a29633a](https://github.com/bcgov/MOH-FPC-Enrolment/commit/a29633a8b87ffd02a5004c150a57121a43992a86))
+- partial solution for internet explorer ([ba882d4](https://github.com/bcgov/MOH-FPC-Enrolment/commit/ba882d4a903010e02960989a6fd1e16a2d06b913))
+- rdsp tags ([6aeb52b](https://github.com/bcgov/MOH-FPC-Enrolment/commit/6aeb52bd54f47b714b8f1ecadf1359a6b12c1d34))
+- remove debug console log ([bea1d09](https://github.com/bcgov/MOH-FPC-Enrolment/commit/bea1d09f43ddc30beae6e58c7a82e3660fda9120))
+- remove tabIndex from search ([40d924e](https://github.com/bcgov/MOH-FPC-Enrolment/commit/40d924e117a0f97afdadc71e406eb2906c4c200b))
+- set dependency latest patch ([37ff7e1](https://github.com/bcgov/MOH-FPC-Enrolment/commit/37ff7e1795a4998ed54091b80d09e2173183828f))
+- set focus to main html element ([55dc73d](https://github.com/bcgov/MOH-FPC-Enrolment/commit/55dc73d6d5aaba48d51428330627467687f60032))
+- spouse rdsp label ([3693e22](https://github.com/bcgov/MOH-FPC-Enrolment/commit/3693e220a2fb3c3343bdcc5e57321b4979a8c262))
+- typo in code ([e9e3af6](https://github.com/bcgov/MOH-FPC-Enrolment/commit/e9e3af6de41de482126d159798f571e755d33222))
+- update wording as per request ([80800e9](https://github.com/bcgov/MOH-FPC-Enrolment/commit/80800e976b3682d8ffbb7cd0164fc3afde8d1028))
+- wording updates ([3e2d4f5](https://github.com/bcgov/MOH-FPC-Enrolment/commit/3e2d4f549cfaad3b70c505675798edbdb61eaa90))
+- **access:** axe reported issues ([a6347e0](https://github.com/bcgov/MOH-FPC-Enrolment/commit/a6347e0c3d6878e3b9e7c9e44077dbe59327301f))
+- **access:** landmarks ([6bacd13](https://github.com/bcgov/MOH-FPC-Enrolment/commit/6bacd13210fad86a5ff0673298ece42dae788023))
+- **mail:** add geocoder wording for suites ([455ce2e](https://github.com/bcgov/MOH-FPC-Enrolment/commit/455ce2e4a5c34cd821071925687d5f00a6dbc018))
+- **mail-address:** wording change in tip ([290d5fc](https://github.com/bcgov/MOH-FPC-Enrolment/commit/290d5fc534e18b88618b941e6780e3e27b24bb0e))
+- **mailing-address:** wording changes ([6ac42e5](https://github.com/bcgov/MOH-FPC-Enrolment/commit/6ac42e5360060b0916c514ca7243dc57f4b0d045))
+- **mailing-address:** wording changes ([bf779ba](https://github.com/bcgov/MOH-FPC-Enrolment/commit/bf779bacd960d3ee2eea3c08553004c1e83ac22e))
+
 ## 2.1.2 (2021-04-05)
 
 ### Bug Fixes
