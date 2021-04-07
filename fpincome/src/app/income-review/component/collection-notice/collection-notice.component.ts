@@ -55,7 +55,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
   onFocusIn$ = defer(() => fromEvent(document, 'focusin')).pipe(
     tap((event: any) => {
-      console.log('document focus in: ', event.target);
+      // console.log('document focus in: ', event.target);
       const tabElements = this.getElements();
 
       if (!tabElements.find((x) => x === event.target)) {
