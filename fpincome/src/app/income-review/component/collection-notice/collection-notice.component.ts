@@ -55,7 +55,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
   onFocusIn$ = defer(() => fromEvent(document, 'focusin')).pipe(
     tap((event: any) => {
-      // console.log('document focus in: ', event.target);
+      console.log('document focus in: ', event.target);
       const tabElements = this.getElements();
 
       if (!tabElements.find((x) => x === event.target)) {
@@ -87,9 +87,6 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
       this.onFocusIn$.pipe(takeUntil(this.unsubscribe$)).subscribe();
       // this.onFocusOut$.pipe(takeUntil(this.unsubscribe$)).subscribe();
     });
-
-    const tabElments = this.getElements();
-    tabElments[0].focus();
   }
 
   ngOnDestroy() {
@@ -114,7 +111,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
   getElements(): Array<HTMLElement> {
     const focusElmts =
-      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]';
+      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])';
 
     const _tabElements = Array.prototype.slice.call(
       this.el.nativeElement.querySelectorAll(focusElmts)
