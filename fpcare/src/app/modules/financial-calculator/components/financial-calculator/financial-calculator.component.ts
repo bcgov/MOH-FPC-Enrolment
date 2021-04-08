@@ -53,19 +53,21 @@ export class FinancialCalculatorComponent implements OnInit {
     this.onChanges.subscribe((changes: SimpleChanges) => {
       //console.log('finCalc onchanges', changes);
 
-      if (changes.income) {
-        this._incomeDisplay = this.currencyFormat(this.income);
-      }
+      if (changes) {
+        if (changes.income) {
+          this._incomeDisplay = this.currencyFormat(this.income);
+        }
 
-      if (changes.disabilitySavingsAmount) {
-        this._disabilityDisplay = this.currencyFormat(this.disabilitySavingsAmount);
-      }
+        if (changes.disabilitySavingsAmount) {
+          this._disabilityDisplay = this.currencyFormat(this.disabilitySavingsAmount);
+        }
 
-      if (changes.income || changes.disabilitySavingsAmount){
-        this.adjustedIncomeAmount = this.financeService.calculateFamilyAdjustedIncome(this.income,
-            this.disabilitySavingsAmount);
-        this._adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
-        this.incomeAdjustment.emit( this._adjustedIncomeDisplay );
+        if (changes.income || changes.disabilitySavingsAmount){
+          this.adjustedIncomeAmount = this.financeService.calculateFamilyAdjustedIncome(this.income,
+              this.disabilitySavingsAmount);
+          this._adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
+          this.incomeAdjustment.emit( this._adjustedIncomeDisplay );
+        }
       }
     });
 

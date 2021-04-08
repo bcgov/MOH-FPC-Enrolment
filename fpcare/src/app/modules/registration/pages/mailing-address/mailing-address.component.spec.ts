@@ -7,6 +7,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {FormsModule} from '@angular/forms';
 import {RegistrationService} from '../../registration.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { GeocoderInputComponent } from 'app/modules/geocoder/components/geocoder-input/geocoder-input.component';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 describe('MailingAddressComponent', () => {
   let component: MailingAddressPageComponent;
@@ -14,14 +16,16 @@ describe('MailingAddressComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MailingAddressPageComponent
+        MailingAddressPageComponent,
+        GeocoderInputComponent
       ],
       imports: [
         CoreModule,
         RouterTestingModule,
         FormsModule,
         CoreModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        TypeaheadModule
       ],
       providers: [
         // Reverted to full DataService, as we make use of its str format function
