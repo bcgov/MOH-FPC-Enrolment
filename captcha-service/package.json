@@ -1,6 +1,6 @@
 {
   "name": "captcha-service",
-  "version": "7.3.4",
+  "version": "7.4.1",
   "description": "A reusable, secure and reliable CAPTCHA microservice for service providers to use within online digital services.",
   "main": "lib/index.js",
   "scripts": {
@@ -53,9 +53,9 @@
   "author": "Mark Lisé <contact@digitalspace.ca> (http://www.digitalspace.ca/)",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/bcgov/MOH-IAM-Enrolment/captcha-service/issues"
+    "url": "https://github.com/bcgov/MOH-FPC-Enrolment/captcha-service/issues"
   },
-  "homepage": "https://github.com/bcgov/MOH-IAM-Enrolment/captcha-service#readme",
+  "homepage": "https://github.com/bcgov/MOH-FPC-Enrolment/captcha-service#readme",
   "engines": {
     "node": ">=10.0.0"
   },
