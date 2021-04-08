@@ -53,7 +53,7 @@
             [(ngModel)]="applicant.address.postal"
             label="Mailing Postal Code"
             [disabled]="disablePhn()"
-            [required]="disablePhn()">
+            [required]="!disablePhn()">
           </common-postal-code>
         </div>
       </div>
