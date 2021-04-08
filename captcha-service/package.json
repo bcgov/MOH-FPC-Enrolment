@@ -40,7 +40,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bcgov/MOH-IAM-Enrolment.git"
+    "url": "git+https://github.com/bcgov/MOH-FPC-Enrolment.git"
   },
   "keywords": [
     "MyGovBC",
