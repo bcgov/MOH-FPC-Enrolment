@@ -225,15 +225,15 @@ let getCaptcha = async function (
           validation: validation,
         };
         // ****uncomment to output memory usage info ****/
-        const { rss, heapTotal, external } = process.memoryUsage();
-        winston.debug(
-          "******** rss " +
-            numeral(rss).format(`0.0 ib`) +
-            ` heapTotal ` +
-            numeral(heapTotal).format(`0.0 ib`) +
-            ` external ` +
-            numeral(external).format(`0.0 ib`)
-        );
+        // const { rss, heapTotal, external } = process.memoryUsage();
+        // winston.debug(
+        //   "******** rss " +
+        //     numeral(rss).format(`0.0 ib`) +
+        //     ` heapTotal ` +
+        //     numeral(heapTotal).format(`0.0 ib`) +
+        //     ` external ` +
+        //     numeral(external).format(`0.0 ib`)
+        // );
         // ****uncomment to output memory usage info ****/
         return responseBody;
       }
@@ -457,9 +457,7 @@ let getAudio = async function (body: GetAudioRequestBody, req?: Request) {
     })
     .catch((e) => {
       winston.error("Error getting audio(decrypt):" + JSON.stringify(e));
-      if (e.message == "Audio Capacity Exceded"){
-        throw e;
-      }
+
       return {
         error: "unknown",
       };
@@ -468,10 +466,6 @@ let getAudio = async function (body: GetAudioRequestBody, req?: Request) {
 exports.getAudio = getAudio;
 
 app.post("/captcha/audio", async function (req: Request, res: Response) {
-  const { rss } = process.memoryUsage();
-  if (rss < 256000000 ) {
-    winston.debug("captcha requested rss(bytes)=" + rss);
-
     getAudio(req.body, req)
       .then((ret) => {
         winston.debug("Audio sent successfully")
@@ -479,16 +473,7 @@ app.post("/captcha/audio", async function (req: Request, res: Response) {
       })
       .catch((e) => {
         winston.error("Error getting audio(app.post):" + JSON.stringify(e));
-        if (e.message == "Audio Capacity Exceded"){
-          winston.error("Captcha Audio Refused Returning 503");
-          res.sendStatus(503);
-        }
       });
-  } else {
-    winston.error("Captcha Audio Refused rss(bytes)=" + rss );
-    res.sendStatus(503);
-  }
-
 });
 
 ////////////////////////////////////////////////////////
@@ -599,34 +584,28 @@ function getMp3DataUriFromText(text: string, language: string = "en") {
       //without this workaround typescript fails due to incorrect return type
       //from text2wav package
       let t2w = async (txt : string, lang : string) : Promise<Uint8Array> => {
-	      winston.info("Audio Requested: Converting Text");
+	      winston.debug("Audio Requested: Converting Text");
         return text2wav(txt, { voice: lang })
       }
-      const { rss } = process.memoryUsage();
-      if (rss < 256000000) {
-        winston.error("Audio accepted rss(bytes)=" + rss);
-        t2w(text, language)
-          .then((audioArrayBuffer) =>{
 
-            // convert to buffer
-            winston.debug("Convert arraybuffer to buffer");
-            let audioBuffer = arrayBufferToBuffer(audioArrayBuffer);      
+      t2w(text, language)
+        .then((audioArrayBuffer) =>{
 
-            // Convert ArrayBuffer to Streamable type for input to the encoder
-            winston.debug("Streamify our buffer");
-            let audioStream = streamifier.createReadStream(audioBuffer);
+          // convert to buffer
+          winston.debug("Convert arraybuffer to buffer");
+          let audioBuffer = arrayBufferToBuffer(audioArrayBuffer);      
 
-            // once all events setup we can the pipeline
-            winston.debug("Pipe audio stream to WAV reader");
-            audioStream.pipe(reader);
-          })
-          .catch((e)=>{
-            winston.error("Error getting audio(text2wav):" + JSON.stringify(e));
-          })
-      } else {
-        winston.error("Audio rejected rss(bytes)=" + rss);
-        reject(new Error("Audio Capacity Exceded"));
-      }
+          // Convert ArrayBuffer to Streamable type for input to the encoder
+          winston.debug("Streamify our buffer");
+          let audioStream = streamifier.createReadStream(audioBuffer);
+
+          // once all events setup we can the pipeline
+          winston.debug("Pipe audio stream to WAV reader");
+          audioStream.pipe(reader);
+        })
+        .catch((e)=>{
+          winston.error("Error getting audio(text2wav):" + JSON.stringify(e));
+        })
   });
 }
 
