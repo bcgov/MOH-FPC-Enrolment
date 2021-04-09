@@ -3,30 +3,30 @@ const numeral = require("numeral");
 
 /*jshint node:true, esversion: 6 */
 require("dotenv").config();
-var jose = require("node-jose");
-var express = require("express");
-var app = express();
-var jwt = require("jsonwebtoken");
-var svgCaptcha = require("svg-captcha");
-var winston = require("winston");
+let jose = require("node-jose");
+let express = require("express");
+let app = express();
+let jwt = require("jsonwebtoken");
+let svgCaptcha = require("svg-captcha");
+let winston = require("winston");
 const ipRangeCheck = require("ip-range-check");
 
 // requires for audio support
-var lame = require("lame");
-var wav = require("wav");
+let lame = require("lame");
+let wav = require("wav");
 import text2wav = require("text2wav");
-var streamifier = require("streamifier");
-var arrayBufferToBuffer = require("arraybuffer-to-buffer");
+let streamifier = require("streamifier");
+let arrayBufferToBuffer = require("arraybuffer-to-buffer");
 
 const AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST =
   process.env.AUTHORIZED_RESOURCE_SERVER_IP_RANGE_LIST || "127.0.0.1";
-var LISTEN_IP = process.env.LISTEN_IP || "0.0.0.0";
-var HOSTNAME = require("os").hostname();
-var CAPTCHA_SIGN_EXPIRY: number =
+let LISTEN_IP = process.env.LISTEN_IP || "0.0.0.0";
+let HOSTNAME = require("os").hostname();
+let CAPTCHA_SIGN_EXPIRY: number =
   (process.env.CAPTCHA_SIGN_EXPIRY && +process.env.CAPTCHA_SIGN_EXPIRY) || 30; // In minutes
-var JWT_SIGN_EXPIRY = process.env.JWT_SIGN_EXPIRY || "30"; // In minutes
-var SECRET = process.env.SECRET || "defaultSecret";
-var PRIVATE_KEY = process.env.PRIVATE_KEY
+let JWT_SIGN_EXPIRY = process.env.JWT_SIGN_EXPIRY || "30"; // In minutes
+let SECRET = process.env.SECRET || "defaultSecret";
+let PRIVATE_KEY = process.env.PRIVATE_KEY
   ? JSON.parse(process.env.PRIVATE_KEY)
   : {
       kty: "oct",
@@ -35,11 +35,11 @@ var PRIVATE_KEY = process.env.PRIVATE_KEY
       alg: "A256GCM",
       k: "FK3d8WvSRdxlUHs4Fs_xxYO3-6dCiUarBwiYNFw5hv8",
     };
-var LOG_LEVEL = process.env.LOG_LEVEL || "debug";
-var SERVICE_PORT = process.env.SERVICE_PORT || 8080;
-var WINSTON_HOST = process.env.WINSTON_HOST;
-var WINSTON_PORT = process.env.WINSTON_PORT;
-var AUDIO_ENABLED = process.env.AUDIO_ENABLED || "true";
+let LOG_LEVEL = process.env.LOG_LEVEL || "debug";
+let SERVICE_PORT = process.env.SERVICE_PORT || 8080;
+let WINSTON_HOST = process.env.WINSTON_HOST;
+let WINSTON_PORT = process.env.WINSTON_PORT;
+let AUDIO_ENABLED = process.env.AUDIO_ENABLED || "true";
 
 // Prevent default keys going into production
 if (process.env.NODE_ENV == "production") {
@@ -91,7 +91,7 @@ if (process.env.WINSTON_PORT) {
 ////////////////////////////////////////////////////////
 
 // create the Encoder instance
-var encoder = new lame.Encoder({
+let encoder = new lame.Encoder({
   // input
   channels: 1, // 1 channels
   bitDepth: 16, // 16-bit samples
@@ -106,11 +106,11 @@ var encoder = new lame.Encoder({
 // init app
 app.use(express.json());
 
-var args = process.argv;
+let args = process.argv;
 if (args.length == 3 && args[2] == "server") {
-  var server = app.listen(SERVICE_PORT, LISTEN_IP, function () {
-    var host = server.address().address;
-    var port = server.address().port;
+  let server = app.listen(SERVICE_PORT, LISTEN_IP, function () {
+    let host = server.address().address;
+    let port = server.address().port;
     winston.info(`MyGov Captcha Service listening at http://${host}:${port}`);
     winston.info(`Log level is at: ${LOG_LEVEL}`);
   });
@@ -128,7 +128,7 @@ async function decrypt(body: object, private_key: object) {
       return jose.JWE.createDecrypt(res)
         .decrypt(body)
         .then((decrypted: any) => {
-          var decryptedObject = JSON.parse(
+          let decryptedObject = JSON.parse(
             decrypted.plaintext.toString("utf8")
           );
           winston.debug("decrypted object: " + JSON.stringify(decryptedObject));
@@ -186,7 +186,7 @@ let getCaptcha = async function (
   payload: GetCaptchaRequest
 ): Promise<ValidCaptchaResponse | InvalidCaptchaResponse> {
   //winston.debug(`getCaptcha: ${payload.nonce}`)
-  var captcha = svgCaptcha.create({
+  let captcha = svgCaptcha.create({
     size: 6, // size of random string
     ignoreChars: "0o1il", // filter out some characters like 0o1i
     noise: 2, // number of lines to insert for noise
@@ -200,10 +200,10 @@ let getCaptcha = async function (
   //winston.debug(`captcha generated: ${captcha.text}`)
 
   // prep captcha string for good reading by putting spaces between letters
-  var captchaAudioText = "Type in the text box the following: " + captcha.text;
+  let captchaAudioText = "Type in the text box the following: " + captcha.text;
 
   // add answer, nonce and expiry to body
-  var body: UnencryptedValidation = {
+  let body: UnencryptedValidation = {
     nonce: payload.nonce,
     answer: captcha.text,
     expiry: Date.now() + CAPTCHA_SIGN_EXPIRY * 60000,
@@ -219,7 +219,7 @@ let getCaptcha = async function (
       } else {
         winston.debug(`validation: ` + JSON.stringify(validation));
         // create basic response
-        var responseBody = {
+        let responseBody = {
           nonce: payload.nonce,
           captcha: captcha.data,
           validation: validation,
@@ -275,13 +275,13 @@ export interface VerifyCaptchaInvalidResponse {
   valid: boolean;
 }
 
-var verifyCaptcha = async function (
+let verifyCaptcha = async function (
   payload: VerifyCaptchaRequest
 ): Promise<VerifyCaptchaInvalidResponse | VerifyCaptchaValidResponse> {
   winston.debug(`incoming payload: ` + JSON.stringify(payload));
-  var validation = payload.validation;
-  var answer = payload.answer;
-  var nonce = payload.nonce;
+  let validation = payload.validation;
+  let answer = payload.answer;
+  let nonce = payload.nonce;
 
   // Captcha by-pass for automated testing in dev/test environments
   if (
@@ -292,7 +292,7 @@ var verifyCaptcha = async function (
     // Passed the captcha test
     winston.debug(`Captcha bypassed! Creating JWT.`);
 
-    var token = jwt.sign(
+    let token = jwt.sign(
       {
         data: {
           nonce: nonce,
@@ -321,7 +321,7 @@ var verifyCaptcha = async function (
             // Passed the captcha test
             winston.debug(`Captcha verified! Creating JWT.`);
 
-            var token = jwt.sign(
+            let token = jwt.sign(
               {
                 data: {
                   nonce: nonce,
@@ -400,7 +400,7 @@ const voicePromptLanguageMap: { [index: string]: string } = {
   zh: "请输入以下英文字母或数字", // mandarin chinese
 };
 
-var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
+let getAudio = async function (body: GetAudioRequestBody, req?: Request) {
   winston.debug(`getting audio for`, body);
   // Ensure audio is enabled.
   if (!AUDIO_ENABLED || AUDIO_ENABLED !== "true") {
@@ -411,7 +411,7 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
   }
 
   // pull out encrypted answer
-  var validation = body.validation;
+  let validation = body.validation;
 
   // decrypt payload to get captcha text
   return decrypt(validation, PRIVATE_KEY)
@@ -419,7 +419,7 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
       winston.debug("get audio decrypted body", body);
 
       // Insert leading text and commas to slow down reader
-      var captchaCharArray = decryptedBody.answer.toString().split("");
+      let captchaCharArray = decryptedBody.answer.toString().split("");
       let language = "en";
       if (body.translation) {
         if (typeof body.translation == "string") {
@@ -440,8 +440,8 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
           }
         }
       }
-      var spokenCatpcha = voicePromptLanguageMap[language] + ": ";
-      for (var i = 0; i < captchaCharArray.length; i++) {
+      let spokenCatpcha = voicePromptLanguageMap[language] + ": ";
+      for (let i = 0; i < captchaCharArray.length; i++) {
         spokenCatpcha += captchaCharArray[i] + ", ";
       }
       return getMp3DataUriFromText(spokenCatpcha, language)
@@ -452,10 +452,14 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
         })
         .catch((e) => {
           winston.error("Error getting audio(getMp3DataUriFromText):" + JSON.stringify(e));
+          throw e;
         });
     })
     .catch((e) => {
       winston.error("Error getting audio(decrypt):" + JSON.stringify(e));
+      if (e.message == "Audio Capacity Exceded"){
+        throw e;
+      }
       return {
         error: "unknown",
       };
@@ -464,9 +468,8 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
 exports.getAudio = getAudio;
 
 app.post("/captcha/audio", async function (req: Request, res: Response) {
-  const { rss, heapTotal } = process.memoryUsage();
-  if (heapTotal > 256000) {
-    winston.debug("captcha requested heapTotal(bytes)=" + heapTotal);
+  const { rss } = process.memoryUsage();
+  if (rss > 256000) {
     winston.debug("captcha requested rss(bytes)=" + rss);
 
     getAudio(req.body, req)
@@ -476,10 +479,13 @@ app.post("/captcha/audio", async function (req: Request, res: Response) {
       })
       .catch((e) => {
         winston.error("Error getting audio(app.post):" + JSON.stringify(e));
-        
+        if (e.message == "Audio Capacity Exceded"){
+          winston.error("Captcha Audio Refused Returning 503");
+          res.sendStatus(503);
+        }
       });
   } else {
-    winston.error("Captcha Audio Refused heapTotal(bytes)=" + heapTotal );
+    winston.error("Captcha Audio Refused rss(bytes)=" + rss );
     res.sendStatus(503);
   }
 
@@ -493,13 +499,13 @@ app.post("/captcha/audio", async function (req: Request, res: Response) {
 export interface VerifyJWTResponse {
   valid: boolean;
 }
-var verifyJWT = async function (
+let verifyJWT = async function (
   token: string,
   nonce: string
 ): Promise<VerifyJWTResponse> {
   winston.debug(`verifying: ${token} against ${nonce}`);
   try {
-    var decoded = jwt.verify(token, SECRET);
+    let decoded = jwt.verify(token, SECRET);
     winston.debug(`decoded: ` + JSON.stringify(decoded));
     if (decoded.data && decoded.data.nonce === nonce) {
       winston.debug(`Captcha Valid`);
@@ -547,21 +553,21 @@ app.post("/verify/jwt", async function (req: Request, res: Response) {
 ////////////////////////////////////////////////////////
 function getMp3DataUriFromText(text: string, language: string = "en") {
   winston.debug("Starting audio generation...");
-  return new Promise(async function (resolve) {
+  return new Promise(async function (resolve, reject) {
     // init wave reader, used to convert WAV to PCM
-    var reader = new wav.Reader();
+    let reader = new wav.Reader();
 
     // we have to wait for the "format" event before we can start encoding
     reader.on("format", function (format: object) {
       // init encoder
       winston.debug("Init mp3 encoder");
-      var encoder = new lame.Encoder(format);
+      let encoder = new lame.Encoder(format);
 
       // Pipe Wav reader to the encoder and capture the output stream
       winston.debug("Pipe WAV reader to MP3 encoder");
 
       // As the stream is encoded, convert the mp3 array buffer chunks into base64 string with mime type
-      var dataUri: string | undefined = "data:audio/mp3;base64,";
+      let dataUri: string | undefined = "data:audio/mp3;base64,";
       encoder.on("data", function (arrayBuffer: Buffer) {
         if (!dataUri) {
           return;
@@ -596,24 +602,31 @@ function getMp3DataUriFromText(text: string, language: string = "en") {
 	      winston.info("Audio Requested: Converting Text");
         return text2wav(txt, { voice: lang })
       }
-      t2w(text, language)
-        .then((audioArrayBuffer) =>{
+      const { rss } = process.memoryUsage();
+      if (rss > 256000) {
+        winston.error("Audio accepted rss(bytes)=" + rss);
+        t2w(text, language)
+          .then((audioArrayBuffer) =>{
 
-          // convert to buffer
-          winston.debug("Convert arraybuffer to buffer");
-          var audioBuffer = arrayBufferToBuffer(audioArrayBuffer);      
+            // convert to buffer
+            winston.debug("Convert arraybuffer to buffer");
+            let audioBuffer = arrayBufferToBuffer(audioArrayBuffer);      
 
-          // Convert ArrayBuffer to Streamable type for input to the encoder
-          winston.debug("Streamify our buffer");
-          var audioStream = streamifier.createReadStream(audioBuffer);
+            // Convert ArrayBuffer to Streamable type for input to the encoder
+            winston.debug("Streamify our buffer");
+            let audioStream = streamifier.createReadStream(audioBuffer);
 
-          // once all events setup we can the pipeline
-          winston.debug("Pipe audio stream to WAV reader");
-          audioStream.pipe(reader);
-        })
-        .catch((e)=>{
-          winston.error("Error getting audio(text2wav):" + JSON.stringify(e));
-        })
+            // once all events setup we can the pipeline
+            winston.debug("Pipe audio stream to WAV reader");
+            audioStream.pipe(reader);
+          })
+          .catch((e)=>{
+            winston.error("Error getting audio(text2wav):" + JSON.stringify(e));
+          })
+      } else {
+        winston.error("Audio rejected rss(bytes)=" + rss);
+        reject(new Error("Audio Capacity Exceded"));
+      }
   });
 }
 
