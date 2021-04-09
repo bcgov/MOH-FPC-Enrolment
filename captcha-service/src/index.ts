@@ -224,17 +224,17 @@ let getCaptcha = async function (
           captcha: captcha.data,
           validation: validation,
         };
-        //****uncomment to output memory usage info ****/
-        //const { rss, heapTotal, external } = process.memoryUsage();
-        // winston.debug(
-        //   "******** rss " +
-        //     numeral(rss).format(`0.0 ib`) +
-        //     ` heapTotal ` +
-        //     numeral(heapTotal).format(`0.0 ib`) +
-        //     ` external ` +
-        //     numeral(external).format(`0.0 ib`)
-        // );
-        //****uncomment to output memory usage info ****/
+        // ****uncomment to output memory usage info ****/
+        const { rss, heapTotal, external } = process.memoryUsage();
+        winston.debug(
+          "******** rss " +
+            numeral(rss).format(`0.0 ib`) +
+            ` heapTotal ` +
+            numeral(heapTotal).format(`0.0 ib`) +
+            ` external ` +
+            numeral(external).format(`0.0 ib`)
+        );
+        // ****uncomment to output memory usage info ****/
         return responseBody;
       }
     })
@@ -464,8 +464,11 @@ var getAudio = async function (body: GetAudioRequestBody, req?: Request) {
 exports.getAudio = getAudio;
 
 app.post("/captcha/audio", async function (req: Request, res: Response) {
-  const { heapTotal } = process.memoryUsage();
+  const { rss, heapTotal } = process.memoryUsage();
   if (heapTotal > 256000) {
+    winston.debug("captcha requested heapTotal(bytes)=" + heapTotal);
+    winston.debug("captcha requested rss(bytes)=" + rss);
+
     getAudio(req.body, req)
       .then((ret) => {
         winston.debug("Audio sent successfully")
