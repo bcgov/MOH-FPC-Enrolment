@@ -469,7 +469,7 @@ exports.getAudio = getAudio;
 
 app.post("/captcha/audio", async function (req: Request, res: Response) {
   const { rss } = process.memoryUsage();
-  if (rss > 256000) {
+  if (rss < 256000000 ) {
     winston.debug("captcha requested rss(bytes)=" + rss);
 
     getAudio(req.body, req)
@@ -603,7 +603,7 @@ function getMp3DataUriFromText(text: string, language: string = "en") {
         return text2wav(txt, { voice: lang })
       }
       const { rss } = process.memoryUsage();
-      if (rss > 256000) {
+      if (rss < 256000000) {
         winston.error("Audio accepted rss(bytes)=" + rss);
         t2w(text, language)
           .then((audioArrayBuffer) =>{
