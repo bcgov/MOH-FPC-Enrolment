@@ -1,0 +1,8 @@
+{
+  "/fpincome/api/": {
+      "target": "https://fpincome-web-3f9283-dev.apps.silver.devops.gov.bc.ca/",
+      "changeOrigin": true,
+      "secure": false,
+      "logLevel": "debug"
+  }
+}

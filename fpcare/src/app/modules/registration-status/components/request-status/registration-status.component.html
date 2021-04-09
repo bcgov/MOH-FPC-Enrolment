@@ -1,0 +1,98 @@
+<fpcare-consent-modal
+        #consentModal
+        (onConsented)="onAccept($event)">
+</fpcare-consent-modal>
+
+<common-page-framework layout='default'>
+
+  <div>
+    <h1>
+      Fair PharmaCare Registration Status Search
+    </h1>
+
+    <p>
+      To inquire about the status of your Fair PharmaCare registration, enter your Registration Number. If you do not
+      have your registration number available, enter your Personal Health Number (PHN), Birthdate and Mailing Postal Code.
+    </p>
+    <p>
+      If you registered by phone, a consent form has been mailed to you. You will need to complete and sign the consent
+      form to allow us to check your income with the Canada Revenue Agency and confirm your level of financial
+      assistance under Fair PharmaCare. If you have returned your consent form, please allow four weeks for processing.
+    </p>
+    <p>
+      If you registered by mail, please allow six to eight weeks before you can use this application.
+    </p>
+  </div>
+
+  <div>
+    <h2 class="border-bottom">Your Information</h2>
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="row mx-lg-0">
+      <div class="bg-light rounded p-lg-2 col-lg-6 order-sm-last order-lg-first">
+        <div class="form-group">
+          <fpcare-phn
+              [(value)]="applicant.phn"
+              [disabled]="disablePhn()">
+          </fpcare-phn>
+        </div>
+
+        <div class="form-group">
+          <fpcare-date
+                  [useCurrentDate]="false"
+                  [date]="applicant.sDateOfBirth"
+                  [restrictDate]="'past'"
+                  [disabled]="disablePhn()"
+                  [label]="'Birthdate'">
+          </fpcare-date>
+        </div>
+
+        <div class="form-group">
+          <common-postal-code name="mailPostal"
+            [(ngModel)]="applicant.address.postal"
+            label="Mailing Postal Code"
+            [disabled]="disablePhn()"
+            [required]="!disablePhn()">
+          </common-postal-code>
+        </div>
+      </div>
+      <div class="col-lg-1 or-col text-center">
+        or
+      </div>
+      <div class="col-lg-5 p-lg-2 bg-light rounded order-sm-first order-lg-last align-self-start">
+        <div class="form-group">
+          <label for="regNumber">Registration Number</label>
+          <input class="form-control"
+                 type="text"
+                 id="regNumber"
+                 name="regNumber"
+                 [placeholder]="placeholder"
+                 [maxlength]="regNumberMaxLn()"
+                 fpcareRequired="required,regnum-check"
+                 [ngModel]="applicant.fpcRegNumber"
+                 (ngModelChange)="updateRegNumber($event)"
+                 [disabled]="disableRegNum()"
+                 autocomplete="off">
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <aside>
+
+      <fpcare-phn-definition></fpcare-phn-definition>
+
+      <p class="h5">Registration Number</p>
+      <p>This information is provided upon completion of the Registration process.</p>
+
+  </aside>
+
+</common-page-framework>
+
+<common-form-action-bar
+    [canContinue]="canContinue()"
+    (btnClick)="continue()"
+    [isLoading]="loading">
+</common-form-action-bar>

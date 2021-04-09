@@ -1,0 +1,81 @@
+<fpcare-consent-modal
+        #consentModal
+        (onConsented)="onAccept($event)">
+</fpcare-consent-modal>
+
+<common-page-framework layout='default'>
+
+  <h1>Register for Fair PharmaCare</h1>
+  <div>
+    <h2 class="border-bottom">What you need:</h2>
+    <div>
+      To complete your registration online, you will need to provide information about you (registrant), your family,
+      and your spouse/common-law partner.
+      <h3>Family</h3>
+      <div>
+        For each member of your family (including your children) you will need to provide their:
+        <ul class="mt-2">
+          <li>Personal Health Number (PHN)</li>
+          <li>Date of Birth</li>
+        </ul>
+        <p class="font-italic text-muted">
+            Note: If you share custody of any of your children with a former partner, the 
+            children can only be on one parent's Fair PharmaCare account.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2 class="border-bottom">Registrant and Spouse/Common-law Partner</h2>
+    <div>
+      For you and your spouse/common-law partner, you will also need to provide your:
+      <ul>
+        <li>Social Insurance Number (SIN)</li>
+        <li>
+          Net Income (Line 23600) from the income tax return or from the Notice of Assessment or Reassessment from two years ago.
+          <div class="font-italic text-muted ml-4">
+            Example: If you are registering in {{benefitYearEx}}, use the {{taxYearEx}} income tax return information; If you
+            are registering in {{benefitYearEx + 1}}, use the {{taxYearEx + 1}} income tax return information.
+          </div>
+        </li>
+        <li>
+          If applicable, the amount of any income from a Registered Disability Savings Plan (RDSP) from Line 12500 of
+          the Income Tax Return from two years ago.
+        </li>
+        <li>
+          Written consent to verify your income(s) with the Canada Revenue Agency.
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <aside>
+    <div>Please do not use this online registration system if:
+      <ul>
+          <li>You have registered for Fair PharmaCare in the past</li>
+          <li>You need to add family members to your Fair PharmaCare account</li>
+          <li>You need to remove family members from your Fair PharmaCare account.</li>
+      </ul>
+    </div>
+    <p>
+      Please contact <a target="_blank" href="{{links.HIBC}}">Health Insurance BC</a> to 
+      restore coverage, or update family information.
+    </p> 
+    <p>
+      Each screen has a navigation bar. Use these buttons to move forward or backward through 
+      the screens.
+    </p>
+    <p>
+      There are seven to eight screens in this application. The whole process should take less 
+      than 30 minutes. It must be completed in a single session. Information will not be stored 
+      until your application is submitted.
+    </p>
+
+
+  </aside>
+
+</common-page-framework>
+
+<common-form-action-bar
+    (btnClick)="continue()">
+</common-form-action-bar>

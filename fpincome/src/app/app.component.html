@@ -1,0 +1,65 @@
+<div id="app">
+  <div id="wrap">
+    <common-header
+      [serviceName]="appTitle"
+      urlBaseName="fpincome"
+      [shouldShowPrintLogo]="true"
+    ></common-header>
+
+    <router-outlet></router-outlet>
+
+    <div id="pad"></div>
+  </div>
+
+  <footer class="navbar navbar-expand-md bg-primary">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li>
+          <a
+            class="nav-link"
+            href="http://www2.gov.bc.ca/gov/content/home/disclaimer"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Disclaimer</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="http://www2.gov.bc.ca/gov/content/home/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Privacy</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="http://www2.gov.bc.ca/gov/content/home/accessibility"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Accessibility</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="http://www2.gov.bc.ca/gov/content/home/copyright"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Copyright</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link"
+            href="http://www2.gov.bc.ca/gov/content/home/contact-us"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Contact Us</a
+          >
+        </li>
+      </ul>
+    </div>
+  </footer>
+</div>

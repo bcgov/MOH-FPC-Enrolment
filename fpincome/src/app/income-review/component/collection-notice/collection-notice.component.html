@@ -1,0 +1,34 @@
+<div
+  bsModal
+  #collectionNoticeModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  aria-labelledby="collectionNoticeLabel"
+  role="dialog"
+>
+  <div class="modal-dialog" style="margin-top: 90px;" role="document">
+    <div class="modal-content">
+      <!--  Header -->
+      <div id="collectionNoticeLabel" class="modal-header modal-header-primary">
+        <ng-content select="[collectModalTitle]"></ng-content>
+      </div>
+
+      <!--   Modal Body   -->
+      <div class="modal-body">
+        <ng-content select="[collectModalBody]"></ng-content>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button
+          [disabled]="isDisabled"
+          class="btn btn-block btn-primary pull-left"
+          type="submit"
+          (click)="closeModal($event)"
+        >
+          {{ buttonLabel }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

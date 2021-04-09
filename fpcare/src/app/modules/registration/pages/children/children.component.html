@@ -1,0 +1,70 @@
+<common-page-framework layout='default'>
+
+  <h1>Child Information</h1>
+   <p>
+      Enter your child or children's personal information, if applicable.
+   </p>
+
+   <p class="text-muted font-italic">
+      Note: If you share custody of any of your children with a former partner, the children can only be on one parent's Fair PharmaCare account.
+   </p>
+
+   <h2>Your child's personal information</h2>
+
+  <!-- Repeat for each child -->
+  <form #formRef="ngForm" novalidate>
+    <div *ngFor="let child of children; let i = index;">
+      <!--Array starts at 0 add one -->
+      <h2 class="border-bottom">
+        Child #{{children.indexOf(child)+1}}
+        <i class="fa fa-times mr-3 pointer float-right text-danger" aria-hidden="true" (click)="removeChild( i )"></i>
+      </h2>
+
+      <div class="p-md-2 col-md-8 col-lg-6">
+        <div class="form-group">
+           <fpcare-name
+              [label]="'First Name'"
+              [nameMaxLen]="maxLenGivenName"
+              [(value)]="child.firstName">
+           </fpcare-name>
+        </div>
+         <div class="form-group">
+            <fpcare-name
+                [label]="'Last Name'"
+                [nameMaxLen]="maxLenSurname"
+                [(value)]="child.lastName">
+            </fpcare-name>
+         </div>
+        <div class="form-group">
+          <fpcare-date
+                  id="ch_dob_{{i}}"
+                  [useCurrentDate]="false"
+                  [(date)]="child.sDateOfBirth"
+                  [restrictDate]="'past'"
+                  [label]="'Birthdate'">
+          </fpcare-date>
+        </div>
+        <div class="form-group">
+           <fpcare-phn
+               [(value)]="child.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError=$event">
+           </fpcare-phn>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <button class="btn btn-lg btn-block btn-default" (click)="addChild()" [disabled]="isAddDisabled()">
+    Add Child
+  </button>
+
+  <aside>
+    <fpcare-phn-definition [driverLicense]="false"></fpcare-phn-definition>
+  </aside>
+
+</common-page-framework>
+
+<common-form-action-bar
+    [submitLabel]="buttonLabel"
+    [canContinue]="canContinue()"
+    (btnClick)="continue()">
+</common-form-action-bar>

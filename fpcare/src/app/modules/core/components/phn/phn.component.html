@@ -1,0 +1,19 @@
+<div class='form-group'>
+  <label for="phn_{{objectId}}">Personal Health Number (PHN)</label>
+  <input class="form-control"
+         spellcheck="false"
+         type="text"
+         id="phn_{{objectId}}"
+         name="phn_{{objectId}}"
+         [placeholder]="placeholder"
+         fpcareRequired="required,phn-check"
+         [ngModel]="value"
+         (ngModelChange)="onUpdate($event)"
+         [textMask]="{mask: mask}"
+         [disabled]="disabled" 
+         autocomplete="off"/>
+</div>
+
+<div *ngIf="!uniquePhns" role="alert" aria-live="assertive">
+  <div class="text-danger">{{uniquePhnErrMsg}}</div>
+</div>

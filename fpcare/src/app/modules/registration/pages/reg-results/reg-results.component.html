@@ -1,0 +1,36 @@
+<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response"
+                          [displayPrint]="hasRegistration && isSuccess">
+
+   <h1 title>{{pgTitle}}</h1>
+
+   <div body>
+      <div *ngIf='hasRegistration && isSuccess; else incompleteRegistration'>
+         <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
+         <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
+
+         <!-- Annual Deductible for family based on the information provided during registration -->
+         <div class="col-md-6 pl-md-5" [@growVertical] >
+            <fpcare-annual-deductible
+            [pharmaCareLevel]="assistenceLevel">
+            </fpcare-annual-deductible>
+         </div>
+
+      </div>
+   </div>
+</fpcare-results-framework>
+
+
+<ng-template #incompleteRegistration>
+
+   <p class="font-weight-bold h2">
+      Your status is:
+   </p>
+   <!--
+     Using innerHTML bypasses angular's security sanitzation, so we can
+     directly include links.  This is safe only because we know we control
+     the messages coming back and no user supplied content will ever appear
+     here.
+   -->
+   <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
+
+</ng-template>

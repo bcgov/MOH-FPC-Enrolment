@@ -1,0 +1,67 @@
+<common-page-framework layout='default'>
+
+  <h1>
+    Tell us a bit about who's applying for Fair PharmaCare coverage
+  </h1>
+
+  <div>
+    Enter each person's Personal Health Number as shown on their BC Services.
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+
+    <h2 class="border-bottom">Your Information</h2>
+
+    <div class="p-md-2 col-md-8 col-lg-6">
+
+      <div class="form-group">
+        <fpcare-date
+                id="ap_dob"
+                [useCurrentDate]="false"
+                [(date)]="applicant.sDateOfBirth"
+                [restrictDate]="'past'"
+                [label]="'Birthdate'">
+        </fpcare-date>
+
+        <div class="form-group">
+          <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
+        </div>
+
+      </div>
+    </div>
+
+    <div  *ngIf="hasSpouse">
+
+      <h2 class="border-bottom">Spouse/Common-law Partner Information</h2>
+
+      <div class="p-md-2 col-md-8 col-lg-6">
+        <div class="form-group">
+          <fpcare-date
+                  id="sp_dob"
+                  [useCurrentDate]="false"
+                  [(date)]="spouse.sDateOfBirth"
+                  [restrictDate]="'past'"
+                  [label]="'Birthdate'">
+          </fpcare-date>
+
+          <div class="form-group">
+            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError=$event"></fpcare-phn>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <aside>
+    <fpcare-phn-definition></fpcare-phn-definition>
+  </aside>
+
+</common-page-framework>
+
+<common-form-action-bar
+    [canContinue]="canContinue()"
+    (btnClick)="continue()"
+    [isLoading]="loading">
+</common-form-action-bar>

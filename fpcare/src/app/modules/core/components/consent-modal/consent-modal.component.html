@@ -1,0 +1,53 @@
+<div bsModal #informationCollectionModal="bs-modal"
+     fpcModalFocus
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true"
+     (onShown)="modalShown($event)">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <h2 class="modal-title pull-left" id="consentModalTitle">Information Collection Notice</h2>
+      </div>
+      <div class="modal-body">
+        <p id='consentModalDesc'>
+          Keep your personal information secure - especially when using a shared computer at a library, school or cafe.
+          To remove any information you entered, either complete the application and submit it or, if you don't finish,
+          close the web browser.
+       </p>
+        <p>
+          Personal information is collected, used, disclosed and provided security in accordance with the British
+          Columbia Freedom of Information and Protection of Privacy Act. If you have any questions about the collection
+          or use of this information, please contact <a target="_blank"
+          href="{{links.HIBC}}">
+          Health Insurance BC</a>.
+        </p>
+        <br>
+      </div>
+
+      <div class="d-flex align-items-center p-md-2">
+        <span class="checkbox checkbox-success checkbox-inline pl-4 mb-4 mb-md-0">
+          <label class='d-inline'>
+            <input class="btn btn-lg mr-md-2" name='agree' id="agree" type="checkbox" [(ngModel)]="agreeCheck" #agree>
+            <strong>I have read and understand this information</strong>
+          </label>
+        </span>
+      </div>
+      <div class="mt-2 pl-4" *ngIf="agreeCheck" [@growVertical]>
+        <common-captcha [apiBaseUrl]="captchaApiBaseUrl"
+                 [nonce]="nonce"
+                 (onValidToken)="setToken($event)"
+                 [successMessage]="'  '"></common-captcha>
+      </div>
+
+      
+      <div class="modal-footer">
+        <button [disabled]="!canContinue()"
+                class="btn btn-block btn-primary pull-left"
+                type="submit"
+                (click)="closeModal()">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

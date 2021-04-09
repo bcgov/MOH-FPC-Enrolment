@@ -1,0 +1,163 @@
+<common-page-framework layout='default'>
+
+  <h1>{{ standalone ? 'Fair PharmaCare' : 'Financial' }} Calculator</h1>
+
+   <div>
+      <p>
+         You can view an estimate of your Fair PharmaCare financial assistance by entering the information requested
+         below.
+      </p>
+      <p class="text-muted font-italic">
+         Note: Fair PharmaCare helps British Columbians with the cost of eligible prescription drugs and medical
+         supplies. Eligible costs are the maximum amounts PharmaCare will cover for eligible prescription drugs,
+         medical supplies, and related services (e.g. dispensing fees). For more information, check
+         <a target="_blank" href="{{links.FormularySearch}}">BC PharmaCare Formulary Search</a>.
+      </p>
+   </div>
+
+  <form #formRef="ngForm" novalidate>
+      <h2 class="border-bottom">Financial Information</h2>
+
+      <div class="form-group">
+         <p class='no-bold' for="totalFamilyIncome">
+             Enter your net income from {{taxYear}} - see Line 23600 of your Notice of Assessment or Reassessment from the
+             Canada Revenue Agency (<a role="button"
+                                       aria-haspopup="true"
+                                       href="javascript:void(0)"
+                                       (click)="openSample()">samples</a>). For more information, please see
+             <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a>.
+          </p>
+
+          <div class="input-group mb-3 col-md-6">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <label for="applicantIncome" hidden>Income</label>
+            <input class="form-control"
+                type="text"
+                id="applicantIncome"
+                name="applicantIncome"
+                fpcareRequired="required"
+                [ngModel]="income"
+                (ngModelChange)="income = $event; update()"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Your Income"
+                autocomplete="off"/>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <fpcare-toggle id="hasSpouse"
+                      [label]="hasSpouseLabel"
+                      [data]='hasSpouse'
+                      (dataChange)="hasSpouse = $event; update();">
+        </fpcare-toggle>
+        <p class="text-muted font-italic">
+           Note: Failure to notify PharmaCare when you marry or begin living in a marriage-like relationship may
+           affect your eligibility for Fair PharmaCare.
+        </p>
+      </div>
+
+      <div class="form-group" *ngIf='hasSpouse'>
+          <p class='no-bold' for="spouseIncome">
+             Enter your spouse/common-law partner's net income from {{taxYear}} - see Line 23600 of your spouse/common-law
+             partner's Notice of Assessment or Reassessment from the Canada Revenue Agency
+             (<a role="button" aria-haspopup="true" href="javascript:void(0)" (click)="openSample()">samples</a>).
+             For more information, please see <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a>.
+          </p>
+
+          <div class="input-group mb-3 col-md-6">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+             <label for="spouseIncome" hidden>Income</label>
+            <input class="form-control"
+                type="text"
+                id="spouseIncome"
+                name="spouseIncome"
+                fpcareRequired="required"
+                [ngModel]="spouseIncome"
+                (ngModelChange)="spouseIncome = $event; update()"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Your Spouse's Income"
+                autocomplete="off"/>
+          </div>
+      </div>
+
+      <div class="form-group">
+         <fpcare-toggle id='bornBefore1939'
+                         [label]="bornBefore1939Label"
+                         [data]='bornBefore1939'
+                         (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
+      </div>
+
+      <h2 class="border-bottom">Disability Information (if applicable)</h2>
+      <div class="form-group">
+          <label class='no-bold' for="ap_disability">
+             How much did you report for a Registered Disability Savings Plan on your income tax return {{taxYear}}
+             (Line 12500)?
+          </label>
+          <div class="input-group mb-3 col-md-6">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input class="form-control"
+                type="text"
+                id="ap_disability"
+                name="ap_disability"
+                [ngModel]="disability"
+                (ngModelChange)="disability = $event; update();"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Disability Savings Amounts"
+                autocomplete="off"/>
+          </div>
+      </div>
+
+     <div class="form-group" *ngIf='hasSpouse'>
+        <label class='no-bold' for="sp_disability">
+           How much did your spouse/common-law  partner report for a Registered Disability Savings Plan on their
+           income tax return {{taxYear}} (Line 12500)?
+        </label>
+        <div class="input-group mb-3 col-md-6">
+           <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+           </div>
+           <input class="form-control"
+                  type="text"
+                  id="sp_disability"
+                  name="sp_disability"
+                  [ngModel]="spouseDisability"
+                  (ngModelChange)="spouseDisability = $event; update();"
+                  [textMask]="{mask: moneyMask}"
+                  placeholder="Enter Disability Savings Amounts"
+                  autocomplete="off"/>
+        </div>
+     </div>
+        
+  </form>
+
+  <aside>
+    <fpcare-financial-calculator
+      [income]="totalFamilyIncome"
+      [bornBefore1939]="bornBefore1939"
+      [hasSpouse]="hasSpouse"
+      [disabilitySavingsAmount]="totalFamilyRdsp"
+      (incomeAdjustment)="onIncomeAdjustment($event)"
+    ></fpcare-financial-calculator>
+  </aside>
+
+   <fpcare-sample-modal
+       #taxDocuments
+       [title]="'Tax Documents'"
+       [images]="imageList">
+   </fpcare-sample-modal>
+
+</common-page-framework>
+
+<common-form-action-bar
+    *ngIf="!standalone"
+    [submitLabel]="buttonText"
+    [defaultColor]="false"
+    [canContinue]="canContinue()"
+    (btnClick)="continue()">
+</common-form-action-bar>
