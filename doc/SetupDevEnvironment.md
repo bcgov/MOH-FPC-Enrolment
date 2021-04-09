@@ -154,3 +154,17 @@ oc process -f openshift/templates/quickfpincome-to-all.yaml \
     -p NAMESPACE=$(oc project --short) | \
     oc apply -f -
 ```
+
+Create Secrets for the following environment variables in each application (e.g. address-service, msp-service)
+MUTUAL_TLS_PEM_KEY_BASE64
+    oc create secret generic <application name>-tls-key --from-literal=key=<key string value>
+MUTUAL_TLS_PEM_CERT
+    oc create secret generic <application name>-tls-cert --from-literal=cert=<certificate string value>
+AUTH_TOKEN_KEY
+    oc create secret generic <application name>-auth-token-key  --from-literal=key=<key string value>
+SPLUNK_AUTH_TOKEN
+    oc create secret generic <applicantion name>-splunk-auth-token  --from-literal=token=<token string value>
+
+
+To view:
+oc describe secrets/<secret name>
