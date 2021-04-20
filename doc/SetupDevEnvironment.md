@@ -155,6 +155,11 @@ oc process -f openshift/templates/quickfpincome-to-all.yaml \
     oc apply -f -
 ```
 
+**All Environmnet variables that are tokens, keys and passowrds converted to Secrets (April 12, 2021**
+**Note: File to be stored in local repository**
+Setup secrets before running any commands the require params-*.txt files.
+
+
 Create Secrets for the following environment variables in each application (e.g. address-service, msp-service)
 MUTUAL_TLS_PEM_KEY_BASE64
     oc create secret generic <application name>-tls-key --from-literal=key=<key string value>
