@@ -148,6 +148,25 @@ objects:
   - apiVersion: networking.k8s.io/v1
     kind: NetworkPolicy
     metadata:
+      name: fpcare-to-cache-service
+      labels:
+        app: fpcare-web
+    spec:
+      #  allow fpcare frontend to talk to cache-service
+      podSelector:
+        matchLabels:
+          role: cacheservice
+      ingress:
+        - from:
+            - podSelector:
+                matchLabels:
+                  role: fpcarefrontend
+          ports:
+            - protocol: TCP
+              port: 8080
+  - apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
       name: msp-service-to-splunk-forwarder
       labels:
         app: msp-service
