@@ -173,6 +173,17 @@ objects:
               }
 
               location /api/cache/ {
+                if ( $request_method !~ ^(GET|HEAD|OPTIONS)$ ) {
+                  return 405;
+                }
+                if ( $request_method ~ ^(HEAD|OPTIONS)$ ) {
+                  return 200;
+                }
+                proxy_set_header http_host ${HOSTNAME};
+                proxy_pass_header Authorization;
+                proxy_pass_header http_host;
+                proxy_pass_header request_method;
+                proxy_pass_header http_x_forwarded_host;
                 proxy_pass http://cache-service:8080/;
               }
             }
