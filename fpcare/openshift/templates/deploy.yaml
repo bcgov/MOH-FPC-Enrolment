@@ -208,6 +208,9 @@ parameters:
 - description: SPLUNK_AUTH_TOKEN
   name: SPLUNK_AUTH_TOKEN
   required: false
+- description: SPA_ENV_AUTH_TOKEN
+  name: SPA_ENV_AUTH_TOKEN
+  required: false
 - description: CACHE_ENV_AUTH_TOKEN
   name: CACHE_ENV_AUTH_TOKEN
   required: false
