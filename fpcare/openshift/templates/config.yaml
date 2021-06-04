@@ -224,10 +224,10 @@ parameters:
     required: true
   - description: SPLUNK_AUTH_TOKEN
     name: SPLUNK_AUTH_TOKEN
-    required: true
+    required: false
   - description: SPA_ENV_AUTH_TOKEN
     name: SPA_ENV_AUTH_TOKEN
-    required: true
+    required: false
   - description: FPC_ENV
     name: FPC_ENV
     required: true

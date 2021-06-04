@@ -136,7 +136,7 @@ objects:
               - name: SPLUNK_AUTH_TOKEN
                 value: ${SPLUNK_AUTH_TOKEN}
               - name: SPA_ENV_AUTH_TOKEN
-                value: ${USE_SPLUNK_FORWARDER}
+                value: ${SPA_ENV_AUTH_TOKEN}
               - name: FPC_ENV
                 value: ${FPC_ENV}
               - name: FPC_VERSION
@@ -208,7 +208,7 @@ parameters:
   required: false
 - description: SPA_ENV_AUTH_TOKEN
   name: SPA_ENV_AUTH_TOKEN
-  required: true
+  required: false
 - description: FPC_ENV
   name: FPC_ENV
   required: true
