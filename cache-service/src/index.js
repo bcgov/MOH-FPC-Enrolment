@@ -16,6 +16,8 @@ var https = require('https'),
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
+const AUTH_TOKEN_KEY = process.env.AUTH_TOKEN_KEY || 'NO_TOKEN';
+const USE_AUTH_TOKEN = checkEnvBoolean(process.env.USE_AUTH_TOKEN);
 
 // verbose replacement
 function logProvider(provider) {
@@ -53,6 +55,17 @@ var app = express();
 // Add status endpoint
 app.get('/hello', function (req, res) {
     res.send("OK");
+});
+
+// handle posts to /cache endpoint
+app.post('/cache', function (req, res) {
+    getCacheEnvValue(req).then(function (envValue) {
+        res.status(200);
+        return res.send(envValue);
+    }).catch(function(envValue) {
+        res.status(403);
+        return res.send(envValue);
+    });
 });
 
 //
@@ -211,6 +224,62 @@ app.use('/', proxy);
 // Start express
 app.listen(8080);
 
+// get an env value
+var getCacheEnvValue = function (req) {
+    return new Promise(function (resolve, reject) {
+        var authorized = false;
+
+        if (USE_AUTH_TOKEN && req.get('Authorization') === 'cacheenv ' + AUTH_TOKEN_KEY) {
+            authorized = true;
+        };
+        if (authorized || !USE_AUTH_TOKEN) {
+            // required env name
+            const envName = req.get('CACHE_ENV_NAME') || req.get('cache_env_name');
+
+            // For auditing unauthorized access
+            var logString = '';
+            if (USE_AUDIT_LOGS) {
+                const host = req.get('host') || '?';
+                const logsource = req.get('logsource') || '?';
+                const fhost = req.get('http_x_forwarded_host') || '?';
+                const program = req.get('program') || '?';
+                const times = req.get('timestamp') || '?';
+                const http_host = req.get('http_host') || '?';
+                const method = req.get('request_method') || '?';
+                const forwarded = req.get('http_x_forwarded_for') || '?';
+                const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress || '?';
+                const browser = req.headers['user-agent'];
+                const severity = req.get('severity') || '?';
+                const severityLabel = req.get('severity_label') || '?';
+
+                logString = 'program(' + program + ') envName(' + envName
+                + ') host(' + host + ') logsource(' + logsource + ') fhost(' + fhost
+                + ') severity(' + severity + ') method(' + method + ') times(' + times
+                + ') browser(' + browser + ') sourceIP(' + ip + ') http_host(' + http_host
+                + ') http_x_forwarded_for(' + forwarded + ') pod(' + HOST_NAME + ')';
+            }
+
+        }
+        else {
+            if (USE_AUDIT_LOGS) {
+                winstonLogger.info('Unauthorized: ' + logString);
+                winstonLogger.debug('received with headers: ', req.headers);
+            }
+            reject('Forbidden');
+        }
+    }, function(err) {
+        if (USE_AUDIT_LOGS)
+            winstonLogger.error('error: ' + err);
+        reject('Forbidden');
+    });
+};
+
+exports.getCacheEnvValue = getCacheEnvValue;
+
+// utility function to see if something is set to true
+function checkEnvBoolean(env){
+    return env && env.toLowerCase() === 'true';
+}
 
 /**
  * General deny access handler
