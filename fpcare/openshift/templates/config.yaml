@@ -179,11 +179,13 @@ objects:
                 if ( $request_method ~ ^(HEAD|OPTIONS)$ ) {
                   return 200;
                 }
+                proxy_set_header Authorization "cacheenv ${CACHE_ENV_AUTH_TOKEN}";
                 proxy_set_header http_host ${HOSTNAME};
                 proxy_pass_header Authorization;
                 proxy_pass_header http_host;
                 proxy_pass_header request_method;
                 proxy_pass_header http_x_forwarded_host;
+                proxy_pass_header CACHE_ENV_NAME;
                 proxy_pass http://cache-service:8080/;
               }
             }
@@ -228,6 +230,10 @@ parameters:
   - description: SPA_ENV_AUTH_TOKEN
     name: SPA_ENV_AUTH_TOKEN
     required: false
+  - description: CACHE_ENV_AUTH_TOKEN
+    name: CACHE_ENV_AUTH_TOKEN
+    required: false
+    value: "5993117a-2384-4b70-ad42-1e9b9e6044c3"
   - description: FPC_ENV
     name: FPC_ENV
     required: true
