@@ -4,6 +4,7 @@ export const environment = {
   useMockBackend: false,
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',
   captchaApiBaseUrl: '/fpcare/api/captcha',
+  cacheApiBaseUrl: '/fpcare/api/cache',
   loggingURL: '/fpcare/api/logging',
   envServerUrl: '/fpcare/api/env',
   addressUrl: '/fpcare/api/address',
