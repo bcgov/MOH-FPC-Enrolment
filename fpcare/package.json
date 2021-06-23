@@ -50,7 +50,7 @@
     "jquery": "^3.5.0",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.15",
-    "moh-common-lib": "^3.3.3",
+    "moh-common-lib": "^3.4.1",
     "moment": "^2.22.1",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-select": "^1.0.1",
