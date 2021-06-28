@@ -30,10 +30,10 @@
       aria-required="true"
     ></common-radio>
 
-    <div aside aria-labelledby="isLastYearIncome">
+    <aside aria-labelledby="isLastYearIncome">
       Haven't filed last year's taxes yet? Consider applying with this year's
       gross income.
-    </div>
+    </aside>
   </common-page-section>
 
   <ng-container *ngIf="showSection">
@@ -44,7 +44,7 @@
       <div class="financial--container">
         <fpir-financial-input
           formControlName="income"
-          [attr.aria-label]="ariaLabelIncome"
+          [attr.aria-label]="income"
           [moneyMask]="moneyMask"
           aria-required="true"
         >
@@ -58,7 +58,7 @@
         <ng-container *ngIf="hasSpouse">
           <fpir-financial-input
             formControlName="spouseIncome"
-            aria-label="ariaLabelSpouseIncome"
+            [attr.aria-label]="spouseIncome"
             [moneyMask]="moneyMask"
             [attr.aria-required]="hasSpouse"
           >
@@ -73,7 +73,7 @@
 
           <fpir-financial-input
             formControlName="incomeTotal"
-            aria-label="IncomeTotal"
+            [attr.aria-label]="IncomeTotal"
             [moneyMask]="moneyTotalMask"
           >
             <div label class="finance-bold-text--format">
@@ -102,7 +102,7 @@
           <div class="financial--container">
             <fpir-financial-input
               formControlName="rdspIncome"
-              aria-label="RdspIncome"
+              [attr.aria-label]="RdspIncome"
               [moneyMask]="moneyMask"
               [attr.aria-required]="hasRdspIncome"
             >
@@ -118,7 +118,7 @@
             <ng-container *ngIf="hasSpouse">
               <fpir-financial-input
                 formControlName="spouseRdspIncome"
-                aria-label="SpouseRdspIncome"
+                [attr.aria-label]="SpouseRdspIncome"
                 [moneyMask]="moneyMask"
                 [attr.aria-required]="hasSpouse && hasRdspIncome"
               >
@@ -133,7 +133,7 @@
 
               <fpir-financial-input
                 formControlName="rdspIncomeTotal"
-                aria-label="RdspIncomeTotal"
+                [attr.aria-label]="RdspIncomeTotal"
                 [moneyMask]="moneyTotalMask"
               >
                 <div label class="finance-bold-text--format">
@@ -145,7 +145,7 @@
 
             <fpir-financial-input
               formControlName="netIncomeMinusRdsp"
-              aria-label="NetIncomeMinusRdsp"
+              [attr.aria-label]="NetIncomeMinusRdsp"
               [moneyMask]="moneyTotalMask"
             >
               <div label class="finance-bold-text--format">
@@ -201,7 +201,7 @@
           {{ errorMessage }}
         </common-error-container>
 
-        <div aside class="support-doc--tip-area" aria-label="supportDocuments">
+        <aside class="support-doc--tip-area" aria-label="supportDocuments">
           <ng-container *ngIf="isLastYearIncome === true; else GrossIncomeTip">
             <p class="support-doc--tip-title">{{ netIncomeTipTitle }}</p>
             <ul>
@@ -236,7 +236,7 @@
               file your income tax by the CRA deadline.
             </p>
           </ng-container>
-        </div>
+        </aside>
       </common-page-section>
 
       <ng-container *ngIf="isLastYearIncome === false">
