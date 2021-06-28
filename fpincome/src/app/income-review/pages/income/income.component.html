@@ -44,7 +44,6 @@
       <div class="financial--container">
         <fpir-financial-input
           formControlName="income"
-          [attr.aria-label]="income"
           [moneyMask]="moneyMask"
           aria-required="true"
         >
@@ -58,7 +57,6 @@
         <ng-container *ngIf="hasSpouse">
           <fpir-financial-input
             formControlName="spouseIncome"
-            [attr.aria-label]="spouseIncome"
             [moneyMask]="moneyMask"
             [attr.aria-required]="hasSpouse"
           >
@@ -73,7 +71,6 @@
 
           <fpir-financial-input
             formControlName="incomeTotal"
-            [attr.aria-label]="IncomeTotal"
             [moneyMask]="moneyTotalMask"
           >
             <div label class="finance-bold-text--format">
@@ -118,7 +115,6 @@
             <ng-container *ngIf="hasSpouse">
               <fpir-financial-input
                 formControlName="spouseRdspIncome"
-                [attr.aria-label]="SpouseRdspIncome"
                 [moneyMask]="moneyMask"
                 [attr.aria-required]="hasSpouse && hasRdspIncome"
               >
@@ -133,7 +129,6 @@
 
               <fpir-financial-input
                 formControlName="rdspIncomeTotal"
-                [attr.aria-label]="RdspIncomeTotal"
                 [moneyMask]="moneyTotalMask"
               >
                 <div label class="finance-bold-text--format">
