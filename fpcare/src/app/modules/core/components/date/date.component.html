@@ -17,7 +17,7 @@
                    [required]="required"
                    validateCalendarMonth>
               <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
-              <option value="null" disabled hidden>month</option>
+              <option value="null" disabled hidden>Month</option>
                <!-- We show the blank option so the user can clear out their data.-->
               <option value="blank">&nbsp;</option>
               <option *ngFor="let month of monthNames; let i = index;" [value]="i+1"> {{ month }}</option>
@@ -31,7 +31,7 @@
                   [selectedMonth]='monthRef.value'
                   [selectedYear]='yearRef.value'
                   id="day{{objectId}}" name="day" #dayRef="ngModel"
-                  placeholder="day"
+                  placeholder="Day"
                   [required]="required"
                   [disabled]="disabled"
                   min="1"
@@ -45,12 +45,12 @@
                   validateCalendarYear
                   [disabled]="disabled"
                   id="year{{objectId}}" name="year" #yearRef="ngModel"
-                  placeholder="year"
+                  placeholder="Year"
                   [required]="required"
                   min="1830"
                   max="2300"
                   step="1"
-                  autocomplete="=off">
+                  autocomplete="off">
          </div>
 
            <div *ngIf='yearRef.status !== "DISABLED"' role="alert" class='error-container' aria-live="assertive">
