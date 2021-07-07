@@ -181,4 +181,7 @@ h1, h2, h3,
   color: #494949cc; // Font is eqivalent to opacity 0.8, meeting AA standard
 }
 
-
+.btn-primary.disabled,
+.btn-primary:disabled {
+    background-color: #010105 !important;
+}
