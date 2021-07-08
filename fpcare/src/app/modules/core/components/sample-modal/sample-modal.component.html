@@ -13,9 +13,9 @@
       </div>
 
       <div class="modal-body">
-        <div *ngFor="let image of images" class="fpcare-sample--row">
-          <label for="image_{{objectId}}" *ngIf="image?.title">{{image.title}}</label>
-          <img class="fpcare-sample--image" id="image_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
+        <div *ngFor="let image of images; let i = index;" class="fpcare-sample--row">
+          <label for="image_{{i}}_{{objectId}}" *ngIf="image?.title">{{image.title}}</label>
+          <img class="fpcare-sample--image" id="image_{{i}}_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
         </div>
       </div>
 

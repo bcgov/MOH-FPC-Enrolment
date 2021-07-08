@@ -1,6 +1,6 @@
 <div [ngClass]="{'review-deductible': isReview}">
 
-  <h3>{{deductibleTitle}}</h3>
+  <h2>{{deductibleTitle}}</h2>
 
   <!-- The labels above the progress bar -->
   <div class="progress-labels">
@@ -16,18 +16,21 @@
   <div class="progress">
     <div class="progress-bar"
          role="progressbar"
+         aria-label="deductible ratio"
          [style.width]='deductibleRatio + "%"'
          [attr.aria-valuenow]="deductibleRatio"
          aria-valuemin="0"
          aria-valuemax="100"></div>
     <div class="progress-bar bg-warning"
          role="progressbar"
+         aria-label="PharmaCare ratio"
          [style.width]='pharmaCareRatio + "%"'
          [attr.aria-valuenow]="pharmaCareRatio"
          aria-valuemin="0"
          aria-valuemax="100"></div>
     <div class="progress-bar bg-success"
          role="progressbar"
+         aria-label="maximum ratio"
          [style.width]='maximumRatio + "%"'
          [attr.aria-valuenow]="maximumRatio"
          aria-valuemin="0"
