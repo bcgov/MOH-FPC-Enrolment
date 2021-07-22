@@ -1,259 +1,264 @@
-<h1>Estimate Your Income</h1>
-<p>
-  You can use either last year's net income or this year's gross income to apply
-  for an income review. Choose the year with the lower income (or the year for
-  which you have all required documents).
-</p>
-<p>
-  If you use last year's income, you will need to upload the relevant Canada
-  Revenue Agency (CRA) Notice of Assessment(s), Notice of Reassessment(s), or
-  <a href="{{ incomeStmt }}" target="_blank" rel="noopener noreferrer"
-    >proof of income statement</a
-  >
-  (for both you and your spouse, if applicable).
-</p>
-<p>
-  If you use this year's income, you will need to upload documents showing
-  income (for both you and your spouse, if applicable) from all sources (such as
-  wages, Employment Insurance benefits, disability payments, pensions, etc.).
-</p>
+<common-page-framework layout="blank">
+  <h1>Estimate Your Income</h1>
+  <p>
+    You can use either last year's net income or this year's gross income to
+    apply for an income review. Choose the year with the lower income (or the
+    year for which you have all required documents).
+  </p>
+  <p>
+    If you use last year's income, you will need to upload the relevant Canada
+    Revenue Agency (CRA) Notice of Assessment(s), Notice of Reassessment(s), or
+    <a href="{{ incomeStmt }}" target="_blank" rel="noopener noreferrer"
+      >proof of income statement</a
+    >
+    (for both you and your spouse, if applicable).
+  </p>
+  <p>
+    If you use this year's income, you will need to upload documents showing
+    income (for both you and your spouse, if applicable) from all sources (such
+    as wages, Employment Insurance benefits, disability payments, pensions,
+    etc.).
+  </p>
 
-<form [formGroup]="formGroup" class="pt-2">
-  <common-page-section layout="tips">
-    <common-radio
-      formControlName="isLastYearIncome"
-      name="isLastYearIncome"
-      id="isLastYearIncome"
-      label="Choose the one that applies:"
-      [radioLabels]="incomeOptions"
-      display="table-row-group"
-      aria-required="true"
-    ></common-radio>
+  <form [formGroup]="formGroup" class="pt-2">
+    <common-page-section layout="tips">
+      <common-radio
+        formControlName="isLastYearIncome"
+        name="isLastYearIncome"
+        id="isLastYearIncome"
+        label="Choose the one that applies:"
+        [radioLabels]="incomeOptions"
+        display="table-row-group"
+        aria-required="true"
+      ></common-radio>
 
-    <aside aria-labelledby="isLastYearIncome">
-      Haven't filed last year's taxes yet? Consider applying with this year's
-      gross income.
-    </aside>
-  </common-page-section>
+      <aside aria-labelledby="isLastYearIncome">
+        Haven't filed last year's taxes yet? Consider applying with this year's
+        gross income.
+      </aside>
+    </common-page-section>
 
-  <ng-container *ngIf="showSection">
-    <h2 class="border-bottom">{{ incomeHeading }}</h2>
-    <common-page-section layout="noTips">
-      <div [innerHTML]="incomeInstruction"></div>
+    <ng-container *ngIf="showSection">
+      <h2 class="border-bottom">{{ incomeHeading }}</h2>
+      <common-page-section layout="noTips">
+        <div [innerHTML]="incomeInstruction"></div>
 
-      <div class="financial--container">
-        <fpir-financial-input
-          formControlName="income"
-          [moneyMask]="moneyMask"
-          aria-required="true"
-        >
-          <div label class="finance-text--format">{{ incomeLabel }}</div>
-          <div rowId>{{ incomeLineNumber }}</div>
-          <div errors class="finance-error--format">
-            {{ incomeLabel }} is required.
-          </div>
-        </fpir-financial-input>
-
-        <ng-container *ngIf="hasSpouse">
+        <div class="financial--container">
           <fpir-financial-input
-            formControlName="spouseIncome"
+            formControlName="income"
             [moneyMask]="moneyMask"
-            [attr.aria-required]="hasSpouse"
+            aria-required="true"
           >
-            <div label class="finance-text--format">
-              {{ spouseIncomeLabel }}
-            </div>
-            <div rowId>{{ spouseIncomeLineNumber }}</div>
+            <div label class="finance-text--format">{{ incomeLabel }}</div>
+            <div rowId>{{ incomeLineNumber }}</div>
             <div errors class="finance-error--format">
-              {{ spouseIncomeLabel }} is required.
+              {{ incomeLabel }} is required.
             </div>
           </fpir-financial-input>
 
-          <fpir-financial-input
-            formControlName="incomeTotal"
-            [moneyMask]="moneyTotalMask"
-          >
-            <div label class="finance-bold-text--format">
-              {{ incomeTotalLabel }}
-            </div>
-            <div rowId>{{ incomeTotalLineNo }}</div>
-          </fpir-financial-input>
-        </ng-container>
-      </div>
-
-      <ng-container *ngIf="isLastYearIncome">
-        <common-radio
-          formControlName="hasRdspIncome"
-          name="HasRdspIncome"
-          label="Do you receive Registered Disability Savings Plan (RDSP) income?"
-          display="table-row-group"
-          [attr.aria-required]="isLastYearIncome"
-        ></common-radio>
-
-        <ng-container *ngIf="hasRdspIncome">
-          <p class="pt-2">
-            Fair PharmaCare coverage is based on your net income minus RDSP
-            payments.
-          </p>
-
-          <div class="financial--container">
+          <ng-container *ngIf="hasSpouse">
             <fpir-financial-input
-              formControlName="rdspIncome"
+              formControlName="spouseIncome"
               [moneyMask]="moneyMask"
-              [attr.aria-required]="hasRdspIncome"
+              [attr.aria-required]="hasSpouse"
             >
               <div label class="finance-text--format">
-                {{ rdspIncomeLabel }}
+                {{ spouseIncomeLabel }}
               </div>
-              <div rowId>{{ rdspLineNo }}</div>
+              <div rowId>{{ spouseIncomeLineNumber }}</div>
               <div errors class="finance-error--format">
-                {{ rdspIncomeLabel }} is required.
+                {{ spouseIncomeLabel }} is required.
               </div>
             </fpir-financial-input>
 
-            <ng-container *ngIf="hasSpouse">
-              <fpir-financial-input
-                formControlName="spouseRdspIncome"
-                [moneyMask]="moneyMask"
-                [attr.aria-required]="hasSpouse && hasRdspIncome"
-              >
-                <div label class="finance-text--format">
-                  {{ spouseRdspIncomeLabel }}
-                </div>
-                <div rowId>{{ spouseRdspLineNo }}</div>
-                <div errors class="finance-error--format">
-                  {{ spouseRdspIncomeLabel }} is required.
-                </div>
-              </fpir-financial-input>
-
-              <fpir-financial-input
-                formControlName="rdspIncomeTotal"
-                [moneyMask]="moneyTotalMask"
-              >
-                <div label class="finance-bold-text--format">
-                  {{ rdspIncomeTotalLabel }}
-                </div>
-                <div rowId>{{ totalRspdLineNo }}</div>
-              </fpir-financial-input>
-            </ng-container>
-
             <fpir-financial-input
-              formControlName="netIncomeMinusRdsp"
+              formControlName="incomeTotal"
               [moneyMask]="moneyTotalMask"
             >
               <div label class="finance-bold-text--format">
-                {{ netIncomeMinusRdspLabel }}
+                {{ incomeTotalLabel }}
               </div>
-              <div rowId>{{ netInomeMinusRdspLineNo }}</div>
+              <div rowId>{{ incomeTotalLineNo }}</div>
             </fpir-financial-input>
-          </div>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="isLastYearIncome">
+          <common-radio
+            formControlName="hasRdspIncome"
+            name="HasRdspIncome"
+            label="Do you receive Registered Disability Savings Plan (RDSP) income?"
+            display="table-row-group"
+            [attr.aria-required]="isLastYearIncome"
+          ></common-radio>
+
+          <ng-container *ngIf="hasRdspIncome">
+            <p class="pt-2">
+              Fair PharmaCare coverage is based on your net income minus RDSP
+              payments.
+            </p>
+
+            <div class="financial--container">
+              <fpir-financial-input
+                formControlName="rdspIncome"
+                [moneyMask]="moneyMask"
+                [attr.aria-required]="hasRdspIncome"
+              >
+                <div label class="finance-text--format">
+                  {{ rdspIncomeLabel }}
+                </div>
+                <div rowId>{{ rdspLineNo }}</div>
+                <div errors class="finance-error--format">
+                  {{ rdspIncomeLabel }} is required.
+                </div>
+              </fpir-financial-input>
+
+              <ng-container *ngIf="hasSpouse">
+                <fpir-financial-input
+                  formControlName="spouseRdspIncome"
+                  [moneyMask]="moneyMask"
+                  [attr.aria-required]="hasSpouse && hasRdspIncome"
+                >
+                  <div label class="finance-text--format">
+                    {{ spouseRdspIncomeLabel }}
+                  </div>
+                  <div rowId>{{ spouseRdspLineNo }}</div>
+                  <div errors class="finance-error--format">
+                    {{ spouseRdspIncomeLabel }} is required.
+                  </div>
+                </fpir-financial-input>
+
+                <fpir-financial-input
+                  formControlName="rdspIncomeTotal"
+                  [moneyMask]="moneyTotalMask"
+                >
+                  <div label class="finance-bold-text--format">
+                    {{ rdspIncomeTotalLabel }}
+                  </div>
+                  <div rowId>{{ totalRspdLineNo }}</div>
+                </fpir-financial-input>
+              </ng-container>
+
+              <fpir-financial-input
+                formControlName="netIncomeMinusRdsp"
+                [moneyMask]="moneyTotalMask"
+              >
+                <div label class="finance-bold-text--format">
+                  {{ netIncomeMinusRdspLabel }}
+                </div>
+                <div rowId>{{ netInomeMinusRdspLineNo }}</div>
+              </fpir-financial-input>
+            </div>
+          </ng-container>
+        </ng-container>
+      </common-page-section>
+
+      <ng-container *ngIf="showSupportDocSection">
+        <common-page-section layout="noTips">
+          <h2>Upload Supporting Documents</h2>
+          <p *ngIf="isLastYearIncome === false">
+            Upload all supporting documents. The amounts on the uploaded
+            documents must add up to the total income you enter above.
+          </p>
+          <p><strong>Document upload requirements.</strong></p>
+          <p class="pb-0">
+            Scan the document, or take a photo of it. Make sure that it's:
+          </p>
+          <ul>
+            <li>The entire document, from corner to corner</li>
+            <li>Rotated correctly (not upside down or sideways)</li>
+            <li>In focus and easy to read</li>
+            <li>A JPG, PNG, GIF, BMP, or PDF</li>
+          </ul>
+          <p>
+            Your information will be collected, used and disclosed in accordance
+            with the provincial
+            <em
+              >Freedom of Information and Protection of Privacy Act and
+              Pharmaceutical Services Act</em
+            >.
+          </p>
+        </common-page-section>
+
+        <p class="border-bottom"><em>Supporting document(s)</em></p>
+
+        <common-page-section layout="double">
+          <!-- File upload not compatible with reactive forms -->
+          <common-file-uploader
+            instructionText="{{ uploadInstructions }}"
+            [(images)]="supportingDocuments"
+            (errorDocument)="handleError($event)"
+            [required]="true"
+            id="supportDocuments"
+          >
+          </common-file-uploader>
+          <common-error-container [displayError]="errorMessage !== null">
+            {{ errorMessage }}
+          </common-error-container>
+
+          <aside class="support-doc--tip-area" aria-label="supportDocuments">
+            <ng-container
+              *ngIf="isLastYearIncome === true; else GrossIncomeTip"
+            >
+              <p class="support-doc--tip-title">{{ netIncomeTipTitle }}</p>
+              <ul>
+                <li>
+                  Canada Revenue Agency (CRA) Notice of Assessment or Notice of
+                  Reassessment or
+                  <a
+                    href="{{ incomeStmt }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >proof of income statement</a
+                  >
+                  available from the CRA website.
+                </li>
+              </ul>
+              <ng-container *ngIf="hasRdspIncome">
+                <strong>AND</strong>
+                <ul>
+                  <li>T4A slip for RDSP income</li>
+                </ul>
+              </ng-container>
+              <ul>
+                <li>
+                  If you haven't yet filed last year's income tax, you may apply
+                  using tax slips for all income sources. This option is not
+                  available after June 1.
+                </li>
+              </ul>
+
+              <p>
+                Note: it is a requirement of the Fair PharmaCare program that
+                you file your income tax by the CRA deadline.
+              </p>
+            </ng-container>
+          </aside>
+        </common-page-section>
+
+        <ng-container *ngIf="isLastYearIncome === false">
+          <p class="pt-2">
+            <strong>If you want</strong> HIBC to consider your income for last
+            year as well as your income for this year, you can upload your CRA
+            Notice of Assessment / Reassessment or
+            <a href="{{ incomeStmt }}" target="_blank" rel="noopener noreferrer"
+              >proof of income statement</a
+            >; <strong>AND</strong> if applicable, T4A slip for RDSP income.
+          </p>
+          <p>
+            If you haven't yet filed last year's income tax, you may apply using
+            tax slips for all income sources. This option is not available after
+            June 1.
+          </p>
+          <p>
+            If your application using this year's income is rejected for any
+            reason, we will base our review on your income for last year.
+          </p>
         </ng-container>
       </ng-container>
-    </common-page-section>
-
-    <ng-container *ngIf="showSupportDocSection">
-      <common-page-section layout="noTips">
-        <h2>Upload Supporting Documents</h2>
-        <p *ngIf="isLastYearIncome === false">
-          Upload all supporting documents. The amounts on the uploaded documents
-          must add up to the total income you enter above.
-        </p>
-        <p><strong>Document upload requirements.</strong></p>
-        <p class="pb-0">
-          Scan the document, or take a photo of it. Make sure that it's:
-        </p>
-        <ul>
-          <li>The entire document, from corner to corner</li>
-          <li>Rotated correctly (not upside down or sideways)</li>
-          <li>In focus and easy to read</li>
-          <li>A JPG, PNG, GIF, BMP, or PDF</li>
-        </ul>
-        <p>
-          Your information will be collected, used and disclosed in accordance
-          with the provincial
-          <em
-            >Freedom of Information and Protection of Privacy Act and
-            Pharmaceutical Services Act</em
-          >.
-        </p>
-      </common-page-section>
-
-      <p class="border-bottom"><em>Supporting document(s)</em></p>
-
-      <common-page-section layout="double">
-        <!-- File upload not compatible with reactive forms -->
-        <common-file-uploader
-          instructionText="{{ uploadInstructions }}"
-          [(images)]="supportingDocuments"
-          (errorDocument)="handleError($event)"
-          [required]="true"
-          id="supportDocuments"
-        >
-        </common-file-uploader>
-        <common-error-container [displayError]="errorMessage !== null">
-          {{ errorMessage }}
-        </common-error-container>
-
-        <aside class="support-doc--tip-area" aria-label="supportDocuments">
-          <ng-container *ngIf="isLastYearIncome === true; else GrossIncomeTip">
-            <p class="support-doc--tip-title">{{ netIncomeTipTitle }}</p>
-            <ul>
-              <li>
-                Canada Revenue Agency (CRA) Notice of Assessment or Notice of
-                Reassessment or
-                <a
-                  href="{{ incomeStmt }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >proof of income statement</a
-                >
-                available from the CRA website.
-              </li>
-            </ul>
-            <ng-container *ngIf="hasRdspIncome">
-              <strong>AND</strong>
-              <ul>
-                <li>T4A slip for RDSP income</li>
-              </ul>
-            </ng-container>
-            <ul>
-              <li>
-                If you haven't yet filed last year's income tax, you may apply
-                using tax slips for all income sources. This option is not
-                available after June 1.
-              </li>
-            </ul>
-
-            <p>
-              Note: it is a requirement of the Fair PharmaCare program that you
-              file your income tax by the CRA deadline.
-            </p>
-          </ng-container>
-        </aside>
-      </common-page-section>
-
-      <ng-container *ngIf="isLastYearIncome === false">
-        <p class="pt-2">
-          <strong>If you want</strong> HIBC to consider your income for last
-          year as well as your income for this year, you can upload your CRA
-          Notice of Assessment / Reassessment or
-          <a href="{{ incomeStmt }}" target="_blank" rel="noopener noreferrer"
-            >proof of income statement</a
-          >; <strong>AND</strong> if applicable, T4A slip for RDSP income.
-        </p>
-        <p>
-          If you haven't yet filed last year's income tax, you may apply using
-          tax slips for all income sources. This option is not available after
-          June 1.
-        </p>
-        <p>
-          If your application using this year's income is rejected for any
-          reason, we will base our review on your income for last year.
-        </p>
-      </ng-container>
     </ng-container>
-  </ng-container>
-</form>
+  </form>
+</common-page-framework>
 
 <ng-template #GrossIncomeTip>
   <p class="support-doc--tip-title">{{ grossIncomeTipTitle }}</p>
