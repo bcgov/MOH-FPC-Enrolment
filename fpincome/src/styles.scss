@@ -285,13 +285,3 @@ input[type='number'] {
 header .skip-to-content {
   display: none !important;
 }
-
-// Preload image assets.
-body::after {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: -1;
-  content: url('assets/logo_print.png'); // load images.
-}
