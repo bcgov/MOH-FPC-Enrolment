@@ -1,115 +1,117 @@
-<h1>Personal Information</h1>
+<common-page-framework layout="blank">
+  <h1>Personal Information</h1>
 
-<p class="border-bottom mb-4">
-  Enter your name as it appears on your income tax return.
-</p>
+  <p class="border-bottom mb-4">
+    Enter your name as it appears on your income tax return.
+  </p>
 
-<form [formGroup]="formGroup">
-  <common-page-section layout="tips">
-    <div class="col-md-8">
-      <div class="p-2">
-        <common-name
-          formControlName="firstName"
-          name="firstName"
-          label="{{ applFirstNameLabel }}"
-          maxlength="{{ firstNameLen }}"
-          aria-required="true"
-        ></common-name>
-      </div>
-      <div class="p-2">
-        <common-name
-          formControlName="lastName"
-          name="lastName"
-          label="{{ applLastNameLabel }}"
-          maxlength="{{ lastNameLen }}"
-          aria-required="true"
-        ></common-name>
-      </div>
-      <!-- NOTE: When library is updated placeholder fields can be removed -->
-      <div class="p-2">
-        <common-street
-          formControlName="address"
-          name="address"
-          label="{{ applAddressLabel }}"
-          maxlength="{{ addressLen }}"
-          placeholder=""
-          aria-required="true"
-        ></common-street>
-      </div>
-      <div class="p-2">
-        <common-city
-          formControlName="city"
-          name="city"
-          maxlength="{{ cityNameLen }}"
-          placeholder=""
-          aria-required="true"
-        ></common-city>
-      </div>
-    </div>
-    <div class="col-md-5">
-      <div class="p-2">
-        <common-postal-code
-          formControlName="postalCode"
-          name="postalCode"
-          label="{{ applPostalCodeLabel }}"
-          aria-required="true"
-        ></common-postal-code>
-      </div>
-      <div class="p-2">
-        <common-phn
-          formControlName="phn"
-          name="phn"
-          label="{{ phnLabel }}"
-          placeholder=""
-          aria-required="true"
-        ></common-phn>
-      </div>
-    </div>
-  </common-page-section>
-  <common-page-section layout="tips" class="border-top mt-4 pt-4">
-    <common-radio
-      formControlName="hasSpouse"
-      name="hasSpouse"
-      [label]="hasSpouseQuestion"
-      display="table-row-group"
-      aria-required="true"
-    ></common-radio>
-    <div *ngIf="hasSpouseFlag" class="border-left pl-4">
+  <form [formGroup]="formGroup">
+    <common-page-section layout="tips">
       <div class="col-md-8">
         <div class="p-2">
           <common-name
-            formControlName="spFirstName"
-            name="spFirstName"
-            label="{{ spFirstNameLabel }}"
+            formControlName="firstName"
+            name="firstName"
+            label="{{ applFirstNameLabel }}"
             maxlength="{{ firstNameLen }}"
-            [attr.aria-required]="hasSpouseFlag"
+            aria-required="true"
           ></common-name>
         </div>
         <div class="p-2">
           <common-name
-            formControlName="spLastName"
-            name="spLastName"
-            label="{{ spLastNameLabel }}"
+            formControlName="lastName"
+            name="lastName"
+            label="{{ applLastNameLabel }}"
             maxlength="{{ lastNameLen }}"
-            [attr.aria-required]="hasSpouseFlag"
+            aria-required="true"
           ></common-name>
+        </div>
+        <!-- NOTE: When library is updated placeholder fields can be removed -->
+        <div class="p-2">
+          <common-street
+            formControlName="address"
+            name="address"
+            label="{{ applAddressLabel }}"
+            maxlength="{{ addressLen }}"
+            placeholder=""
+            aria-required="true"
+          ></common-street>
+        </div>
+        <div class="p-2">
+          <common-city
+            formControlName="city"
+            name="city"
+            maxlength="{{ cityNameLen }}"
+            placeholder=""
+            aria-required="true"
+          ></common-city>
         </div>
       </div>
       <div class="col-md-5">
         <div class="p-2">
+          <common-postal-code
+            formControlName="postalCode"
+            name="postalCode"
+            label="{{ applPostalCodeLabel }}"
+            aria-required="true"
+          ></common-postal-code>
+        </div>
+        <div class="p-2">
           <common-phn
-            formControlName="spPhn"
-            name="spPhn"
-            label="{{ spPhnLabel }}"
+            formControlName="phn"
+            name="phn"
+            label="{{ phnLabel }}"
             placeholder=""
-            [attr.aria-required]="hasSpouseFlag"
+            aria-required="true"
           ></common-phn>
         </div>
       </div>
-    </div>
-    <div aside>
-      <strong>"Spouse":</strong> The term "spouse" in this application includes
-      common-law partners.
-    </div>
-  </common-page-section>
-</form>
+    </common-page-section>
+    <common-page-section layout="tips" class="border-top mt-4 pt-4">
+      <common-radio
+        formControlName="hasSpouse"
+        name="hasSpouse"
+        [label]="hasSpouseQuestion"
+        display="table-row-group"
+        aria-required="true"
+      ></common-radio>
+      <div *ngIf="hasSpouseFlag" class="border-left pl-4">
+        <div class="col-md-8">
+          <div class="p-2">
+            <common-name
+              formControlName="spFirstName"
+              name="spFirstName"
+              label="{{ spFirstNameLabel }}"
+              maxlength="{{ firstNameLen }}"
+              [attr.aria-required]="hasSpouseFlag"
+            ></common-name>
+          </div>
+          <div class="p-2">
+            <common-name
+              formControlName="spLastName"
+              name="spLastName"
+              label="{{ spLastNameLabel }}"
+              maxlength="{{ lastNameLen }}"
+              [attr.aria-required]="hasSpouseFlag"
+            ></common-name>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="p-2">
+            <common-phn
+              formControlName="spPhn"
+              name="spPhn"
+              label="{{ spPhnLabel }}"
+              placeholder=""
+              [attr.aria-required]="hasSpouseFlag"
+            ></common-phn>
+          </div>
+        </div>
+      </div>
+      <div aside>
+        <strong>"Spouse":</strong> The term "spouse" in this application
+        includes common-law partners.
+      </div>
+    </common-page-section>
+  </form>
+</common-page-framework>
