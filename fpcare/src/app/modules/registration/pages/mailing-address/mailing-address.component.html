@@ -48,6 +48,8 @@
                  name="street"
                  [maxlength]="streetMaxLength"
                  fpcareRequired
+                 aria-required="true"
+                 required
                  [ngModel]="applicant.updAddress?.street"
                  (ngModelChange)="applicant.updAddress.street=$event"
                  autocomplete="off" />
@@ -60,6 +62,8 @@
                  name="city"
                  [maxlength]="cityMaxLength"
                  fpcareRequired
+                 required
+                 aria-required="true"
                  [ngModel]="applicant.updAddress?.city"
                  (ngModelChange)="applicant.updAddress.city=$event" 
                  autocomplete="off"/>
@@ -71,7 +75,9 @@
                   (ngModelChange)="applicant.updAddress.province=$event"
                   id="province"
                   name="province"
-                  fpcareRequired>
+                  fpcareRequired
+                  required
+                  aria-required="true">
             <option *ngFor="let prov of provinceName; let i = index;"
                     value="{{getProvinceID(i)}}">{{ prov }}</option>
           </select>

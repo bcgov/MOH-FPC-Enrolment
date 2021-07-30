@@ -21,8 +21,7 @@
       <div class="form-group">
          <p class='no-bold' for="totalFamilyIncome">
              Enter your net income from {{taxYear}} - see Line 23600 of your Notice of Assessment or Reassessment from the
-             Canada Revenue Agency (<a role="button"
-                                       aria-haspopup="true"
+             Canada Revenue Agency (<a aria-haspopup="true"
                                        href="javascript:void(0)"
                                        (click)="openSample()">samples</a>). For more information, please see
              <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a>.
@@ -42,6 +41,8 @@
                 (ngModelChange)="income = $event; update()"
                 [textMask]="{mask: moneyMask}"
                 placeholder="Enter Your Income"
+                required
+                aria-required="true"
                 autocomplete="off"/>
           </div>
       </div>
@@ -62,7 +63,7 @@
           <p class='no-bold' for="spouseIncome">
              Enter your spouse/common-law partner's net income from {{taxYear}} - see Line 23600 of your spouse/common-law
              partner's Notice of Assessment or Reassessment from the Canada Revenue Agency
-             (<a role="button" aria-haspopup="true" href="javascript:void(0)" (click)="openSample()">samples</a>).
+             (<a aria-haspopup="true" href="javascript:void(0)" (click)="openSample()">samples</a>).
              For more information, please see <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a>.
           </p>
 
@@ -80,6 +81,8 @@
                 (ngModelChange)="spouseIncome = $event; update()"
                 [textMask]="{mask: moneyMask}"
                 placeholder="Enter Your Spouse's Income"
+                required
+                aria-required="true"
                 autocomplete="off"/>
           </div>
       </div>
@@ -109,6 +112,8 @@
                 (ngModelChange)="disability = $event; update();"
                 [textMask]="{mask: moneyMask}"
                 placeholder="Enter Disability Savings Amounts"
+                aria-required="true"
+                required
                 autocomplete="off"/>
           </div>
       </div>
@@ -130,6 +135,8 @@
                   (ngModelChange)="spouseDisability = $event; update();"
                   [textMask]="{mask: moneyMask}"
                   placeholder="Enter Disability Savings Amounts"
+                  aria-required="true"
+                  required
                   autocomplete="off"/>
         </div>
      </div>

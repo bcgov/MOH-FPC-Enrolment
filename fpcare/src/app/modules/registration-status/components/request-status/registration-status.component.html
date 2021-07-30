@@ -70,6 +70,8 @@
                  [placeholder]="placeholder"
                  [maxlength]="regNumberMaxLn()"
                  fpcareRequired="required,regnum-check"
+                 required
+                 aria-required="true"
                  [ngModel]="applicant.fpcRegNumber"
                  (ngModelChange)="updateRegNumber($event)"
                  [disabled]="disableRegNum()"

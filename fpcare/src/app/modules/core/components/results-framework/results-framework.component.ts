@@ -52,4 +52,15 @@ export class ResultsFrameworkComponent {
       ? msg.msgText
       : SRQ_Msgs.find((val) => val.msgCode === 'SRQ_058').msgText;
   }
+
+  keyPress(event){
+    if (event.keyCode === 13){ // code for Enter key
+      this.printPage();
+    }
+  }
+
+  printPage() {
+    window.print();
+    return false;
+  }
 }

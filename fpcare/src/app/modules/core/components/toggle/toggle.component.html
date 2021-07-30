@@ -6,6 +6,8 @@
          id="no_{{objectId}}"
          name="selection_{{objectId}}"
          value="No"
+         required
+         aria-required="true"
          [checked]="data === false"
          (click)="dataChange.emit(false)">
       <label class="custom-control-label" for="no_{{objectId}}">No</label>
@@ -16,6 +18,8 @@
          id="yes_{{objectId}}"
          name="selection_{{objectId}}"
          value="Yes"
+         required
+         aria-required="true"
          [checked]="data === true"
          (click)="dataChange.emit(true)">
       <label class="custom-control-label" for="yes_{{objectId}}">Yes</label>

@@ -16,3 +16,8 @@
 //   url('../fonts/MyriadWebPro.ttf')  format('truetype'), /* Safari, Android, iOS */
 //   url('../fonts/MyriadWebPro.svg#svgFontName') format('svg'); /* Legacy iOS */
 // }
+
+
+.step-container a:focus div span {
+  border: 2px solid black;
+}
