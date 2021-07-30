@@ -19,7 +19,11 @@
     </div>
 
     <div class="col-md-6" *ngIf="displayPrint">
-      <button class="btn btn-default float-right fpc-icon--print" onclick="window.print();return false;" aria-label="print">
+      <button class="btn btn-default float-right fpc-icon--print" 
+        (click)="printPage()" 
+        tabindex="0"
+        aria-label="print"
+        (keypress)="keyPress($event)">
         <i class="fa fa-print fa-2x pointer" aria-hidden="true"></i>
       </button>
     </div>

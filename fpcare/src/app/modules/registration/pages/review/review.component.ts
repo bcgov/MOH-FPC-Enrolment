@@ -159,11 +159,23 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( REGISTRATION_PERSONAL );
   }
 
+  personalPress(event) {
+    if (event.keyCode === 13){ // code for Enter key
+      this.editPersonalInfo();
+    }
+  }
+
   /**
    * Link to Child Information page so applicant can edit data
    */
   editChildInfo() {
     this.navigate( REGISTRATION_CHILD );
+  }
+
+  childPress(event) {
+    if (event.keyCode === 13){ // code for Enter key
+      this.editChildInfo();
+    }
   }
 
   /**
@@ -173,11 +185,23 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( REGISTRATION_ADDRESS );
   }
 
+  contactPress(event) {
+    if (event.keyCode === 13){ // code for Enter key
+      this.editContactInfo();
+    }
+  }
+
   /**
    * Link to Financial page so applicant can edit data
    */
   editFinancialInfo() {
     this.navigate( REGISTRATION_FINANCIAL );
+  }
+
+  financialPress(event) {
+    if (event.keyCode === 13){ // code for Enter key
+      this.editFinancialInfo();
+    }
   }
 
   editSpouse() {
@@ -187,6 +211,13 @@ export class ReviewPageComponent extends Base implements OnInit {
       this.editFinancialInfo();
     }
   }
+
+  spousePress(event) {
+    if (event.keyCode === 13){ // code for Enter key
+      this.editSpouse();
+    }
+  }
+
   /**
    * Retrieve the updated street address
    * @returns {string}

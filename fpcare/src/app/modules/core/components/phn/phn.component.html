@@ -7,6 +7,8 @@
          name="phn_{{objectId}}"
          [placeholder]="placeholder"
          fpcareRequired="required,phn-check"
+         aria-required="true"
+         required
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"
          [textMask]="{mask: mask}"

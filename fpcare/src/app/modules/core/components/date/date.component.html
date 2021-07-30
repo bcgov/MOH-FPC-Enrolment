@@ -15,6 +15,7 @@
                    #monthRef="ngModel"
                    [disabled]="disabled"
                    [required]="required"
+                   aria-required="true"
                    validateCalendarMonth>
               <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
               <option value="null" disabled hidden>Month</option>
@@ -33,6 +34,7 @@
                   id="day{{objectId}}" name="day" #dayRef="ngModel"
                   placeholder="Day"
                   [required]="required"
+                  aria-required="true"
                   [disabled]="disabled"
                   min="1"
                   max="31"
@@ -47,6 +49,7 @@
                   id="year{{objectId}}" name="year" #yearRef="ngModel"
                   placeholder="Year"
                   [required]="required"
+                  aria-required="true"
                   min="1830"
                   max="2300"
                   step="1"
@@ -90,4 +93,4 @@
            </div>
        </div>
    </fieldset>
-</form>
+  </form>

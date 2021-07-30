@@ -7,6 +7,8 @@
          name="sin_{{objectId}}"
          [placeholder]="placeholder"
          fpcareRequired="required,sin-check"
+         aria-required="true"
+         required
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"
          [textMask]="{mask: mask}"

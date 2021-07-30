@@ -7,6 +7,8 @@
          name="name_{{objectId}}"
          [maxlength]="nameMaxLen"
          fpcareRequired="required,name-check"
+         aria-required="true"
+         required
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"
          autocomplete="off">

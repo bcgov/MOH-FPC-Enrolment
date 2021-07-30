@@ -14,7 +14,7 @@
   <common-page-section layout='double'>
     <div>
       <h2>Applicant Information
-        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editPersonalInfo()"></i>
+        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editPersonalInfo()" tabindex="0" (keypress)="personalPress($event)"></i>
       </h2>
       <div class="bg-light section">
         <div class="line-item">
@@ -40,7 +40,9 @@
       <h2>Spouse/Common-law Partner Information
         <i class="fa fa-pencil edit--icon"
           aria-hidden="true"
-          (click)="editSpouse()"></i>
+          (click)="editSpouse()"
+          tabindex="0"
+          (keypress)="spousePress($event)"></i>
       </h2>
       <div class="bg-light section">
         <div *ngIf="hasSpouse; else noSpouse">
@@ -66,7 +68,11 @@
 
     <div>
       <h2>Child Information
-        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editChildInfo()"></i>
+        <i class="fa fa-pencil edit--icon" 
+        aria-hidden="true" 
+        (click)="editChildInfo()" 
+        tabindex="0"
+        (keypress)="childPress($event)"></i>
       </h2>
       <div class="bg-light section">
         <div *ngFor="let child of children">
@@ -92,7 +98,11 @@
     <aside>
       <div>
         <h2>Contact Information
-          <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
+          <i class="fa fa-pencil edit--icon" 
+          aria-hidden="true"
+          (click)="editContactInfo()" 
+          tabindex="0"
+          (keypress)="contactPress($event)"></i>
         </h2>
         <div class="bg-light section">
           <div class="line-item">
@@ -104,7 +114,11 @@
 
       <div>
         <h2>Financial Information
-          <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
+          <i class="fa fa-pencil edit--icon" 
+          aria-hidden="true" 
+          (click)="editFinancialInfo()"
+          tabindex="0"
+          (keypress)="financialPress($event)"></i>
         </h2>
         <div class="bg-light section">
           <div class="pb-2">
