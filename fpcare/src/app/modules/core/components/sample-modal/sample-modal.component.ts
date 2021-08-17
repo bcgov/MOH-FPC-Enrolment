@@ -95,7 +95,7 @@ export class SampleModalComponent extends Base implements OnInit {
 
   getElements(): Array<HTMLElement> {
     const focusElmts =
-      'button';
+      'button, i, h2';
 
     const _tabElements = Array.prototype.slice.call(
       this.el.nativeElement.querySelectorAll(focusElmts)
