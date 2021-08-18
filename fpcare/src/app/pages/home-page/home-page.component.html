@@ -1,57 +1,57 @@
-<h1>Home Page</h1>
+<main class="container-fluid" id="content">
+  <h1>Home Page</h1>
+  <section>
+
+    <!--
+      Demo page is broken. Need to create a DemoModule and set it up to restore it, when time is available.
+
+      <a routerLink="/demo">
+      <button class="btn btn-block btn-lg btn-secondary">
+        Demo page
+      </button>
+    </a>
+
+    <hr> -->
+
+    <a [routerLink]='registration'>
+      <button class="btn btn-block btn-lg btn-secondary">
+        Registration
+      </button>
+    </a>
+
+    <hr class="invisible">
+
+    <a [routerLink]='requestRegStatus'>
+      <button class="btn btn-block btn-lg btn-secondary">
+        Registration Status
+      </button>
+    </a>
+
+    <hr class="invisible">
 
 
-<section>
+    <a [routerLink]='confirmAssistance'>
+      <button class="btn btn-block btn-lg btn-secondary">
+        Request Confirmation of Assistance
+      </button>
+    </a>
 
-  <!--
-    Demo page is broken. Need to create a DemoModule and set it up to restore it, when time is available.
+    <hr class="invisible">
 
-    <a routerLink="/demo">
-    <button class="btn btn-block btn-lg btn-secondary">
-      Demo page
-    </button>
-  </a>
-
-  <hr> -->
-
-  <a [routerLink]='registration'>
-    <button class="btn btn-block btn-lg btn-secondary">
-      Registration
-    </button>
-  </a>
-
-  <hr class="invisible">
-
-  <a [routerLink]='requestRegStatus'>
-    <button class="btn btn-block btn-lg btn-secondary">
-      Registration Status
-    </button>
-  </a>
-
-  <hr class="invisible">
+    <a [routerLink]='requestConsent'>
+      <button class="btn btn-block btn-lg btn-secondary">
+        Request Consent Form
+      </button>
+    </a>
 
 
-  <a [routerLink]='confirmAssistance'>
-    <button class="btn btn-block btn-lg btn-secondary">
-      Request Confirmation of Assistance
-    </button>
-  </a>
+    <hr class="invisible">
 
-  <hr class="invisible">
+    <a routerLink='/financial-calculator'>
+      <button class="btn btn-block btn-lg btn-secondary">
+        Financial Calculator (standalone)
+      </button>
+    </a>
 
-  <a [routerLink]='requestConsent'>
-    <button class="btn btn-block btn-lg btn-secondary">
-      Request Consent Form
-    </button>
-  </a>
-
-
-  <hr class="invisible">
-
-  <a routerLink='/financial-calculator'>
-    <button class="btn btn-block btn-lg btn-secondary">
-      Financial Calculator (standalone)
-    </button>
-  </a>
-
-</section>
+  </section>
+</main>
