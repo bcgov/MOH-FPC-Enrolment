@@ -1,17 +1,20 @@
-<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
-  <h1 title>Fair PharmaCare Registration Status Search Results</h1>
+<main class="container-fluid" id="content">
+  <fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
+    <h1 title>Fair PharmaCare Registration Status Search Results</h1>
+  
+    <div body>
+      <p class="font-weight-bold">
+        Your status for {{ hasReg ? 'Registration Number' : 'Personal Health Number (PHN)'}} {{accountNumber}} is:
+      </p>
+        <!--
+          Using innerHTML bypasses angular's security sanitzation, so we can
+          directly include links.  This is safe only because we know we control
+          the messages coming back and no user supplied content will ever appear
+          here.
+        -->
+      <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
+    </div>
+  
+  </fpcare-results-framework>
+</main>
 
-  <div body>
-    <p class="font-weight-bold">
-      Your status for {{ hasReg ? 'Registration Number' : 'Personal Health Number (PHN)'}} {{accountNumber}} is:
-    </p>
-      <!--
-        Using innerHTML bypasses angular's security sanitzation, so we can
-        directly include links.  This is safe only because we know we control
-        the messages coming back and no user supplied content will ever appear
-        here.
-      -->
-    <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
-  </div>
-
-</fpcare-results-framework>
