@@ -14,7 +14,7 @@
   <common-page-section layout='double'>
     <div>
       <h2>Applicant Information
-        <i class="fa fa-pencil edit--icon" aria-label="Edit Personal Information" (click)="editPersonalInfo()" tabindex="0" (keypress)="personalPress($event)"></i>
+        <i class="fa fa-pencil edit--icon" (click)="editPersonalInfo()" tabindex="0" (keypress)="personalPress($event)"></i>
       </h2>
       <div class="bg-light section">
         <div class="line-item">
@@ -39,7 +39,6 @@
     <div>
       <h2>Spouse/Common-law Partner Information
         <i class="fa fa-pencil edit--icon"
-          aria-label="Edit Spouse/Common-law Partner Information"
           (click)="editSpouse()"
           tabindex="0"
           (keypress)="spousePress($event)"></i>
@@ -69,7 +68,6 @@
     <div>
       <h2>Child Information
         <i class="fa fa-pencil edit--icon" 
-        aria-label="Edit Child Information"
         (click)="editChildInfo()" 
         tabindex="0"
         (keypress)="childPress($event)"></i>
@@ -99,7 +97,6 @@
       <div>
         <h2>Contact Information
           <i class="fa fa-pencil edit--icon" 
-          aria-label="Edit Contact Information"
           (click)="editContactInfo()" 
           tabindex="0"
           (keypress)="contactPress($event)"></i>
@@ -114,8 +111,7 @@
 
       <div>
         <h2>Financial Information
-          <i class="fa fa-pencil edit--icon" 
-          aria-label="Edit Financial Information" 
+          <i class="fa fa-pencil edit--icon"
           (click)="editFinancialInfo()"
           tabindex="0"
           (keypress)="financialPress($event)"></i>
