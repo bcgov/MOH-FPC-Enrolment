@@ -13,7 +13,6 @@
 
   <!-- Repeat for each child -->
   <form #formRef="ngForm" novalidate>
-    <div id="child" tabindex="0"></div>
     <div *ngFor="let child of children; let i = index;">
       <!--Array starts at 0 add one -->
       <h2 class="border-bottom">
