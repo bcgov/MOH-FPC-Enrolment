@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {FPCPerson} from '../../../../models/person.model';
 import {Router} from '@angular/router';
@@ -33,13 +33,10 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
-  private index = 0;
-
   constructor(private fpcService: FPCareDataService
       , protected router: Router
       , private responseStore: ResponseStoreService
-      , private registrationService: RegistrationService
-      , private el: ElementRef) {
+      , private registrationService: RegistrationService) {
     super(router);
   }
 
