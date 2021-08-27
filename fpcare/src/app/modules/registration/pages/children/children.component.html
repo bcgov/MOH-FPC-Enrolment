@@ -13,6 +13,7 @@
 
   <!-- Repeat for each child -->
   <form #formRef="ngForm" novalidate>
+    <div id="child" tabindex="0"></div>
     <div *ngFor="let child of children; let i = index;">
       <!--Array starts at 0 add one -->
       <h2 class="border-bottom">
@@ -23,6 +24,8 @@
       <div class="p-md-2 col-md-8 col-lg-6">
         <div class="form-group">
            <fpcare-name
+              id="first_name_{{i}}"
+              tabindex="0"
               [label]="'First Name'"
               [nameMaxLen]="maxLenGivenName"
               [(value)]="child.firstName">
