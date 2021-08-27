@@ -133,7 +133,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   addChild() {
     this.fpcService.addChild();
     setTimeout(() => {
-      const idTag = 'first_name_' + (this.children.length - 1);
+      const idTag = 'first-name-' + (this.children.length - 1);
       const elem = document.getElementById(idTag);
       if (elem){
         elem.focus();
