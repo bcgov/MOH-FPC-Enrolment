@@ -29,115 +29,121 @@
 </fpir-collection-notice>
 
 <!-- HOME PAGE -->
-<common-page-framework layout="blank">
-  <h1>Get Started</h1>
-  <common-page-section layout="tips">
-    <div>
-      The Fair PharmaCare deductible and family maximum for this year are
-      normally calculated using your net income from two years ago. You can
-      apply to have your coverage reviewed if your income has dropped by 10% or
-      more in the past two years. It is possible that your deductible and family
-      maximum will be lowered. A family can be a couple or a single person, with
-      or without children.
-    </div>
-    <h2>You can use this form if</h2>
-    <div>
-      <ul>
-        <li>
-          You are registered for Fair PharmaCare. If you recently registered,
-          wait to receive a Confirmation of Assistance letter. If you aren't
-          sure,
-          <a
-            href="{{ fpcRegistrationStatus }}"
-            target="_blank"
-            rel="noopener noreferrer"
-            >check your status</a
-          >.
-        </li>
-        <li>
-          You expect your net income for last year or gross income for this year
-          to be at least 10% lower than your net income from two years ago. The
-          loss of income can be for any reason, including the COVID-19 pandemic.
-        </li>
-      </ul>
-    </div>
-    <div class="pb-4">
-      <strong>Note:</strong> Submit this application no later than December 31
-      of this year. We only review your coverage for this year. Your coverage
-      for previous years cannot be reviewed or changed retroactively.
-    </div>
-    <div>
-      <strong>New residents of Canada:</strong> If you have not yet filed a tax
-      return in Canada for a full year of income, you must submit a Notarized
-      Affidavit Form (HLTH 5357) before submitting this application. To request
-      an affidavit form, call: 1-800-663-7100 (toll-free); 604-683-7151 (Lower
-      Mainland).
-    </div>
-
-    <aside>
-      <strong>Did you know:</strong> The Medical Services Plan (MSP) can help
-      households with lower incomes pay for certain supplementary medical
-      services (e.g., physical therapy, massage, podiatry). Learn more about
-      <a href="{{ mspSuppBenefits }}" target="_blank" rel="noopener noreferrer"
-        >MSP supplementary benefits</a
-      >.
-    </aside>
-  </common-page-section>
-
-  <form [formGroup]="formGroup">
-    <h2 class="border-bottom">Fair PharmaCare Registration</h2>
+<main class="container-fluid" id="content">
+  <common-page-framework layout="blank">
+    <h1>Get Started</h1>
     <common-page-section layout="tips">
-      <common-radio
-        formControlName="isRegistered"
-        name="isRegistered"
-        [label]="isRegisteredQuestion"
-        display="table-row-group"
-        aria-required="true"
-        required="true"
-      ></common-radio>
-
-      <common-error-container [displayError]="isRegisterError">
-        Income reviews are for people who are registered for the income-based
-        Fair PharmaCare plan. You can
-        <a
-          href="{{ fpcRegistration }}"
-          target="_blank"
-          rel="noopener noreferrer"
-          >register here</a
-        >. You can only apply for an income review once you have registered for
-        Fair PharmaCare and received a Confirmation of Assistance letter.
-      </common-error-container>
-    </common-page-section>
-
-    <h2 class="border-bottom">Income Requirements</h2>
-    <common-page-section layout="tips">
-      <common-radio
-        formControlName="isIncomeLess"
-        name="isIncomeLess"
-        [label]="isIncomeLessQuestion"
-        display="table-row-group"
-        aria-required="true"
-        required="true"
-      ></common-radio>
-
-      <common-error-container [displayError]="isIncomeLessError">
-        Income reviews are only for Fair PharmaCare registrants whose income has
-        dropped by 10% or more since it was verified two years ago.
-      </common-error-container>
+      <div>
+        The Fair PharmaCare deductible and family maximum for this year are
+        normally calculated using your net income from two years ago. You can
+        apply to have your coverage reviewed if your income has dropped by 10%
+        or more in the past two years. It is possible that your deductible and
+        family maximum will be lowered. A family can be a couple or a single
+        person, with or without children.
+      </div>
+      <h2>You can use this form if</h2>
+      <div>
+        <ul>
+          <li>
+            You are registered for Fair PharmaCare. If you recently registered,
+            wait to receive a Confirmation of Assistance letter. If you aren't
+            sure,
+            <a
+              href="{{ fpcRegistrationStatus }}"
+              target="_blank"
+              rel="noopener noreferrer"
+              >check your status</a
+            >.
+          </li>
+          <li>
+            You expect your net income for last year or gross income for this
+            year to be at least 10% lower than your net income from two years
+            ago. The loss of income can be for any reason, including the
+            COVID-19 pandemic.
+          </li>
+        </ul>
+      </div>
+      <div class="pb-4">
+        <strong>Note:</strong> Submit this application no later than December 31
+        of this year. We only review your coverage for this year. Your coverage
+        for previous years cannot be reviewed or changed retroactively.
+      </div>
+      <div>
+        <strong>New residents of Canada:</strong> If you have not yet filed a
+        tax return in Canada for a full year of income, you must submit a
+        Notarized Affidavit Form (HLTH 5357) before submitting this application.
+        To request an affidavit form, call: 1-800-663-7100 (toll-free);
+        604-683-7151 (Lower Mainland).
+      </div>
 
       <aside>
-        <div class="pb-4">
-          <strong>Net income:</strong> Your income after deductions. We use your
-          Canada Revenue Agency Notice of Assessment / Reassessment to verify
-          your net income. Contact HIBC if you don't have a Notice of Assessment
-          / Reassessment.
-        </div>
-
-        <div>
-          <strong>Gross income:</strong> Your income before deductions, verified
-          by supporting documents.
-        </div>
+        <strong>Did you know:</strong> The Medical Services Plan (MSP) can help
+        households with lower incomes pay for certain supplementary medical
+        services (e.g., physical therapy, massage, podiatry). Learn more about
+        <a
+          href="{{ mspSuppBenefits }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          >MSP supplementary benefits</a
+        >.
       </aside>
     </common-page-section>
-  </form>
-</common-page-framework>
+
+    <form [formGroup]="formGroup">
+      <h2 class="border-bottom">Fair PharmaCare Registration</h2>
+      <common-page-section layout="tips">
+        <common-radio
+          formControlName="isRegistered"
+          name="isRegistered"
+          [label]="isRegisteredQuestion"
+          display="table-row-group"
+          aria-required="true"
+          required="true"
+        ></common-radio>
+
+        <common-error-container [displayError]="isRegisterError">
+          Income reviews are for people who are registered for the income-based
+          Fair PharmaCare plan. You can
+          <a
+            href="{{ fpcRegistration }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            >register here</a
+          >. You can only apply for an income review once you have registered
+          for Fair PharmaCare and received a Confirmation of Assistance letter.
+        </common-error-container>
+      </common-page-section>
+
+      <h2 class="border-bottom">Income Requirements</h2>
+      <common-page-section layout="tips">
+        <common-radio
+          formControlName="isIncomeLess"
+          name="isIncomeLess"
+          [label]="isIncomeLessQuestion"
+          display="table-row-group"
+          aria-required="true"
+          required="true"
+        ></common-radio>
+
+        <common-error-container [displayError]="isIncomeLessError">
+          Income reviews are only for Fair PharmaCare registrants whose income
+          has dropped by 10% or more since it was verified two years ago.
+        </common-error-container>
+
+        <aside>
+          <div class="pb-4">
+            <strong>Net income:</strong> Your income after deductions. We use
+            your Canada Revenue Agency Notice of Assessment / Reassessment to
+            verify your net income. Contact HIBC if you don't have a Notice of
+            Assessment / Reassessment.
+          </div>
+
+          <div>
+            <strong>Gross income:</strong> Your income before deductions,
+            verified by supporting documents.
+          </div>
+        </aside>
+      </common-page-section>
+    </form>
+  </common-page-framework>
+</main>
