@@ -74,7 +74,7 @@
       Mainland).
     </div>
 
-    <aside aria-label="Medical Services Plan Information">
+    <aside>
       <strong>Did you know:</strong> The Medical Services Plan (MSP) can help
       households with lower incomes pay for certain supplementary medical
       services (e.g., physical therapy, massage, podiatry). Learn more about
@@ -93,6 +93,7 @@
         [label]="isRegisteredQuestion"
         display="table-row-group"
         aria-required="true"
+        required="true"
       ></common-radio>
 
       <common-error-container [displayError]="isRegisterError">
@@ -116,6 +117,7 @@
         [label]="isIncomeLessQuestion"
         display="table-row-group"
         aria-required="true"
+        required="true"
       ></common-radio>
 
       <common-error-container [displayError]="isIncomeLessError">
@@ -123,7 +125,7 @@
         dropped by 10% or more since it was verified two years ago.
       </common-error-container>
 
-      <aside aria-label="Income definitions">
+      <aside>
         <div class="pb-4">
           <strong>Net income:</strong> Your income after deductions. We use your
           Canada Revenue Agency Notice of Assessment / Reassessment to verify

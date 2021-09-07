@@ -30,9 +30,10 @@
         [radioLabels]="incomeOptions"
         display="table-row-group"
         aria-required="true"
+        required="true"
       ></common-radio>
 
-      <aside aria-labelledby="isLastYearIncome">
+      <aside>
         Haven't filed last year's taxes yet? Consider applying with this year's
         gross income.
       </aside>
@@ -90,6 +91,7 @@
             label="Do you receive Registered Disability Savings Plan (RDSP) income?"
             display="table-row-group"
             [attr.aria-required]="isLastYearIncome"
+            required="isLastYearIncome"
           ></common-radio>
 
           <ng-container *ngIf="hasRdspIncome">
@@ -196,7 +198,7 @@
             {{ errorMessage }}
           </common-error-container>
 
-          <aside class="support-doc--tip-area" aria-label="supportDocuments">
+          <aside class="support-doc--tip-area">
             <ng-container
               *ngIf="isLastYearIncome === true; else GrossIncomeTip"
             >
