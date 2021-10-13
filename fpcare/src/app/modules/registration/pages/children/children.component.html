@@ -15,10 +15,14 @@
   <form #formRef="ngForm" novalidate>
     <div *ngFor="let child of children; let i = index;">
       <!--Array starts at 0 add one -->
-      <h2 class="border-bottom">
-        Child #{{children.indexOf(child)+1}}
-        <i class="fa fa-times mr-3 pointer float-right text-danger" tabindex="0" aria-label=" - Remove" (click)="removeChild( i )"></i>
-      </h2>
+      <div class="row border-bottom">
+        <div class="col">
+          <h2>Child #{{children.indexOf(child)+1}}</h2>
+        </div>
+        <div class="col">
+          <i class="fa fa-times fa-lg mr-3 pointer text-danger align-icon" tabindex="0" aria-label="Remove Child" (click)="removeChild( i )"></i>
+        </div>
+      </div>
 
       <div class="p-md-2 col-md-8 col-lg-6">
         <div class="form-group">

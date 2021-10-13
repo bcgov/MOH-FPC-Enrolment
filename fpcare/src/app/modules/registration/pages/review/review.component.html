@@ -13,9 +13,19 @@
 
   <common-page-section layout='double'>
     <div>
-      <h2>Applicant Information
-        <i class="fa fa-pencil edit--icon" (click)="editPersonalInfo()" tabindex="0" aria-label=" - Edit" (keypress)="personalPress($event)"></i>
-      </h2>
+      <!-- Application Information -->
+      <div class="row">
+        <div class="col">
+          <h2>Applicant Information</h2>
+        </div>
+        <div class="col">
+          <i class="fa fa-pencil fa-lg align-icon" 
+            (click)="editPersonalInfo()" 
+            tabindex="0" 
+            aria-label="Edit Personal Information" 
+            (keypress)="personalPress($event)"></i>
+        </div>
+      </div>
       <div class="bg-light section">
         <div class="line-item">
           <div class="line-item--text">Name</div>
@@ -36,14 +46,20 @@
       </div>
     </div>
 
+    <!-- Spouse/Common-law Partner Information -->
     <div>
-      <h2>Spouse/Common-law Partner Information
-        <i class="fa fa-pencil edit--icon"
-          (click)="editSpouse()"
-          tabindex="0"
-          aria-label=" - Edit"
-          (keypress)="spousePress($event)"></i>
-      </h2>
+      <div class="row">
+        <div class="col">
+          <h2>Spouse/Common-law Partner Information</h2>
+        </div>
+        <div class="col">
+          <i class="fa fa-pencil fa-lg align-icon"
+            (click)="editSpouse()"
+            tabindex="0"
+            aria-label="Edit Spouse/Common-law Partner Information"
+            (keypress)="spousePress($event)"></i>
+        </div>
+      </div>
       <div class="bg-light section">
         <div *ngIf="hasSpouse; else noSpouse">
           <div class="line-item">
@@ -66,14 +82,20 @@
       </div>
     </div>
 
+    <!-- Child Information -->
     <div>
-      <h2>Child Information
-        <i class="fa fa-pencil edit--icon" 
-        (click)="editChildInfo()" 
-        tabindex="0"
-        aria-label=" - Edit"
-        (keypress)="childPress($event)"></i>
-      </h2>
+      <div class="row">
+        <div class="col">
+          <h2>Child Information</h2>
+        </div>
+        <div class="col">
+          <i class="fa fa-pencil fa-lg align-icon"
+            (click)="editChildInfo()" 
+            tabindex="0"
+            aria-label="Edit Child Information"
+            (keypress)="childPress($event)"></i>
+        </div>
+      </div>
       <div class="bg-light section">
         <div *ngFor="let child of children">
           <div class="line-item">
@@ -96,14 +118,20 @@
     </div>
 
     <aside>
+      <!-- Contact Information -->
       <div>
-        <h2>Contact Information
-          <i class="fa fa-pencil edit--icon" 
-          (click)="editContactInfo()" 
-          tabindex="0"
-          aria-label=" - Edit"
-          (keypress)="contactPress($event)"></i>
-        </h2>
+        <div class="row">
+          <div class="col">
+            <h2>Contact Information</h2>
+          </div>
+          <div class="col">
+            <i class="fa fa-pencil fa-lg align-icon"
+            (click)="editContactInfo()" 
+            tabindex="0"
+            aria-label="Edit Contact Information"
+            (keypress)="contactPress($event)"></i>
+          </div>
+        </div>
         <div class="bg-light section">
           <div class="line-item">
             <div class="line-item--text">Mailing Address</div>
@@ -112,14 +140,20 @@
         </div>
       </div>
 
+      <!-- Financial Information -->
       <div>
-        <h2>Financial Information
-          <i class="fa fa-pencil edit--icon"
-          (click)="editFinancialInfo()"
-          tabindex="0"
-          aria-label=" - Edit"
-          (keypress)="financialPress($event)"></i>
-        </h2>
+        <div class="row">
+          <div class="col">
+            <h2>Financial Information</h2>
+          </div>
+          <div class="col">
+            <i class="fa fa-pencil fa-lg align-icon"
+              (click)="editFinancialInfo()"
+              tabindex="0"
+              aria-label="Edit Financial Information"
+              (keypress)="financialPress($event)"></i>
+          </div>
+        </div>
         <div class="bg-light section">
           <div class="pb-2">
             <div class="line-item">
