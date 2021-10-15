@@ -23,7 +23,6 @@
           href="{{links.HIBC}}">
           Health Insurance BC</a>.
         </p>
-        <br>
       </div>
 
       <div class="d-flex align-items-center p-md-2">
@@ -34,14 +33,12 @@
           </label>
         </span>
       </div>
-      <div class="mt-2 pl-4" *ngIf="agreeCheck" [@growVertical]>
+      <div class="mt-2 pl-4">
         <common-captcha [apiBaseUrl]="captchaApiBaseUrl"
                  [nonce]="nonce"
                  (onValidToken)="setToken($event)"
                  [successMessage]="'  '"></common-captcha>
       </div>
-
-      
       <div class="modal-footer">
         <button [disabled]="!canContinue()"
                 class="btn btn-block btn-primary pull-left"
