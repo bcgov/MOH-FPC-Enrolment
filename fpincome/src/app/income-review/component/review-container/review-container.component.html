@@ -5,7 +5,11 @@
       <h2>{{ reviewObject.heading }}</h2>
     </div>
     <div *ngIf="!reviewObject.isPrintView" class="col-md-2 review--icon">
-      <button class="btn btn-edit" (click)="redirectURL()" aria-label="Edit">
+      <button
+        class="btn btn-edit"
+        (click)="redirectURL()"
+        [attr.aria-label]="'Edit ' + reviewObject.heading"
+      >
         Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
       </button>
     </div>
