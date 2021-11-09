@@ -44,11 +44,6 @@ export class ConsentModalComponent extends Base implements OnInit {
     this.onConsented.emit( this.agreeCheck );
   }
 
-  public modalShown(event){
-    //Set focus on the checkbox
-    this.checkbox.nativeElement.focus();
-  }
-
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */
   get nonce(): string {
     return this.objectId;
