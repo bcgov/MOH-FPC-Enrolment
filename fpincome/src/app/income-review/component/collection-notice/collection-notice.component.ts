@@ -107,7 +107,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
 
   getElements(): Array<HTMLElement> {
     const focusElmts =
-      'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])';
+      'h2, a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])';
 
     const _tabElements = Array.prototype.slice.call(
       this.el.nativeElement.querySelectorAll(focusElmts)

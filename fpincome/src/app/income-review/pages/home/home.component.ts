@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
 import { ContainerService, PageStateService } from 'moh-common-lib';
@@ -17,6 +23,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
   @ViewChild('infoCollectionModal', { static: true })
   infoCollectionModal: CollectionNoticeComponent;
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   // Value never changed, but can be read outside class
   readonly captchaApiUrl = environment.api.captchaBaseURL;
@@ -100,6 +109,7 @@ export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
     // Individual has not consented to collection notice
     if (!this.incomeReviewDataService.informationCollectionNoticeConsent) {
       this.infoCollectionModal.openModal();
+      this.heading.nativeElement.focus();
     }
   }
 
