@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {FPCPerson} from '../../../../models/person.model';
@@ -22,6 +22,8 @@ import {CountryNames, ProvinceNames} from '../../../../models/province-names.enu
 })
 export class ReviewPageComponent extends Base implements OnInit {
 
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   constructor( private fpcService: FPCareDataService
              , private router: Router
@@ -31,8 +33,11 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
-
     this.registrationService.setItemIncomplete();
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChildren, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { FPCPerson } from '../../../../models/person.model';
@@ -29,6 +29,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   readonly addressValidatorUrl = environment.addressUrl;
 
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
@@ -69,6 +72,10 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
     // Handles case when returning to page with data (e.g. back/forward nav)
     this.checkPostal();
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   get countryName(): string {

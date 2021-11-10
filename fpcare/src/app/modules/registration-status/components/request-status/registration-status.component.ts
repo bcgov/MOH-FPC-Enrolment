@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { FPCPerson } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
@@ -20,6 +20,9 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   /** Access to date component */
   @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
+
+   /** Focuses the next element to the heading of a new page */
+   @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   public placeholder = 'A12345678';
 
@@ -55,10 +58,12 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   ngAfterViewInit() {
-
     // Individual has not consented to collection notice
     if (!this.fpcareDataService.acceptedCollectionNotice) {
       this.consentModal.openModal();
+    }
+    else {
+      this.heading.nativeElement.focus();
     }
   }
 

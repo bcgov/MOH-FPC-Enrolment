@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FPCPerson} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
@@ -19,6 +19,9 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
 
   @ViewChild('sinSample', { static: false }) sinSample: SampleModalComponent;
 
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+
   /** Indicates whether or not the same SIN has been used for spouse */
   public uniqueSinError = false;
   public links = environment.links;
@@ -38,6 +41,10 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**

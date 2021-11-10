@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Base } from 'moh-common-lib';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -20,6 +20,8 @@ import * as moment from 'moment';
 export class RegistrationRequirementsComponent extends Base implements OnInit, AfterViewInit {
 
   @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 
@@ -55,6 +57,9 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
     // Individual has not consented to collection notice
     if (!this.fpcareDataService.acceptedCollectionNotice) {
       this.consentModal.openModal();
+    }
+    else {
+      this.heading.nativeElement.focus();
     }
   }
 
