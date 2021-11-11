@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { INCOME_REVIEW_PAGES } from '../../income-review.constants';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
@@ -54,6 +60,9 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
 
   updateIncomeTotalValue: boolean = false;
   errorMessage: string = null;
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   constructor(
     protected router: Router,
@@ -276,7 +285,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
-
+    this.heading.nativeElement.focus();
     // subscribe to value changes
     this.formGroup.controls.isLastYearIncome.valueChanges.subscribe((val) => {
       this.incomeReviewDataService.isLastYearIncome = val;

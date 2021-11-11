@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
 import {
@@ -23,6 +29,9 @@ import { ServerPayload } from '../../models/review-income-api';
 })
 export class ConsentComponent extends BaseForm
   implements OnInit, AfterViewInit {
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+
   constructor(
     protected router: Router,
     protected containerService: ContainerService,
@@ -99,7 +108,7 @@ export class ConsentComponent extends BaseForm
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
-
+    this.heading.nativeElement.focus();
     // subscrib to value changes
     this.formGroup.controls.registrantConsent.valueChanges.subscribe(
       (val) => (this.incomeReviewDataService.applicant.consent = val)

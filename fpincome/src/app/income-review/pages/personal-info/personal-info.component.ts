@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
 import {
@@ -21,6 +27,9 @@ export class PersonalInfoComponent extends BaseForm
   readonly cityNameLen = 25;
   readonly addressLen = 75;
   readonly hasSpouseQuestion = 'Do you have a spouse?';
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   constructor(
     protected router: Router,
@@ -96,7 +105,7 @@ export class PersonalInfoComponent extends BaseForm
 
   ngAfterViewInit() {
     super.ngAfterViewInit();
-
+    this.heading.nativeElement.focus();
     // subscribe to value changes
     this.formGroup.controls.firstName.valueChanges.subscribe(
       (val) => (this.incomeReviewDataService.applicant.firstName = val)
