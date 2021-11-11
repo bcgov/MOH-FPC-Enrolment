@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {FPCPerson} from '../../../../models/person.model';
 import {Router} from '@angular/router';
@@ -33,6 +33,9 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+
   constructor(private fpcService: FPCareDataService
       , protected router: Router
       , private responseStore: ResponseStoreService
@@ -59,6 +62,10 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
         }
       });
     }
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,6 +23,9 @@ import {DeductiblePayload} from '../../../../models/api.model';
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
 
   @ViewChild('taxDocuments', { static: true }) taxDocuments: SampleModalComponent;
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
@@ -118,6 +121,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
       // Update data - user may have used back button on browser
       this.update();
     }
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**

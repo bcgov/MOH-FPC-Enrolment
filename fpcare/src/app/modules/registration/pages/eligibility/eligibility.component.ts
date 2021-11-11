@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, ElementRef, ViewChild} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -30,6 +30,9 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+
   /** Indicates whether or not the same PHN has been used for spouse */
   public uniquePhnError = false;
 
@@ -50,6 +53,10 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**

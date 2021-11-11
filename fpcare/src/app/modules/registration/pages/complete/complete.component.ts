@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -35,6 +35,9 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
   public spouseAgreement: boolean = false;
   public links = environment.links;
 
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+
   constructor( private fpcService: FPCareDataService
              , protected router: Router
              , private apiService: ApiService
@@ -48,6 +51,10 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**
