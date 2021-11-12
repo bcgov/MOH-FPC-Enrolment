@@ -1,8 +1,6 @@
 <main class="container-fluid" id="content">
   <fpcare-results-framework [displayIcon]="getErrorIcon()" [hasBody]="errorResponse">
-
-    <h1 title>Fair PharmaCare Status</h1>
-  
+    <h1 tabindex="0" #heading title>Fair PharmaCare Status</h1>
     <div body>
       <!--
         Using innerHTML bypasses angular's security sanitzation, so we can
@@ -12,6 +10,5 @@
       -->
       <p class="font-weight-normal" [innerHTML]="errorResponse">"{{errorResponse}}"</p>
     </div>
-  
   </fpcare-results-framework>
 </main>

@@ -1,8 +1,6 @@
 <fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response"
                           [displayPrint]="hasRegistration && isSuccess">
-
-   <h1 title>{{pgTitle}}</h1>
-
+   <h1 tabindex="0" #heading title>{{pgTitle}}</h1>
    <div body>
       <div *ngIf='hasRegistration && isSuccess; else incompleteRegistration'>
          <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
@@ -14,14 +12,11 @@
             [pharmaCareLevel]="assistenceLevel">
             </fpcare-annual-deductible>
          </div>
-
       </div>
    </div>
 </fpcare-results-framework>
 
-
 <ng-template #incompleteRegistration>
-
    <p class="font-weight-bold h2">
       Your status is:
    </p>

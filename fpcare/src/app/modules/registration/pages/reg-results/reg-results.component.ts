@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {RegistrationService} from '../../registration.service';
 import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
@@ -21,6 +21,9 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
   public assistenceLevel: PharmaCareAssistanceLevel;
   public pgTitle: string = 'Fair PharmaCare Registration Status';
   public famNumber: string = null;
+
+  /** Focuses the next element to the heading of a new page */
+  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
 
   constructor( private responseStore: ResponseStoreService
              , private registrationService: RegistrationService
@@ -48,6 +51,10 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
         this.assistenceLevel = this.getAssistenceLevel();
       }
     }
+  }
+
+  ngAfterViewInit() {
+    this.heading.nativeElement.focus();
   }
 
   /**
