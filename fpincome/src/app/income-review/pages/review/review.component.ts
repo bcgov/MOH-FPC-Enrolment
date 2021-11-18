@@ -37,6 +37,7 @@ export class ReviewComponent extends BaseForm implements OnInit {
   }
 
   ngAfterViewInit() {
+    super.ngAfterViewInit();
     this.heading.nativeElement.focus();
   }
 
