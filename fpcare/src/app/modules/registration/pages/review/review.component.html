@@ -19,11 +19,14 @@
           <h2>Applicant Information</h2>
         </div>
         <div class="col">
-          <i class="fa fa-pencil fa-lg align-icon" 
-            (click)="editPersonalInfo()" 
-            tabindex="0" 
-            aria-label="Edit Personal Information" 
-            (keypress)="personalPress($event)"></i>
+          <button
+            class="btn btn-edit align-icon"
+            (click)="editPersonalInfo()"
+            (keypress)="personalPress($event)"
+            aria-label="Edit Personal Information"
+          >
+            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <div class="bg-light section">
@@ -53,11 +56,14 @@
           <h2>Spouse/Common-law Partner Information</h2>
         </div>
         <div class="col">
-          <i class="fa fa-pencil fa-lg align-icon"
+          <button
+            class="btn btn-edit align-icon"
             (click)="editSpouse()"
-            tabindex="0"
+            (keypress)="spousePress($event)"
             aria-label="Edit Spouse/Common-law Partner Information"
-            (keypress)="spousePress($event)"></i>
+          >
+            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <div class="bg-light section">
@@ -89,11 +95,14 @@
           <h2>Child Information</h2>
         </div>
         <div class="col">
-          <i class="fa fa-pencil fa-lg align-icon"
-            (click)="editChildInfo()" 
-            tabindex="0"
+          <button
+            class="btn btn-edit align-icon"
+            (click)="editChildInfo()"
+            (keypress)="childPress($event)"
             aria-label="Edit Child Information"
-            (keypress)="childPress($event)"></i>
+          >
+            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+          </button>
         </div>
       </div>
       <div class="bg-light section">
@@ -125,11 +134,14 @@
             <h2>Contact Information</h2>
           </div>
           <div class="col">
-            <i class="fa fa-pencil fa-lg align-icon"
-            (click)="editContactInfo()" 
-            tabindex="0"
-            aria-label="Edit Contact Information"
-            (keypress)="contactPress($event)"></i>
+            <button
+              class="btn btn-edit align-icon"
+              (click)="editContactInfo()"
+              (keypress)="contactPress($event)"
+              aria-label="Edit Contact Information"
+            >
+              <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
         <div class="bg-light section">
@@ -147,11 +159,14 @@
             <h2>Financial Information</h2>
           </div>
           <div class="col">
-            <i class="fa fa-pencil fa-lg align-icon"
+            <button
+              class="btn btn-edit align-icon"
               (click)="editFinancialInfo()"
-              tabindex="0"
+              (keypress)="financialPress($event)"
               aria-label="Edit Financial Information"
-              (keypress)="financialPress($event)"></i>
+            >
+              <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+            </button>
           </div>
         </div>
         <div class="bg-light section">
