@@ -2,28 +2,30 @@
   <!-- Section: Heading -->
   <div class="row review--heading border-bottom">
     <div class="col-md-10 pl-0 ml-0">
-      <h2>{{ reviewObject.heading }}</h2>
+      <h2 tabindex="0">{{ reviewObject.heading }}</h2>
     </div>
-    <div *ngIf="!reviewObject.isPrintView" class="col-md-2 review--icon">
-      <button
-        class="btn btn-edit"
-        (click)="redirectURL()"
-        [attr.aria-label]="'Edit ' + reviewObject.heading"
-      >
-        Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
-      </button>
+    <div class="col-md-2 review--icon">
+      <div *ngIf="!reviewObject.isPrintView">
+        <button
+          class="btn btn-edit"
+          (click)="redirectURL()"
+          [attr.aria-label]="'Edit ' + reviewObject.heading"
+        >
+          Edit <i class="fa fa-pencil fa-lg pl-2" aria-hidden="true"></i>
+        </button>
+      </div>
     </div>
   </div>
 
   <div class="review--background-color">
-    <ng-container *ngIf="!reviewObject?.isFinancialData; else FinancialDisplay">
+    <div *ngIf="!reviewObject?.isFinancialData; else FinancialDisplay">
       <div *ngFor="let item of reviewObject.sectionItems; let idx = index">
         <div class="row review--row">
           <div class="col-md-6 review--key" [innerHTML]="item.label"></div>
           <div [innerHTML]="item.value"></div>
         </div>
       </div>
-    </ng-container>
+    </div>
   </div>
 </div>
 
