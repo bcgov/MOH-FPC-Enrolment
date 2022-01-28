@@ -20,9 +20,13 @@
   <div class="review--background-color">
     <div *ngIf="!reviewObject?.isFinancialData; else FinancialDisplay">
       <div *ngFor="let item of reviewObject.sectionItems; let idx = index">
-        <div class="row review--row">
-          <div class="col-md-6 review--key" [innerHTML]="item.label"></div>
-          <div [innerHTML]="item.value"></div>
+        <div class="row line-item">
+          <div class="col-md-6">
+            <div class="line-item--text" [innerHTML]="item.label"></div>
+          </div>
+          <div class="col-md-6">
+            <div class="line-item--value" [innerHTML]="item.value"></div>
+          </div>
         </div>
       </div>
     </div>
