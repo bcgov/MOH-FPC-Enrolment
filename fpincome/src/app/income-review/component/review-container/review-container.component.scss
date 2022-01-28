@@ -36,6 +36,19 @@
   }
 }
 
-.review--key {
+// .review--key {
+//   text-align: right;
+// }
+
+.line-item {
+  margin-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.line-item--text {
   text-align: right;
+}
+
+.line-item--value {
+  text-align: left;
 }
