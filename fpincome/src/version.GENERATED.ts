@@ -1,11 +1,11 @@
 // DO NOT DELETE OR APP WILL FAIL TO COMPILE! Generated from version.js
-export const gitCommit = '0c22018';
-export const buildTime = '1/20/2022 at 1:30:38 PM';
+export const gitCommit = 'f311e90';
+export const buildTime = '1/28/2022 at 10:50:15 AM';
 /** App version retrieved from package.json. */
-export const projectVersion = '2.1.13';
+export const projectVersion = '2.1.14';
 /** Human readable message  */
 export const message =
-  'Canonical Version: 0c22018 - 1/20/2022 at 1:30:38 PM (v2.1.13)' +
-  '\nhttps://github.com/bcgov/MOH-FPC-Enrolment/commits/0c22018';
+  'Canonical Version: f311e90 - 1/28/2022 at 10:50:15 AM (v2.1.14)' +
+  '\nhttps://github.com/bcgov/MOH-FPC-Enrolment/commits/f311e90';
 /** If true, other values should be present. */
 export const success = true;
