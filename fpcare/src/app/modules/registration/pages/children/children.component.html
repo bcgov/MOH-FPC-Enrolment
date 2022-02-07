@@ -1,6 +1,6 @@
 <common-page-framework layout='default'>
 
-  <h1 tabindex="0" #heading>Child Information</h1>
+  <h1 #heading>Child Information</h1>
    <p>
       Enter your child or children's personal information, if applicable.
    </p>
@@ -28,7 +28,6 @@
         <div class="form-group">
            <fpcare-name
               id="first-name-{{i}}"
-              tabindex="0"
               [label]="'First Name'"
               [nameMaxLen]="maxLenGivenName"
               [(value)]="child.firstName">
