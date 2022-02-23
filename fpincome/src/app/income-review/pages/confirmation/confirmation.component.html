@@ -1,67 +1,68 @@
-<common-page-framework layout="blank">
-  <common-confirm-template [displayIcon]="displayIcon">
-    <div class="print-hide" confirmationTitle>
-      <ng-container *ngTemplateOutlet="confirmTitle"></ng-container>
-    </div>
+<main class="container-fluid" id="content">
+  <common-page-framework layout="blank">
+    <common-confirm-template [displayIcon]="displayIcon">
+      <div class="print-hide" confirmationTitle>
+        <ng-container *ngTemplateOutlet="confirmTitle"></ng-container>
+      </div>
 
-    <div message>
-      <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
-    </div>
+      <div message>
+        <ng-container *ngTemplateOutlet="confirmMessage"></ng-container>
+      </div>
 
-    <div AdditionalInfo>
-      <div>
-        <h2 class="border-bottom"><strong>Next Steps</strong></h2>
+      <div AdditionalInfo>
         <div>
-          <ul>
-            <li>
-              <strong
-                >We will make every effort to process your application within
-                one month.</strong
-              >
-              We will send a letter to let you know if you qualify for increased
-              assistance.
-            </li>
-            <li>
-              If your application is approved, your new level of assistance
-              starts the day we approve it. At the end of the year, we will
-              review your records to see if you should get a refund for benefit
-              items you bought this year (you cannot be reimbursed for previous
-              years). We will pay you any amount we owe you next spring.
-            </li>
-            <li>
-              When you file your tax return, Health Insurance BC will verify
-              your family net income with the CRA. If the net income you
-              reported to the CRA does not confirm the reduction in your family
-              income, PharmaCare will recover any overpayment of financial
-              assistance made to you.
-            </li>
-            <li>
-              If you have any questions, contact
-              <a href="{{ hibc }}" target="_blank" rel="noopener noreferrer"
-                >Health Insurance BC</a
-              >.
-            </li>
-          </ul>
+          <h2 class="border-bottom"><strong>Next Steps</strong></h2>
+          <div>
+            <ul>
+              <li>
+                <strong>We will make every effort to process your application within
+                one month.</strong> We will send a letter to let you know if you qualify for
+                increased assistance.
+              </li>
+              <li>
+                If your application is approved, your new level of assistance
+                starts the day we approve it. At the end of the year, we will
+                review your records to see if you should get a refund for
+                benefit items you bought this year (you cannot be reimbursed for
+                previous years). We will pay you any amount we owe you next
+                spring.
+              </li>
+              <li>
+                When you file your tax return, Health Insurance BC will verify
+                your family net income with the CRA. If the net income you
+                reported to the CRA does not confirm the reduction in your
+                family income, PharmaCare will recover any overpayment of
+                financial assistance made to you.
+              </li>
+              <li>
+                If you have any questions, contact
+                <a href="{{ hibc }}" target="_blank" rel="noopener noreferrer"
+                  >Health Insurance BC.</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="pt-2">
+          <fpir-review-container #personalInfo></fpir-review-container>
+          <fpir-review-container #income></fpir-review-container>
+          <fpir-review-container #supportDocs></fpir-review-container>
         </div>
       </div>
-      <div class="pt-2">
-        <fpir-review-container #personalInfo></fpir-review-container>
-        <fpir-review-container #income></fpir-review-container>
-        <fpir-review-container #supportDocs></fpir-review-container>
-      </div>
-    </div>
-  </common-confirm-template>
-</common-page-framework>
+    </common-confirm-template>
+  </common-page-framework>
+</main>
 
 <!-- Needed if we print confirmation of submission with review information -->
 <ng-template #confirmTitle>
   <button
     *ngIf="!isError"
     (click)="print($event)"
+    tabindex="0"
+    aria-label="print"
     class="btn btn-clear float-right print-hide"
   >
-    <strong
-      >Print
+    <strong>Print
       <i class="fa fa-print fa-lg" aria-hidden="true"></i>
     </strong>
   </button>
