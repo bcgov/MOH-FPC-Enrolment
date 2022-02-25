@@ -132,7 +132,7 @@ export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
 
   setFocus() {
     // Set focus to main html tag identified by id=content
-    const mainContent = document.getElementById('content');
+    const mainContent = document.getElementById('mainHeading');
     // Headless tests fail if null not checked for
     if (mainContent) {
       mainContent.tabIndex = -1;
