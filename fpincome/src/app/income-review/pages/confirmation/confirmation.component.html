@@ -58,18 +58,23 @@
 
 <!-- Needed if we print confirmation of submission with review information -->
 <ng-template #confirmTitle>
-  <button
-    *ngIf="!isError"
-    (click)="print($event)"
-    aria-label="print"
-    class="btn btn-clear float-right print-hide"
-  >
-    <strong
-      >Print
-      <i class="fa fa-print fa-lg" aria-hidden="true"></i>
-    </strong>
-  </button>
-  <h1>{{ pageTitle }}</h1>
+  <div class="row">
+    <div class="col-md-10">
+      <h1 #mainHeading>{{ pageTitle }}</h1>
+    </div>
+    <div class="col-md-2 print--icon">
+      <button
+        *ngIf="!isError"
+        (click)="print($event)"
+        aria-label="print"
+        class="btn btn-clear print-hide"
+      >
+        <strong
+          >Print <i class="fa fa-print fa-lg pl-1" aria-hidden="true"></i
+        ></strong>
+      </button>
+    </div>
+  </div>
 </ng-template>
 
 <ng-template #confirmMessage>

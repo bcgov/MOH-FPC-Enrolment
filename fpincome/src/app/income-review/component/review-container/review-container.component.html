@@ -35,22 +35,24 @@
 
 <ng-template #FinancialDisplay>
   <div *ngFor="let item of reviewObject.sectionItems; let idx = index">
-    <fpir-financial-input
-      value="{{ item.value }}"
-      [moneyMask]="item?.extraInfo?.mask"
-      disabled="true"
-    >
-      <div
-        label
-        class="{{
-          item?.extraInfo?.isTotal
-            ? 'finance-bold-text--format'
-            : 'finance-text--format'
-        }}"
-      >
-        {{ item.label }}
+    <div class="row line-item">
+      <div class="col-md-6">
+        <div class="line-item--text">
+          <div
+            label
+            class="{{
+              item?.extraInfo?.isTotal
+                ? 'finance-bold-text--format'
+                : 'finance-text--format'
+            }}"
+          >
+            {{ item.label }}
+          </div>
+        </div>
       </div>
-      <div rowId>{{ item?.extraInfo?.lineNo }}</div>
-    </fpir-financial-input>
+      <div class="col-md-6">
+        <div class="line-item--value">$ {{ item.value }}</div>
+      </div>
+    </div>
   </div>
 </ng-template>
