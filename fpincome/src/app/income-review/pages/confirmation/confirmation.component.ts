@@ -57,6 +57,16 @@ export class ConfirmationComponent extends Base implements OnInit {
     );
   }
 
+  ngAfterViewInit() {
+    // Set focus to main html tag identified by id=content
+    const mainContent = document.getElementById('mainHeading');
+    // Headless tests fail if null not checked for
+    if (mainContent) {
+      mainContent.tabIndex = -1;
+      mainContent.focus();
+    }
+  }
+
   get isError() {
     return this.displayIcon === ApiStatusCodes.ERROR;
   }
