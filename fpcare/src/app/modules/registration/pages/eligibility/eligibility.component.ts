@@ -31,7 +31,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   /** Indicates whether or not the same PHN has been used for spouse */
   public uniquePhnError = false;

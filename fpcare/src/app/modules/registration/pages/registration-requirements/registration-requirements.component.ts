@@ -19,9 +19,9 @@ import * as moment from 'moment';
 })
 export class RegistrationRequirementsComponent extends Base implements OnInit, AfterViewInit {
 
-  @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
+  @ViewChild('consentModal', {}) consentModal: ConsentModalComponent;
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 

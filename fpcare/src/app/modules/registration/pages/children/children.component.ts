@@ -34,7 +34,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   private _baseUrl = REGISTRATION_PATH + '/';
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   constructor(private fpcService: FPCareDataService
       , protected router: Router

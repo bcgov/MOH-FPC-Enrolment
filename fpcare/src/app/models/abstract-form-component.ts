@@ -18,7 +18,7 @@ export abstract class AbstractFormComponent extends Base {
   abstract continue(): void;
 
   /** Access to the form elements for validation */
-  @ViewChild('formRef', { static: true}) form: NgForm;
+  @ViewChild('formRef', {}) form: NgForm;
   @ViewChildren(FPCareDateComponent) dateForm: QueryList<FPCareDateComponent>;
 
   /**

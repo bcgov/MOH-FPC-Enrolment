@@ -17,11 +17,11 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./confirmation.component.scss'],
 })
 export class ConfirmationComponent extends Base implements OnInit {
-  @ViewChild('personalInfo', { static: true })
+  @ViewChild('personalInfo', {})
   personalInfo: ReviewContainerComponent;
-  @ViewChild('income', { static: true })
+  @ViewChild('income', {})
   income: ReviewContainerComponent;
-  @ViewChild('supportDocs', { static: true })
+  @ViewChild('supportDocs', {})
   supportDocs: ReviewContainerComponent;
 
   readonly printView: boolean = true;

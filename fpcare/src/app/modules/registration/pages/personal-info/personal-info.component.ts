@@ -17,10 +17,10 @@ import {environment} from '../../../../../environments/environment';
 })
 export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
-  @ViewChild('sinSample', { static: false }) sinSample: SampleModalComponent;
+  @ViewChild('sinSample', {}) sinSample: SampleModalComponent;
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   /** Indicates whether or not the same SIN has been used for spouse */
   public uniqueSinError = false;

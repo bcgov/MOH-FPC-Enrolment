@@ -62,7 +62,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   errorMessage: string = null;
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   constructor(
     protected router: Router,

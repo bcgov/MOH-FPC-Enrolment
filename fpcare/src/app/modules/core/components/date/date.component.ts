@@ -39,7 +39,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   /** Can be one of: "future", "past". "future" includes today, "past" does not. */
   @Input() restrictDate: string;
 
-  @ViewChild('formRef', { static: true }) form: NgForm;
+  @ViewChild('formRef', {}) form: NgForm;
 
 
   constructor(private cd: ChangeDetectorRef) {

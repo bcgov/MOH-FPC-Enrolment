@@ -16,7 +16,7 @@ export class SampleModalComponent extends Base implements OnInit {
   @Input() images: ImageInterface[];
   @Output() onHide: EventEmitter<void> = new EventEmitter<void>();
 
-  @ViewChild('samplesModal', { static: true }) 
+  @ViewChild('samplesModal', {}) 
   public samplesModal: ModalDirective;
   private onHide$: Subscription;
   private unsubscribe$ = new Subject<void>();

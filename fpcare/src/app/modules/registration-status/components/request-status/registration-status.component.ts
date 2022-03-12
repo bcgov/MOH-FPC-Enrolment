@@ -19,10 +19,10 @@ import {ErrorPageService} from '../../../../pages/error-page/error-page.service'
 export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Access to date component */
-  @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
+  @ViewChild('consentModal', {}) consentModal: ConsentModalComponent;
 
    /** Focuses the next element to the heading of a new page */
-   @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+   @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   public placeholder = 'A12345678';
 

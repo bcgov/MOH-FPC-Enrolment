@@ -23,7 +23,7 @@ import {CountryNames, ProvinceNames} from '../../../../models/province-names.enu
 export class ReviewPageComponent extends Base implements OnInit {
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   constructor( private fpcService: FPCareDataService
              , private router: Router

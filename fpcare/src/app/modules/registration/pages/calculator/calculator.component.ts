@@ -22,10 +22,10 @@ import {DeductiblePayload} from '../../../../models/api.model';
 })
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
 
-  @ViewChild('taxDocuments', { static: true }) taxDocuments: SampleModalComponent;
+  @ViewChild('taxDocuments', {}) taxDocuments: SampleModalComponent;
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
 
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
