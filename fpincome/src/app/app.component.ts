@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Inject, Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, map, mergeMap } from 'rxjs/operators';
@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   appTitle = APP_TITLE;
 
   constructor(
+    @Inject(Title)
     private titleService: Title,
     private router: Router,
     private splunkLogging: SplunkLoggingService,

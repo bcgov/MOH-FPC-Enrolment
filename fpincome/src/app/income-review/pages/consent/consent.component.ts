@@ -30,7 +30,7 @@ import { ServerPayload } from '../../models/review-income-api';
 export class ConsentComponent extends BaseForm
   implements OnInit, AfterViewInit {
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', {}) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading') heading: ElementRef<HTMLInputElement>;
 
   constructor(
     protected router: Router,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Inject, Component, OnInit, OnDestroy } from '@angular/core';
 import { SplashPageService } from '../services/splash-page.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -9,16 +9,15 @@ import { MAINT_FLAG_TRUE } from '../app.constants';
   templateUrl: './splash-page.component.html',
 })
 export class SplashPageComponent implements OnInit, OnDestroy {
-  private _subcription: Subscription;
+  constructor(
+    @Inject(SplashPageService) private splashService: SplashPageService,
+    private router: Router
+  ) {}
 
+  private _subcription: Subscription;
   public startTime: string;
   public endTime: string;
   public message: string;
-
-  constructor(
-    private splashService: SplashPageService,
-    private router: Router
-  ) {}
 
   ngOnInit() {
     this._subcription = this.splashService.$values.subscribe((values) => {
