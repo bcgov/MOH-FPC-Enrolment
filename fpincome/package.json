@@ -54,7 +54,7 @@
     "mygovbc-bootstrap-theme": "^0.4.1",
     "ngx-bootstrap": "~5.1.2",
     "ngx-mydatepicker": "2.4.5",
-    "pdfjs-dist": "2.11.338",
+    "pdfjs-dist": "2.0.550",
     "rxjs": "~6.4.0",
     "sha1": "^1.1.1",
     "text-mask-addons": "^3.8.0",
