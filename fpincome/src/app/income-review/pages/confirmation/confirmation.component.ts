@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 import { format } from 'date-fns';
 import { Base, ApiStatusCodes, PageStateService } from 'moh-common-lib';
@@ -17,11 +17,16 @@ import { environment } from '../../../../environments/environment';
   styleUrls: ['./confirmation.component.scss'],
 })
 export class ConfirmationComponent extends Base implements OnInit {
-  @ViewChild('personalInfo', { static: true })
+  @ViewChild('personalInfo', { static: true } as any)
+  personalInfoRef: ElementRef<HTMLElement>;
   personalInfo: ReviewContainerComponent;
-  @ViewChild('income', { static: true })
+  @ViewChild('income', { static: true } as any) incomeRef: ElementRef<
+    HTMLElement
+  >;
   income: ReviewContainerComponent;
-  @ViewChild('supportDocs', { static: true })
+  @ViewChild('supportDocs', { static: true } as any) supportDocsRef: ElementRef<
+    HTMLElement
+  >;
   supportDocs: ReviewContainerComponent;
 
   readonly printView: boolean = true;

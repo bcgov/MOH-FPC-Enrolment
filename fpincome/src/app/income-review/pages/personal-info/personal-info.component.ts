@@ -29,7 +29,9 @@ export class PersonalInfoComponent extends BaseForm
   readonly hasSpouseQuestion = 'Do you have a spouse?';
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', { static: true } as any) heading: ElementRef<
+    HTMLElement
+  >;
 
   constructor(
     protected router: Router,

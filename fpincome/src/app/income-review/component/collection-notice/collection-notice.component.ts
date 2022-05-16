@@ -22,7 +22,8 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
   @Output() onHide: EventEmitter<void> = new EventEmitter<void>();
 
   // Read after the ngAfterViewInit
-  @ViewChild('collectionNoticeModal', { static: false })
+  @ViewChild('collectionNoticeModal', { static: false } as any)
+  collectionNoticeModalRef: ElementRef<HTMLElement>;
   public collectionNoticeModal: ModalDirective;
 
   private onHide$: Subscription;

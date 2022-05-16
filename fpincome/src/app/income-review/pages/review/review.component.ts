@@ -11,14 +11,21 @@ import { ReviewContainerComponent } from '../../component/review-container/revie
   templateUrl: './review.component.html',
 })
 export class ReviewComponent extends BaseForm implements OnInit {
-  @ViewChild('personalInfo', { static: true })
+  @ViewChild('personalInfo', { static: true } as any)
+  personalInfoRef: ElementRef<HTMLElement>;
   personalInfo: ReviewContainerComponent;
-  @ViewChild('income', { static: true })
+  @ViewChild('income', { static: true } as any) incomeRef: ElementRef<
+    HTMLElement
+  >;
   income: ReviewContainerComponent;
-  @ViewChild('supportDocs', { static: true })
+  @ViewChild('supportDocs', { static: true } as any) supportDocsRef: ElementRef<
+    HTMLElement
+  >;
   supportDocs: ReviewContainerComponent;
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', { static: true } as any) heading: ElementRef<
+    HTMLElement
+  >;
 
   constructor(
     protected router: Router,

@@ -21,11 +21,14 @@ import { FormBuilder, Validators } from '@angular/forms';
   templateUrl: './home.component.html',
 })
 export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
-  @ViewChild('infoCollectionModal', { static: true })
+  @ViewChild('infoCollectionModal', { static: true } as any)
+  infoCollectionModalRef: ElementRef<HTMLElement>;
   infoCollectionModal: CollectionNoticeComponent;
 
   /** Focuses the next element to the heading of a new page */
-  @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
+  @ViewChild('heading', { static: true } as any) heading: ElementRef<
+    HTMLElement
+  >;
 
   // Value never changed, but can be read outside class
   readonly captchaApiUrl = environment.api.captchaBaseURL;
