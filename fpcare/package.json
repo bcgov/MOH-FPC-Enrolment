@@ -51,13 +51,13 @@
     "jquery": "^3.5.0",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.21",
-    "moh-common-lib": "^3.4.1",
+    "moh-common-lib": "^3.6.0",
     "moment": "^2.29.4",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-select": "^1.0.1",
     "ngx-bootstrap": "^5.1.2",
     "ngx-mydatepicker": "^2.4.9",
-    "pdfjs-dist": "~2.3.200",
+    "pdfjs-dist": "~2.11.338",
     "popper.js": "^1.14.5",
     "rx-dom": "^7.0.3",
     "rxjs": "^6.5.2",
@@ -66,7 +66,7 @@
     "typescript": "~3.5.3",
     "xlsx": "^0.18.5",
     "zlib": "^1.0.5",
-    "zone.js": "~0.9.1"
+    "zone.js": "^0.11.7"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.23",
