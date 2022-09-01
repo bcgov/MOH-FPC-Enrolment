@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
               public splash: SplashPageService,
               public apiService: ApiService,
               private responseStore: ResponseStoreService) {
+    this.handleNavigation(location.pathname);
   }
 
   ngOnInit() {
@@ -98,6 +99,12 @@ export class AppComponent implements OnInit {
 
     if (environment.purgeWhenInactive){
       this.enablePurgeWhenInactive();
+    }
+  }
+
+  handleNavigation(url){
+    if (url.includes("/registration")) {
+      location.assign('https://my.gov.bc.ca/ahdc');
     }
   }
 
