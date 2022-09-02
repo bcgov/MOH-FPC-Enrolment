@@ -30,10 +30,10 @@ const routes: Routes = [
   // },
 
   // Lazy loading modules below
-  {
-    path: REGISTRATION_PATH,
-    loadChildren: () => import('app/modules/registration/registration.module').then(m => m.RegistrationModule)
-  },
+  // {
+  //   path: REGISTRATION_PATH,
+  //   loadChildren: () => import('app/modules/registration/registration.module').then(m => m.RegistrationModule)
+  // },
   {
     path: REGISTRATION_STATUS_PATH,
     loadChildren: () => import('app/modules/registration-status/registration-status.module').then(m => m.RegistrationStatusModule)
