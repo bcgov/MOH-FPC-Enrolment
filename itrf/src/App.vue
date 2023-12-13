@@ -1,8 +1,9 @@
 <script setup>
+  import GetStartedPage from './views/GetStartedPage.vue';
 </script>
 
 <template>
-  <!-- <GetStartedPage/> -->
+  <GetStartedPage/>
 </template>
 
 <style lang="scss">
