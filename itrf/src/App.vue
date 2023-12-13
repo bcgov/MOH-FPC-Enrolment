@@ -1,30 +1,61 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <!-- <GetStartedPage/> -->
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style lang="scss">
+main {
+  padding: 0;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+label {
+  margin: 0 !important;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+input[type="radio"] {
+  min-width: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.footer {
+  position: fixed;
+  width: 100vw;
+  bottom: 0;
+}
+
+.text-danger {
+  color: #D8292F !important;
+}
+
+.bottom {
+  position: fixed;
+  right: 40px;
+  bottom: 0;
+}
+
+.mb {
+  margin-bottom: 80px;
+}
+
+.submission-type {
+  background: #eee;
+  padding: 4px 8px 0 8px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+
+  .name {
+    width: 50%;
+    text-align: right;
+    padding-right: 8px;
+  }
+
+  .radios {
+    width: 50%;
+    padding: 0 6px;
+  }
 }
 </style>
