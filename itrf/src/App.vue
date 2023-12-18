@@ -7,9 +7,7 @@
     <Header :title='pageTitle'
               imagePath='/itrf/images/' 
               />
-    <main>
-      <GetStartedPage/>
-    </main>
+    <router-view></router-view>
   </div>
   <Footer :version='version' />
 </template>
