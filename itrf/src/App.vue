@@ -4,6 +4,9 @@
 
 <template>
   <div id="app">
+    <Header :title='pageTitle'
+              imagePath='/itrf/images/' 
+              />
     <main>
       <GetStartedPage/>
     </main>
@@ -15,6 +18,7 @@
 import "./styles/style.css";
 import "./styles/bootstrap-theme.min.css";
 import project from '../package.json';
+import Header from "../src/components/Header.vue";
 import Footer from "../src/components/Footer.vue";
 
 export default {
