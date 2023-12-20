@@ -17,7 +17,7 @@
       </div>
       <div class="mobile-step-container p-3 border-bottom">
         <div class="pb-3">Step {{ currentStepNumber }}/{{ routes.length }} - {{ currentStepTitle }}</div>
-        <div class="chevron-container" @click="openDropdown">
+        <div class="chevron-container">
           <font-awesome-icon icon="chevron-down" />
         </div>
       </div>
@@ -37,16 +37,16 @@
           </div>
         </a>
         </div>
-        <div class="chevron-container" @click="closeDropdown">
+        <div class="chevron-container">
           <font-awesome-icon icon="chevron-up" />
         </div>
       </div>
     </nav>
-  </template>
+</template>
   
-  <script>
-//   import { HIDE_MOBILE_PROGRESS, SHOW_MOBILE_PROGRESS, SHOW_SIGN_OUT_MODAL } from '../store';
-  export default {
+<script>
+import environment from '../settings';
+export default {
     name: "ProgressBar",
     components: {},
     props: {
@@ -54,12 +54,6 @@
       routes: Array
     },
     computed: {
-    //   hideMobileStep() {
-    //     return this.$store.state.showMobileProgress;
-    //   },
-    //   hideMobileProgress() {
-    //     return !this.$store.state.showMobileProgress;
-    //   },
       progressBarStyles() {
         const index = this.routes.findIndex(element => {
           return element.path === this.currentPath;
@@ -93,27 +87,11 @@
       }
     },
     methods: {
-      onClickLink(path) {
-        const index = this.routes.findIndex(el => el.path.includes(path));
-        const isPrevRoute = index + 1 < this.currentStepNumber;
-        if (isPrevRoute) {
-          // If they click on log out
-          if (index === 0) {
-            // pop up window
-            // this.$store.dispatch(SHOW_SIGN_OUT_MODAL);
-          } else {
-            // otherwise navigate
-            this.$router.push(path);
-            scrollTo(0);
-          }
-        }
-      },
-      openDropdown() {
-        // this.$store.dispatch(SHOW_MOBILE_PROGRESS);
-      },
-      closeDropdown() {
-        // this.$store.dispatch(HIDE_MOBILE_PROGRESS);
-      }
+        onClickLink: function(path) {
+            if (environment.bypassRouteGuards) {
+                this.$router.push(path);
+            }
+        },
     }
   };
   </script>

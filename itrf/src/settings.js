@@ -1,5 +1,5 @@
 export default {
-    bypassRouteGuards: false,
+    bypassRouteGuards: true,
     useDummyData: false,
   };
   

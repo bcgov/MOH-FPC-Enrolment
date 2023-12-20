@@ -3,6 +3,7 @@
         <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
         <PageContent>
             <div class="container pt-3 pt-sm-5 mb-5">
+                <h1>Submission</h1>
             </div>
         </PageContent>
     </div>
