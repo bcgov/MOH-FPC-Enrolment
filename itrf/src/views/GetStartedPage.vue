@@ -2,6 +2,7 @@
     <div>
       <!-- <ConsentModal v-if="showConsentModal"
                     @close="handleCloseConsentModal" /> -->
+        <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
         <PageContent>
             <div class="container pt-3 pt-sm-5 mb-5">
                 <h1>Get Started</h1>
@@ -40,25 +41,30 @@
                         :items='radioOptionsHasSpouseFiledIncomeTaxReturn'/>
                 </div>
             </div>
-      </PageContent>
-      <ContinueBar :buttonLabel="'Continue'" />
+        </PageContent>
+      <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
     </div>
 </template>
   
 <script>
+import ProgressBar from '../components/ProgressBar.vue';
 import PageContent from '../components/PageContent.vue';
 import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
+import { stepRoutes, routes } from '../router/index';
+import pageStateService from '../services/page-state-service.js';
 
 export default {
-    name: 'HomePage',
+    name: 'GetStartedPage',
     components: {
+        ProgressBar,
         PageContent,
         Radio,
         ContinueBar
     },
     data: () => {
         return {
+            stepRoutes: stepRoutes,
             incomeTaxReturnYear: null,
             hasFiledIncomeTaxReturn: null,
             hasSpouse: null,
@@ -107,6 +113,14 @@ export default {
         ];
         this.incomeTaxReturnYear = new Date().getFullYear() - 2;
     },
+    methods: {
+        nextPage() {
+            const path = routes.PERSONAL_INFO.path;
+            pageStateService.setPageComplete(path);
+            pageStateService.visitPage(path);
+            this.$router.push(path);
+        }
+    }
 }
 </script>
   

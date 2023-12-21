@@ -1,12 +1,6 @@
-<script setup>
-  import GetStartedPage from './views/GetStartedPage.vue';
-</script>
-
 <template>
   <div id="app">
-    <Header :title='pageTitle'
-              imagePath='/itrf/images/' 
-              />
+    <Header :title='pageTitle' imagePath='/itrf/images/' />
     <router-view></router-view>
   </div>
   <Footer :version='version' />
@@ -16,13 +10,15 @@
 import "./styles/style.css";
 import "./styles/bootstrap-theme.min.css";
 import project from '../package.json';
-import Header from "../src/components/Header.vue";
-import Footer from "../src/components/Footer.vue";
+import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
-  },
+    Header,
+    Footer
+},
   data: () => {
     return {
       version: project.version,
