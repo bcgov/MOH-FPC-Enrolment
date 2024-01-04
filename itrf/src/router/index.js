@@ -52,6 +52,13 @@ export const stepRoutes = [
   { ...routes.SUBMISSION }
 ];
 
+export const routeStepOrder = [
+  routes.GET_STARTED,
+  routes.PERSONAL_INFO,
+  routes.DECLARATION,
+  routes.SUBMISSION
+]
+
 const router = createRouter({
   history: createWebHistory('/itrf/'),
   routes: [
@@ -77,5 +84,16 @@ const router = createRouter({
     },
   ]
 });
+
+export const isPastPath = (toPath, fromPath) => {
+  for (let i=0; i<routeStepOrder.length; i++) {
+    if (routeStepOrder[i].path === fromPath) {
+      return false;
+    } else if (routeStepOrder[i].path === toPath) {
+      return true;
+    }
+  }
+  return false;
+};
 
 export default router;

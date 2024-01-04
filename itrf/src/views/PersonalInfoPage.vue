@@ -9,12 +9,14 @@
                 <Input
                     :label="'First name'"
                     :className="'mt-3'"
+                    :inputStyle="mediumStyles"
                     v-model="firstName"
                     :required="true"
                 />
                 <Input
                     :label="'Last name'"
                     :className="'mt-3'"
+                    :inputStyle="mediumStyles"
                     v-model="lastName"
                     :required="true"
                 />
@@ -29,12 +31,14 @@
                     <Input
                         :label="'Personal Health Number (PHN)'"
                         :className="'mt-3'"
+                        :inputStyle="smallStyles"
                         v-model="phn"
                         :required="true"
                     />
                     <Input
                         :label="'Pharmacare Registration Number (optional)'"
                         :className="'mt-3'"
+                        :inputStyle="smallStyles"
                         v-model="regNum"
                         :required="true"
                     />
@@ -66,7 +70,6 @@
 <style scoped>
 .mt-3 {
     font-weight: bolder;
-    width: 400px;
 }
 .bcid-container {
   display: flex;
@@ -92,6 +95,8 @@ import DateInput from '../components/DateInput.vue';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import { isPastPath } from '../router/index';
+import { mediumStyles, smallStyles,} from '../constants/input-styles';
 
 export default {
     name: 'PersonalInfoPage',
@@ -106,6 +111,8 @@ export default {
     data: () => {
         return {
             stepRoutes,
+            smallStyles,
+            mediumStyles,
             firstName: "",
             lastName: "",
             birthDate: "",
@@ -121,6 +128,19 @@ export default {
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
+        }
+    },
+    beforeRouteLeave(to, from, next){
+        pageStateService.setPageIncomplete(from.path);
+        if (pageStateService.isPageComplete(to.path) || isPastPath(to.path, from.path)) {
+            next();
+        } else {
+            next();
+            // Will uncomment once there's page validation
+            // next({
+            //     path: routes.PERSONAL_INFO.path,
+            //     replace: true
+            // });
         }
     }
 }
