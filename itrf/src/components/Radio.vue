@@ -47,9 +47,13 @@
 </template>
 
 <script>
+import blurMixin from '../mixins/blur-mixin';
 
 export default {
   name: 'RadioComponent',
+  mixins: [
+    blurMixin,
+  ],
   props: {
     required: {
       type: Boolean,

@@ -119,7 +119,7 @@ export default {
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
-        }
+        },
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);

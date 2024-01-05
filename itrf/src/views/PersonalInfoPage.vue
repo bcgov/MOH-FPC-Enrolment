@@ -115,7 +115,7 @@ export default {
             mediumStyles,
             firstName: "",
             lastName: "",
-            birthDate: "",
+            birthDate: null,
             phn: "",
             regNum: "",
         };
