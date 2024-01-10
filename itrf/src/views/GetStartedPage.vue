@@ -45,6 +45,12 @@
       <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
     </div>
 </template>
+
+<style scoped>
+.container {
+    margin-top: 0;
+}
+</style>
   
 <script>
 import ProgressBar from '../components/ProgressBar.vue';

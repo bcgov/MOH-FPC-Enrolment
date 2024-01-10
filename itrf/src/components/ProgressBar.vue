@@ -1,54 +1,52 @@
 <template>
-    <nav class="container component-container">
-      <div class="progress-bar-container">
-        <div class="progress-bar" :style="progressBarStyles"></div>
-      </div>
+    <nav>
       <div class="step-container">
-        <a
-          href="javascript:void(0);"
-          v-for="(route, index) in routes"
-          :key="route.path"
-          @click="onClickLink(route.path)"
-        >
-          <div class="step" v-bind:class="{'step-selected': index + 1 === currentStepNumber, 'step-passed': index + 1 < currentStepNumber}">
-            <div class="step-text" v-bind:class="{'v-step-text-selected': index + 1 === currentStepNumber}">{{ route.title }}</div>
+        <div class="row">
+          <div class="col-md-6 p-3">
+            <div v-if="currentStepNumber != 1" >
+              <a class="back-button chevron-left"
+                href="javascript:void(0);"
+                @click="onClickLink(previousPath)"
+              >
+              <IconChevronSingleLeft /> Back
+              </a>
+            </div>
           </div>
-        </a>
+          <div class="col-md-6 p-3">
+            <p class="step">Step {{ currentStepNumber }} of {{ routes.length }}</p>
+            <p class="step">{{ currentStepTitle }}</p>
+          </div>
+        </div>
       </div>
       <div class="mobile-step-container p-3 border-bottom">
-        <div class="pb-3">Step {{ currentStepNumber }}/{{ routes.length }} - {{ currentStepTitle }}</div>
-        <div class="chevron-container">
-          <font-awesome-icon icon="chevron-down" />
-        </div>
-      </div>
-      <div class="mobile-progress-bar-container p-3 pt-5 border-bottom">
-        <div class="v-progress-bar-container">
-          <div class="v-progress-bar" :style="verticalProgressBarStyles"></div>
-        </div>
-        <div class="v-step-container">
-          <a
-          href="javascript:void(0);"
-          v-for="(route, index) in routes"
-          :key="route.path"
-          @click="onClickLink(route.path)"
-        >
-          <div class="v-step" v-bind:class="{'v-step-selected': index + 1 === currentStepNumber, 'v-step-passed': index + 1 < currentStepNumber}">
-            <div class="v-step-text" v-bind:class="{'v-step-text-selected': index + 1 === currentStepNumber}" >{{ route.title }}</div>
+        <div class="row">
+          <div class="col-sm-6">
+            <div v-if="currentStepNumber != 1" >
+              <a class="back-button chevron-left"
+                href="javascript:void(0);"
+                @click="onClickLink(previousPath)"
+              >
+              <IconChevronSingleLeft /> Back
+              </a>
+            </div>
           </div>
-        </a>
-        </div>
-        <div class="chevron-container">
-          <font-awesome-icon icon="chevron-up" />
+          <div class="col-sm-6">
+            <p class="step">Step {{ currentStepNumber }} of {{ routes.length }}</p>
+            <p class="step">{{ currentStepTitle }}</p>
+          </div>
         </div>
       </div>
     </nav>
 </template>
   
 <script>
-import environment from '../settings';
+import IconChevronSingleLeft from '../assets/IconChevronSingleLeft.vue';
+
 export default {
     name: "ProgressBar",
-    components: {},
+    components: {
+      IconChevronSingleLeft,
+    },
     props: {
       currentPath: String,
       routes: Array
@@ -73,6 +71,12 @@ export default {
           height: index / (this.routes.length - 1) * 100 + "%"
         };
       },
+      previousPath() {
+        const index = this.routes.findIndex(element => {
+          return element.path.includes(this.currentPath);
+        });
+        return this.routes[index-1].path;
+      },
       currentStepNumber() {
         const index = this.routes.findIndex(element => {
           return element.path.includes(this.currentPath);
@@ -88,9 +92,7 @@ export default {
     },
     methods: {
         onClickLink: function(path) {
-            if (environment.bypassRouteGuards) {
-                this.$router.push(path);
-            }
+            this.$router.push(path);
         },
     }
   };
@@ -103,6 +105,7 @@ export default {
     padding: 1em 0;
     min-height: 2em;
     margin-top: 0;
+    background: #f2f2f2;
     /* min-width: 650px; */
   }
   
@@ -124,16 +127,31 @@ export default {
     background: #036;
   }
   .step-container {
-    display: flex;
-    justify-content: space-around;
+    padding: 0 1em;
+    background: #f4f4f4;
   }
   .step {
+    display: flex;
+    justify-content: right;
+    margin-bottom: 0;
+    font-weight: bolder;
+  }
+  .back-button{
+    display: flex;
+    justify-content: left;
+    padding: 0 1em;
+    font-weight: bolder;
+  }
+  .chevron-left {
+    width: 85px;
+  }
+  /* .step {
     position: relative;
     -webkit-transform: translateX(-0.5em);
     transform: translateX(-0.5em);
     margin-top: 0.25rem;
     cursor: default;
-  }
+  } 
   .step:before {
     content: " ";
     position: absolute;
@@ -167,7 +185,7 @@ export default {
   }
   .step-text-selected {
     font-weight: bold;
-  }
+  } */
   .mobile-progress-bar-container {
     display: none;
     font-weight: bold;
