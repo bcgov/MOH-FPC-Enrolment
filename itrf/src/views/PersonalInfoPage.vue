@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-sm-5">
                         <TipBox title="Tip: PHN number">
-                            <p>The 10 digit number that can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a> (or front of the CareCard if you still have one).</p>
+                            <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
                             <div class="bcid-container">
                                 <div class="bcid-image-container">
                                 <img src="../images/bcid-sample-front.png"
@@ -70,6 +70,9 @@
 <style scoped>
 .mt-3 {
     font-weight: bolder;
+}
+.container {
+    margin-top: 0;
 }
 .bcid-container {
   display: flex;

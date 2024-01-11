@@ -7,15 +7,15 @@
             <div class="container pt-3 pt-sm-5 mb-5">
                 <h1>Get Started</h1>
                 <hr/>
-                <p>The Fair PharmaCare deductible and family maximum for this year are normally calculated using your net income from two years ago.  If HIBC is not able to verify your net income with the Canada Revenue Agency (CRA), then your Fair PharmaCare deductible will be set to the default maximum of $10,000.  This means that Fair PharmaCare will assist you only after you spend more than $10,000 on eligible prescription drugs and/or medical supplies.</p><br>
-                <h2>You can use this form</h2>
+                <p>The Fair PharmaCare deductible and family maximum for this year are normally calculated using your net income from two years ago.  If we are not able to verify your net income with the Canada Revenue Agency (CRA), then your Fair PharmaCare deductible will be set to the default maximum of $10,000.  This means that Fair PharmaCare will assist you only after you spend more than $10,000 on eligible prescription drugs and/or medical supplies.</p><br>
+                <h2>You can use this form if</h2>
                 <ul>
                     <li>You are registered for Fair Pharmacare.</li>
-                    <li>You have given HIBC your consent to verify your net income with the CRA.</li>
+                    <li>You have given Pharmacare your consent to verify your net income with the CRA.</li>
                     <li>You and your spouse (if applicable) have filed your income tax return with the CRA for the tax year {{ incomeTaxReturnYear }}.</li>
                 </ul><br>
                 <h2>If you were unable to file taxes for year {{ incomeTaxReturnYear }}</h2>
-                <p>You may not have been able to file taxes in Canada. You may have worked in another country two years ago or were a minor (under 18) with no income. In this case, you may be required to document your income on the Fair PharmaCare Proof of Income Affidavit. <a href="https://www2.gov.bc.ca/assets/gov/health/forms/5357fil.pdf" target="_blank">Download a copy</a> or contact HIBC at 1-800-663-7100 (toll-free), 604-683-7151 (Lower Mainland) to have one sent to you.</p><br>
+                <p>You may not have been able to file taxes in Canada two years ago. You may have worked in another country two years ago or were a minor (under 18) with no income. In this case, you may be required to document your income on the Fair PharmaCare Proof of Income Affidavit. <a href="https://www2.gov.bc.ca/assets/gov/health/forms/5357fil.pdf" target="_blank">Download a copy</a> or contact us at 1-800-663-7100 (toll-free), 604-683-7151 (Lower Mainland) to have one sent to you.</p><br>
                 <h2>Income tax return filling</h2>
                 <p><b>Have you filed your income tax return with Canada Revenue Agency (CRA) for the year {{ incomeTaxReturnYear }}?</b></p>
                 <Radio 
@@ -45,6 +45,12 @@
       <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
     </div>
 </template>
+
+<style scoped>
+.container {
+    margin-top: 0;
+}
+</style>
   
 <script>
 import ProgressBar from '../components/ProgressBar.vue';

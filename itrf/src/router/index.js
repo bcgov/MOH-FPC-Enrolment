@@ -49,14 +49,12 @@ export const stepRoutes = [
   { ...routes.GET_STARTED },
   { ...routes.PERSONAL_INFO },
   { ...routes.DECLARATION },
-  { ...routes.SUBMISSION }
 ];
 
 export const routeStepOrder = [
   routes.GET_STARTED,
   routes.PERSONAL_INFO,
   routes.DECLARATION,
-  routes.SUBMISSION
 ]
 
 const router = createRouter({
@@ -76,11 +74,6 @@ const router = createRouter({
       path: routes.DECLARATION.path,
       name: routes.DECLARATION.name,
       component: routes.DECLARATION.component,
-    },
-    {
-      path: routes.SUBMISSION.path,
-      name: routes.SUBMISSION.name,
-      component: routes.SUBMISSION.component,
     },
   ]
 });

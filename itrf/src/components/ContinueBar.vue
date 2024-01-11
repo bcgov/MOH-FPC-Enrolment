@@ -1,7 +1,9 @@
 <template>
     <div class='continue-bar'>
       <div class="d-flex flex-row-reverse p-3 container">
-        <Button :label='buttonLabel'
+        <Button 
+                class="continue-button"
+                :label='buttonLabel'
                 :hasLoader='hasLoader'
                 @click='onContinue()'/>
       </div>
@@ -38,9 +40,15 @@ export default {
   <!-- Add "scoped" attribute to limit CSS to this component only -->
   <style scoped>
   .continue-bar {
-    background-color: #cdd9e4;
+    background-color: #f2f2f2;
     position: sticky;
     bottom: 0;
+  }
+
+  .continue-button {
+    background-color:#003366;
+    color:#f4f4f4;
+    border-color:#003366;
   }
   </style>
   
