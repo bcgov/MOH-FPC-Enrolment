@@ -1,7 +1,7 @@
 <template>
     <div>
-      <!-- <ConsentModal v-if="showConsentModal"
-                    @close="handleCloseConsentModal" /> -->
+      <ConsentModal v-if="showConsentModal"
+                    @close="handleCloseConsentModal" />
         <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
         <PageContent>
             <div class="container pt-3 pt-sm-5 mb-5">
@@ -59,6 +59,7 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import ConsentModal from '../components/ConsentModal.vue';
 
 export default {
     name: 'GetStartedPage',
@@ -66,7 +67,8 @@ export default {
         ProgressBar,
         PageContent,
         Radio,
-        ContinueBar
+        ContinueBar,
+        ConsentModal
     },
     data: () => {
         return {
@@ -76,8 +78,8 @@ export default {
             hasSpouse: null,
             hasSpouseFiledIncomeTaxReturn: null,
             radioOptionsFiledIncomeTaxReturn: null,
-            radioOptionsHasSpouse: null
-            // showConsentModal: true,
+            radioOptionsHasSpouse: null,
+            showConsentModal: true,
         };
     },
     created() {
