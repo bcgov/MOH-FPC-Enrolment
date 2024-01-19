@@ -9,9 +9,7 @@
             <h2 class="modal-title">Information collection notice</h2>
           </div>
           <div class="modal-body">
-            <p><b>Keep your personal information secure - especially when using a shared device like a computer at a library, school or café.</b> To delete any information that was entered, either complete the application and submit it or, if you don't finish, close the web browser.</p>
-            <p><b>Need to take a break and come back later?</b> The data you enter on this form is saved locally to the computer or device you are using until you close the web browser or submit your application.</p>
-            <p class="mb-4">Personal information is collected under the authority of the <em>Medicare Protection Act</em> and section 26 (a), (c) and (e) of the <em>Freedom of Information and Protection of Privacy Act</em> for the purposes of administration of the Medical Services Plan. If you have any questions about the collection and use of your personal information, please contact <a href="https://www2.gov.bc.ca/gov/content/health/about-bc-s-health-care-system/partners/health-insurance-bc" target="_blank">Health Insurance BC</a>.</p>
+            <p>Your personal information is collected by the Ministry of Health under the authority of sections 26(a) and (c) of the <em>Freedom of Information and Protection of Privacy Act (FIPPA).</em> It is collected for the purpose of administering Medical Services Plan and Supplementary Benefits under the <em>Medicare Protection Act,</em> and to determine, verify and administer your and your family’s Fair PharmaCare coverage under the <em>Pharmaceutical Services Act.</em> If you have questions about the collection of personal information on this form, contact the HIBC Chief Privacy Officer at PO Box 9035 STN Prov Govt, Victoria BC V8W 9E3; or call 604 683-7151 (Vancouver) or 1 800 663-7100 (toll free).</p>
             <Captcha v-if="!isCaptchaValid"
                     :apiBasePath="captchaAPIBasePath"
                     :nonce="applicationUuid"
