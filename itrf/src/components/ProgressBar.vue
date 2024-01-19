@@ -8,7 +8,7 @@
                 href="javascript:void(0);"
                 @click="onClickLink(previousPath)"
               >
-              <IconChevronSingleLeft /> Back
+              <IconChevronSingleLeft /> Previous Step
               </a>
             </div>
           </div>
@@ -139,7 +139,7 @@ export default {
   .back-button{
     display: flex;
     justify-content: left;
-    padding: 0 1em;
+    padding: 0 0em;
     font-weight: bolder;
   }
   .chevron-left {
