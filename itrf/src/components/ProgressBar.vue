@@ -13,7 +13,7 @@
             </div>
           </div>
           <div class="col-md-6 p-3">
-            <p class="step">Step {{ currentStepNumber }} of {{ routes.length }}</p>
+            <p class="step">Step {{ currentStepNumber }} of {{ routes.length - 1 }}</p>
             <p class="step">{{ currentStepTitle }}</p>
           </div>
         </div>
