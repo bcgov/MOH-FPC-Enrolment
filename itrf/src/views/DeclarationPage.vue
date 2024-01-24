@@ -13,9 +13,9 @@
                     id="applicant-consent"
                     v-model="isAuthorized" /> <br/>
                 <div class="container info pb-5">
-                    <div class="alert alert-info pt-4">
-                        <p><IconInfoCircle class="icon-info"/><b>After clicking the Submit button, do not navigate away from this page. Please wait for the submission process to complete.</b></p>
-                    </div>
+                    <InfoBox class="pt-4">
+                        <p><b>After clicking the Submit button, do not navigate away from this page. Please wait for the submission process to complete.</b></p>
+                    </InfoBox>
                 </div>
             </div>
         </PageContent>
@@ -28,9 +28,6 @@
     position: absolute;
     bottom: 0;
 }
-.icon-info {
-    width: 35px;
-}
 </style>
   
 <script>
@@ -40,7 +37,7 @@ import ContinueBar from '../components/ContinueBar.vue';
 import Checkbox from '../components/Checkbox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
-import IconInfoCircle from '../assets/IconInfoCircle.vue';
+import InfoBox from '../components/InfoBox.vue';
 
 export default {
     name: 'DeclarationPage',
@@ -49,7 +46,7 @@ export default {
     PageContent,
     ContinueBar,
     Checkbox,
-    IconInfoCircle
+    InfoBox
 },
     data: () => {
         return {
@@ -64,7 +61,7 @@ export default {
     computed: {
         applicantConsentLabel() {
             // TO-DO: Replace TEST with the actual store value from the first and last name on the Personal Info Page"
-            let label = 'TEST';
+            let label = 'TEST DATA';
             return label;
         }
     },
