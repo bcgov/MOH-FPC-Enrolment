@@ -8,12 +8,12 @@
                 href="javascript:void(0);"
                 @click="onClickLink(previousPath)"
               >
-              <IconChevronSingleLeft /> Back
+              <IconChevronSingleLeft /> Previous Step
               </a>
             </div>
           </div>
           <div class="col-md-6 p-3">
-            <p class="step">Step {{ currentStepNumber }} of {{ routes.length }}</p>
+            <p class="step">Step {{ currentStepNumber }} of {{ routes.length - 1 }}</p>
             <p class="step">{{ currentStepTitle }}</p>
           </div>
         </div>
@@ -139,7 +139,7 @@ export default {
   .back-button{
     display: flex;
     justify-content: left;
-    padding: 0 1em;
+    padding: 0 0em;
     font-weight: bolder;
   }
   .chevron-left {
