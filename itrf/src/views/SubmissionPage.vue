@@ -33,8 +33,7 @@
                 <br>
 
                 <h2>Personal information</h2>
-                <ReviewTable :elements='personalInfoData'
-                  :backgroundColor='tableBackgroundColor'/>
+                <ReviewTable :elements='personalInfoData'/>
             </div>
         </PageContent>
     </div>
