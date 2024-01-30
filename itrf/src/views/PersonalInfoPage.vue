@@ -36,7 +36,7 @@
                         :required="true"
                     />
                     <Input
-                        :label="'Pharmacare Registration Number (optional)'"
+                        :label="'PharmaCare Registration Number (optional)'"
                         :className="'mt-3'"
                         :inputStyle="smallStyles"
                         v-model="regNum"

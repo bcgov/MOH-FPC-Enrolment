@@ -6,8 +6,8 @@
                 <h1>Declaration</h1>
                 <hr/>
                 <p><b>Please read and click to sign.</b></p>
-                <p>I certify that the information given in this application form is true, correct, and complete.</p>
-                <p>I certify that I (and my spouse, if applicable) have filed an income return with the CRA for tax year {{ incomeTaxReturnYear }}.</p>
+                <p>I certify that the information given in this application form is true, correct and complete.</p>
+                <p>I certify that I (and my spouse or common-law partner, if applicable) have filed an income return with the CRA for the tax year {{ incomeTaxReturnYear }}.</p>
                 <Checkbox 
                     :label="applicantConsentLabel"
                     id="applicant-consent"
