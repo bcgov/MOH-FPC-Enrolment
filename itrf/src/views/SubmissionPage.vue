@@ -116,7 +116,7 @@ export default {
                         value: phn,
                         },
                         {
-                        label: "Pharmacare Registration Number",
+                        label: "PharmaCare Registration Number",
                         value: regNum,
                         },
             );
