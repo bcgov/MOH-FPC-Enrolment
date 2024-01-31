@@ -20,14 +20,14 @@ metadata:
     description: |
       This configmap is used internally by NGINX
       to store config.
-  name: fpincome-web-config
+  name: itrf-web-config
 objects:
   - apiVersion: v1
     kind: ConfigMap
     metadata:
-      name: fpincome-web-config
+      name: itrf-web-config
       labels:
-        app: fpincome-web
+        app: itrf-web
     data:
       nginx.conf: |
         worker_processes auto;
@@ -99,9 +99,9 @@ objects:
             # uncomment for test2
             # index index.html index.htm;
 
-            # serve our angular app here
+            # serve our app here
             location / {
-              rewrite ^/fpincome(/.*)$ $1;
+              rewrite ^/itrf(/.*)$ $1;
 
               root /opt/app-root/src;
 
@@ -213,11 +213,11 @@ parameters:
   - description: SPA_ENV_AUTH_TOKEN
     name: SPA_ENV_AUTH_TOKEN
     required: true
-  - description: FPC_ENV
-    name: FPC_ENV
+  - description: ITRF_ENV
+    name: ITRF_ENV
     required: true
-  - description: FPC_VERSION
-    name: FPC_VERSION
+  - description: ITRF_VERSION
+    name: ITRF_VERSION
     required: true
   - description: SOURCE_IMAGE_TAG
     name: SOURCE_IMAGE_TAG
