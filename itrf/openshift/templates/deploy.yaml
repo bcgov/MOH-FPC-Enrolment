@@ -137,10 +137,10 @@ objects:
                 value: ${SPLUNK_AUTH_TOKEN}
               - name: SPA_ENV_AUTH_TOKEN
                 value: ${USE_SPLUNK_FORWARDER}
-              - name: ITRF_ENV
-                value: ${ITRF_ENV}
-              - name: ITRF_VERSION
-                value: ${ITRF_VERSION}
+              # - name: ITRF_ENV
+              #   value: ${ITRF_ENV}
+              # - name: ITRF_VERSION
+              #   value: ${ITRF_VERSION}
               - name: ROUTER_DEFAULT_SERVER_TIMEOUT
                 value: ${ROUTER_DEFAULT_SERVER_TIMEOUT}
               - name: ROUTER_DEFAULT_CLIENT_TIMEOUT
@@ -177,6 +177,7 @@ parameters:
   displayName: Build Project
   name: SOURCE_IMAGE_NAMESPACE
   required: true
+  value: 3f9283-tools
 - description: The name of the source image.
   displayName: Source Image Name
   name: SOURCE_IMAGE_NAME
@@ -195,6 +196,7 @@ parameters:
   value: apps.silver.devops.gov.bc.ca
 - description: RealIpFrom for nginx
   name: RealIpFrom
+  value: "142.34.194.118"
   required: true
 - description: IpFilterRules
   name: IpFilterRules
@@ -210,12 +212,13 @@ parameters:
 - description: SPA_ENV_AUTH_TOKEN
   name: SPA_ENV_AUTH_TOKEN
   required: true
-- description: ITRF_ENV
-  name: ITRF_ENV
-  required: true
-- description: ITRF_VERSION
-  name: ITRF_VERSION
-  required: true
+  value: 
+# - description: ITRF_ENV
+#   name: ITRF_ENV
+#   required: true
+# - description: ITRF_VERSION
+#   name: ITRF_VERSION
+#   required: true
 - description: ROUTER_DEFAULT_SERVER_TIMEOUT
   name: ROUTER_DEFAULT_SERVER_TIMEOUT
   value: "60s"
