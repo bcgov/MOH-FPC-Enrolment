@@ -209,10 +209,10 @@ parameters:
     name: IpFilterRules
     required: true
     value: "allow 0.0.0.0/0; deny all;"
-  # - description: SPLUNK_AUTH_TOKEN
-  #   name: SPLUNK_AUTH_TOKEN
-  #   required: true
-  #   value:
+  - description: SPLUNK_AUTH_TOKEN
+    name: SPLUNK_AUTH_TOKEN
+    required: true
+    value:
   - description: SPA_ENV_AUTH_TOKEN
     name: SPA_ENV_AUTH_TOKEN
     required: true
