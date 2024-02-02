@@ -29,7 +29,7 @@
                 <h2>Next steps</h2>
                 <hr />
                 <p><b>Print or save this page for your records.</b></p>
-                <p>When we have verified your income with the Canada Revenue Agency, you will receive a Confirmation of Coverage letter within 1-2 weeks.</p>
+                <p>When we have verified your income with the CRA, you will receive a Confirmation of Coverage letter within 1-2 weeks.</p>
                 <br>
 
                 <h2>Personal information</h2>
@@ -98,7 +98,7 @@ export default {
             const lastName = 'DATA';
             const birthDate = 'January 01, 2000';
             const phn = '9999 999 998';
-            const regNum = '9999 999 998';
+            const hasSpouse = 'Yes';
             items.push({
                         label: "First name",
                         value: firstName,
@@ -116,9 +116,9 @@ export default {
                         value: phn,
                         },
                         {
-                        label: "PharmaCare Registration Number",
-                        value: regNum,
-                        },
+                        label: "Has a spouse or common-law partner",
+                        value: hasSpouse,
+                        }
             );
             return items;
         }

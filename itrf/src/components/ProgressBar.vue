@@ -4,11 +4,11 @@
         <div class="row">
           <div class="col-md-6 p-3">
             <div v-if="currentStepNumber != 1" >
-              <a class="back-button chevron-left"
+              <a class="back-button"
                 href="javascript:void(0);"
                 @click="onClickLink(previousPath)"
               >
-              <IconChevronSingleLeft /> Previous Step
+              <IconChevronSingleLeft class="chevron-left" /> Previous Step
               </a>
             </div>
           </div>
@@ -143,7 +143,7 @@ export default {
     font-weight: bolder;
   }
   .chevron-left {
-    width: 85px;
+    width: 15px;
   }
   /* .step {
     position: relative;

@@ -6,45 +6,38 @@
                 <h1>Personal Information</h1>
                 <hr/>
                 <p>Enter your name as it appears in your BC Services Card</p>
-                <Input
-                    :label="'First name'"
-                    :className="'mt-3'"
-                    :inputStyle="mediumStyles"
-                    v-model="firstName"
-                    :required="true"
-                />
-                <Input
-                    :label="'Last name'"
-                    :className="'mt-3'"
-                    :inputStyle="mediumStyles"
-                    v-model="lastName"
-                    :required="true"
-                />
                 <div class="row">
                     <div class="col-sm-7">
-                    <DateInput
-                        label='Birthdate'
-                        className='mt-3'
-                        v-model='birthDate'
-                        :required="true"
-                    />
-                    <Input
-                        :label="'Personal Health Number (PHN)'"
-                        :className="'mt-3'"
-                        :inputStyle="smallStyles"
-                        v-model="phn"
-                        :required="true"
-                    />
-                    <Input
-                        :label="'PharmaCare Registration Number (optional)'"
-                        :className="'mt-3'"
-                        :inputStyle="smallStyles"
-                        v-model="regNum"
-                        :required="true"
-                    />
+                        <Input
+                            :label="'First name'"
+                            :className="'mt-3'"
+                            :inputStyle="mediumStyles"
+                            v-model="firstName"
+                            :required="true"
+                        />
+                        <Input
+                            :label="'Last name'"
+                            :className="'mt-3'"
+                            :inputStyle="mediumStyles"
+                            v-model="lastName"
+                            :required="true"
+                        />
+                        <DateInput
+                            label='Birthdate'
+                            className='mt-3'
+                            v-model='birthDate'
+                            :required="true"
+                        />
+                        <Input
+                            :label="'Personal Health Number (PHN)'"
+                            :className="'mt-3'"
+                            :inputStyle="smallStyles"
+                            v-model="phn"
+                            :required="true"
+                        />
                     </div>
                     <div class="col-sm-5">
-                        <TipBox title="Tip: PHN number">
+                        <TipBox title="Tip: PHN number" class="mt-2">
                             <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
                             <div class="bcid-container">
                                 <div class="bcid-image-container">
@@ -120,7 +113,6 @@ export default {
             lastName: "",
             birthDate: null,
             phn: "",
-            regNum: "",
         };
     },
     created() {

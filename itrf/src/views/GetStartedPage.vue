@@ -25,6 +25,14 @@
                     v-model='hasFiledIncomeTaxReturn'
                     :required="true"
                     :items='radioOptionsFiledIncomeTaxReturn'/><br>
+                <!-- <div class="text-danger"
+                    v-if="$v.hasFiledIncomeTaxReturn.$dirty && !$v.hasFiledIncomeTaxReturn.required"
+                    aria-live="assertive">Select an option to answer the question.</div> -->
+                <!-- <div class="text-danger"
+                    v-if="v$.hasFiledIncomeTaxReturn.$dirty && v$.hasFiledIncomeTaxReturn.required.$invalid"
+                    aria-live="assertive">
+                    <p>You can't submit this form if you have not filed your taxes for the year {{ incomeTaxReturnYear }}</p>
+                    <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p></div> -->
                 <p><b>Do you have a spouse or common-law partner?</b></p>
                 <Radio 
                     id='spouse'
@@ -60,6 +68,12 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import {
+  SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
+  SET_APPLICANT_HAS_SPOUSE,
+  SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
+} from '../store/index';
+
 
 export default {
     name: 'GetStartedPage',
@@ -71,6 +85,7 @@ export default {
     },
     data: () => {
         return {
+            isPageLoaded: false,
             stepRoutes: stepRoutes,
             incomeTaxReturnYear: null,
             hasFiledIncomeTaxReturn: null,
@@ -82,6 +97,9 @@ export default {
         };
     },
     created() {
+        // this.hasFiledIncomeTaxReturn = this.$store.state.hasFiledIncomeTaxReturn;
+        // this.hasSpouse = this.$store.state.hasSpouse;
+        // this.hasSpouseFiledIncomeTaxReturn = this.$store.state.hasSpouseFiledIncomeTaxReturn;
         this.radioOptionsFiledIncomeTaxReturn = [
             {
                 id: 'filed-income-tax-return-y',
@@ -119,9 +137,30 @@ export default {
             }
         ];
         this.incomeTaxReturnYear = new Date().getFullYear() - 2;
+        this.$nextTick(() => {
+            this.isPageLoaded = true;
+        })
+    },
+    validations() {
+        const validations = {
+            hasFiledIncomeTaxReturn: {
+                required
+            },
+            // hasSpouse: {
+            //     required
+            // },
+            // hasSpouseFiledIncomeTaxReturn: {
+            //     required
+            // }
+        };
+        return validations;
     },
     methods: {
         nextPage() {
+            // this.$store.commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, this.hasFiledIncomeTaxReturn);
+            // this.$store.commit(SET_APPLICANT_HAS_SPOUSE, this.hasSpouse);
+            // this.$store.commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, this.hasSpouseFiledIncomeTaxReturn);
+
             const path = routes.PERSONAL_INFO.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
