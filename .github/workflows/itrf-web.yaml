@@ -1,12 +1,12 @@
 name: itrf-web build
 on:
   push:
-    # paths:
-    #   - "itrf/src/**/*.html"
-    #   - "itrf/src/**/*.ts"
-    #   - "itrf/src/**/*.js"
-    #   - "itrf/src/**/*.scss"
-    #   - "itrf/package*.json"
+    paths:
+      - "itrf/src/**/*.html"
+      - "itrf/src/**/*.ts"
+      - "itrf/src/**/*.js"
+      - "itrf/src/**/*.scss"
+      - "itrf/package*.json"
   workflow_dispatch:
 env:
   NAMESPACE: 3f9283-tools
