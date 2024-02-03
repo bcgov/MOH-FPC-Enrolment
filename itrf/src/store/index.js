@@ -4,7 +4,6 @@ import { createStore } from 'vuex';
 export const SET_UUID = "setUUID";
 export const SET_API_RESPONSE = "setApiResponse";
 export const SET_SUBMISSION_DATE = 'setSubmissionDate';
-export const SET_MAINTENANCE_MESSAGE = "setMaintenanceMessage";
 export const RESET_FORM = "resetForm";
 export const NEW_FORM = "newForm";
 
@@ -24,13 +23,15 @@ export const SET_BIRTHDATE = "setBirthdate";
 export const SET_PHN= "setPHN";
 export const SET_APPLICANT_CONSENT = "setApplicantConsent";
 
+export const MODULE_NAME = 'itrfModule';
+
 export default createStore({
+  namespaced: true,
   state: () => {
     const state = {
       uuid: null,
       apiResponse: null,
       submissionDate: null,
-      maintenancePage: null,
       isInfoCollectionNoticeOpen: true,
       captchaToken: null,
       applicantHasFiledIncomeTaxReturn: null,
@@ -53,9 +54,6 @@ export default createStore({
     },
     setSubmissionDate(state, payload) {
         state.submissionDate = payload;
-    },
-    setMaintenancePage(state, payload) {
-        state.maintenancePage = payload;
     },
     setIsInfoCollectionNoticeOpen(state, payload) {
         state.isInfoCollectionNoticeOpen = payload;
@@ -98,7 +96,6 @@ export default createStore({
       commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, null);
       commit(SET_APPLICANT_HAS_SPOUSE, null);
       commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, null);
-      commit(SET_MAINTENANCE_PAGE, null);
       commit(SET_FIRST_NAME, null);
       commit(SET_LAST_NAME, null);
       commit(SET_BIRTHDATE, null);
@@ -114,13 +111,13 @@ export default createStore({
       commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, null);
       commit(SET_APPLICANT_HAS_SPOUSE, null);
       commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, null);
-      commit(SET_MAINTENANCE_PAGE, null);
       commit(SET_FIRST_NAME, null);
       commit(SET_LAST_NAME, null);
       commit(SET_BIRTHDATE, null);
       commit(SET_PHN, null);
       commit(SET_APPLICANT_CONSENT, null);
-    },
+    }
   },
   getters: {}
 });
+

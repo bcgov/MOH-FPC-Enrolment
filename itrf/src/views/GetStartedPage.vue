@@ -24,22 +24,28 @@
                     name='filed-income-tax-return'
                     v-model='hasFiledIncomeTaxReturn'
                     :required="true"
-                    :items='radioOptionsFiledIncomeTaxReturn'/><br>
-                <!-- <div class="text-danger"
-                    v-if="$v.hasFiledIncomeTaxReturn.$dirty && !$v.hasFiledIncomeTaxReturn.required"
-                    aria-live="assertive">Select an option to answer the question.</div> -->
-                <!-- <div class="text-danger"
+                    :items='radioOptionsFiledIncomeTaxReturn'/>
+                <div class="text-danger"
                     v-if="v$.hasFiledIncomeTaxReturn.$dirty && v$.hasFiledIncomeTaxReturn.required.$invalid"
+                    aria-live="assertive">Select an option to answer the question.
+                </div>
+                <div class="text-danger"
+                    v-if="hasFiledIncomeTaxReturn == 'N'"
                     aria-live="assertive">
                     <p>You can't submit this form if you have not filed your taxes for the year {{ incomeTaxReturnYear }}</p>
-                    <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p></div> -->
+                    <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                </div><br>
                 <p><b>Do you have a spouse or common-law partner?</b></p>
                 <Radio 
                     id='spouse'
                     name='spouse'
                     v-model='hasSpouse'
                     :required="true"
-                    :items='radioOptionsHasSpouse'/><br>
+                    :items='radioOptionsHasSpouse'/>
+                    <div class="text-danger"
+                            v-if="v$.hasSpouse.$dirty && v$.hasSpouse.required.$invalid"
+                            aria-live="assertive">Select an option to answer the question.
+                    </div><br>
                 <div class="ml-4 mb-0" v-if="hasSpouse === 'Y'">
                     <p><b>Have they filed their income tax return with CRA for the year {{ incomeTaxReturnYear }}?</b></p>
                     <Radio 
@@ -48,7 +54,15 @@
                         v-model='hasSpouseFiledIncomeTaxReturn'
                         :required="true"
                         :items='radioOptionsHasSpouseFiledIncomeTaxReturn'/>
-                </div>
+                        <div class="text-danger"
+                            v-if="v$.hasSpouseFiledIncomeTaxReturn.$dirty && v$.hasSpouseFiledIncomeTaxReturn.required.$invalid"
+                            aria-live="assertive">Select an option to answer the question.</div>
+                        <div class="text-danger"
+                            v-if="hasSpouseFiledIncomeTaxReturn == 'N'"
+                            aria-live="assertive">
+                            <p>You can't submit this form if your spouse or common-law partner has not filed your taxes for the year {{ incomeTaxReturnYear }}</p>
+                            <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p></div>
+                        </div>
             </div>
         </PageContent>
       <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
@@ -68,12 +82,13 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 import {
-  SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
-  SET_APPLICANT_HAS_SPOUSE,
-  SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
-} from '../store/index';
-
+    SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
+    SET_APPLICANT_HAS_SPOUSE,
+    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
+} from "../store/index"
 
 export default {
     name: 'GetStartedPage',
@@ -97,9 +112,9 @@ export default {
         };
     },
     created() {
-        // this.hasFiledIncomeTaxReturn = this.$store.state.hasFiledIncomeTaxReturn;
-        // this.hasSpouse = this.$store.state.hasSpouse;
-        // this.hasSpouseFiledIncomeTaxReturn = this.$store.state.hasSpouseFiledIncomeTaxReturn;
+        this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
+        this.hasSpouse = this.$store.state.applicantHasSpouse;
+        this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;
         this.radioOptionsFiledIncomeTaxReturn = [
             {
                 id: 'filed-income-tax-return-y',
@@ -141,25 +156,34 @@ export default {
             this.isPageLoaded = true;
         })
     },
+    setup () {
+        return { v$: useVuelidate() }
+    },
     validations() {
         const validations = {
             hasFiledIncomeTaxReturn: {
                 required
             },
-            // hasSpouse: {
-            //     required
-            // },
-            // hasSpouseFiledIncomeTaxReturn: {
-            //     required
-            // }
+            hasSpouse: {
+                required
+            },
+            hasSpouseFiledIncomeTaxReturn: {
+                required
+            }
         };
         return validations;
     },
     methods: {
         nextPage() {
-            // this.$store.commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, this.hasFiledIncomeTaxReturn);
-            // this.$store.commit(SET_APPLICANT_HAS_SPOUSE, this.hasSpouse);
-            // this.$store.commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, this.hasSpouseFiledIncomeTaxReturn);
+            this.v$.$touch();
+
+            if (this.v$.$invalid) {
+                return;
+            }
+
+            this.$store.commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, this.hasFiledIncomeTaxReturn);
+            this.$store.commit(SET_APPLICANT_HAS_SPOUSE, this.hasSpouse);
+            this.$store.commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, this.hasSpouseFiledIncomeTaxReturn);
 
             const path = routes.PERSONAL_INFO.path;
             pageStateService.setPageComplete(path);
@@ -171,13 +195,6 @@ export default {
         pageStateService.setPageIncomplete(from.path);
         if (pageStateService.isPageComplete(to.path)){
             next();
-        } else {
-            next();
-            // Will uncomment once there's page validation
-            // next({
-            //     path: routes.GET_STARTED.path,
-            //     replace: true
-            // });
         }
     }
 }
