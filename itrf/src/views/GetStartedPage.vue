@@ -12,7 +12,7 @@
                 <h2>You can use this form if</h2>
                 <ul>
                     <li>You are registered for Fair PharmaCare.</li>
-                    <li>You have given PharmaCare your consent to verify your net income with the CRA.</li>
+                    <li>You have given Fair PharmaCare your consent to verify your net income with the CRA.</li>
                     <li>You and your spouse or common-law partner (if applicable) have filed your income tax return with the CRA for the tax year {{ incomeTaxReturnYear }}.</li>
                 </ul><br>
                 <h2>If you were unable to file taxes for year {{ incomeTaxReturnYear }}</h2>
@@ -90,6 +90,14 @@ import {
     SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
 } from "../store/index"
 
+const validateQuestions = (_value, vm) => {
+  if ((vm.hasFiledIncomeTaxReturn === 'Y' && vm.hasSpouse === 'N')
+    || (vm.hasFiledIncomeTaxReturn === 'Y' && vm.hasSpouse === 'Y' && vm.hasSpouseFiledIncomeTaxReturn === 'Y')) {
+    return true;
+  }
+  return false;
+}
+
 export default {
     name: 'GetStartedPage',
     components: {
@@ -101,6 +109,7 @@ export default {
     data: () => {
         return {
             isPageLoaded: false,
+            isValidated: false,
             stepRoutes: stepRoutes,
             incomeTaxReturnYear: null,
             hasFiledIncomeTaxReturn: null,
@@ -155,22 +164,26 @@ export default {
         this.$nextTick(() => {
             this.isPageLoaded = true;
         })
-    },
+    },  
     setup () {
         return { v$: useVuelidate() }
     },
     validations() {
         const validations = {
+            isValidated: {
+                validateQuestions
+            },
             hasFiledIncomeTaxReturn: {
                 required
             },
             hasSpouse: {
                 required
             },
-            hasSpouseFiledIncomeTaxReturn: {
-                required
-            }
+            hasSpouseFiledIncomeTaxReturn: {}
         };
+        if (this.hasSpouse === 'Y'){
+            validations.hasSpouseFiledIncomeTaxReturn.required = required;
+        }
         return validations;
     },
     methods: {
@@ -188,14 +201,13 @@ export default {
             const path = routes.PERSONAL_INFO.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
+            console.log(path);
             this.$router.push(path);
         },
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
-        if (pageStateService.isPageComplete(to.path)){
-            next();
-        }
+        next();
     }
 }
 </script>
