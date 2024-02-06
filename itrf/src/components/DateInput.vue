@@ -129,6 +129,11 @@
     const distantPast = subYears(startOfToday(), MAX_YEAR_RANGE);
     return isSameDay(date, distantPast) || isAfter(date, distantPast);
   };
+
+  export const birthdate16YearsValidator = (value) => {
+    const sixteenYearsAgo = subYears(startOfToday(), 16);
+    return isSameDay(sixteenYearsAgo, value) || isBefore(value, sixteenYearsAgo);
+  };
   
   export const beforeDateValidator = (compareDateName) => {
     return (date, vm) => {

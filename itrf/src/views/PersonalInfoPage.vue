@@ -48,6 +48,22 @@
                             v-if="v$.birthdate.$dirty && v$.birthdate.required.$invalid"
                             aria-live="assertive">Birthdate is required.
                         </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.dateDataValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.distantPastValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.distantFutureValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.birthdate16YearsValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
                         <PhnInput
                             label="Personal Health Number (PHN)"
                             class="mt-3"
@@ -116,9 +132,10 @@ import PageContent from '../components/PageContent.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import Input from '../components/Input.vue';
 import DateInput from '../components/DateInput.vue';
+import { distantPastValidator, distantFutureValidator, birthdate16YearsValidator } from '../components/DateInput.vue';
 import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
-import { nameValidator, phnFirstDigitValidator } from '../helpers/validators';
+import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
@@ -169,7 +186,11 @@ export default {
                 nameValidator
             },
             birthdate: {
-                required
+                required,
+                dateDataValidator,
+                distantPastValidator,
+                distantFutureValidator,
+                birthdate16YearsValidator
             },
             phn: {
                 required,
