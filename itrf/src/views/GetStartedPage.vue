@@ -201,7 +201,6 @@ export default {
             const path = routes.PERSONAL_INFO.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
-            console.log(path);
             this.$router.push(path);
         },
     },

@@ -15,6 +15,10 @@
                             v-model="firstName"
                             :required="true"
                         />
+                        <div class="text-danger"
+                            v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+                            aria-live="assertive">First name is required.
+                        </div>
                         <Input
                             :label="'Last name'"
                             :className="'mt-3'"
@@ -22,20 +26,43 @@
                             v-model="lastName"
                             :required="true"
                         />
+                        <div class="text-danger"
+                            v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
+                            aria-live="assertive">Last name is required.
+                        </div>
                         <DateInput
                             label='Birthdate'
                             className='mt-3'
-                            v-model='birthDate'
+                            v-model='birthdate'
                             :required="true"
                         />
-                        <Input
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && v$.birthdate.required.$invalid"
+                            aria-live="assertive">Birthdate is required.
+                        </div>
+                        <!-- <Input
                             :label="'Personal Health Number (PHN)'"
                             :className="'mt-3'"
                             :inputStyle="smallStyles"
                             v-model="phn"
                             :required="true"
+                        /> -->
+                        <PhnInput
+                            label="Personal Health Number (PHN)"
+                            class="mt-3"
+                            placeholder="1111 111 111"
+                            :inputStyle="smallStyles"
+                            v-model="phn"
+                            :required="true"
                         />
-                    </div>
+                        <div class="text-danger"
+                            v-if="v$.phn.$dirty && v$.phn.required.$invalid"
+                            aria-live="assertive">Personal Health Number is required.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.phn.$dirty && !v$.phn.required.$invalid && (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)"
+                            aria-live="assertive">Personal Health Number is not valid.</div>
+                        </div>
                     <div class="col-sm-5">
                         <TipBox title="Tip: PHN number" class="mt-2">
                             <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
@@ -88,11 +115,16 @@ import PageContent from '../components/PageContent.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import Input from '../components/Input.vue';
 import DateInput from '../components/DateInput.vue';
+import PhnInput from '../components/PhnInput.vue';
+import { phnValidator } from '../components/PhnInput.vue';
+import { phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
 import { isPastPath } from '../router/index';
 import { mediumStyles, smallStyles,} from '../constants/input-styles';
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
 
 export default {
     name: 'PersonalInfoPage',
@@ -102,6 +134,7 @@ export default {
         ContinueBar,
         Input,
         DateInput,
+        PhnInput,
         TipBox
     },
     data: () => {
@@ -111,14 +144,50 @@ export default {
             mediumStyles,
             firstName: "",
             lastName: "",
-            birthDate: null,
+            birthdate: null,
             phn: "",
         };
     },
     created() {
+        this.firstName = this.$store.state.firstName;
+        this.lastName = this.$store.state.lastName;
+        this.birthdate = this.$store.state.birthdate;
+        this.phn = this.$store.state.phn;
+    },
+    setup () {
+        return { v$: useVuelidate() }
+    },
+    validations() {
+        const validations = {
+            firstName: {
+                required
+            },
+            lastName: {
+                required
+            },
+            birthdate: {
+                required
+            },
+            phn: {
+                required,
+                phnValidator,
+                phnFirstDigitValidator
+            }
+        };
+        // if (this.phn) {
+        //     validations.phn.phnValidator = optionalValidator(phnValidator);
+        //     validations.phn.phnFirstDigitValidator = optionalValidator(phnFirstDigitValidator);
+        // }
+        return validations;
     },
     methods: {
         nextPage() {
+            this.v$.$touch();
+
+            if (this.v$.$invalid) {
+                return;
+            }
+
             const path = routes.DECLARATION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
