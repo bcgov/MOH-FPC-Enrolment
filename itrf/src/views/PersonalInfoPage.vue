@@ -19,6 +19,10 @@
                             v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
                             aria-live="assertive">First name is required.
                         </div>
+                        <div class="text-danger"
+                            v-if="v$.firstName.$dirty && !v$.firstName.required.$invalid && v$.firstName.nameValidator.$invalid"
+                            aria-live="assertive">First name must begin with a letter and cannot include special characters except hyphens, periods, apostrophes and blank characters.
+                        </div>
                         <Input
                             :label="'Last name'"
                             :className="'mt-3'"
@@ -30,6 +34,10 @@
                             v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
                             aria-live="assertive">Last name is required.
                         </div>
+                        <div class="text-danger"
+                            v-if="v$.lastName.$dirty && !v$.lastName.required.$invalid && v$.lastName.nameValidator.$invalid"
+                            aria-live="assertive">Last name must begin with a letter and cannot include special characters except hyphens, periods, apostrophes and blank characters.
+                        </div>
                         <DateInput
                             label='Birthdate'
                             className='mt-3'
@@ -40,13 +48,6 @@
                             v-if="v$.birthdate.$dirty && v$.birthdate.required.$invalid"
                             aria-live="assertive">Birthdate is required.
                         </div>
-                        <!-- <Input
-                            :label="'Personal Health Number (PHN)'"
-                            :className="'mt-3'"
-                            :inputStyle="smallStyles"
-                            v-model="phn"
-                            :required="true"
-                        /> -->
                         <PhnInput
                             label="Personal Health Number (PHN)"
                             class="mt-3"
@@ -117,7 +118,7 @@ import Input from '../components/Input.vue';
 import DateInput from '../components/DateInput.vue';
 import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
-import { phnFirstDigitValidator } from '../helpers/validators';
+import { nameValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
@@ -160,10 +161,12 @@ export default {
     validations() {
         const validations = {
             firstName: {
-                required
+                required,
+                nameValidator
             },
             lastName: {
-                required
+                required,
+                nameValidator
             },
             birthdate: {
                 required
@@ -174,10 +177,6 @@ export default {
                 phnFirstDigitValidator
             }
         };
-        // if (this.phn) {
-        //     validations.phn.phnValidator = optionalValidator(phnValidator);
-        //     validations.phn.phnFirstDigitValidator = optionalValidator(phnFirstDigitValidator);
-        // }
         return validations;
     },
     methods: {
