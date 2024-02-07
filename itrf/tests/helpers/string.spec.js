@@ -8,9 +8,9 @@ describe("Helper string.js", () => {
     expect(typeof result).toEqual("string");
   });
 
-  it("returns null when called without an argument", () => {
+  it("returns undefined when called without an argument", () => {
     const result = replaceSpecialCharacters();
-    expect(result).toBeNull();
+    expect(result).toBeUndefined();
   });
 
   it("replaces special characters with similar equivalents", () => {
