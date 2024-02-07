@@ -1,35 +1,20 @@
-import { replaceSpecialCharacters } from "@/helpers/string.js";
+import {
+  padLeadingZeros,
+} from '../../src/helpers/string';
 import { it, describe, expect } from "vitest";
 
-describe("Helper string.js", () => {
-  it("returns a string when passed a string", () => {
-    const result = replaceSpecialCharacters("string");
-    expect(result).toBeDefined();
-    expect(typeof result).toEqual("string");
-  });
+describe('String helpers', () => {
+  const date = new Date();
 
-  it("returns undefined when called without an argument", () => {
-    const result = replaceSpecialCharacters();
-    expect(result).toBeUndefined();
-  });
-
-  it("replaces special characters with similar equivalents", () => {
-    const result = replaceSpecialCharacters("Á");
-    expect(result).toEqual("A");
-  });
-
-  it("replaces special characters with similar equivalents (case 2)", () => {
-    const result = replaceSpecialCharacters(" Ę ");
-    expect(result).toEqual(" E ");
-  });
-
-  it("replaces special characters with similar equivalents (case 3)", () => {
-    const result = replaceSpecialCharacters("aꝋa");
-    expect(result).toEqual("aoa");
-  });
-
-  it("leaves numerals passed through in a string alone", () => {
-    const result = replaceSpecialCharacters("2");
-    expect(result).toEqual("2");
+  it('padLeadingZeros', () => {
+    expect(padLeadingZeros(123, 5)).toBe('00123');
+    expect(padLeadingZeros('123', 5)).toBe('00123');
+    expect(padLeadingZeros('123', 0)).toBe('123');
+    expect(padLeadingZeros(undefined, 5)).toBe('00000');
+    expect(padLeadingZeros(null, 5)).toBe('00000');
+    expect(padLeadingZeros(NaN, 5)).toBe('00000');
+    expect(padLeadingZeros(undefined, undefined)).toBe('');
+    expect(padLeadingZeros(null, null)).toBe('');
+    expect(padLeadingZeros(NaN, NaN)).toBe('');
   });
 });

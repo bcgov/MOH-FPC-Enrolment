@@ -11,31 +11,6 @@ export const formatDate = (date) => {
   }
   return date;
 };
-  
-export const formatISODate = (date) => {
-  if (date instanceof Date) {
-    return formatDateFns(date, 'yyyy-MM-dd');
-  }
-  return date;
-};
-  
-// getAge: calculates the age of a given JS Date object
-export const calculateAge = (birthDate) => {
-  if (!(birthDate instanceof Date)) {
-    return undefined;
-  }
-  const currentDate = new Date();
-  let age = currentDate.getFullYear() - birthDate.getFullYear();
-  const monthDiff = currentDate.getMonth() - birthDate.getMonth();
-  if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < birthDate.getDate())) {
-    age--;
-  }
-  return age;
-}
-  
-export const getBCTimestamp = () => {
-  return formatDateFns(new Date(), 'yyyy-MM-dd HH:mm:ss zzz');
-};
 
 export const getISODateString = (year, month, day) => {
   return `${padLeadingZeros(year, 4)}-${padLeadingZeros(month, 2)}-${padLeadingZeros(day, 2)}`;

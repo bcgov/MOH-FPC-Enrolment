@@ -68,7 +68,7 @@
 import PageContent from '../components/PageContent.vue';
 import ReviewTable from '../components/ReviewTable.vue';
 import SuccessBox from '../components/SuccessBox.vue';
-import { format as formatDateFns } from 'date-fns';
+import { formatDate } from '../helpers/date.js';
 
 export default {
     name: 'DeclarationPage',
@@ -84,7 +84,7 @@ export default {
         };
     },
     created() {
-        this.dateSubmitted = formatDateFns(new Date(), 'MMMM d, y');
+        this.dateSubmitted = formatDate(new Date());
     },
     methods: {
         printPage() {

@@ -1,10 +1,7 @@
 import { parseISO } from 'date-fns';
 import {
-  calculateAge,
-  getBCTimestamp,
   getISODateString,
   formatDate,
-  formatISODate,
   isValidISODateString,
 } from '../../src/helpers/date';
 import { it, describe, expect } from "vitest";
@@ -51,28 +48,5 @@ describe('Date helpers', () => {
     expect(formatDate(undefined)).toEqual(undefined);
     expect(formatDate(null)).toEqual(null);
     expect(formatDate(NaN)).toEqual(NaN);
-  });
-
-  it('formatISODate', () => {
-    expect(formatISODate(oneDigitDate)).toEqual('2021-07-01');
-    expect(formatISODate(twoDigitDate)).toEqual('2021-07-21');
-    expect(formatISODate(123)).toEqual(123);
-    expect(formatISODate(undefined)).toEqual(undefined);
-    expect(formatISODate(null)).toEqual(null);
-    expect(formatISODate(NaN)).toEqual(NaN);
-  });
-
-  it('getBCTimestamp', () => {
-    expect(typeof getBCTimestamp() === 'string').toBe(true);
-  });
-
-  it('calculateAge', () => {
-    let input = new Date();
-    input.setFullYear( input.getFullYear() - 10 );
-    expect(calculateAge(input)).toBe(10);
-    input.setDate( input.getDate() + 1 );
-    expect(calculateAge(input)).toBe(9);
-    input = 'invalid input'
-    expect(calculateAge(input)).toBe(undefined);
   });
 });
