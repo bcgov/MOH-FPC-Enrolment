@@ -57,10 +57,6 @@
                             aria-live="assertive">Invalid birthdate.
                         </div>
                         <div class="text-danger"
-                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.distantFutureValidator.$invalid"
-                            aria-live="assertive">Invalid birthdate.
-                        </div>
-                        <div class="text-danger"
                             v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.birthdate16YearsValidator.$invalid"
                             aria-live="assertive">Invalid birthdate.
                         </div>
@@ -132,7 +128,7 @@ import PageContent from '../components/PageContent.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import Input from '../components/Input.vue';
 import DateInput from '../components/DateInput.vue';
-import { distantPastValidator, distantFutureValidator, birthdate16YearsValidator } from '../components/DateInput.vue';
+import { distantPastValidator, birthdate16YearsValidator } from '../components/DateInput.vue';
 import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
 import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
@@ -189,7 +185,6 @@ export default {
                 required,
                 dateDataValidator,
                 distantPastValidator,
-                distantFutureValidator,
                 birthdate16YearsValidator
             },
             phn: {

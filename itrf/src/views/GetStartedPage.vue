@@ -32,8 +32,10 @@
                 <div class="text-danger"
                     v-if="hasFiledIncomeTaxReturn == 'N'"
                     aria-live="assertive">
-                    <p>You can't submit this form if you have not filed your taxes for the year {{ incomeTaxReturnYear }}</p>
-                    <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                    <ErrorBox>
+                        <p><b>You can't submit this form if you have not filed your taxes for the year {{ incomeTaxReturnYear }}.</b></p>
+                        <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                    </ErrorBox>
                 </div><br>
                 <p><b>Do you have a spouse or common-law partner?</b></p>
                 <Radio 
@@ -60,9 +62,12 @@
                         <div class="text-danger"
                             v-if="hasSpouseFiledIncomeTaxReturn == 'N'"
                             aria-live="assertive">
-                            <p>You can't submit this form if your spouse or common-law partner has not filed your taxes for the year {{ incomeTaxReturnYear }}</p>
-                            <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p></div>
+                            <ErrorBox>
+                                <p><b>You can't submit this form if your spouse or common-law partner has not filed their taxes for the year {{ incomeTaxReturnYear }}.</b></p>
+                                <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                            </ErrorBox>
                         </div>
+                </div>
             </div>
         </PageContent>
       <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
@@ -84,6 +89,7 @@ import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import ErrorBox from '../components/ErrorBox.vue';
 import {
     SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
     SET_APPLICANT_HAS_SPOUSE,
@@ -104,7 +110,8 @@ export default {
         ProgressBar,
         PageContent,
         Radio,
-        ContinueBar
+        ContinueBar,
+        ErrorBox
     },
     data: () => {
         return {
