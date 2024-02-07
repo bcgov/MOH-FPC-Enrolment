@@ -62,15 +62,23 @@ objects:
       type: Git
     strategy:
       sourceStrategy:
-        env:
-        - name: BUILD_LOGLEVEL
-          value: "5"
         from:
-          kind: ImageStreamTag
-          name: ${SOURCE_IMAGE_NAME}:${SOURCE_IMAGE_TAG}
-          namespace: ${SOURCE_IMAGE_NAMESPACE}
+          kind: DockerImage
+          name: registry.redhat.io/ubi9/nodejs-18
+        env:
+          - name: BUILD_LOGLEVEL
+            value: '5'
         incremental: false
-      type: Source
+      # sourceStrategy:
+      #   env:
+      #   - name: BUILD_LOGLEVEL
+      #     value: "5"
+      #   from:
+      #     kind: ImageStreamTag
+      #     name: ${SOURCE_IMAGE_NAME}:${SOURCE_IMAGE_TAG}
+      #     namespace: ${SOURCE_IMAGE_NAMESPACE}
+      #   incremental: false
+      # type: Source
     # triggers:
     # - type: ConfigChange
 - apiVersion: v1
@@ -104,7 +112,7 @@ objects:
       images:
       - from: 
           kind: ImageStreamTag
-          name: fpincome-web-artifacts:latest
+          name: itrf-web-artifacts:latest
         paths: 
         - sourcePath: /opt/app-root/src/dist/
           destinationDir: "."
@@ -124,7 +132,7 @@ parameters:
   displayName: Name
   name: NAME
   required: true
-  value: fpincome
+  value: itrf
 - description: |
     The URL to your GIT repo, don't use the this default unless
     your just experimenting.
@@ -141,27 +149,27 @@ parameters:
   displayName: Source Context Directory
   name: SOURCE_CONTEXT_DIR
   required: false
-  value: "fpincome"
+  value: "itrf"
 - description: The tag given to the built image.
   displayName: Output Image Tag
   name: OUTPUT_IMAGE_TAG
   required: true
   value: latest
-- description: The openshift project where builds and target images are stored.
-  displayName: Build Project
-  name: SOURCE_IMAGE_NAMESPACE
-  value: 'openshift'
-  required: true
-- description: The name of the source image.
-  displayName: Source Image Name
-  name: SOURCE_IMAGE_NAME
-  value: 'nodejs'
-  required: true
-- description: The tag of the source image.
-  displayName: Source Image Tag
-  name: SOURCE_IMAGE_TAG
-  value: "10"
-  required: true
+# - description: The openshift project where builds and target images are stored.
+#   displayName: Build Project
+#   name: SOURCE_IMAGE_NAMESPACE
+#   value: 'openshift'
+#   required: true
+# - description: The name of the source image.
+#   displayName: Source Image Name
+#   name: SOURCE_IMAGE_NAME
+#   value: 'nodejs'
+#   required: true
+# - description: The tag of the source image.
+#   displayName: Source Image Tag
+#   name: SOURCE_IMAGE_TAG
+#   value: "18"
+#   required: true
 - description: The resources CPU limit (in cores) for this build.
   displayName: Resources CPU Limit
   name: CPU_LIMIT
