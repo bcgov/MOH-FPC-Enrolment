@@ -39,17 +39,21 @@
                             aria-live="assertive">Last name must begin with a letter and cannot include special characters except hyphens, periods, apostrophes and blank characters.
                         </div>
                         <DateInput
-                            label='Birthdate'
-                            className='mt-3'
-                            v-model='birthdate'
+                            id="birthdate"
+                            label="Birthdate"
+                            className="mt-3"
+                            v-model="birthdate"
                             :required="true"
+                            :watchForModelChange="true"
+                            :useInvalidState="true"
+                            @processDate="handleProcessBirthdate($event)"
                         />
                         <div class="text-danger"
-                            v-if="v$.birthdate.$dirty && v$.birthdate.required.$invalid"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.dateDataValidator.$invalid && v$.birthdate.required.$invalid"
                             aria-live="assertive">Birthdate is required.
                         </div>
                         <div class="text-danger"
-                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.dateDataValidator.$invalid"
+                            v-if="v$.birthdate.$dirty && v$.birthdate.dateDataValidator.$invalid"
                             aria-live="assertive">Invalid birthdate.
                         </div>
                         <div class="text-danger"
@@ -131,7 +135,7 @@ import DateInput from '../components/DateInput.vue';
 import { distantPastValidator, birthdate16YearsValidator } from '../components/DateInput.vue';
 import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
-import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
+import { nameValidator, dateDataRequiredValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
@@ -139,6 +143,7 @@ import { isPastPath } from '../router/index';
 import { mediumStyles, smallStyles,} from '../constants/input-styles';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
+import { SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store';
 
 export default {
     name: 'PersonalInfoPage',
@@ -160,6 +165,7 @@ export default {
             lastName: "",
             birthdate: null,
             phn: "",
+            birthdateData: null
         };
     },
     created() {
@@ -203,24 +209,28 @@ export default {
                 return;
             }
 
+            this.$store.commit(SET_FIRST_NAME, this.firstName);
+            this.$store.commit(SET_LAST_NAME, this.lastName);
+            this.$store.commit(SET_BIRTHDATE, this.birthdate);
+            this.$store.commit(SET_PHN, this.phn);
+
             const path = routes.DECLARATION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
-        }
+        },
+        handleBlurField(validationObject) {
+            if (validationObject) {
+                validationObject.$touch();
+            }
+        },
+        handleProcessBirthdate(data) {
+            this.birthdateData = data;
+        },
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
-        if (pageStateService.isPageComplete(to.path) || isPastPath(to.path, from.path)) {
-            next();
-        } else {
-            next();
-            // Will uncomment once there's page validation
-            // next({
-            //     path: routes.PERSONAL_INFO.path,
-            //     replace: true
-            // });
-        }
+        next();
     }
 }
 </script>

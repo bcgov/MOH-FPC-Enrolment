@@ -8,20 +8,28 @@ export const nameValidator = (value) => {
   return criteria.test(value);
 };
 
-export const dateDataValidator = (dateData) => {
+export const dateDataValidator = (_, vm) => {
+  const data = vm.birthdateData;
+  if (!data || (!data.year && typeof data.month !== 'number' && !data.day)) {
+    return true;
+  }
+  const year = data.year;
+  const month = data.month;
+  const day = data.day;
+  if (!(year && typeof month === 'number' && day)
+    && (year || typeof month === 'number' || day)) {
+    return false;
+  }
+  const isoDateString = getISODateString(year, month + 1, day);
+  return isValidISODateString(isoDateString);
+};
+
+export const dateDataRequiredValidator = (dateData) => {
   return () => {
     if (!dateData || !dateData.year && typeof dateData.month !== 'number' && !dateData.day) {
-      return true;
-    }
-    const year = dateData.year;
-    const month = dateData.month;
-    const day = dateData.day;
-    if (!(year && typeof month === 'number' && day)
-      && (year || typeof month === 'number' || day)) {
       return false;
     }
-    const isoDateString = getISODateString(year, month + 1, day);
-    return isValidISODateString(isoDateString);
+    return true;
   };
 };
 
