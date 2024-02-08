@@ -12,7 +12,7 @@
                 <h2>You can use this form if</h2>
                 <ul>
                     <li>You are registered for Fair PharmaCare.</li>
-                    <li>You have given PharmaCare your consent to verify your net income with the CRA.</li>
+                    <li>You have given Fair PharmaCare your consent to verify your net income with the CRA.</li>
                     <li>You and your spouse or common-law partner (if applicable) have filed your income tax return with the CRA for the tax year {{ incomeTaxReturnYear }}.</li>
                 </ul><br>
                 <h2>If you were unable to file taxes for year {{ incomeTaxReturnYear }}</h2>
@@ -24,14 +24,30 @@
                     name='filed-income-tax-return'
                     v-model='hasFiledIncomeTaxReturn'
                     :required="true"
-                    :items='radioOptionsFiledIncomeTaxReturn'/><br>
+                    :items='radioOptionsFiledIncomeTaxReturn'/>
+                <div class="text-danger"
+                    v-if="v$.hasFiledIncomeTaxReturn.$dirty && v$.hasFiledIncomeTaxReturn.required.$invalid"
+                    aria-live="assertive">Select an option to answer the question.
+                </div>
+                <div class="text-danger"
+                    v-if="hasFiledIncomeTaxReturn == 'N'"
+                    aria-live="assertive">
+                    <ErrorBox>
+                        <p><b>You can't submit this form if you have not filed your taxes for the year {{ incomeTaxReturnYear }}.</b></p>
+                        <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                    </ErrorBox>
+                </div><br>
                 <p><b>Do you have a spouse or common-law partner?</b></p>
                 <Radio 
                     id='spouse'
                     name='spouse'
                     v-model='hasSpouse'
                     :required="true"
-                    :items='radioOptionsHasSpouse'/><br>
+                    :items='radioOptionsHasSpouse'/>
+                    <div class="text-danger"
+                            v-if="v$.hasSpouse.$dirty && v$.hasSpouse.required.$invalid"
+                            aria-live="assertive">Select an option to answer the question.
+                    </div><br>
                 <div class="ml-4 mb-0" v-if="hasSpouse === 'Y'">
                     <p><b>Have they filed their income tax return with CRA for the year {{ incomeTaxReturnYear }}?</b></p>
                     <Radio 
@@ -40,6 +56,17 @@
                         v-model='hasSpouseFiledIncomeTaxReturn'
                         :required="true"
                         :items='radioOptionsHasSpouseFiledIncomeTaxReturn'/>
+                        <div class="text-danger"
+                            v-if="v$.hasSpouseFiledIncomeTaxReturn.$dirty && v$.hasSpouseFiledIncomeTaxReturn.required.$invalid"
+                            aria-live="assertive">Select an option to answer the question.</div>
+                        <div class="text-danger"
+                            v-if="hasSpouseFiledIncomeTaxReturn == 'N'"
+                            aria-live="assertive">
+                            <ErrorBox>
+                                <p><b>You can't submit this form if your spouse or common-law partner has not filed their taxes for the year {{ incomeTaxReturnYear }}.</b></p>
+                                <p>If you have an urgent medical need for prescriptions, please contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).</p>
+                            </ErrorBox>
+                        </div>
                 </div>
             </div>
         </PageContent>
@@ -60,6 +87,22 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import ErrorBox from '../components/ErrorBox.vue';
+import {
+    SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
+    SET_APPLICANT_HAS_SPOUSE,
+    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
+} from "../store/index"
+
+const validateQuestions = (_value, vm) => {
+  if ((vm.hasFiledIncomeTaxReturn === 'Y' && vm.hasSpouse === 'N')
+    || (vm.hasFiledIncomeTaxReturn === 'Y' && vm.hasSpouse === 'Y' && vm.hasSpouseFiledIncomeTaxReturn === 'Y')) {
+    return true;
+  }
+  return false;
+}
 
 export default {
     name: 'GetStartedPage',
@@ -67,10 +110,13 @@ export default {
         ProgressBar,
         PageContent,
         Radio,
-        ContinueBar
+        ContinueBar,
+        ErrorBox
     },
     data: () => {
         return {
+            isPageLoaded: false,
+            isValidated: false,
             stepRoutes: stepRoutes,
             incomeTaxReturnYear: null,
             hasFiledIncomeTaxReturn: null,
@@ -82,6 +128,9 @@ export default {
         };
     },
     created() {
+        this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
+        this.hasSpouse = this.$store.state.applicantHasSpouse;
+        this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;
         this.radioOptionsFiledIncomeTaxReturn = [
             {
                 id: 'filed-income-tax-return-y',
@@ -119,9 +168,43 @@ export default {
             }
         ];
         this.incomeTaxReturnYear = new Date().getFullYear() - 2;
+        this.$nextTick(() => {
+            this.isPageLoaded = true;
+        })
+    },  
+    setup () {
+        return { v$: useVuelidate() }
+    },
+    validations() {
+        const validations = {
+            isValidated: {
+                validateQuestions
+            },
+            hasFiledIncomeTaxReturn: {
+                required
+            },
+            hasSpouse: {
+                required
+            },
+            hasSpouseFiledIncomeTaxReturn: {}
+        };
+        if (this.hasSpouse === 'Y'){
+            validations.hasSpouseFiledIncomeTaxReturn.required = required;
+        }
+        return validations;
     },
     methods: {
         nextPage() {
+            this.v$.$touch();
+
+            if (this.v$.$invalid) {
+                return;
+            }
+
+            this.$store.commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, this.hasFiledIncomeTaxReturn);
+            this.$store.commit(SET_APPLICANT_HAS_SPOUSE, this.hasSpouse);
+            this.$store.commit(SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN, this.hasSpouseFiledIncomeTaxReturn);
+
             const path = routes.PERSONAL_INFO.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
@@ -130,16 +213,7 @@ export default {
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
-        if (pageStateService.isPageComplete(to.path)){
-            next();
-        } else {
-            next();
-            // Will uncomment once there's page validation
-            // next({
-            //     path: routes.GET_STARTED.path,
-            //     replace: true
-            // });
-        }
+        next();
     }
 }
 </script>

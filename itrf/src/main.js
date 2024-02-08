@@ -1,6 +1,7 @@
 import App from "./App.vue";
 import { createApp } from 'vue';
 import router from "./router";
+import store from './store';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
@@ -40,6 +41,7 @@ const app = createApp({
 })
 
 app
+  .use(store)
   .use(router)
   .component("font-awesome-icon", FontAwesomeIcon)
   .mount('#app');
