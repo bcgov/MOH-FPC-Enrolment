@@ -24,15 +24,6 @@ export const dateDataValidator = (_, vm) => {
   return isValidISODateString(isoDateString);
 };
 
-export const dateDataRequiredValidator = (dateData) => {
-  return () => {
-    if (!dateData || !dateData.year && typeof dateData.month !== 'number' && !dateData.day) {
-      return false;
-    }
-    return true;
-  };
-};
-
 export const phnFirstDigitValidator = (value) => {
   if (typeof(value) !== 'string') {
     return false;
