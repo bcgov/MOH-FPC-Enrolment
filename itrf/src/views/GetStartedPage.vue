@@ -129,6 +129,9 @@ export default {
             pageStateService.visitPage(path);
             this.$router.push(path);
         },
+        handleCloseConsentModal() {
+            this.showConsentModal = false;
+        },
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
