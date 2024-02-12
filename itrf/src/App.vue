@@ -2,8 +2,8 @@
   <div id="app">
     <Header :title='pageTitle' imagePath='/itrf/images/' />
     <router-view></router-view>
+    <Footer :version='version' />
   </div>
-  <Footer :version='version' />
 </template>
 
 <script>
@@ -27,6 +27,7 @@ export default {
   },
   created() {
     document.title = this.pageTitle;
+    const applicationUuid = this.$store.state.applicationUuid;
   },
   methods: {
   },

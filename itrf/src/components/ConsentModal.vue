@@ -50,23 +50,18 @@ export default {
     Button,
     Captcha,
   },
-  props: {
-    applicationUuid: {
-      type: String,
-      default: '',
-      required: true,
-    },
-  },
   data: () => {
     return {
       focusableEls: [],
       focusedEl: null,
       captchaAPIBasePath: '/itrf/api/captcha',
+      applicationUuid: null,
       isCaptchaValid: false,
       isTermsAccepted: false,
     };
   },
   created() {
+    this.applicationUuid = this.$store.state.applicationUuid;
     window.addEventListener('keydown', this.handleKeyDown);
     document.body.classList.add('no-scroll');
   },

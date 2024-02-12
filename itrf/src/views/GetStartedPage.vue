@@ -92,9 +92,10 @@ import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ErrorBox from '../components/ErrorBox.vue';
 import {
+    SET_IS_INFO_COLLECTION_NOTICE_OPEN,
     SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
     SET_APPLICANT_HAS_SPOUSE,
-    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
+    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN    
 } from "../store/index"
 
 const validateQuestions = (_value, vm) => {
@@ -133,6 +134,7 @@ export default {
         this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
         this.hasSpouse = this.$store.state.applicantHasSpouse;
         this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;
+        this.showConsentModal = this.$store.state.isInfoCollectionNoticeOpen;
         this.radioOptionsFiledIncomeTaxReturn = [
             {
                 id: 'filed-income-tax-return-y',
@@ -214,6 +216,8 @@ export default {
         },
         handleCloseConsentModal() {
             this.showConsentModal = false;
+            this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
+
         },
     },
     beforeRouteLeave(to, from, next){
