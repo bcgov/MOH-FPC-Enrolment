@@ -6,45 +6,82 @@
                 <h1>Personal Information</h1>
                 <hr/>
                 <p>Enter your name as it appears in your BC Services Card</p>
-                <Input
-                    :label="'First name'"
-                    :className="'mt-3'"
-                    :inputStyle="mediumStyles"
-                    v-model="firstName"
-                    :required="true"
-                />
-                <Input
-                    :label="'Last name'"
-                    :className="'mt-3'"
-                    :inputStyle="mediumStyles"
-                    v-model="lastName"
-                    :required="true"
-                />
                 <div class="row">
                     <div class="col-sm-7">
-                    <DateInput
-                        label='Birthdate'
-                        className='mt-3'
-                        v-model='birthDate'
-                        :required="true"
-                    />
-                    <Input
-                        :label="'Personal Health Number (PHN)'"
-                        :className="'mt-3'"
-                        :inputStyle="smallStyles"
-                        v-model="phn"
-                        :required="true"
-                    />
-                    <Input
-                        :label="'PharmaCare Registration Number (optional)'"
-                        :className="'mt-3'"
-                        :inputStyle="smallStyles"
-                        v-model="regNum"
-                        :required="true"
-                    />
-                    </div>
+                        <Input
+                            :label="'First name'"
+                            :className="'mt-3'"
+                            :inputStyle="mediumStyles"
+                            v-model="firstName"
+                            :required="true"
+                        />
+                        <div class="text-danger"
+                            v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+                            aria-live="assertive">First name is required.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.firstName.$dirty && !v$.firstName.required.$invalid && v$.firstName.nameValidator.$invalid"
+                            aria-live="assertive">First name must begin with a letter and cannot include special characters except hyphens, periods, apostrophes and blank characters.
+                        </div>
+                        <Input
+                            :label="'Last name'"
+                            :className="'mt-3'"
+                            :inputStyle="mediumStyles"
+                            v-model="lastName"
+                            :required="true"
+                        />
+                        <div class="text-danger"
+                            v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
+                            aria-live="assertive">Last name is required.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.lastName.$dirty && !v$.lastName.required.$invalid && v$.lastName.nameValidator.$invalid"
+                            aria-live="assertive">Last name must begin with a letter and cannot include special characters except hyphens, periods, apostrophes and blank characters.
+                        </div>
+                        <DateInput
+                            id="birthdate"
+                            label="Birthdate"
+                            className="mt-3"
+                            v-model="birthdate"
+                            :required="true"
+                            :watchForModelChange="true"
+                            :useInvalidState="true"
+                            @processDate="handleProcessBirthdate($event)"
+                        />
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.dateDataValidator.$invalid && v$.birthdate.required.$invalid"
+                            aria-live="assertive">Birthdate is required.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && v$.birthdate.dateDataValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.distantPastValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.birthdate.$dirty && !v$.birthdate.required.$invalid && v$.birthdate.birthdate16YearsValidator.$invalid"
+                            aria-live="assertive">Invalid birthdate.
+                        </div>
+                        <PhnInput
+                            label="Personal Health Number (PHN)"
+                            class="mt-3"
+                            placeholder="1111 111 111"
+                            :inputStyle="smallStyles"
+                            v-model="phn"
+                            :required="true"
+                        />
+                        <div class="text-danger"
+                            v-if="v$.phn.$dirty && v$.phn.required.$invalid"
+                            aria-live="assertive">Personal Health Number is required.
+                        </div>
+                        <div class="text-danger"
+                            v-if="v$.phn.$dirty && !v$.phn.required.$invalid && (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)"
+                            aria-live="assertive">Personal Health Number is not valid.</div>
+                        </div>
                     <div class="col-sm-5">
-                        <TipBox title="Tip: PHN number">
+                        <TipBox title="Tip: PHN number" class="mt-2">
                             <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
                             <div class="bcid-container">
                                 <div class="bcid-image-container">
@@ -95,11 +132,17 @@ import PageContent from '../components/PageContent.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import Input from '../components/Input.vue';
 import DateInput from '../components/DateInput.vue';
+import { distantPastValidator, birthdate16YearsValidator } from '../components/DateInput.vue';
+import PhnInput from '../components/PhnInput.vue';
+import { phnValidator } from '../components/PhnInput.vue';
+import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
-import { isPastPath } from '../router/index';
 import { mediumStyles, smallStyles,} from '../constants/input-styles';
+import { required } from "@vuelidate/validators";
+import useVuelidate from "@vuelidate/core";
+import { SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store';
 
 export default {
     name: 'PersonalInfoPage',
@@ -109,6 +152,7 @@ export default {
         ContinueBar,
         Input,
         DateInput,
+        PhnInput,
         TipBox
     },
     data: () => {
@@ -118,33 +162,74 @@ export default {
             mediumStyles,
             firstName: "",
             lastName: "",
-            birthDate: null,
+            birthdate: null,
             phn: "",
-            regNum: "",
+            birthdateData: null
         };
     },
     created() {
+        this.firstName = this.$store.state.firstName;
+        this.lastName = this.$store.state.lastName;
+        this.birthdate = this.$store.state.birthdate;
+        this.phn = this.$store.state.phn;
+    },
+    setup () {
+        return { v$: useVuelidate() }
+    },
+    validations() {
+        const validations = {
+            firstName: {
+                required,
+                nameValidator
+            },
+            lastName: {
+                required,
+                nameValidator
+            },
+            birthdate: {
+                required,
+                dateDataValidator,
+                distantPastValidator,
+                birthdate16YearsValidator
+            },
+            phn: {
+                required,
+                phnValidator,
+                phnFirstDigitValidator
+            }
+        };
+        return validations;
     },
     methods: {
         nextPage() {
+            this.v$.$touch();
+
+            if (this.v$.$invalid) {
+                return;
+            }
+
+            this.$store.commit(SET_FIRST_NAME, this.firstName);
+            this.$store.commit(SET_LAST_NAME, this.lastName);
+            this.$store.commit(SET_BIRTHDATE, this.birthdate);
+            this.$store.commit(SET_PHN, this.phn);
+
             const path = routes.DECLARATION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
-        }
+        },
+        handleBlurField(validationObject) {
+            if (validationObject) {
+                validationObject.$touch();
+            }
+        },
+        handleProcessBirthdate(data) {
+            this.birthdateData = data;
+        },
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
-        if (pageStateService.isPageComplete(to.path) || isPastPath(to.path, from.path)) {
-            next();
-        } else {
-            next();
-            // Will uncomment once there's page validation
-            // next({
-            //     path: routes.PERSONAL_INFO.path,
-            //     replace: true
-            // });
-        }
+        next();
     }
 }
 </script>
