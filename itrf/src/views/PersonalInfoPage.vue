@@ -13,6 +13,7 @@
                             :className="'mt-3'"
                             :inputStyle="mediumStyles"
                             v-model="firstName"
+                            @input="handleAPIValidationReset"
                             :required="true"
                         />
                         <div class="text-danger"
@@ -28,6 +29,7 @@
                             :className="'mt-3'"
                             :inputStyle="mediumStyles"
                             v-model="lastName"
+                            @input="handleAPIValidationReset"
                             :required="true"
                         />
                         <div class="text-danger"
@@ -46,6 +48,7 @@
                             :required="true"
                             :watchForModelChange="true"
                             :useInvalidState="true"
+                            @input="handleAPIValidationReset"
                             @processDate="handleProcessBirthdate($event)"
                         />
                         <div class="text-danger"
@@ -70,6 +73,7 @@
                             placeholder="1111 111 111"
                             :inputStyle="smallStyles"
                             v-model="phn"
+                            @input="handleAPIValidationReset"
                             :required="true"
                         />
                         <div class="text-danger"
@@ -78,8 +82,17 @@
                         </div>
                         <div class="text-danger"
                             v-if="v$.phn.$dirty && !v$.phn.required.$invalid && (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)"
-                            aria-live="assertive">Personal Health Number is not valid.</div>
+                            aria-live="assertive">Personal Health Number is not valid.
                         </div>
+                        <div class="text-danger"
+                            v-if="isValidationCode1Shown || isValidationCode2Shown"
+                            aria-live="assertive">The last name and/or PHN you entered does not match our records.<br/>Please contact <a href="https://www2.gov.bc.ca/gov/content/health/about-bc-s-health-care-system/partners/health-insurance-bc" target="_blank">Health Insurance BC</a> for more information.</div>
+                        <div class="text-danger"
+                            v-if="isSystemUnavailable"
+                            aria-live="assertive">Unable to continue, system unavailable. Please try again later.
+                        </div>
+                    </div>
+                        
                     <div class="col-sm-5">
                         <TipBox title="Tip: PHN number" class="mt-2">
                             <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
@@ -100,7 +113,11 @@
                 </div>  
             </div>
         </PageContent>
-        <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
+        <ContinueBar
+            @continue="nextPage()"
+            :buttonLabel="'Continue'"
+            :hasLoader="isLoading"
+            cypressId="continueBar"/>
     </div>
 </template>
 
@@ -127,6 +144,7 @@
 </style>
   
 <script>
+import apiService from '../services/api-service';
 import ProgressBar from '../components/ProgressBar.vue';
 import PageContent from '../components/PageContent.vue';
 import ContinueBar from '../components/ContinueBar.vue';
@@ -164,7 +182,11 @@ export default {
             lastName: "",
             birthdate: null,
             phn: "",
-            birthdateData: null
+            birthdateData: null,
+            isLoading: false,
+            isValidationCode1Shown: false,
+            isValidationCode2Shown: false,
+            isSystemUnavailable: false,
         };
     },
     created() {
@@ -202,12 +224,74 @@ export default {
     },
     methods: {
         nextPage() {
+            this.isValidationCode1Shown = false;
+            this.isValidationCode2Shown = false;
+            this.isSystemUnavailable = false;
             this.v$.$touch();
 
             if (this.v$.$invalid) {
                 return;
             }
 
+            this.isLoading = true;
+
+            const token = this.$store.state.captchaToken;
+            const applicationUuid = this.$store.state.applicationUuid;
+            const phn = this.phn.replace(/ /g,'');
+
+            apiService.validatePerson(token, applicationUuid, this.lastName, phn)
+                .then((response) => {
+                // Handle HTTP success.
+                const returnCode = response.data.returnCode;
+
+                this.isLoading = false;
+
+                switch (returnCode) {
+                    case '0': // Validation success.
+                    // logService.logInfo(applicationUuid, {
+                    //     event: 'validation success (validatePhnName)',
+                    //     response: response.data,
+                    // });
+                    this.handleValidationSuccess();
+                    break;
+                    case '1': // PHN does not match with the lastname.
+                    this.isValidationCode1Shown = true;
+                    // logService.logInfo(applicationUuid, {
+                    //     event: 'validation failure (validatePhnName)',
+                    //     response: response.data,
+                    // });
+                    // scrollToError();
+                    break;
+                    case '2': // Validation incorrect.
+                    this.isValidationCode2Shown = true;
+                    // logService.logInfo(applicationUuid, {
+                    //     event: 'validation failure (validatePhnName)',
+                    //     response: response.data,
+                    // });
+                    // scrollToError();
+                    break;
+                    case '3': // System unavailable.
+                    this.isSystemUnavailable = true;
+                    // logService.logError(applicationUuid, {
+                    //     event: 'validation failure (validatePhnName endpoint unavailable)',
+                    //     response: response.data,
+                    // });
+                    // scrollToError();
+                    break;
+                }
+                })
+                .catch((error) => {
+                // Handle HTTP error.
+                this.isLoading = false;
+                this.isSystemUnavailable = true;
+                // logService.logError(applicationUuid, {
+                //     event: 'HTTP error (validatePhnName endpoint unavailable)',
+                //     status: error.response.status,
+                // });
+                // scrollToError();
+                });   
+        },
+        handleValidationSuccess() {
             this.$store.commit(SET_FIRST_NAME, this.firstName);
             this.$store.commit(SET_LAST_NAME, this.lastName);
             this.$store.commit(SET_BIRTHDATE, this.birthdate);
@@ -226,6 +310,11 @@ export default {
         handleProcessBirthdate(data) {
             this.birthdateData = data;
         },
+        handleAPIValidationReset() {
+            this.isValidationCode1Shown = false;
+            this.isValidationCode2Shown = false;
+            this.isSystemUnavailable = false;
+        }
     },
     beforeRouteLeave(to, from, next){
         pageStateService.setPageIncomplete(from.path);
