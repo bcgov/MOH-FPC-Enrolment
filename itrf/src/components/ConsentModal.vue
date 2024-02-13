@@ -43,6 +43,7 @@
 <script>
 import Button from "./Button.vue";
 import Captcha from './Captcha.vue';
+import { SET_CAPTCHA_TOKEN } from '@/store';
 
 export default {
   name: "ConsentModal",
@@ -82,6 +83,7 @@ export default {
     },
     handleCaptchaVerified(captchaToken) {
       this.$emit('captchaVerified', captchaToken);
+      this.$store.commit(SET_CAPTCHA_TOKEN, captchaToken);
       this.isCaptchaValid = true;
       setTimeout(() => {
         this.focusableEls = this.getFocusableEls();
