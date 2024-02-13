@@ -213,7 +213,7 @@ export default {
             this.$store.commit(SET_BIRTHDATE, this.birthdate);
             this.$store.commit(SET_PHN, this.phn);
 
-            const path = routes.DECLARATION.path;
+            const path = routes.SUBMISSION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
