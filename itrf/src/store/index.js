@@ -1,7 +1,8 @@
 import { createStore } from 'vuex';
+import { v4 as uuidv4 } from 'uuid';
 
 // For Submission
-export const SET_UUID = "setUUID";
+export const SET_APPLICATION_UUID = "setApplicationUuid";
 export const SET_API_RESPONSE = "setApiResponse";
 export const SET_SUBMISSION_DATE = 'setSubmissionDate';
 export const RESET_FORM = "resetForm";
@@ -26,10 +27,10 @@ export const SET_APPLICANT_CONSENT = "setApplicantConsent";
 export const MODULE_NAME = 'itrfModule';
 
 export default createStore({
-  namespaced: true,
+  namespaced: false,
   state: () => {
     const state = {
-      uuid: null,
+      applicationUuid: uuidv4(),
       apiResponse: null,
       submissionDate: null,
       isInfoCollectionNoticeOpen: true,
@@ -46,8 +47,8 @@ export default createStore({
     return state;
   },
   mutations: {
-    setUUID(state, payload) {
-        state.uuid = payload;
+    setApplicationUuid(state, payload) {
+        state.applicationUuid = payload;
     },
     setApiResponse(state, payload) {
         state.apiResponse = payload;
@@ -88,7 +89,7 @@ export default createStore({
   },
   actions: {
     resetForm({ commit }) {
-      commit(SET_UUID, null);
+      commit(SET_APPLICATION_UUID, uuidv4());
       commit(SET_API_RESPONSE, null);
       commit(SET_SUBMISSION_DATE, null);
       commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, null);
@@ -103,7 +104,7 @@ export default createStore({
       commit(SET_APPLICANT_CONSENT, null);
     },
     newForm({ commit }) {
-      commit(SET_UUID, null);
+      commit(SET_APPLICATION_UUID, uuidv4());
       commit(SET_API_RESPONSE, null);
       commit(SET_SUBMISSION_DATE, null);
       commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, null);

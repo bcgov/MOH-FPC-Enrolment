@@ -1,7 +1,7 @@
 <template>
     <div>
-      <!-- <ConsentModal v-if="showConsentModal"
-                    @close="handleCloseConsentModal" /> -->
+      <ConsentModal v-if="showConsentModal"
+                    @close="handleCloseConsentModal" />
         <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
         <PageContent>
             <div class="container pt-3 pt-sm-5 mb-5">
@@ -87,13 +87,15 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import ConsentModal from '../components/ConsentModal.vue';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import ErrorBox from '../components/ErrorBox.vue';
 import {
+    SET_IS_INFO_COLLECTION_NOTICE_OPEN,
     SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
     SET_APPLICANT_HAS_SPOUSE,
-    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN
+    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN    
 } from "../store/index"
 
 const validateQuestions = (_value, vm) => {
@@ -111,6 +113,7 @@ export default {
         PageContent,
         Radio,
         ContinueBar,
+        ConsentModal,
         ErrorBox
     },
     data: () => {
@@ -123,14 +126,15 @@ export default {
             hasSpouse: null,
             hasSpouseFiledIncomeTaxReturn: null,
             radioOptionsFiledIncomeTaxReturn: null,
-            radioOptionsHasSpouse: null
-            // showConsentModal: true,
+            radioOptionsHasSpouse: null,
+            showConsentModal: true,
         };
     },
     created() {
         this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
         this.hasSpouse = this.$store.state.applicantHasSpouse;
         this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;
+        this.showConsentModal = this.$store.state.isInfoCollectionNoticeOpen;
         this.radioOptionsFiledIncomeTaxReturn = [
             {
                 id: 'filed-income-tax-return-y',
@@ -209,6 +213,11 @@ export default {
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
+        },
+        handleCloseConsentModal() {
+            this.showConsentModal = false;
+            this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
+
         },
     },
     beforeRouteLeave(to, from, next){
