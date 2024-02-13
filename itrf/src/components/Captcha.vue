@@ -92,7 +92,7 @@
     </div>
     <div class="captcha-input-container">
       <div>
-        <label for="input-answer">Enter the text you either see in the box or you hear in the audio</label>
+        <label class="bold" for="input-answer">Enter the text you either see in the box or you hear in the audio</label>
       </div>
       <input id="input-answer"
             :class="'form-control input-answer ' + (isInputValid === false ? 'border-danger' : '')"
@@ -253,6 +253,10 @@ export default {
 </script>
 
 <style scoped>
+
+.bold {
+  font-weight: bold;
+}
 .captcha-image-container {
   display: inline-block;
   border: solid thin #000;
