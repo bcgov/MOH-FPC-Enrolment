@@ -80,7 +80,19 @@
                             v-if="v$.phn.$dirty && !v$.phn.required.$invalid && (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)"
                             aria-live="assertive">Personal Health Number is not valid.</div>
                         </div>
-                    <div class="col-sm-5">
+                        <div class="text-danger"
+                            v-if="isSystemUnavailable"
+                            aria-live="assertive">Unable to continue, system unavailable. Please try again later.
+                        </div>
+                        <div class="text-danger"
+                            v-if="validatePersonErrorMessage"
+                            aria-live="assertive">
+                            <ErrorBox>
+                                <p><b>Validation error</b></p>
+                                <p>The information provided does not match our records. Please try again one more time. If the validation result is unsuccessful a third time, please contact <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us">Health Insurance BC</a> to process your Income Tax Return Filed form.</p>
+                            </ErrorBox>
+                        </div>
+                        <div class="col-sm-5">
                         <TipBox title="Tip: PHN number" class="mt-2">
                             <p>The 10 digit number can be found on the back of your <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card" target="_blank">BC Services Card</a>.</p>
                             <div class="bcid-container">
@@ -100,7 +112,7 @@
                 </div>  
             </div>
         </PageContent>
-        <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
+        <ContinueBar @continue="validateFields()" :buttonLabel="'Continue'" />
     </div>
 </template>
 
@@ -137,12 +149,15 @@ import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
 import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
+import ErrorBox from '../components/ErrorBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
 import { mediumStyles, smallStyles,} from '../constants/input-styles';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
-import { SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store';
+import { MODULE_NAME as itrfModule, SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store/index.js';
+import { scrollToError } from '../helpers/scroll.js';
+import apiService from '@/services/api-service';
 
 export default {
     name: 'PersonalInfoPage',
@@ -153,7 +168,8 @@ export default {
         Input,
         DateInput,
         PhnInput,
-        TipBox
+        TipBox,
+        ErrorBox
     },
     data: () => {
         return {
@@ -164,7 +180,9 @@ export default {
             lastName: "",
             birthdate: null,
             phn: "",
-            birthdateData: null
+            birthdateData: null,
+            isSystemUnavailable: false,
+            validatePersonErrorMessage: null,
         };
     },
     created() {
@@ -201,22 +219,55 @@ export default {
         return validations;
     },
     methods: {
-        nextPage() {
+        validateFields() {
             this.v$.$touch();
 
             if (this.v$.$invalid) {
+                scrollToError();
                 return;
             }
+            
+            this.isSystemUnavailable = false;
+            this.validatePersonErrorMessage = null;
+            this.saveData();
 
+            apiService.validatePerson(this.$store.state.itrfModule)
+                .then((response) => {
+                // this.isLoading = false;
+                if (response.date && response.data.returnCode === 'success'){
+                    this.nextPage();
+                }
+                else if (response.data && response.data.exception){
+                    this.isSystemUnavailable = true;
+                    scrollToError();
+                }
+                else {
+                    this.validatePersonErrorMessage = true;
+                    scrollToError();
+                }
+                })
+                .catch(() => {
+                // this.isLoading = false;
+                this.isSystemUnavailable = true;
+                scrollToError();
+                });
+
+            this.nextPage();
+        },
+        saveData() {
             this.$store.commit(SET_FIRST_NAME, this.firstName);
             this.$store.commit(SET_LAST_NAME, this.lastName);
             this.$store.commit(SET_BIRTHDATE, this.birthdate);
             this.$store.commit(SET_PHN, this.phn);
-
+        },
+        nextPage() {
             const path = routes.SUBMISSION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
+        },
+        scrolltoError() {
+
         },
         handleBlurField(validationObject) {
             if (validationObject) {
