@@ -86,7 +86,12 @@
                         </div>
                         <div class="text-danger"
                             v-if="isValidationCode1Shown || isValidationCode2Shown"
-                            aria-live="assertive">The last name and/or PHN you entered does not match our records.<br/>Please contact <a href="https://www2.gov.bc.ca/gov/content/health/about-bc-s-health-care-system/partners/health-insurance-bc" target="_blank">Health Insurance BC</a> for more information.</div>
+                            aria-live="assertive">
+                            <ErrorBox>
+                                <p><b>Validation error</b></p>
+                                <p>The information provided does not match our records. Please try again one more time. If the validation result is unsuccessful a third time, please contact <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us">Health Insurance BC</a> to process your Income Tax Return Filed form.</p>
+                            </ErrorBox>
+                        </div>
                         <div class="text-danger"
                             v-if="isSystemUnavailable"
                             aria-live="assertive">Unable to continue, system unavailable. Please try again later.
@@ -155,6 +160,7 @@ import PhnInput from '../components/PhnInput.vue';
 import { phnValidator } from '../components/PhnInput.vue';
 import { nameValidator, dateDataValidator, phnFirstDigitValidator } from '../helpers/validators';
 import TipBox from '../components/TipBox.vue';
+import ErrorBox from '../components/ErrorBox.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
 import { mediumStyles, smallStyles,} from '../constants/input-styles';
@@ -171,7 +177,8 @@ export default {
         Input,
         DateInput,
         PhnInput,
-        TipBox
+        TipBox,
+        ErrorBox
     },
     data: () => {
         return {
