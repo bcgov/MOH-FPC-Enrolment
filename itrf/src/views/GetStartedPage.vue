@@ -97,6 +97,7 @@ import {
     SET_APPLICANT_HAS_SPOUSE,
     SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN    
 } from "../store/index"
+import { scrollTo, scrollToError } from '../helpers/scroll';
 
 const validateQuestions = (_value, vm) => {
   if ((vm.hasFiledIncomeTaxReturn === 'Y' && vm.hasSpouse === 'N')
@@ -202,6 +203,7 @@ export default {
             this.v$.$touch();
 
             if (this.v$.$invalid) {
+                scrollToError();
                 return;
             }
 
@@ -213,6 +215,7 @@ export default {
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
+            scrollTo(0);
         },
         handleCloseConsentModal() {
             this.showConsentModal = false;

@@ -143,6 +143,7 @@ import { mediumStyles, smallStyles,} from '../constants/input-styles';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store';
+import { scrollTo, scrollToError } from '../helpers/scroll';
 
 export default {
     name: 'PersonalInfoPage',
@@ -205,6 +206,7 @@ export default {
             this.v$.$touch();
 
             if (this.v$.$invalid) {
+                scrollToError();
                 return;
             }
 
@@ -217,6 +219,7 @@ export default {
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);
+            scrollTo(0);
         },
         handleBlurField(validationObject) {
             if (validationObject) {
