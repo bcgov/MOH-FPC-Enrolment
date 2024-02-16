@@ -245,8 +245,9 @@ export default {
             const token = this.$store.state.captchaToken;
             const applicationUuid = this.$store.state.applicationUuid;
             const phn = this.phn.replace(/ /g,'');
+            const formState = this.$store.state;
 
-            apiService.validatePerson(token, applicationUuid, this.lastName, phn)
+            apiService.validatePerson(token, formState)
                 .then((response) => {
                 // Handle HTTP success.
                 const returnCode = response.data.returnCode;
