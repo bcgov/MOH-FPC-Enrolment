@@ -85,7 +85,7 @@
                             aria-live="assertive">Personal Health Number is not valid.
                         </div>
                         <div class="text-danger"
-                            v-if="isValidationCode1Shown || isValidationCode2Shown"
+                            v-if="isAPIValidationErrorShown"
                             aria-live="assertive">
                             <ErrorBox>
                                 <p><b>Validation error</b></p>
@@ -192,8 +192,7 @@ export default {
             phn: "",
             birthdateData: null,
             isLoading: false,
-            isValidationCode1Shown: false,
-            isValidationCode2Shown: false,
+            isAPIValidationErrorShown: false,
             isSystemUnavailable: false,
         };
     },
@@ -202,6 +201,7 @@ export default {
         this.lastName = this.$store.state.lastName;
         this.birthdate = this.$store.state.birthdate;
         this.phn = this.$store.state.phn;
+        this.token = this.$store.state.captchaToken;
     },
     setup () {
         return { v$: useVuelidate() }
@@ -232,8 +232,7 @@ export default {
     },
     methods: {
         nextPage() {
-            this.isValidationCode1Shown = false;
-            this.isValidationCode2Shown = false;
+            this.isAPIValidationErrorShown = false;
             this.isSystemUnavailable = false;
             this.v$.$touch();
 
@@ -244,12 +243,15 @@ export default {
 
             this.isLoading = true;
 
-            const token = this.$store.state.captchaToken;
             const applicationUuid = this.$store.state.applicationUuid;
             const phn = this.phn.replace(/ /g,'');
+            this.$store.commit(SET_FIRST_NAME, this.firstName);
+            this.$store.commit(SET_LAST_NAME, this.lastName);
+            this.$store.commit(SET_BIRTHDATE, this.birthdate);
+            this.$store.commit(SET_PHN, this.phn);
             const formState = this.$store.state;
 
-            apiService.validatePerson(token, formState)
+            apiService.validatePerson(this.token, formState)
                 .then((response) => {
                 // Handle HTTP success.
                 const returnCode = response.data.returnCode;
@@ -257,37 +259,36 @@ export default {
                 this.isLoading = false;
 
                 switch (returnCode) {
-                    case '0': // Validation success.
+                    case 'success': // Validation success.
                     // logService.logInfo(applicationUuid, {
                     //     event: 'validation success (validatePhnName)',
                     //     response: response.data,
                     // });
-                    this.handleValidationSuccess();
+                    this.handleValidationSuccess(formState);
                     break;
-                    case '1': // PHN does not match with the lastname.
-                    this.isValidationCode1Shown = true;
+                    case 'failure': // PHN does not match with the lastname.
+                    this.isAPIValidationErrorShown = true;
                     // logService.logInfo(applicationUuid, {
-                    //     event: 'validation failure (validatePhnName)',
+                    //     event: 'validation failure (validatePerson)',
                     //     response: response.data,
                     // });
-                    // scrollToError();
-                    break;
-                    case '2': // Validation incorrect.
-                    this.isValidationCode2Shown = true;
-                    // logService.logInfo(applicationUuid, {
-                    //     event: 'validation failure (validatePhnName)',
-                    //     response: response.data,
-                    // });
-                    // scrollToError();
+                    scrollToError();
                     break;
                     case '3': // System unavailable.
                     this.isSystemUnavailable = true;
                     // logService.logError(applicationUuid, {
-                    //     event: 'validation failure (validatePhnName endpoint unavailable)',
+                    //     event: 'validation failure (validatePerson endpoint unavailable)',
                     //     response: response.data,
                     // });
-                    // scrollToError();
+                    scrollToError();
                     break;
+                    default: //-1 error code, schema error, etc
+                    this.isSystemUnavailable = true;
+                    // logService.logError(applicationUuid, {
+                    //     event: 'validation failure (schema error or other unexpected problem)',
+                    //     response: response.data,
+                    // });
+                    scrollToError();
                 }
                 })
                 .catch((error) => {
@@ -298,15 +299,13 @@ export default {
                 //     event: 'HTTP error (validatePhnName endpoint unavailable)',
                 //     status: error.response.status,
                 // });
-                // scrollToError();
+                scrollToError();
                 });   
         },
-        handleValidationSuccess() {
-            this.$store.commit(SET_FIRST_NAME, this.firstName);
-            this.$store.commit(SET_LAST_NAME, this.lastName);
-            this.$store.commit(SET_BIRTHDATE, this.birthdate);
-            this.$store.commit(SET_PHN, this.phn);
-
+        handleValidationSuccess(formState) {
+            this.handleSubmitForm();
+        },
+        handleSubmitForm() {
             const path = routes.DECLARATION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
@@ -322,8 +321,7 @@ export default {
             this.birthdateData = data;
         },
         handleAPIValidationReset() {
-            this.isValidationCode1Shown = false;
-            this.isValidationCode2Shown = false;
+            this.isAPIValidationErrorShown = false;
             this.isSystemUnavailable = false;
         }
     },
