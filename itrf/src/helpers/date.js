@@ -7,7 +7,7 @@ import { padLeadingZeros } from './string';
   
 export const formatDate = (date) => {
   if (date instanceof Date) {
-    return formatDateFns(date, 'MMMM d, y');
+    return formatDateFns(date, 'yyyy-MM-dd');
   }
   return date;
 };
