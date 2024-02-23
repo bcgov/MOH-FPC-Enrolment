@@ -5,7 +5,7 @@
             <div class="container pt-3 pt-sm-5 mb-5">
                 <h1>Personal Information</h1>
                 <hr/>
-                <p>Enter your name as it appears in your BC Services Card</p>
+                <p>Enter your name as it appears on your BC Services Card</p>
                 <div class="row">
                     <div class="col-sm-7">
                         <Input
@@ -168,6 +168,7 @@ import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
 import { SET_BIRTHDATE, SET_FIRST_NAME, SET_LAST_NAME, SET_PHN } from '../store';
 import { scrollTo, scrollToError } from '../helpers/scroll';
+import { formatDate } from '../helpers/date';
 
 export default {
     name: 'PersonalInfoPage',
@@ -244,11 +245,11 @@ export default {
             this.isLoading = true;
 
             const applicationUuid = this.$store.state.applicationUuid;
-            const phn = this.phn.replace(/ /g,'');
+            const formattedPhn = this.phn.replace(/ /g,'');
             this.$store.commit(SET_FIRST_NAME, this.firstName);
             this.$store.commit(SET_LAST_NAME, this.lastName);
-            this.$store.commit(SET_BIRTHDATE, this.birthdate);
-            this.$store.commit(SET_PHN, this.phn);
+            this.$store.commit(SET_BIRTHDATE, formatDate(this.birthdate));
+            this.$store.commit(SET_PHN, formattedPhn);
             const formState = this.$store.state;
 
             apiService.validatePerson(this.token, formState)
@@ -303,6 +304,57 @@ export default {
                 });   
         },
         handleValidationSuccess(formState) {
+            //this function accepts formState as an argument to help ensure there are no mutations to the store between the validation check and the final submission
+            apiService.submitForm(this.token, formState)
+                .then((response) => {
+                // Handle HTTP success.
+                const returnCode = response.data.returnCode;
+
+                this.isLoading = false;
+
+                switch (returnCode) {
+                    case 'success': // Validation success.
+                    // logService.logInfo(applicationUuid, {
+                    //     event: 'validation success (validatePhnName)',
+                    //     response: response.data,
+                    // });
+                    this.handleValidationSuccess();
+                    break;
+                    case 'failure': // PHN does not match with the lastname.
+                    this.isAPIValidationErrorShown = true;
+                    // logService.logInfo(applicationUuid, {
+                    //     event: 'validation failure (validatePerson)',
+                    //     response: response.data,
+                    // });
+                    scrollToError();
+                    break;
+                    case '3': // System unavailable.
+                    this.isSystemUnavailable = true;
+                    // logService.logError(applicationUuid, {
+                    //     event: 'validation failure (validatePerson endpoint unavailable)',
+                    //     response: response.data,
+                    // });
+                    scrollToError();
+                    break;
+                    default: //-1 error code, schema error, etc
+                    this.isSystemUnavailable = true;
+                    // logService.logError(applicationUuid, {
+                    //     event: 'validation failure (schema error or other unexpected problem)',
+                    //     response: response.data,
+                    // });
+                    scrollToError();
+                }
+                })
+                .catch((error) => {
+                // Handle HTTP error.
+                this.isLoading = false;
+                this.isSystemUnavailable = true;
+                // logService.logError(applicationUuid, {
+                //     event: 'HTTP error (validatePhnName endpoint unavailable)',
+                //     status: error.response.status,
+                // });
+                scrollToError();
+                });
             this.handleSubmitForm();
         },
         handleSubmitForm() {
