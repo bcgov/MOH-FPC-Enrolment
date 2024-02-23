@@ -1,5 +1,6 @@
 name: itrf-web deploy to test
 on:
+  push:
   workflow_dispatch:
 defaults:
   run:
