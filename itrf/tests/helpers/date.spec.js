@@ -42,8 +42,8 @@ describe('Date helpers', () => {
   });
 
   it('formatDate', () => {
-    expect(formatDate(oneDigitDate)).toEqual('July 1, 2021');
-    expect(formatDate(twoDigitDate)).toEqual('July 21, 2021');
+    expect(formatDate(oneDigitDate)).toEqual('2021-07-01');
+    expect(formatDate(twoDigitDate)).toEqual('2021-07-21');
     expect(formatDate(123)).toEqual(123);
     expect(formatDate(undefined)).toEqual(undefined);
     expect(formatDate(null)).toEqual(null);

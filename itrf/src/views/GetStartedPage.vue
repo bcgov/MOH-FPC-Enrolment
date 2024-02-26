@@ -87,6 +87,7 @@ import Radio from '../components/Radio.vue';
 import ContinueBar from '../components/ContinueBar.vue';
 import { stepRoutes, routes } from '../router/index';
 import pageStateService from '../services/page-state-service.js';
+import spaEnvService from '../services/spa-env-service';
 import ConsentModal from '../components/ConsentModal.vue';
 import { required } from "@vuelidate/validators";
 import useVuelidate from "@vuelidate/core";
@@ -95,7 +96,8 @@ import {
     SET_IS_INFO_COLLECTION_NOTICE_OPEN,
     SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
     SET_APPLICANT_HAS_SPOUSE,
-    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN    
+    SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN,
+    SET_MAINTENANCE_MESSAGE   
 } from "../store/index"
 import { scrollTo, scrollToError } from '../helpers/scroll';
 
@@ -131,7 +133,28 @@ export default {
             showConsentModal: true,
         };
     },
-    created() {
+    async created() {
+        await spaEnvService.loadEnvs()
+            .then(() => {
+                if (spaEnvService.values && spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_FLAG === "true") {
+                    this.$store.commit(SET_MAINTENANCE_MESSAGE, spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_MESSAGE);
+                    const toPath = routes.MAINTENANCE.path;
+                    pageStateService.setPageComplete(toPath);
+                    pageStateService.visitPage(toPath);
+                    this.$router.push(toPath);
+                }
+            })
+            .catch((error) => {
+                // logService.logError(applicationUuid, {
+                // event: 'HTTP error getting values from spa-env-server',
+                // status: error.response.status,
+                // });
+            });
+            // logService.logNavigation(
+            // applicationUuid,
+            // routes.HOME_PAGE.path,
+            // routes.HOME_PAGE.title
+            // );
         this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
         this.hasSpouse = this.$store.state.applicantHasSpouse;
         this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;

@@ -82,6 +82,11 @@ const router = createRouter({
       name: routes.SUBMISSION.name,
       component: routes.SUBMISSION.component,
     },
+    {
+      path: routes.MAINTENANCE.path,
+      name: routes.MAINTENANCE.name,
+      component: routes.MAINTENANCE.component,
+    },
   ]
 });
 

@@ -16,6 +16,7 @@ export const SET_CAPTCHA_TOKEN = 'setCaptchaToken';
 export const SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN = 'setApplicantHasFiledIncomeTaxReturn';
 export const SET_APPLICANT_HAS_SPOUSE = 'setApplicantHasSpouse';
 export const SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN = 'setSpouseHasFiledIncomeTaxReturn';
+export const SET_MAINTENANCE_MESSAGE = "setMaintenanceMessage";
 
 // For Personal Info Page
 export const SET_FIRST_NAME = "setFirstName";
@@ -23,8 +24,6 @@ export const SET_LAST_NAME = "setLastName";
 export const SET_BIRTHDATE = "setBirthdate";
 export const SET_PHN= "setPHN";
 export const SET_APPLICANT_CONSENT = "setApplicantConsent";
-
-export const MODULE_NAME = 'itrfModule';
 
 export default createStore({
   namespaced: false,
@@ -42,7 +41,8 @@ export default createStore({
       lastName: null,
       birthdate: null,
       phn: null,
-      applicantConsent: null
+      applicantConsent: null,
+      maintenanceMessage: '',
     };
     return state;
   },
@@ -85,7 +85,10 @@ export default createStore({
     },
     setApplicantConsent(state, payload) {
         state.applicantConsent = payload;
-    }
+    },
+    setMaintenanceMessage(state, payload) {
+      state.maintenanceMessage = payload;
+    },
   },
   actions: {
     resetForm({ commit }) {
