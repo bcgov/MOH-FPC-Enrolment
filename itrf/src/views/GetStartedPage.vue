@@ -1,7 +1,7 @@
 <template>
   <div>
     <ConsentModal v-if="showConsentModal" @close="handleCloseConsentModal" />
-    <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
+    <ProgressBar :routes="stepRoutes" :current-path="$route.path" />
     <PageContent>
       <div class="container pt-3 pt-sm-5 mb-5">
         <h1>Get Started</h1>
@@ -70,24 +70,24 @@
         </p>
         <Radio
           id="filed-income-tax-return"
-          name="filed-income-tax-return"
           v-model="hasFiledIncomeTaxReturn"
+          name="filed-income-tax-return"
           :required="true"
           :items="radioOptionsFiledIncomeTaxReturn"
         />
         <div
-          class="text-danger"
           v-if="
             v$.hasFiledIncomeTaxReturn.$dirty &&
             v$.hasFiledIncomeTaxReturn.required.$invalid
           "
+          class="text-danger"
           aria-live="assertive"
         >
           Select an option to answer the question.
         </div>
         <div
-          class="text-danger"
           v-if="hasFiledIncomeTaxReturn == 'N'"
+          class="text-danger"
           aria-live="assertive"
         >
           <ErrorBox>
@@ -108,20 +108,20 @@
         <p><b>Do you have a spouse or common-law partner?</b></p>
         <Radio
           id="spouse"
-          name="spouse"
           v-model="hasSpouse"
+          name="spouse"
           :required="true"
           :items="radioOptionsHasSpouse"
         />
         <div
-          class="text-danger"
           v-if="v$.hasSpouse.$dirty && v$.hasSpouse.required.$invalid"
+          class="text-danger"
           aria-live="assertive"
         >
           Select an option to answer the question.
         </div>
         <br />
-        <div class="ml-4 mb-0" v-if="hasSpouse === 'Y'">
+        <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
           <p>
             <b
               >Have they filed their income tax return with CRA for the year
@@ -130,24 +130,24 @@
           </p>
           <Radio
             id="spouse-filed-income-tax-return"
-            name="spouse-filed-income-tax-return"
             v-model="hasSpouseFiledIncomeTaxReturn"
+            name="spouse-filed-income-tax-return"
             :required="true"
             :items="radioOptionsHasSpouseFiledIncomeTaxReturn"
           />
           <div
-            class="text-danger"
             v-if="
               v$.hasSpouseFiledIncomeTaxReturn.$dirty &&
               v$.hasSpouseFiledIncomeTaxReturn.required.$invalid
             "
+            class="text-danger"
             aria-live="assertive"
           >
             Select an option to answer the question.
           </div>
           <div
-            class="text-danger"
             v-if="hasSpouseFiledIncomeTaxReturn == 'N'"
+            class="text-danger"
             aria-live="assertive"
           >
             <ErrorBox>
@@ -168,15 +168,9 @@
         </div>
       </div>
     </PageContent>
-    <ContinueBar @continue="nextPage()" :buttonLabel="'Continue'" />
+    <ContinueBar :button-label="'Continue'" @continue="nextPage()" />
   </div>
 </template>
-
-<style scoped>
-.container {
-  margin-top: 0;
-}
-</style>
 
 <script>
 import ProgressBar from "../components/ProgressBar.vue";
@@ -220,6 +214,13 @@ export default {
     ContinueBar,
     ConsentModal,
     ErrorBox,
+  },
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    next();
+  },
+  setup() {
+    return { v$: useVuelidate() };
   },
   data: () => {
     return {
@@ -311,9 +312,6 @@ export default {
       this.isPageLoaded = true;
     });
   },
-  setup() {
-    return { v$: useVuelidate() };
-  },
   validations() {
     const validations = {
       isValidated: {
@@ -362,9 +360,11 @@ export default {
       this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
     },
   },
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    next();
-  },
 };
 </script>
+
+<style scoped>
+.container {
+  margin-top: 0;
+}
+</style>

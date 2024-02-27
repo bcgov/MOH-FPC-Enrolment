@@ -15,6 +15,21 @@ export default {
       continueBarHeight: 0,
     };
   },
+  computed: {
+    minHeightDelta() {
+      let delta = 0;
+      delta += this.headerHeight;
+      delta += this.footerHeight;
+      delta += this.stepperHeight;
+      delta += this.continueBarHeight;
+      return delta;
+    },
+    pageContentStyles() {
+      return {
+        "min-height": "calc(100vh - " + this.minHeightDelta + "px)",
+      };
+    },
+  },
   created() {
     setTimeout(() => {
       const headerEl = document.querySelector("header");
@@ -35,21 +50,6 @@ export default {
         this.continueBarHeight = continueBarEl.offsetHeight;
       }
     }, 0);
-  },
-  computed: {
-    minHeightDelta() {
-      let delta = 0;
-      delta += this.headerHeight;
-      delta += this.footerHeight;
-      delta += this.stepperHeight;
-      delta += this.continueBarHeight;
-      return delta;
-    },
-    pageContentStyles() {
-      return {
-        "min-height": "calc(100vh - " + this.minHeightDelta + "px)",
-      };
-    },
   },
 };
 </script>

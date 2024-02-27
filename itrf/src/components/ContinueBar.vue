@@ -4,7 +4,7 @@
       <Button
         class="continue-button"
         :label="buttonLabel"
-        :hasLoader="hasLoader"
+        :has-loader="hasLoader"
         @click="onContinue()"
       />
     </div>

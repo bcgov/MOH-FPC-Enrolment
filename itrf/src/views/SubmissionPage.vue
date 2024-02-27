@@ -47,31 +47,6 @@
   </div>
 </template>
 
-<style scoped>
-.tip-container {
-  position: relative;
-  display: inline-block;
-  color: black;
-}
-.tip-container .tip {
-  visibility: hidden;
-  width: 220px;
-  background-color: #f2f2f2;
-  color: #606060;
-  text-align: center;
-  padding: 2px 4px;
-  border: 2px solid #606060;
-  font-weight: normal;
-  font-size: 13.33px;
-  right: 25px;
-  position: absolute;
-  z-index: 1;
-}
-.tip-container:hover .tip {
-  visibility: visible;
-}
-</style>
-
 <script>
 import PageContent from "../components/PageContent.vue";
 import ReviewTable from "../components/ReviewTable.vue";
@@ -90,14 +65,6 @@ export default {
       dateSubmitted: null,
       referenceNumber: "1234567890",
     };
-  },
-  created() {
-    this.dateSubmitted = formatDate(new Date());
-  },
-  methods: {
-    printPage() {
-      window.print();
-    },
   },
   computed: {
     personalInfoData() {
@@ -132,5 +99,38 @@ export default {
       return items;
     },
   },
+  created() {
+    this.dateSubmitted = formatDate(new Date());
+  },
+  methods: {
+    printPage() {
+      window.print();
+    },
+  },
 };
 </script>
+
+<style scoped>
+.tip-container {
+  position: relative;
+  display: inline-block;
+  color: black;
+}
+.tip-container .tip {
+  visibility: hidden;
+  width: 220px;
+  background-color: #f2f2f2;
+  color: #606060;
+  text-align: center;
+  padding: 2px 4px;
+  border: 2px solid #606060;
+  font-weight: normal;
+  font-size: 13.33px;
+  right: 25px;
+  position: absolute;
+  z-index: 1;
+}
+.tip-container:hover .tip {
+  visibility: visible;
+}
+</style>

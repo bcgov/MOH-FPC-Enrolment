@@ -26,21 +26,21 @@
             </p>
             <Captcha
               v-if="!isCaptchaValid"
-              :apiBasePath="captchaAPIBasePath"
+              :api-base-path="captchaAPIBasePath"
               :nonce="applicationUuid"
-              @captchaLoaded="handleCaptchaLoaded()"
-              @captchaVerified="handleCaptchaVerified($event)"
+              @captcha-loaded="handleCaptchaLoaded()"
+              @captcha-verified="handleCaptchaVerified($event)"
             />
             <div v-if="isCaptchaValid" class="text-success">
               Captcha successfully verified.
             </div>
             <div class="mt-3">
               <input
+                id="is-terms-accepted"
+                v-model="isTermsAccepted"
                 type="checkbox"
                 data-cy="consentCheckbox"
-                id="is-terms-accepted"
                 class="d-inline"
-                v-model="isTermsAccepted"
               />
               <label for="is-terms-accepted" class="mt-3 ml-2 d-inline"
                 ><b>I have read and understand this information</b></label
@@ -50,9 +50,9 @@
           <div class="modal-footer justify-content-center">
             <Button
               label="Continue"
-              cypressId="consentContinue"
-              @click="closeModal()"
+              cypress-id="consentContinue"
               :disabled="!isCaptchaValid || !isTermsAccepted"
+              @click="closeModal()"
             />
           </div>
         </div>

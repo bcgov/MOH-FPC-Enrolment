@@ -72,7 +72,7 @@
               v-if="isDatePickerOpen"
               v-model="datePickerDate"
               :cypress-id="cypressId"
-              @dateSelected="handleDateSelected()"
+              @date-selected="handleDateSelected()"
             />
           </div>
         </div>

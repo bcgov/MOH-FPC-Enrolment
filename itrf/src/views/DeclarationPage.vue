@@ -16,9 +16,9 @@
           {{ incomeTaxReturnYear }}.
         </p>
         <Checkbox
-          :label="applicantConsentLabel"
           id="applicant-consent"
           v-model="isAuthorized"
+          :label="applicantConsentLabel"
         />
         <br />
         <div class="container info pb-5">
@@ -36,13 +36,6 @@
     </PageContent>
   </div>
 </template>
-
-<style scoped>
-.info {
-  position: absolute;
-  bottom: 0;
-}
-</style>
 
 <script>
 import PageContent from "../components/PageContent.vue";
@@ -62,9 +55,6 @@ export default {
       incomeTaxReturnYear: null,
     };
   },
-  created() {
-    this.incomeTaxReturnYear = new Date().getFullYear() - 2;
-  },
   computed: {
     applicantConsentLabel() {
       // TO-DO: Replace TEST with the actual store value from the first and last name on the Personal Info Page"
@@ -72,5 +62,15 @@ export default {
       return label;
     },
   },
+  created() {
+    this.incomeTaxReturnYear = new Date().getFullYear() - 2;
+  },
 };
 </script>
+
+<style scoped>
+.info {
+  position: absolute;
+  bottom: 0;
+}
+</style>

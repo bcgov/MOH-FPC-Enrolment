@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
+    <ProgressBar :routes="stepRoutes" :current-path="$route.path" />
     <PageContent>
       <div class="container pt-3 pt-sm-5 mb-5">
         <h1>Personal Information</h1>
@@ -9,27 +9,27 @@
         <div class="row">
           <div class="col-sm-7">
             <Input
-              :label="'First name'"
-              :className="'mt-3'"
-              :inputStyle="mediumStyles"
               v-model="firstName"
-              @input="handleAPIValidationReset"
+              :label="'First name'"
+              :class-name="'mt-3'"
+              :input-style="mediumStyles"
               :required="true"
+              @input="handleAPIValidationReset"
             />
             <div
-              class="text-danger"
               v-if="v$.firstName.$dirty && v$.firstName.required.$invalid"
+              class="text-danger"
               aria-live="assertive"
             >
               First name is required.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.firstName.$dirty &&
                 !v$.firstName.required.$invalid &&
                 v$.firstName.nameValidator.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               First name must begin with a letter and cannot include special
@@ -37,27 +37,27 @@
               characters.
             </div>
             <Input
-              :label="'Last name'"
-              :className="'mt-3'"
-              :inputStyle="mediumStyles"
               v-model="lastName"
-              @input="handleAPIValidationReset"
+              :label="'Last name'"
+              :class-name="'mt-3'"
+              :input-style="mediumStyles"
               :required="true"
+              @input="handleAPIValidationReset"
             />
             <div
-              class="text-danger"
               v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
+              class="text-danger"
               aria-live="assertive"
             >
               Last name is required.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.lastName.$dirty &&
                 !v$.lastName.required.$invalid &&
                 v$.lastName.nameValidator.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Last name must begin with a letter and cannot include special
@@ -66,89 +66,89 @@
             </div>
             <DateInput
               id="birthdate"
-              label="Birthdate"
-              className="mt-3"
               v-model="birthdate"
+              label="Birthdate"
+              class-name="mt-3"
               :required="true"
-              :watchForModelChange="true"
-              :useInvalidState="true"
+              :watch-for-model-change="true"
+              :use-invalid-state="true"
               @input="handleAPIValidationReset"
-              @processDate="handleProcessBirthdate($event)"
+              @process-date="handleProcessBirthdate($event)"
             />
             <div
-              class="text-danger"
               v-if="
                 v$.birthdate.$dirty &&
                 !v$.birthdate.dateDataValidator.$invalid &&
                 v$.birthdate.required.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Birthdate is required.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.birthdate.$dirty && v$.birthdate.dateDataValidator.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Invalid birthdate.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.birthdate.$dirty &&
                 !v$.birthdate.required.$invalid &&
                 v$.birthdate.distantPastValidator.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Invalid birthdate.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.birthdate.$dirty &&
                 !v$.birthdate.required.$invalid &&
                 v$.birthdate.birthdate16YearsValidator.$invalid
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Invalid birthdate.
             </div>
             <PhnInput
+              v-model="phn"
               label="Personal Health Number (PHN)"
               class="mt-3"
               placeholder="1111 111 111"
-              :inputStyle="smallStyles"
-              v-model="phn"
-              @input="handleAPIValidationReset"
+              :input-style="smallStyles"
               :required="true"
+              @input="handleAPIValidationReset"
             />
             <div
-              class="text-danger"
               v-if="v$.phn.$dirty && v$.phn.required.$invalid"
+              class="text-danger"
               aria-live="assertive"
             >
               Personal Health Number is required.
             </div>
             <div
-              class="text-danger"
               v-if="
                 v$.phn.$dirty &&
                 !v$.phn.required.$invalid &&
                 (v$.phn.phnValidator.$invalid ||
                   v$.phn.phnFirstDigitValidator.$invalid)
               "
+              class="text-danger"
               aria-live="assertive"
             >
               Personal Health Number is not valid.
             </div>
             <br />
             <div
-              class="text-danger"
               v-if="isAPIValidationErrorShown"
+              class="text-danger"
               aria-live="assertive"
             >
               <ErrorBox>
@@ -167,8 +167,8 @@
               </ErrorBox>
             </div>
             <div
-              class="text-danger"
               v-if="isSystemUnavailable"
+              class="text-danger"
               aria-live="assertive"
             >
               Unable to continue, system unavailable. Please try again later.
@@ -207,35 +207,13 @@
       </div>
     </PageContent>
     <ContinueBar
+      :button-label="'Submit'"
+      :has-loader="isLoading"
+      cypress-id="continueBar"
       @continue="nextPage()"
-      :buttonLabel="'Submit'"
-      :hasLoader="isLoading"
-      cypressId="continueBar"
     />
   </div>
 </template>
-
-<style scoped>
-.mt-3 {
-  font-weight: bolder;
-}
-.container {
-  margin-top: 0;
-}
-.bcid-container {
-  display: flex;
-  flex-flow: row wrap;
-}
-.bcid-image-container {
-  width: 50%;
-  padding: 5px;
-}
-.bcid {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-}
-</style>
 
 <script>
 import apiService from "../services/api-service";
@@ -283,6 +261,13 @@ export default {
     TipBox,
     ErrorBox,
   },
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    next();
+  },
+  setup() {
+    return { v$: useVuelidate() };
+  },
   data: () => {
     return {
       stepRoutes,
@@ -304,9 +289,6 @@ export default {
     this.birthdate = this.$store.state.birthdate;
     this.phn = this.$store.state.phn;
     this.token = this.$store.state.captchaToken;
-  },
-  setup() {
-    return { v$: useVuelidate() };
   },
   validations() {
     const validations = {
@@ -480,9 +462,27 @@ export default {
       this.isSystemUnavailable = false;
     },
   },
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    next();
-  },
 };
 </script>
+
+<style scoped>
+.mt-3 {
+  font-weight: bolder;
+}
+.container {
+  margin-top: 0;
+}
+.bcid-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+.bcid-image-container {
+  width: 50%;
+  padding: 5px;
+}
+.bcid {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+}
+</style>

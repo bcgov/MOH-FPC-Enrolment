@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :title="pageTitle" imagePath="/itrf/images/" />
+    <Header :title="pageTitle" image-path="/itrf/images/" />
     <router-view></router-view>
     <Footer :version="version" />
   </div>

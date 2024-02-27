@@ -40,15 +40,15 @@
       <Loader :color="'#AAA'" :size="'20px'" />
     </div>
     <div v-if="!isLoadingNewCaptcha" class="captcha-group-container">
-      <div v-html="captchaSVG" class="captcha-image-container"></div>
+      <div class="captcha-image-container" v-html="captchaSVG"></div>
       <div class="button-container">
-        <audio ref="audio" v-if="audio && audio.length > 0" :src="audio">
+        <audio v-if="audio && audio.length > 0" ref="audio" :src="audio">
           Your browser does not support the audio element.
         </audio>
         <button
           class="captcha-button play-audio-button"
-          @click="playAudio()"
           role="button"
+          @click="playAudio()"
         >
           <svg v-if="!isLoadingAudio" class="icon-play">
             <use xlink:href="#icon-play-def"></use>
@@ -247,8 +247,8 @@
         <button
           class="captcha-button try-another-image"
           href="javascript:void(0)"
-          @click="handleTryAnotherImageClick()"
           role="button"
+          @click="handleTryAnotherImageClick()"
         >
           <svg class="icon-loop"><use xlink:href="#icon-loop-def"></use></svg>
           <span>Try another image</span>
@@ -264,11 +264,11 @@
       </div>
       <input
         id="input-answer"
+        v-model="inputAnswer"
         :class="
           'form-control input-answer ' +
           (isInputValid === false ? 'border-danger' : '')
         "
-        v-model="inputAnswer"
         data-cy="captchaInput"
         :disabled="
           inputAnswer &&
@@ -277,12 +277,12 @@
             ? true
             : false
         "
-        @input="handleInputChange($event)"
         maxlength="6"
         autocorrect="off"
         autocomplete="off"
         autocapitalize="none"
         aria-required="true"
+        @input="handleInputChange($event)"
       />
       <div
         v-if="isLoadingCaptchaVerification"
