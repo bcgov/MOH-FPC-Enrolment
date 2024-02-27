@@ -9,7 +9,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "precommit": "lint-staged",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -30,11 +32,23 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.22.0",
+    "husky": "^9.0.11",
     "jsdom": "^23.0.1",
+    "lint-staged": "^15.2.2",
     "lodash": "^4.17.21",
     "prettier": "3.2.5",
     "sass": "^1.69.5",
     "vite": "^5.0.11",
     "vitest": "^1.1.0"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn precommit"
+    }
   }
 }
