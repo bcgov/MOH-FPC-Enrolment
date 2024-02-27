@@ -1,6 +1,6 @@
-<template>
+<!-- DECLARATION PAGE IS NO LONGER NEEDED FOR ITRF but keep the file for reference -->
+<template>   
     <div>
-        <ProgressBar :routes="stepRoutes" :currentPath="$route.path" />
         <PageContent>
             <div class="container pt-3 pt-sm-5 mb-5">
                 <h1>Declaration</h1>
@@ -19,7 +19,6 @@
                 </div>
             </div>
         </PageContent>
-        <ContinueBar @continue="nextPage()" :buttonLabel="'Submit'" />
     </div>
 </template>
 
@@ -31,26 +30,19 @@
 </style>
   
 <script>
-import ProgressBar from '../components/ProgressBar.vue';
 import PageContent from '../components/PageContent.vue';
-import ContinueBar from '../components/ContinueBar.vue';
 import Checkbox from '../components/Checkbox.vue';
-import { stepRoutes, routes } from '../router/index';
-import pageStateService from '../services/page-state-service.js';
 import InfoBox from '../components/InfoBox.vue';
 
 export default {
     name: 'DeclarationPage',
     components: {
-    ProgressBar,
-    PageContent,
-    ContinueBar,
-    Checkbox,
-    InfoBox
-},
+        PageContent,
+        Checkbox,
+        InfoBox
+    },
     data: () => {
         return {
-            stepRoutes,
             isAuthorized: null,
             incomeTaxReturnYear: null
         };
@@ -65,14 +57,6 @@ export default {
             return label;
         }
     },
-    methods: {
-        nextPage() {
-            const path = routes.SUBMISSION.path;
-            pageStateService.setPageComplete(path);
-            pageStateService.visitPage(path);
-            this.$router.push(path);
-        }
-    }
 }
 </script>
   

@@ -83,13 +83,13 @@
                         <div class="text-danger"
                             v-if="v$.phn.$dirty && !v$.phn.required.$invalid && (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)"
                             aria-live="assertive">Personal Health Number is not valid.
-                        </div>
+                        </div><br>
                         <div class="text-danger"
                             v-if="isAPIValidationErrorShown"
                             aria-live="assertive">
                             <ErrorBox>
                                 <p><b>Validation error</b></p>
-                                <p>The information provided does not match our records. Please try again one more time. If the validation result is unsuccessful a third time, please contact <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us">Health Insurance BC</a> to process your Income Tax Return Filed form.</p>
+                                <p>The information provided does not match our records. Please try again one more time. If the validation result is unsuccessful a third time, please contact <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us" target="_blank">Health Insurance BC</a> to process your Income Tax Return Filed form.</p>
                             </ErrorBox>
                         </div>
                         <div class="text-danger"
@@ -120,7 +120,7 @@
         </PageContent>
         <ContinueBar
             @continue="nextPage()"
-            :buttonLabel="'Continue'"
+            :buttonLabel="'Submit'"
             :hasLoader="isLoading"
             cypressId="continueBar"/>
     </div>
@@ -358,7 +358,7 @@ export default {
             this.handleSubmitForm();
         },
         handleSubmitForm() {
-            const path = routes.DECLARATION.path;
+            const path = routes.SUBMISSION.path;
             pageStateService.setPageComplete(path);
             pageStateService.visitPage(path);
             this.$router.push(path);

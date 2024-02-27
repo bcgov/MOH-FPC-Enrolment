@@ -17,6 +17,8 @@
                 </ul><br>
                 <h2>If you were unable to file taxes for year {{ incomeTaxReturnYear }}</h2>
                 <p>You may not have been able to file taxes in Canada two years ago. You may have worked in another country two years ago or were a minor (under 18) with no income. In this case, you may be required to document your income on the Fair PharmaCare Proof of Income Affidavit. <a href="https://www2.gov.bc.ca/assets/gov/health/forms/5357fil.pdf" target="_blank">Download a copy</a> or contact us at 1-800-663-7100 (toll-free), 604-683-7151 (Lower Mainland) to have one sent to you.</p><br>
+                <h2>For tax year other than {{ incomeTaxReturnYear }}</h2>
+                <p>If the notification letter you received from HIBC refers to a tax year other than {{ incomeTaxReturnYear }}, do not use this online form. Download and mail the <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan" target="_blank">print form</a> or contact us for support.</p><br>
                 <h2>Income tax return filing</h2>
                 <p><b>Have you filed your income tax return with CRA for the year {{ incomeTaxReturnYear }}?</b></p>
                 <Radio 

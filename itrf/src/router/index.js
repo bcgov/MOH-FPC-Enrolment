@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import GetStartedPage from "../views/GetStartedPage.vue";
 import PersonalInfoPage from "../views/PersonalInfoPage.vue";
-import DeclarationPage from "../views/DeclarationPage.vue";
 import SubmissionPage from "../views/SubmissionPage.vue";
 import SubmissionErrorPage from "../views/SubmissionErrorPage.vue";
 import MaintenancePage from "../views/MaintenancePage.vue";
@@ -18,12 +17,6 @@ export const routes = {
     title: "Personal Information",
     name: "PersonalInfo",
     component: PersonalInfoPage
-  },
-  DECLARATION: {
-    path: "/declaration",
-    title: "Declaration",
-    name: "Declaration",
-    component: DeclarationPage
   },
   SUBMISSION: {
     path: "/submission",
@@ -48,14 +41,12 @@ export const routes = {
 export const stepRoutes = [
   { ...routes.GET_STARTED },
   { ...routes.PERSONAL_INFO },
-  { ...routes.DECLARATION },
   { ...routes.SUBMISSION },
 ];
 
 export const routeStepOrder = [
   routes.GET_STARTED,
   routes.PERSONAL_INFO,
-  routes.DECLARATION,
   routes.SUBMISSION
 ]
 
@@ -71,11 +62,6 @@ const router = createRouter({
       path: routes.PERSONAL_INFO.path,
       name: routes.PERSONAL_INFO.name,
       component: routes.PERSONAL_INFO.component,
-    },
-    {
-      path: routes.DECLARATION.path,
-      name: routes.DECLARATION.name,
-      component: routes.DECLARATION.component,
     },
     {
       path: routes.SUBMISSION.path,
