@@ -30,8 +30,8 @@ class ApiService {
       taxYear,
       spouse: formState.applicantHasSpouse === "Y" ? "yes" : "no",
       consent: "yes",
-      declaration1: "I certify that the information given in this application form is true, correct, and complete",
-      declaration2: `I certify that I (and my spouse, if applicable) have filed an income tax return with the CRA for tax year ${taxYear}.`,
+      declaration1: "Information collection notice acknowledged.",
+      declaration2: "Signature not required.",
       "person": {
         lastName: formState.lastName,
         firstName: formState.firstName,
