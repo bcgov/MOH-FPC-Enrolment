@@ -1,9 +1,9 @@
-<!-- DECLARATION PAGE IS NO LONGER NEEDED FOR ITRF but keep the file for reference -->
+<!-- DECLARATION PAGE IS NO LONGER NEEDED FOR ITRF but keep the file for reference. -->
 <template>
   <div>
     <PageContent>
       <div class="container pt-3 pt-sm-5 mb-5">
-        <h1>Declaration</h1>
+                <h1>Declaration</h1>
         <hr />
         <p><b>Please read and click to sign.</b></p>
         <p>
