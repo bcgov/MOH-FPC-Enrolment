@@ -22,7 +22,7 @@ export default {
   data: () => {
     return {
       version: project.version,
-      pageTitle: "Fair Pharmacare - Income Tax Return Filed"
+      pageTitle: "Fair PharmaCare Taxes Filed"
     };
   },
   created() {
