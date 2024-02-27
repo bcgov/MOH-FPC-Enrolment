@@ -10,7 +10,7 @@
     </div>
   </div>
 </template>
-  
+
 <style scoped>
 .info-box {
   border-radius: 10px;

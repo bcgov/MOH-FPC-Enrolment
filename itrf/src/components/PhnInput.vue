@@ -1,15 +1,11 @@
 <template>
-  <div
-    :class="className"
-  >
-    <label
-      :for="id"
-    >
-      {{ label }}<span
-        v-if="isRequiredAsteriskShown"
-        class="required-asterisk"
-      >*</span>
-    </label><br>
+  <div :class="className">
+    <label :for="id">
+      {{ label
+      }}<span v-if="isRequiredAsteriskShown" class="required-asterisk"
+        >*</span
+      > </label
+    ><br />
     <input
       :id="id"
       ref="input"
@@ -25,40 +21,29 @@
       :aria-required="required"
       @input.stop="inputHandler($event)"
       @blur="handleBlur($event)"
-    >
+    />
   </div>
 </template>
 
 <script>
-import { maska } from 'maska';
-import cypressMixin from '../mixins/cypress-mixin.js';
-import blurMixin from '../mixins/blur-mixin';
-  
+import { maska } from "maska";
+import cypressMixin from "../mixins/cypress-mixin.js";
+import blurMixin from "../mixins/blur-mixin";
+
 export const phnValidator = (value) => {
   if (!value) {
     return false;
   }
   // Init weights and other stuff
-  const weights = [
-    -1,
-    2,
-    4,
-    8,
-    5,
-    10,
-    9,
-    7,
-    3,
-    -1,
-  ];
+  const weights = [-1, 2, 4, 8, 5, 10, 9, 7, 3, -1];
   let sumOfRemainders = 0;
   let phn;
   // Clean up string
   value = value.trim();
   phn = value
-    .replace(/^0+/, '') // remove leading zeros
-    .replace(/_/g, '') // remove underlines
-    .replace(/\s/g, ''); // spaces
+    .replace(/^0+/, "") // remove leading zeros
+    .replace(/_/g, "") // remove underlines
+    .replace(/\s/g, ""); // spaces
 
   // Test for length
   if (phn.length !== 10) {
@@ -67,7 +52,6 @@ export const phnValidator = (value) => {
 
   // Walk through each character
   for (let i = 0; i < phn.length; i++) {
-
     // pull out char
     const char = phn.charAt(i);
 
@@ -107,33 +91,30 @@ export const phnValidator = (value) => {
   }
   return true;
 };
-  
+
 export default {
-  name: 'PhnInput',
-  directives: { maska, },
-  mixins: [
-    blurMixin,
-    cypressMixin,
-  ],
+  name: "PhnInput",
+  directives: { maska },
+  mixins: [blurMixin, cypressMixin],
   props: {
     required: {
       type: Boolean,
-      default: false
+      default: false,
     },
     id: {
       type: String,
-      default: '',
+      default: "",
     },
     modelValue: {
       type: String,
     },
     label: {
       type: String,
-      default: '',
+      default: "",
     },
     className: {
       type: String,
-      default: '',
+      default: "",
     },
     inputStyle: {
       type: Object,
@@ -147,18 +128,15 @@ export default {
     },
     placeholder: {
       type: String,
-      default: '',
+      default: "",
     },
   },
-  emits: [
-    'input',
-    'update:modelValue',
-  ],
+  emits: ["input", "update:modelValue"],
   methods: {
     inputHandler(event) {
       const value = event?.target?.value;
-      this.$emit('input', value);
-      this.$emit('update:modelValue', value);
+      this.$emit("input", value);
+      this.$emit("update:modelValue", value);
 
       // Prevent input focus loss during rerender.
       this.$nextTick(() => {
@@ -166,5 +144,5 @@ export default {
       });
     },
   },
-}
+};
 </script>

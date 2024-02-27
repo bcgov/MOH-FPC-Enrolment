@@ -1,38 +1,59 @@
 <template>
   <div ref="modal">
-    <div class="modal fade show"
-        tabindex="-1"
-        role="dialog">
+    <div class="modal fade show" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h2 class="modal-title">Information collection notice</h2>
           </div>
           <div class="modal-body">
-            <p>Your personal information is collected by the Ministry of Health under the authority of sections 26(a) and (c) of the <em>Freedom of Information and Protection of Privacy Act (FIPPA).</em> It is collected for the purpose of administering Medical Services Plan and Supplementary Benefits under the <em>Medicare Protection Act,</em> and to determine, verify and administer your and your family’s Fair PharmaCare coverage under the <em>Pharmaceutical Services Act.</em> If you have questions about the collection of personal information on this form, contact the HIBC Chief Privacy Officer at PO Box 9035 STN Prov Govt, Victoria BC V8W 9E3; or call 604 683-7151 (Vancouver) or 1 800 663-7100 (toll free).</p>
-            <Captcha v-if="!isCaptchaValid"
-                    :apiBasePath="captchaAPIBasePath"
-                    :nonce="applicationUuid"
-                    @captchaLoaded="handleCaptchaLoaded()"
-                    @captchaVerified="handleCaptchaVerified($event)" />
-            <div v-if="isCaptchaValid"
-                class="text-success">Captcha successfully verified.</div>
-            <div class="mt-3">
-              <input type="checkbox"
-                    data-cy="consentCheckbox"
-                    id="is-terms-accepted"
-                    class="d-inline"
-                    v-model="isTermsAccepted" />
-              <label for="is-terms-accepted"
-                    class="mt-3 ml-2 d-inline"><b>I have read and understand this information</b></label>
+            <p>
+              Your personal information is collected by the Ministry of Health
+              under the authority of sections 26(a) and (c) of the
+              <em
+                >Freedom of Information and Protection of Privacy Act
+                (FIPPA).</em
+              >
+              It is collected for the purpose of administering Medical Services
+              Plan and Supplementary Benefits under the
+              <em>Medicare Protection Act,</em> and to determine, verify and
+              administer your and your family’s Fair PharmaCare coverage under
+              the <em>Pharmaceutical Services Act.</em> If you have questions
+              about the collection of personal information on this form, contact
+              the HIBC Chief Privacy Officer at PO Box 9035 STN Prov Govt,
+              Victoria BC V8W 9E3; or call 604 683-7151 (Vancouver) or 1 800
+              663-7100 (toll free).
+            </p>
+            <Captcha
+              v-if="!isCaptchaValid"
+              :apiBasePath="captchaAPIBasePath"
+              :nonce="applicationUuid"
+              @captchaLoaded="handleCaptchaLoaded()"
+              @captchaVerified="handleCaptchaVerified($event)"
+            />
+            <div v-if="isCaptchaValid" class="text-success">
+              Captcha successfully verified.
             </div>
-            
+            <div class="mt-3">
+              <input
+                type="checkbox"
+                data-cy="consentCheckbox"
+                id="is-terms-accepted"
+                class="d-inline"
+                v-model="isTermsAccepted"
+              />
+              <label for="is-terms-accepted" class="mt-3 ml-2 d-inline"
+                ><b>I have read and understand this information</b></label
+              >
+            </div>
           </div>
           <div class="modal-footer justify-content-center">
-            <Button label="Continue"
-                    cypressId="consentContinue"
-                    @click="closeModal()"
-                    :disabled="!isCaptchaValid || !isTermsAccepted"/>
+            <Button
+              label="Continue"
+              cypressId="consentContinue"
+              @click="closeModal()"
+              :disabled="!isCaptchaValid || !isTermsAccepted"
+            />
           </div>
         </div>
       </div>
@@ -42,8 +63,8 @@
 
 <script>
 import Button from "./Button.vue";
-import Captcha from './Captcha.vue';
-import { SET_CAPTCHA_TOKEN } from '@/store';
+import Captcha from "./Captcha.vue";
+import { SET_CAPTCHA_TOKEN } from "@/store";
 
 export default {
   name: "ConsentModal",
@@ -55,7 +76,7 @@ export default {
     return {
       focusableEls: [],
       focusedEl: null,
-      captchaAPIBasePath: '/itrf/api/captcha',
+      captchaAPIBasePath: "/itrf/api/captcha",
       applicationUuid: null,
       isCaptchaValid: false,
       isTermsAccepted: false,
@@ -63,12 +84,12 @@ export default {
   },
   created() {
     this.applicationUuid = this.$store.state.applicationUuid;
-    window.addEventListener('keydown', this.handleKeyDown);
-    document.body.classList.add('no-scroll');
+    window.addEventListener("keydown", this.handleKeyDown);
+    document.body.classList.add("no-scroll");
   },
   unmounted() {
-    window.removeEventListener('keydown', this.handleKeyDown);
-    document.body.classList.remove('no-scroll');
+    window.removeEventListener("keydown", this.handleKeyDown);
+    document.body.classList.remove("no-scroll");
   },
   mounted() {
     this.focusableEls = this.getFocusableEls();
@@ -76,13 +97,17 @@ export default {
   methods: {
     getFocusableEls() {
       // Create an array of focusable elements from the contents of the modal
-      return Array.from(this.$refs.modal.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button, [tabindex="0"]'));
+      return Array.from(
+        this.$refs.modal.querySelectorAll(
+          'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button, [tabindex="0"]',
+        ),
+      );
     },
     handleCaptchaLoaded() {
       this.focusableEls = this.getFocusableEls();
     },
     handleCaptchaVerified(captchaToken) {
-      this.$emit('captchaVerified', captchaToken);
+      this.$emit("captchaVerified", captchaToken);
       this.$store.commit(SET_CAPTCHA_TOKEN, captchaToken);
       this.isCaptchaValid = true;
       setTimeout(() => {
@@ -90,11 +115,11 @@ export default {
       }, 0);
     },
     closeModal() {
-      this.$emit('close', true);
+      this.$emit("close", true);
     },
     handleKeyDown(event) {
       // Handle tabbing
-      if (event.key === 'Tab') {
+      if (event.key === "Tab") {
         // Prevent usual tabbing, manually set focus
         event.preventDefault();
         if (event.shiftKey) {
@@ -134,7 +159,7 @@ export default {
       }
       this.focusedEl.focus();
     },
-  }
+  },
 };
 </script>
 
@@ -147,6 +172,6 @@ export default {
 }
 .modal-header {
   background: #036;
-  color: #FFF;
+  color: #fff;
 }
 </style>

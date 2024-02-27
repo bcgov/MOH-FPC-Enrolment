@@ -7,7 +7,7 @@ const stepRoutes = [
   { ...routes.GET_STARTED },
   { ...routes.PERSONAL_INFO },
   { ...routes.DECLARATION },
-  { ...routes.SUBMISSION }
+  { ...routes.SUBMISSION },
 ];
 
 //only use for passing. for assertions, use pages[] path

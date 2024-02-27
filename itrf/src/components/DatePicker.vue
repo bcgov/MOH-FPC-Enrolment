@@ -1,11 +1,6 @@
 <template>
-  <div
-    :class="'date-picker no-select ' + className"
-  >
-    <div
-      v-if="isYearArrowsShown"
-      class="title-container"
-    >
+  <div :class="'date-picker no-select ' + className">
+    <div v-if="isYearArrowsShown" class="title-container">
       <div
         class="year-arrow left"
         :data-cy="getCypressValue('ChevronDoubleLeft')"
@@ -20,11 +15,7 @@
       >
         <IconChevronSingleLeft />
       </div>
-      <div
-        class="date-label"
-      >
-        {{ monthLabel }} {{ year }}
-      </div>
+      <div class="date-label">{{ monthLabel }} {{ year }}</div>
       <div
         class="month-arrow right"
         :data-cy="getCypressValue('ChevronRight')"
@@ -40,66 +31,23 @@
         <IconChevronDoubleRight />
       </div>
     </div>
-    <div
-      v-if="!isYearArrowsShown"
-      class="title-container month-arrows-only"
-    >
-      <div
-        class="month-arrow left"
-        @click="previousMonth()"
-      >
+    <div v-if="!isYearArrowsShown" class="title-container month-arrows-only">
+      <div class="month-arrow left" @click="previousMonth()">
         <IconChevronSingleLeft />
       </div>
-      <div
-        class="date-label"
-      >
-        {{ monthLabel }} {{ year }}
-      </div>
-      <div
-        class="month-arrow right"
-        @click="nextMonth()"
-      >
+      <div class="date-label">{{ monthLabel }} {{ year }}</div>
+      <div class="month-arrow right" @click="nextMonth()">
         <IconChevronSingleRight />
       </div>
     </div>
-    <div
-      class="date-container"
-    >
-      <div
-        class="date-header-cell"
-      >
-        Su
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        Mo
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        Tu
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        We
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        Th
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        Fr
-      </div>
-      <div
-        class="date-header-cell"
-      >
-        Sa
-      </div>
+    <div class="date-container">
+      <div class="date-header-cell">Su</div>
+      <div class="date-header-cell">Mo</div>
+      <div class="date-header-cell">Tu</div>
+      <div class="date-header-cell">We</div>
+      <div class="date-header-cell">Th</div>
+      <div class="date-header-cell">Fr</div>
+      <div class="date-header-cell">Sa</div>
       <div
         v-for="index in paddedSquares"
         :key="'index' + index"
@@ -108,15 +56,14 @@
       <div
         v-for="(date, index) in datesInMonth"
         :key="index"
-        :class="'date-cell ' +
+        :class="
+          'date-cell ' +
           (isSelectedDate(date) ? 'selected ' : '') +
-          (isDateToday(date) ? 'date-today ' : '')"
-        :data-cy="getCypressValue('Day'+index)"
+          (isDateToday(date) ? 'date-today ' : '')
+        "
+        :data-cy="getCypressValue('Day' + index)"
       >
-        <div
-          class="circle"
-          @click="handleDaySelect(date)"
-        >
+        <div class="circle" @click="handleDaySelect(date)">
           {{ date.getDate() }}
         </div>
       </div>
@@ -124,48 +71,42 @@
   </div>
 </template>
 <script>
-import {
-  getDaysInMonth,
-  getDay,
-  startOfToday
-} from 'date-fns';
-import IconChevronDoubleLeft from '../assets/IconChevronDoubleLeft.vue';
-import IconChevronDoubleRight from '../assets/IconChevronDoubleRight.vue';
-import IconChevronSingleLeft from '../assets/IconChevronSingleLeft.vue';
-import IconChevronSingleRight from '../assets/IconChevronSingleRight.vue';
-import cypressMixin from '../mixins/cypress-mixin.js'
+import { getDaysInMonth, getDay, startOfToday } from "date-fns";
+import IconChevronDoubleLeft from "../assets/IconChevronDoubleLeft.vue";
+import IconChevronDoubleRight from "../assets/IconChevronDoubleRight.vue";
+import IconChevronSingleLeft from "../assets/IconChevronSingleLeft.vue";
+import IconChevronSingleRight from "../assets/IconChevronSingleRight.vue";
+import cypressMixin from "../mixins/cypress-mixin.js";
 
 const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 export default {
-  name: 'DatePicker',
+  name: "DatePicker",
   components: {
     IconChevronDoubleLeft,
     IconChevronDoubleRight,
     IconChevronSingleLeft,
     IconChevronSingleRight,
   },
-  mixins: [
-    cypressMixin,
-  ],
+  mixins: [cypressMixin],
   props: {
     modelValue: {},
     className: {
       type: String,
-      default: '',
+      default: "",
     },
     isYearArrowsShown: {
       type: Boolean,
@@ -182,8 +123,7 @@ export default {
   },
   computed: {
     datesInMonth() {
-      const dates = [
-      ];
+      const dates = [];
       const daysInMonth = getDaysInMonth(new Date(this.year, this.month));
 
       for (let i = 0; i < daysInMonth; i++) {
@@ -192,8 +132,7 @@ export default {
       return dates;
     },
     paddedSquares() {
-      const items = [
-      ];
+      const items = [];
       const weekIndex = getDay(new Date(this.year, this.month));
 
       for (let i = 0; i < weekIndex; i++) {
@@ -229,9 +168,9 @@ export default {
       }
     },
     handleDaySelect(date) {
-      this.$emit('input', date);
-      this.$emit('update:modelValue', date);
-      this.$emit('dateSelected', date);
+      this.$emit("input", date);
+      this.$emit("update:modelValue", date);
+      this.$emit("dateSelected", date);
     },
     nextMonth() {
       if (this.month === 11) {
@@ -256,37 +195,41 @@ export default {
       this.year--;
     },
     isSelectedDate(date) {
-      if (date instanceof Date
-        && !isNaN(date)
-        && this.modelValue instanceof Date
-        && !isNaN(this.modelValue)
-        && this.modelValue.getFullYear() === date.getFullYear()
-        && this.modelValue.getMonth() === date.getMonth()
-        && this.modelValue.getDate() === date.getDate()) {
+      if (
+        date instanceof Date &&
+        !isNaN(date) &&
+        this.modelValue instanceof Date &&
+        !isNaN(this.modelValue) &&
+        this.modelValue.getFullYear() === date.getFullYear() &&
+        this.modelValue.getMonth() === date.getMonth() &&
+        this.modelValue.getDate() === date.getDate()
+      ) {
         return true;
       }
       return false;
     },
     isDateToday(date) {
-      if (date
-        && this.dateToday.getFullYear() === date.getFullYear()
-        && this.dateToday.getMonth() === date.getMonth()
-        && this.dateToday.getDate() === date.getDate()) {
+      if (
+        date &&
+        this.dateToday.getFullYear() === date.getFullYear() &&
+        this.dateToday.getMonth() === date.getMonth() &&
+        this.dateToday.getDate() === date.getDate()
+      ) {
         return true;
       }
       return false;
     },
   },
-}
+};
 </script>
 
 <style scoped>
 .date-picker {
-  background: #FFF;
+  background: #fff;
   color: #313132;
   border: solid thin #606060;
   border-radius: 4px;
-  box-shadow: 0px 0px 20px 0px #CCC;
+  box-shadow: 0px 0px 20px 0px #ccc;
   width: 320px;
 }
 .date-container {
@@ -382,7 +325,7 @@ export default {
   margin: 5px;
 }
 .date-cell.selected .circle {
-  color: #FFF;
+  color: #fff;
   background: #036;
 }
 .date-cell.date-today .circle {
@@ -394,11 +337,11 @@ export default {
 }
 .no-select {
   -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Old versions of Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
 </style>

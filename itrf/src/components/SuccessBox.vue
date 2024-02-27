@@ -10,7 +10,7 @@
     </div>
   </div>
 </template>
-  
+
 <style scoped>
 .success-box {
   border-radius: 10px;
@@ -19,4 +19,3 @@
   padding: 10px;
 }
 </style>
-  

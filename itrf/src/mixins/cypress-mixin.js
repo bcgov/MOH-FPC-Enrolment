@@ -2,7 +2,7 @@ export default {
   props: {
     cypressId: {
       type: String,
-      default: ''
+      default: "",
     },
   },
   methods: {
