@@ -42,9 +42,9 @@
     "vitest": "^1.1.0"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,vue}": [
+    "src/*/*.{js,jsx,ts,tsx,vue}": [
       "eslint --fix",
-      "prettier .  --write"
+      "prettier --write --ignore-unknown"
     ]
   },
   "husky": {
