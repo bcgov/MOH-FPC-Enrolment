@@ -1,35 +1,36 @@
 <template>
   <div id="app">
-    <Header :title='pageTitle' imagePath='/itrf/images/' />
+    <HeaderComponent :title="pageTitle" image-path="/itrf/images/" />
     <router-view></router-view>
+    <FooterComponent :version="version" />
   </div>
-  <Footer :version='version' />
 </template>
 
 <script>
 import "./styles/style.css";
 import "./styles/bootstrap-theme.min.css";
-import project from '../package.json';
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
+import project from "../package.json";
+import HeaderComponent from "./components/HeaderComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 
 export default {
   name: "App",
   components: {
-    Header,
-    Footer
-},
+    HeaderComponent,
+    FooterComponent,
+  },
   data: () => {
     return {
       version: project.version,
-      pageTitle: "Fair Pharmacare - Income Tax Return Filed"
+      pageTitle: "Fair PharmaCare Taxes Filed",
     };
   },
   created() {
     document.title = this.pageTitle;
+    // eslint-disable-next-line no-unused-vars
+    const applicationUuid = this.$store.state.applicationUuid;
   },
-  methods: {
-  },
+  methods: {},
 };
 </script>
 

@@ -1,9 +1,7 @@
 <template>
   <div>
     <div :class="loaderCss" />
-    <div v-if="page">
-      Loading... Please Wait
-    </div>
+    <div v-if="page">Loading... Please Wait</div>
   </div>
 </template>
 
@@ -11,19 +9,20 @@
 // import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Loader",
   props: {
     page: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      loaderCss: this.page ? "bcgov-page-loader" : "bcgov-btn-loader"
+      loaderCss: this.page ? "bcgov-page-loader" : "bcgov-btn-loader",
     };
-  }
+  },
 };
 </script>
 

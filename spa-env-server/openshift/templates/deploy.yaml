@@ -166,12 +166,22 @@ objects:
                   value: ${SPA_ENV_FPIR_MAINTENANCE_FLAG}
                 - name: SPA_ENV_FPIR_MAINTENANCE_MESSAGE
                   value: ${SPA_ENV_FPIR_MAINTENANCE_MESSAGE}
+                - name: SPA_ENV_ITRF_MAINTENANCE_FLAG
+                  value: ${SPA_ENV_ITRF_MAINTENANCE_FLAG}
+                - name: SPA_ENV_ITRF_MAINTENANCE_START
+                  value: ${SPA_ENV_ITRF_MAINTENANCE_START}
+                - name: SPA_ENV_ITRF_MAINTENANCE_END
+                  value: ${SPA_ENV_ITRF_MAINTENANCE_END}
+                - name: SPA_ENV_ITRF_TIME_FORMAT
+                  value: ${SPA_ENV_ITRF_TIME_FORMAT}
+                - name: SPA_ENV_ITRF_MAINTENANCE_MESSAGE
+                  value: ${SPA_ENV_ITRF_MAINTENANCE_MESSAGE}
               resources:
                 limits:
-                  cpu: 200m
+                  cpu: 20m
                   memory: 128Mi
                 requests:
-                  cpu: 100m
+                  cpu: 10m
                   memory: 92Mi
               volumeMounts:
                 - mountPath: /var/logs
@@ -335,3 +345,23 @@ parameters:
     description: FPCare Income Review maintenance message
     required: false
     value: "Fair PharmaCare Income Review is unavailable."
+  - name: SPA_ENV_ITRF_MAINTENANCE_FLAG
+    description: ITRF maintenance flag
+    required: false
+    value: "false"
+  - name: SPA_ENV_ITRF_MAINTENANCE_START
+    description: ITRF maintenance start time
+    required: false
+    value: "2018-11-26 9:00:00 PM"
+  - name: SPA_ENV_ITRF_MAINTENANCE_END
+    description: ITRF maintenance end time
+    required: false
+    value: "2018-11-26 10:00:00 PM"
+  - name: SPA_ENV_ITRF_TIME_FORMAT
+    description: Format of DateTime specified for Maintenance tasks
+    required: false
+    value: "YYYY-MM-DD h:mm:ss A"
+  - name: SPA_ENV_ITRF_MAINTENANCE_MESSAGE
+    description: FPCare Income Review maintenance message
+    required: false
+    value: "This application is currently undergoing maintenance. Please try again later."
