@@ -247,7 +247,6 @@ import {
   SET_PHN,
 } from "../store";
 import { scrollTo, scrollToError } from "../helpers/scroll";
-import { formatDate } from "../helpers/date";
 
 export default {
   name: "PersonalInfoPage",
@@ -327,11 +326,10 @@ export default {
 
       this.isLoading = true;
 
-      const formattedPhn = this.phn.replace(/ /g, "");
       this.$store.commit(SET_FIRST_NAME, this.firstName);
       this.$store.commit(SET_LAST_NAME, this.lastName);
-      this.$store.commit(SET_BIRTHDATE, formatDate(this.birthdate));
-      this.$store.commit(SET_PHN, formattedPhn);
+      this.$store.commit(SET_BIRTHDATE, this.birthdate);
+      this.$store.commit(SET_PHN, this.phn);
       const formState = this.$store.state;
 
       apiService
