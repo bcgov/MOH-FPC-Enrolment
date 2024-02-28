@@ -54,8 +54,14 @@ export default {
     IconChevronSingleLeft,
   },
   props: {
-    currentPath: String,
-    routes: Array,
+    currentPath: {
+      type: String,
+      default: null
+    },
+    routes: {
+      type: Array,
+      default: null
+    },
   },
   computed: {
     progressBarStyles() {

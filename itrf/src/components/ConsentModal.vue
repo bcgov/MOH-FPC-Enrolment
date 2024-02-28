@@ -48,7 +48,7 @@
             </div>
           </div>
           <div class="modal-footer justify-content-center">
-            <Button
+            <ButtonComponent
               label="Continue"
               cypress-id="consentContinue"
               :disabled="!isCaptchaValid || !isTermsAccepted"
@@ -69,9 +69,10 @@ import { SET_CAPTCHA_TOKEN } from "@/store";
 export default {
   name: "ConsentModal",
   components: {
-    Button,
+    ButtonComponent: Button,
     Captcha,
   },
+  emits: ["captchaVerified", "close"],
   data: () => {
     return {
       focusableEls: [],

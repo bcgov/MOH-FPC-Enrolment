@@ -44,6 +44,7 @@ export default {
       default: "",
     },
     modelValue: {
+      default: null,
       validator: (p) => {
         return p === null || typeof p === "string";
       },

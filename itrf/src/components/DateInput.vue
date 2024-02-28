@@ -156,6 +156,7 @@ export default {
     },
     modelValue: {
       type: Date,
+      default: null
     },
     id: {
       type: String,

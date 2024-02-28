@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Header :title="pageTitle" image-path="/itrf/images/" />
+    <HeaderComponent :title="pageTitle" image-path="/itrf/images/" />
     <router-view></router-view>
-    <Footer :version="version" />
+    <FooterComponent :version="version" />
   </div>
 </template>
 
@@ -10,14 +10,14 @@
 import "./styles/style.css";
 import "./styles/bootstrap-theme.min.css";
 import project from "../package.json";
-import Header from "./components/Header.vue";
-import Footer from "./components/Footer.vue";
+import HeaderComponent from "./components/HeaderComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 
 export default {
   name: "App",
   components: {
-    Header,
-    Footer,
+    HeaderComponent,
+    FooterComponent,
   },
   data: () => {
     return {
@@ -27,6 +27,7 @@ export default {
   },
   created() {
     document.title = this.pageTitle;
+    // eslint-disable-next-line no-unused-vars
     const applicationUuid = this.$store.state.applicationUuid;
   },
   methods: {},

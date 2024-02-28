@@ -1,7 +1,7 @@
 <template>
   <div class="continue-bar">
     <div class="d-flex flex-row-reverse p-3 container">
-      <Button
+      <ButtonComponent
         class="continue-button"
         :label="buttonLabel"
         :has-loader="hasLoader"
@@ -17,8 +17,7 @@ import Button from "./Button.vue";
 export default {
   name: "ContinueBar",
   components: {
-    Button,
-    Button,
+    ButtonComponent: Button,
   },
   props: {
     hasLoader: {
@@ -30,6 +29,7 @@ export default {
       default: "Continue",
     },
   },
+  emits: ["continue"],
   methods: {
     onContinue() {
       this.$emit("continue");

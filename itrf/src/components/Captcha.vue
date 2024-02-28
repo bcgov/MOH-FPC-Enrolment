@@ -40,6 +40,7 @@
       <Loader :color="'#AAA'" :size="'20px'" />
     </div>
     <div v-if="!isLoadingNewCaptcha" class="captcha-group-container">
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div class="captcha-image-container" v-html="captchaSVG"></div>
       <div class="button-container">
         <audio v-if="audio && audio.length > 0" ref="audio" :src="audio">
@@ -327,6 +328,7 @@ export default {
       required: true,
     },
   },
+  emits: ["captchaLoaded", "captchaVerified"],
   data: () => {
     return {
       isLoadingNewCaptcha: true,

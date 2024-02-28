@@ -103,7 +103,10 @@ export default {
   },
   mixins: [cypressMixin],
   props: {
-    modelValue: {},
+    modelValue: {
+      type: Date,
+      default: null,
+    },
     className: {
       type: String,
       default: "",
@@ -113,6 +116,7 @@ export default {
       default: true,
     },
   },
+  emits: ["input", "update:modelValue", "dateSelected"],
   data: () => {
     return {
       year: null,

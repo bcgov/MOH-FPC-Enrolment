@@ -8,7 +8,7 @@
         <p>Enter your name as it appears on your BC Services Card</p>
         <div class="row">
           <div class="col-sm-7">
-            <Input
+            <InputComponent
               v-model="firstName"
               :label="'First name'"
               :class-name="'mt-3'"
@@ -36,7 +36,7 @@
               characters except hyphens, periods, apostrophes and blank
               characters.
             </div>
-            <Input
+            <InputComponent
               v-model="lastName"
               :label="'Last name'"
               :class-name="'mt-3'"
@@ -220,7 +220,7 @@ import apiService from "../services/api-service";
 import ProgressBar from "../components/ProgressBar.vue";
 import PageContent from "../components/PageContent.vue";
 import ContinueBar from "../components/ContinueBar.vue";
-import Input from "../components/Input.vue";
+import InputComponent from "../components/InputComponent.vue";
 import DateInput from "../components/DateInput.vue";
 import {
   distantPastValidator,
@@ -255,7 +255,7 @@ export default {
     ProgressBar,
     PageContent,
     ContinueBar,
-    Input,
+    InputComponent,
     DateInput,
     PhnInput,
     TipBox,
@@ -327,7 +327,6 @@ export default {
 
       this.isLoading = true;
 
-      const applicationUuid = this.$store.state.applicationUuid;
       const formattedPhn = this.phn.replace(/ /g, "");
       this.$store.commit(SET_FIRST_NAME, this.firstName);
       this.$store.commit(SET_LAST_NAME, this.lastName);

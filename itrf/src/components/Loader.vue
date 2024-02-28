@@ -9,6 +9,7 @@
 // import "@bcgov/bootstrap-theme/dist/css/bootstrap-theme.min.css";
 
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Loader",
   props: {
     page: {

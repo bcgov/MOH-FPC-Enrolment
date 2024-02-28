@@ -107,6 +107,7 @@ export default {
     },
     modelValue: {
       type: String,
+      default: null
     },
     label: {
       type: String,
