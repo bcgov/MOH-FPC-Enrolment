@@ -6,11 +6,11 @@ export const padLeadingZeros = (number, size) => {
     size = 0;
   }
   if (number === 0 && size === 0) {
-    return '';
+    return "";
   }
-  let result = number + '';
+  let result = number + "";
   while (result.length < size) {
-    result = '0' + result;
+    result = "0" + result;
   }
   return result;
 };

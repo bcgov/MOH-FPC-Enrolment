@@ -1,3 +1,3 @@
 <template>
-    <div>placeholder maintenance page</div>
+  <div>placeholder maintenance page</div>
 </template>

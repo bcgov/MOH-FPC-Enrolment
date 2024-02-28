@@ -10,32 +10,32 @@ export const routes = {
     path: "/",
     title: "Get Started",
     name: "GetStarted",
-    component: GetStartedPage
+    component: GetStartedPage,
   },
   PERSONAL_INFO: {
     path: "/personal-info",
     title: "Personal Information",
     name: "PersonalInfo",
-    component: PersonalInfoPage
+    component: PersonalInfoPage,
   },
   SUBMISSION: {
     path: "/submission",
     title: "Submission",
     name: "Submission",
-    component: SubmissionPage
+    component: SubmissionPage,
   },
   SUBMISSION_ERROR: {
     path: "/submission-error",
     title: "Submission Error",
     name: "SubmissionError",
-    component: SubmissionErrorPage
+    component: SubmissionErrorPage,
   },
   MAINTENANCE: {
     path: "/maintenance",
     title: "Maintenance",
     name: "Maintenance",
-    component: MaintenancePage
-  }
+    component: MaintenancePage,
+  },
 };
 
 export const stepRoutes = [
@@ -47,11 +47,11 @@ export const stepRoutes = [
 export const routeStepOrder = [
   routes.GET_STARTED,
   routes.PERSONAL_INFO,
-  routes.SUBMISSION
-]
+  routes.SUBMISSION,
+];
 
 const router = createRouter({
-  history: createWebHistory('/itrf/'),
+  history: createWebHistory("/itrf/"),
   routes: [
     {
       path: routes.GET_STARTED.path,
@@ -73,11 +73,11 @@ const router = createRouter({
       name: routes.MAINTENANCE.name,
       component: routes.MAINTENANCE.component,
     },
-  ]
+  ],
 });
 
 export const isPastPath = (toPath, fromPath) => {
-  for (let i=0; i<routeStepOrder.length; i++) {
+  for (let i = 0; i < routeStepOrder.length; i++) {
     if (routeStepOrder[i].path === fromPath) {
       return false;
     } else if (routeStepOrder[i].path === toPath) {

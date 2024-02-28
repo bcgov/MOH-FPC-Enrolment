@@ -1,13 +1,9 @@
-import {
-        format as formatDateFns,
-        getDaysInMonth,
-        isValid,
-} from 'date-fns';
-import { padLeadingZeros } from './string';
-  
+import { format as formatDateFns, getDaysInMonth, isValid } from "date-fns";
+import { padLeadingZeros } from "./string";
+
 export const formatDate = (date) => {
   if (date instanceof Date) {
-    return formatDateFns(date, 'yyyy-MM-dd');
+    return formatDateFns(date, "yyyy-MM-dd");
   }
   return date;
 };
@@ -17,11 +13,10 @@ export const getISODateString = (year, month, day) => {
 };
 
 export const isValidISODateString = (isoDateString) => {
-  if (typeof isoDateString !== 'string'
-    || isoDateString.length !== 10) {
+  if (typeof isoDateString !== "string" || isoDateString.length !== 10) {
     return false;
   }
-  const dateItems = isoDateString.split('-');
+  const dateItems = isoDateString.split("-");
   if (dateItems.length !== 3) {
     return false;
   }
@@ -32,12 +27,14 @@ export const isValidISODateString = (isoDateString) => {
     return false;
   }
   const daysInMonth = getDaysInMonth(new Date(year, month - 1));
-  if ( year >= 0
-    && year <= 9999
-    && month >= 1
-    && month <= 12
-    && day >= 1
-    && day <= daysInMonth) {
+  if (
+    year >= 0 &&
+    year <= 9999 &&
+    month >= 1 &&
+    month <= 12 &&
+    day >= 1 &&
+    day <= daysInMonth
+  ) {
     return isValid(new Date(isoDateString));
   }
   return false;

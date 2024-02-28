@@ -1,7 +1,4 @@
-import {
-  getISODateString,
-  isValidISODateString,
-} from './date';
+import { getISODateString, isValidISODateString } from "./date";
 
 export const nameValidator = (value) => {
   const criteria = /^[a-zA-Z][a-zA-Z-.' ]*$/;
@@ -10,14 +7,16 @@ export const nameValidator = (value) => {
 
 export const dateDataValidator = (_, vm) => {
   const data = vm.birthdateData;
-  if (!data || (!data.year && typeof data.month !== 'number' && !data.day)) {
+  if (!data || (!data.year && typeof data.month !== "number" && !data.day)) {
     return true;
   }
   const year = data.year;
   const month = data.month;
   const day = data.day;
-  if (!(year && typeof month === 'number' && day)
-    && (year || typeof month === 'number' || day)) {
+  if (
+    !(year && typeof month === "number" && day) &&
+    (year || typeof month === "number" || day)
+  ) {
     return false;
   }
   const isoDateString = getISODateString(year, month + 1, day);
@@ -25,8 +24,8 @@ export const dateDataValidator = (_, vm) => {
 };
 
 export const phnFirstDigitValidator = (value) => {
-  if (typeof(value) !== 'string') {
+  if (typeof value !== "string") {
     return false;
   }
-  return value[0] === '9';
+  return value[0] === "9";
 };

@@ -10,13 +10,13 @@
     </div>
   </div>
 </template>
-  
+
 <style scoped>
 .error-box {
-    border-radius: 10px;
-    border: 1px solid rgb(0, 0, 0);
-    background-color: #fccece;
-    padding: 10px;
-    color: rgb(0, 0, 0);
+  border-radius: 10px;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: #fccece;
+  padding: 10px;
+  color: rgb(0, 0, 0);
 }
 </style>
