@@ -39,8 +39,8 @@ class ApiService {
       person: {
         lastName: formState.lastName,
         firstName: formState.firstName,
-        phn: formState.phn,
-        birthDate: formState.birthdate,
+        phn: formState.phn.replace(/ /g, ""),
+        birthDate: formatDate(formState.birthdate),
       },
     };
     return axios.post(
