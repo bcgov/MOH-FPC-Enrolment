@@ -73,7 +73,8 @@ export default {
       const lastName = this.$store.state.lastName;
       const birthdate = formatDateDisplay(this.$store.state.birthdate);
       const phn = this.$store.state.phn;
-      const hasSpouse = this.$store.state.applicantHasSpouse == "N" ? "No" : "Yes";
+      const hasSpouse =
+        this.$store.state.applicantHasSpouse == "N" ? "No" : "Yes";
       items.push(
         {
           label: "First name",

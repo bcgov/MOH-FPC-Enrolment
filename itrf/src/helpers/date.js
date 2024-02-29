@@ -12,7 +12,7 @@ export const formatDateDisplay = (date) => {
   if (!date) {
     return null;
   }
-  return formatDateFns(date, 'MMMM d, y')
+  return formatDateFns(date, "MMMM d, y");
 };
 
 export const getISODateString = (year, month, day) => {

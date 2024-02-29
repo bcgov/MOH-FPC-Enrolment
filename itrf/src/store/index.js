@@ -1,5 +1,5 @@
-import dummyData from './states/form-dummy-data';
-import settings from '../settings';
+import dummyData from "./states/form-dummy-data";
+import settings from "../settings";
 import { createStore } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 
@@ -101,7 +101,7 @@ export default createStore({
     },
     setReferenceNumber(state, payload) {
       state.referenceNumber = payload;
-    }
+    },
   },
   actions: {
     resetForm({ commit }) {

@@ -245,7 +245,7 @@ import {
   SET_FIRST_NAME,
   SET_LAST_NAME,
   SET_PHN,
-  SET_REFERENCE_NUMBER
+  SET_REFERENCE_NUMBER,
 } from "../store";
 import { scrollTo, scrollToError } from "../helpers/scroll";
 

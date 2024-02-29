@@ -27,7 +27,7 @@ export default {
   props: {
     elements: {
       type: Array,
-      default: null
+      default: null,
     },
     backgroundColor: {
       type: String,
