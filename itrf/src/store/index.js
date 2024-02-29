@@ -1,3 +1,5 @@
+import dummyData from './states/form-dummy-data';
+import settings from '../settings';
 import { createStore } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 
@@ -45,8 +47,11 @@ export default createStore({
       birthdate: null,
       phn: null,
       applicantConsent: null,
-      maintenanceMessage: "",
+      maintenanceMessage: null,
     };
+    if (settings.useDummyData) {
+      Object.assign(state, dummyData);
+    }
     return state;
   },
   mutations: {
