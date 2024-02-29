@@ -8,6 +8,13 @@ export const formatDate = (date) => {
   return date;
 };
 
+export const formatDateDisplay = (date) => {
+  if (!date) {
+    return null;
+  }
+  return formatDateFns(date, 'MMMM d, y')
+};
+
 export const getISODateString = (year, month, day) => {
   return `${padLeadingZeros(year, 4)}-${padLeadingZeros(month, 2)}-${padLeadingZeros(day, 2)}`;
 };
