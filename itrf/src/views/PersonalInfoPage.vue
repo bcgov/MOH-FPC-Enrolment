@@ -245,6 +245,7 @@ import {
   SET_FIRST_NAME,
   SET_LAST_NAME,
   SET_PHN,
+  SET_REFERENCE_NUMBER
 } from "../store";
 import { scrollTo, scrollToError } from "../helpers/scroll";
 
@@ -391,16 +392,17 @@ export default {
         .then((response) => {
           // Handle HTTP success.
           const returnCode = response.data.returnCode;
+          this.$store.commit(SET_REFERENCE_NUMBER, response.data.refNumber);
 
           this.isLoading = false;
 
           switch (returnCode) {
-            case "success": // Validation success.
+            case "success": // Submit form success.
               // logService.logInfo(applicationUuid, {
-              //     event: 'validation success (validatePhnName)',
+              //     event: 'submission success (submitForm)',
               //     response: response.data,
               // });
-              this.handleValidationSuccess();
+              this.handleSubmitForm();
               break;
             case "failure": // PHN does not match with the lastname.
               this.isAPIValidationErrorShown = true;
@@ -437,7 +439,6 @@ export default {
           // });
           scrollToError();
         });
-      this.handleSubmitForm();
     },
     handleSubmitForm() {
       const path = routes.SUBMISSION.path;
