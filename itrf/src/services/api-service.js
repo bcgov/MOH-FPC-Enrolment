@@ -53,7 +53,7 @@ class ApiService {
   }
 
   getHeaders(token) {
-    const encoded = btoa("gcpemspde:welcome1");
+    const encoded = btoa("username:password");
     return {
       "Content-Type": "application/json",
       "Response-Type": "application/json",
