@@ -53,9 +53,9 @@ describe("Date helpers", () => {
     expect(formatDate(NaN)).toEqual(NaN);
   });
 
-  it('formatDateDisplay', () => {
-    expect(formatDateDisplay(oneDigitDate)).toEqual('July 1, 2021');
-    expect(formatDateDisplay(twoDigitDate)).toEqual('July 21, 2021');
+  it("formatDateDisplay", () => {
+    expect(formatDateDisplay(oneDigitDate)).toEqual("July 1, 2021");
+    expect(formatDateDisplay(twoDigitDate)).toEqual("July 21, 2021");
     expect(formatDateDisplay(123)).toEqual(123);
     expect(formatDateDisplay(undefined)).toEqual(undefined);
     expect(formatDateDisplay(null)).toEqual(null);
