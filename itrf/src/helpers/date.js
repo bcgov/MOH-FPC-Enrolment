@@ -9,10 +9,10 @@ export const formatDate = (date) => {
 };
 
 export const formatDateDisplay = (date) => {
-  if (!date) {
-    return null;
+  if (date instanceof Date) {
+    return formatDateFns(date, 'MMMM d, y');
   }
-  return formatDateFns(date, "MMMM d, y");
+  return date;
 };
 
 export const getISODateString = (year, month, day) => {
