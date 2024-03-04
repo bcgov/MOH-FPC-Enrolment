@@ -159,6 +159,20 @@ if (process.env.USE_MUTUAL_TLS &&
 
     var myAgent = new https.Agent(httpsAgentOptions);
 }
+
+// Identify if the target username and password is for ITRF or FPCare and FPIncome
+var targetPathname = url.parse(req.url).pathname;
+var targetPathnameParts = targetPathname.split("/");
+var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
+if (targetNounIndex < 0) {
+    console.log("USING FPCARE environment variables");
+    var targetAuth = process.env.TARGET_USERNAME_PASSWORD;
+}
+else {
+    console.log("USING ITRF environment variables");
+    var targetAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+}
+
 //
 // Create a HTTP Proxy server with a HTTPS target
 //
@@ -168,7 +182,7 @@ var proxy = proxy({
     secure: process.env.SECURE_MODE || false,
     keepAlive: true,
     changeOrigin: true,
-    auth: process.env.TARGET_USERNAME_PASSWORD || "username:password",
+    auth: targetAuth || "username:password",
     logLevel: 'info',
     logProvider: logProvider,
 
