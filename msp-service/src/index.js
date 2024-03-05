@@ -201,9 +201,9 @@ var proxy = proxy({
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function(proxyReq, req, res, options) {
-        //winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
+        winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-        //winston.info('RAW options: ', stringify(options));
+        winston.info('RAW options: ', stringify(options));
 
         // Identify if the target username and password is for ITRF or FPCare and FPIncome
         var targetPathname = url.parse(req.url).pathname;
@@ -217,6 +217,9 @@ var proxy = proxy({
             console.log("USING FPCARE environment variables");
             proxyReq.setHeader("Authorization", `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
         }
+
+        winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
+        winston.info('RAW options: ', stringify(options));
     }
 });
 
