@@ -201,7 +201,7 @@ var proxy = proxy({
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function(proxyReq, req, res, options) {
-        winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
+        winston.info('RAW proxyReq: ', stringify(req.headers));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
         winston.info('RAW options: ', stringify(options));
 
@@ -210,15 +210,15 @@ var proxy = proxy({
         var targetPathnameParts = targetPathname.split("/");
         var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
         if (targetNounIndex > 0) {
+            req.setRequestHeader('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`);
             console.log("USING ITRF environment variables");
-            proxyReq.setHeader("Authorization", `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`);   
         }
         else {
+            req.setRequestHeader('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
             console.log("USING FPCARE environment variables");
-            proxyReq.setHeader("Authorization", `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
         }
 
-        winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
+        winston.info('RAW proxyReq: ', stringify(req.headers));
         winston.info('RAW options: ', stringify(options));
     }
 });
