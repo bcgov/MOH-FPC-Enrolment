@@ -145,18 +145,6 @@ app.use('/', function (req, res, next) {
         }
     }
 
-    // Identify if the target username and password is for ITRF or FPCare and FPIncome
-    var targetPathname = url.parse(req.url).pathname;
-    var targetPathnameParts = targetPathname.split("/");
-    var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
-    if (targetNounIndex < 0) {
-        console.log("USING FPCARE environment variables");
-        targetAuth = process.env.TARGET_USERNAME_PASSWORD;
-    }
-    else {
-        console.log("USING ITRF environment variables");
-        targetAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
-    }
     // OK its valid let it pass thru this event
     next(); // pass control to the next handler
 });
@@ -183,7 +171,6 @@ var proxy = proxy({
     secure: process.env.SECURE_MODE || false,
     keepAlive: true,
     changeOrigin: true,
-    auth: targetAuth || "username:password",
     logLevel: 'info',
     logProvider: logProvider,
 
@@ -215,8 +202,21 @@ var proxy = proxy({
     //
     onProxyReq: function(proxyReq, req, res, options) {
         //winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
-    //    logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
+        //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
         //winston.info('RAW options: ', stringify(options));
+
+        // Identify if the target username and password is for ITRF or FPCare and FPIncome
+        var targetPathname = url.parse(req.url).pathname;
+        var targetPathnameParts = targetPathname.split("/");
+        var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
+        if (targetNounIndex > 0) {
+            console.log("USING ITRF environment variables");
+            proxyReq.setHeader("Authorization", `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`);   
+        }
+        else {
+            console.log("USING FPCARE environment variables");
+            proxyReq.setHeader("Authorization", `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
+        }
     }
 });
 
