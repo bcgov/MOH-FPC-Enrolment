@@ -52,12 +52,10 @@ class ApiService {
   }
 
   getHeaders(token) {
-    const encoded = btoa("placeholderusername:placeholderpassword");
     return {
       "Content-Type": "application/json",
       "Response-Type": "application/json",
       "X-Authorization": "Bearer " + token,
-      Authorization: "Basic " + encoded,
     };
   }
 }
