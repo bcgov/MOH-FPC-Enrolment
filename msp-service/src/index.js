@@ -195,6 +195,7 @@ var proxy = proxy({
     onProxyReq: function(proxyReq, req, res, options) {
         winston.info("PROXY REQ", stringify(proxyReq.headers));
         winston.info("REQ: ", stringify(req.headers));
+        winston.info("REQ AUTH: ", stringify(req.headers.authorization));
         winston.info("RES: ", stringify(res.headers));
 
         var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
@@ -202,10 +203,12 @@ var proxy = proxy({
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
         var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
         winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-        req.headers["Authorization"] = `Basic ${targetAuth}`;
+        proxyReq.setHeader('User', `${targetAuth}`);
+        //req.headers["Authorization"] = `Basic ${targetAuth}`;
 
         winston.info("PROXY REQ", stringify(proxyReq.headers));
         winston.info("REQ: ", stringify(req.headers));
+        winston.info("REQ AUTH: ", stringify(req.headers.authorization));
         winston.info("RES: ", stringify(res.headers));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
     }
