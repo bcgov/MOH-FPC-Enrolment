@@ -165,9 +165,8 @@ if (process.env.USE_MUTUAL_TLS &&
 app.use('/', (req, res, next) => {
     winston.info("REQ: ", stringify(req));
     winston.info("RES: ", stringify(res));
-    winston.info("NEXT: ", stringify(next));
     var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-    var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+    // var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
     var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
     winston.info("IS TARGET PATH ITRF?: ", stringify(isTargetPathItrf));
     proxy({
@@ -175,7 +174,7 @@ app.use('/', (req, res, next) => {
         agent: myAgent || http.globalAgent,
         secure: process.env.SECURE_MODE || false,
         keepAlive: true,
-        auth: isTargetPathItrf ? targetItrfAuth : targetFpcareAuth,
+        auth: targetFpcareAuth,
         changeOrigin: true,
         logLevel: 'info',
         logProvider: logProvider,
