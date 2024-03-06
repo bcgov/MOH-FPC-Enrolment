@@ -16,7 +16,6 @@ var https = require('https'),
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
-var proxyOptions = {};
 
 // verbose replacement
 function logProvider(provider) {
