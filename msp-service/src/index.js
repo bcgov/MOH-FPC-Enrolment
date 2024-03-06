@@ -162,69 +162,132 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
+app.use('/', (req, res, next) => {
+    var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+    var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+    var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+    proxy({
+        target: process.env.TARGET_URL || "http://localhost:3000",
+        agent: myAgent || http.globalAgent,
+        secure: process.env.SECURE_MODE || false,
+        keepAlive: true,
+        auth: isTargetPathItrf ? targetItrfAuth : targetFpcareAuth,
+        changeOrigin: true,
+        logLevel: 'info',
+        logProvider: logProvider,
+        //
+        // Listen for the `error` event on `proxy`.
+        //
+        onError: function (err, req, res) {
+            logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
+            res.writeHead(500, {
+                'Content-Type': 'text/plain'
+            });
+
+            res.end('Error with proxy');
+        },
+
+        //
+        // Listen for the `proxyRes` event on `proxy`.
+        //
+        onProxyRes: function (proxyRes, req, res) {
+            winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
+
+            // Delete set-cookie
+            delete proxyRes.headers["set-cookie"];
+        },
+
+        //
+        // Listen for the `proxyReq` event on `proxy`.
+        //
+        onProxyReq: function(proxyReq, req, res, options) {
+            //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
+        }
+    })
+});
+
 //
 // Create a HTTP Proxy server with a HTTPS target
 //
-var proxy = proxy({
-    target: process.env.TARGET_URL || "http://localhost:3000",
-    agent: myAgent || http.globalAgent,
-    secure: process.env.SECURE_MODE || false,
-    keepAlive: true,
-    changeOrigin: true,
-    logLevel: 'info',
-    logProvider: logProvider,
+// var proxy = proxy({
+//     target: process.env.TARGET_URL || "http://localhost:3000",
+//     agent: myAgent || http.globalAgent,
+//     secure: process.env.SECURE_MODE || false,
+//     keepAlive: true,
+//     auth: ,
+//     changeOrigin: true,
+//     logLevel: 'info',
+//     logProvider: logProvider,
 
-    //
-    // Listen for the `error` event on `proxy`.
-    //
-    onError: function (err, req, res) {
-        logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
-        res.writeHead(500, {
-            'Content-Type': 'text/plain'
-        });
+//     //
+//     // Listen for the `error` event on `proxy`.
+//     //
+//     onError: function (err, req, res) {
+//         logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
+//         res.writeHead(500, {
+//             'Content-Type': 'text/plain'
+//         });
 
-        res.end('Error with proxy');
-    },
+//         res.end('Error with proxy');
+//     },
 
 
-    //
-    // Listen for the `proxyRes` event on `proxy`.
-    //
-    onProxyRes: function (proxyRes, req, res) {
-        winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
+//     //
+//     // Listen for the `proxyRes` event on `proxy`.
+//     //
+//     onProxyRes: function (proxyRes, req, res) {
+//         winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
 
-        // Delete set-cookie
-        delete proxyRes.headers["set-cookie"];
-    },
+//         // Delete set-cookie
+//         delete proxyRes.headers["set-cookie"];
+//     },
 
-    //
-    // Listen for the `proxyReq` event on `proxy`.
-    //
-    onProxyReq: function(proxyReq, req, res, options) {
-        winston.info('RAW proxyReq: ', stringify(req.headers));
-        //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-        winston.info('RAW options: ', stringify(options));
+//     //
+//     // Listen for the `proxyReq` event on `proxy`.
+//     //
+//     onProxyReq: function(proxyReq, req, res, options) {
+//         winston.info('RAW PROXYREQ: ', stringify(proxyReq));
+//         winston.info('RAW REQ: ', stringify(req));
+//         winston.info('RAW RES: ', stringify(res));
+//         winston.info('RAW options: ', stringify(options));
+//         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
 
-        // Identify if the target username and password is for ITRF or FPCare and FPIncome
-        var targetPathname = url.parse(req.url).pathname;
-        var targetPathnameParts = targetPathname.split("/");
-        var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
-        if (targetNounIndex > 0) {
-            req.setRequestHeader('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`);
-            console.log("USING ITRF environment variables");
-        }
-        else {
-            req.setRequestHeader('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
-            console.log("USING FPCARE environment variables");
-        }
+//         // Identify if the target username and password is for ITRF or FPCare and FPIncome
+//         var targetPathname = url.parse(req.url).pathname;
+//         var targetPathnameParts = targetPathname.split("/");
+//         var targetNounIndex = targetPathnameParts.indexOf("itrfIntegration");
+//         if (targetNounIndex > 0) {
+//             // TRY 2
+//             req.headers['Authorization'] = `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`;
 
-        winston.info('RAW proxyReq: ', stringify(req.headers));
-        winston.info('RAW options: ', stringify(options));
-    }
-});
+//             // TRY 3
+//             // proxyReq.headers['Authorization'] = `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`;
+
+//             // TRY 4
+//             // proxyReq.setHeader = ('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD_ITRF}`);
+//             console.log("USING ITRF environment variables");
+//         }
+//         else {
+//             // TRY 2
+//             req.headers['Authorization'] = `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`;
+
+//             // TRY 3
+//             // proxyReq.headers['Authorization'] = `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`;
+
+//             // TRY 4
+//             // proxyReq.setHeader = ('Authorization', `Basic + ${process.env.TARGET_USERNAME_PASSWORD}`);
+//             console.log("USING FPCARE environment variables");
+//         }
+
+//         winston.info('RAW PROXYREQ: ', stringify(proxyReq));
+//         winston.info('RAW REQ: ', stringify(req));
+//         winston.info('RAW RES: ', stringify(res));
+//         winston.info('RAW options: ', stringify(options));
+//     }
+// });
 
 // Add in proxy AFTER authorization
-app.use('/', proxy);
+// app.use('/', proxy);
 
 // Start express
 app.listen(8080);
