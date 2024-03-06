@@ -202,7 +202,8 @@ var proxy = proxy({
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
         var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
         winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-        proxyReq.setHeader('Authorization', `Basic ${targetAuth}`);
+        //proxyReq.setHeader('Authorization', `Basic ${targetAuth}`);
+        proxyReq.setHeader('Authorization', `${targetAuth}`);
 
         winston.info("PROXY REQ", stringify(proxyReq.headers));
         winston.info("REQ: ", stringify(req.headers));
