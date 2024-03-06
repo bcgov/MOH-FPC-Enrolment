@@ -190,7 +190,7 @@ var proxy = proxy({
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
         var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
         winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-        proxyRes.headers['authorization'] = `Basic + ${targetAuth}`;
+        proxyRes.headers['authorization'] = `Basic ${targetAuth}`;
 
         // Delete set-cookie
         delete proxyRes.headers["set-cookie"];
