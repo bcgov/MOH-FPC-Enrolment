@@ -185,24 +185,27 @@ var proxy = proxy({
     //
     onProxyRes: function (proxyRes, req, res) {
         winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
-        var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-        var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
-        var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
-        var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
-        winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-        proxyRes.headers['Authorization'] = `Basic ${targetAuth}`;
-
         // Delete set-cookie
         delete proxyRes.headers["set-cookie"];
-        winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
     },
 
     //
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function(proxyReq, req, res, options) {
-        winston.info("PROXY REQ", stringify(proxyReq));
-        winston.info("REQ: ", stringify(req));
+        winston.info("PROXY REQ", stringify(proxyReq.headers));
+        winston.info("REQ: ", stringify(req.headers));
+        winston.info("RES: ", stringify(res));
+
+        var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+        var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+        var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+        var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+        winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
+        proxyReq.setHeader('Authorization', `Basic ${targetAuth}`);
+
+        winston.info("PROXY REQ", stringify(proxyReq.headers));
+        winston.info("REQ: ", stringify(req.headers));
         winston.info("RES: ", stringify(res));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
     }
