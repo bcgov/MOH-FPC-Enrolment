@@ -11,8 +11,8 @@ var https = require('https'),
     url = require('url'),
     stringify = require('json-stringify-safe'),
     express = require('express'),
-    moment = require('moment');
-    proxy = require('http-proxy-middleware');
+    moment = require('moment'),
+    { createProxyMiddleware } = require('http-proxy-middleware');
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
@@ -162,101 +162,52 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
-var itrfProxy = proxy({
-    target: process.env.TARGET_URL || "http://localhost:3000",
-    agent: myAgent || http.globalAgent,
-    secure: process.env.SECURE_MODE || false,
-    keepAlive: true,
-    changeOrigin: true,
-    auth: targetItrfAuth,
-    logLevel: 'info',
-    logProvider: logProvider,
-    //
-    // Listen for the `error` event on `proxy`.
-    //
-    onError: function (err, req, res) {
-        logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
-        res.writeHead(500, {
-            'Content-Type': 'text/plain'
-        });
-
-        res.end('Error with proxy');
-    },
-
-    //
-    // Listen for the `proxyRes` event on `proxy`.
-    //
-    onProxyRes: function (proxyRes, req, res) {
-        winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
-        // Delete set-cookie
-        delete proxyRes.headers["set-cookie"];
-    },
-
-    //
-    // Listen for the `proxyReq` event on `proxy`.
-    //
-    onProxyReq: function(proxyReq, req, res, options) {
-        winston.info("ITRF PROXY REQ", stringify(proxyReq));
-        winston.info("ITRF REQ: ", stringify(req));
-        winston.info("ITRF RES: ", stringify(res));
-        // proxyReq.setHeader('User', `${targetAuth}`);
-        //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-    }
-});
-
-var fpcareProxy = proxy({
-    target: process.env.TARGET_URL || "http://localhost:3000",
-    agent: myAgent || http.globalAgent,
-    secure: process.env.SECURE_MODE || false,
-    keepAlive: true,
-    changeOrigin: true,
-    auth: targetFpcareAuth,
-    logLevel: 'info',
-    logProvider: logProvider,
-    //
-    // Listen for the `error` event on `proxy`.
-    //
-    onError: function (err, req, res) {
-        logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
-        res.writeHead(500, {
-            'Content-Type': 'text/plain'
-        });
-
-        res.end('Error with proxy');
-    },
-
-    //
-    // Listen for the `proxyRes` event on `proxy`.
-    //
-    onProxyRes: function (proxyRes, req, res) {
-        winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
-        // Delete set-cookie
-        delete proxyRes.headers["set-cookie"];
-    },
-
-    //
-    // Listen for the `proxyReq` event on `proxy`.
-    //
-    onProxyReq: function(proxyReq, req, res, options) {
-        winston.info("FPCARE PROXY REQ", stringify(proxyReq));
-        winston.info("FPCARE REQ: ", stringify(req));
-        winston.info("FPCARE RES: ", stringify(res));
-        // proxyReq.setHeader('User', `${targetAuth}`);
-        //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-    }
-});
-
-app.use('/', (req, res, next) => {
+app.use('/', function (req, res, next) {
     var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
     var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
     winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-
-    if (targetAuth === true){
-        return itrfProxy;
-    }
-    else {
-        return fpcareProxy;
-    }
+    return createProxyMiddleware({
+        target: process.env.TARGET_URL || "http://localhost:3000",
+        agent: myAgent || http.globalAgent,
+        secure: process.env.SECURE_MODE || false,
+        keepAlive: true,
+        changeOrigin: true,
+        auth: targetAuth,
+        logLevel: 'info',
+        logProvider: logProvider,
+        //
+        // Listen for the `error` event on `proxy`.
+        //
+        onError: function (err, req, res) {
+            logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
+            res.writeHead(500, {
+                'Content-Type': 'text/plain'
+            });
+    
+            res.end('Error with proxy');
+        },
+    
+        //
+        // Listen for the `proxyRes` event on `proxy`.
+        //
+        onProxyRes: function (proxyRes, req, res) {
+            winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
+            // Delete set-cookie
+            delete proxyRes.headers["set-cookie"];
+        },
+    
+        //
+        // Listen for the `proxyReq` event on `proxy`.
+        //
+        onProxyReq: function(proxyReq, req, res, options) {
+            winston.info("PROXY REQ", stringify(proxyReq));
+            winston.info("REQ: ", stringify(req));
+            winston.info("REQ AUTH: ", stringify(req.auth));
+            winston.info("RES: ", stringify(res));
+            // proxyReq.setHeader('User', `${targetAuth}`);
+            //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
+        }
+    });
 });
 
 
