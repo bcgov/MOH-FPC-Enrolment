@@ -193,23 +193,25 @@ var proxy = proxy({
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function(proxyReq, req, res, options) {
-        winston.info("PROXY REQ", stringify(proxyReq.headers));
-        winston.info("REQ: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.headers.authorization));
-        winston.info("RES: ", stringify(res.headers));
+        winston.info("PROXY REQ", stringify(proxyReq));
+        winston.info("REQ HEADERS: ", stringify(req.headers));
+        winston.info("REQ AUTH: ", stringify(req.auth));
+        winston.info("REQ HEADERS AUTH: ", stringify(req.headers.authorization));
+        winston.info("RES: ", stringify(res));
 
         var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
         var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
         var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
         winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-        proxyReq.setHeader('User', `${targetAuth}`);
-        //req.headers["Authorization"] = `Basic ${targetAuth}`;
+        // proxyReq.setHeader('User', `${targetAuth}`);
+        req.auth = targetAuth;
 
-        winston.info("PROXY REQ", stringify(proxyReq.headers));
-        winston.info("REQ: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.headers.authorization));
-        winston.info("RES: ", stringify(res.headers));
+        winston.info("PROXY REQ", stringify(proxyReq));
+        winston.info("REQ HEADERS: ", stringify(req.headers));
+        winston.info("REQ AUTH: ", stringify(req.auth));
+        winston.info("REQ HEADERS AUTH: ", stringify(req.headers.authorization));
+        winston.info("RES: ", stringify(res));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
     }
 });
