@@ -20,10 +20,6 @@ var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
 var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
 var targetAuth;
 
-module.exports = (req, res, next) => {
-    
-};
-
 // verbose replacement
 function logProvider(provider) {
     var logger = winston;
