@@ -19,9 +19,8 @@ describe("GetStartedPage.vue", () => {
     wrapper = shallowMount(Page, {
       global: {
         plugins: [store, router],
-        stubs: { FontAwesomeIcon: false }
+        stubs: { FontAwesomeIcon: false },
       },
-      
     });
   });
 

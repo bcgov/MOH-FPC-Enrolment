@@ -1,4 +1,5 @@
-const testUrl = "https://itrf-web-3f9283-dev.apps.silver.devops.gov.bc.ca/itrf/";
+const testUrl =
+  "https://itrf-web-3f9283-dev.apps.silver.devops.gov.bc.ca/itrf/";
 
 describe("template spec", () => {
   it("passes", () => {
@@ -10,7 +11,7 @@ describe("template spec", () => {
     cy.get("[data-cy=captchaInput]").type("irobot");
     cy.get("[data-cy=consentCheckbox]").click();
     cy.get("[data-cy=consentContinue]").click();
-    cy.get("[data-cy=hasFiledIncomeTaxReturn]")
+    cy.get("[data-cy=hasFiledIncomeTaxReturn]");
     cy.get("[data-cy=continueBar]").click();
   });
 });
