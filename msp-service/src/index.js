@@ -16,6 +16,8 @@ var https = require('https'),
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
+var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
 
 // verbose replacement
 function logProvider(provider) {
@@ -160,12 +162,13 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
-var proxy = proxy({
+var itrfProxy = proxy({
     target: process.env.TARGET_URL || "http://localhost:3000",
     agent: myAgent || http.globalAgent,
     secure: process.env.SECURE_MODE || false,
     keepAlive: true,
     changeOrigin: true,
+    auth: targetItrfAuth,
     logLevel: 'info',
     logProvider: logProvider,
     //
@@ -193,31 +196,72 @@ var proxy = proxy({
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function(proxyReq, req, res, options) {
-        winston.info("PROXY REQ", stringify(proxyReq));
-        winston.info("REQ HEADERS: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.auth));
-        winston.info("REQ HEADERS AUTH: ", stringify(req.headers.authorization));
-        winston.info("RES: ", stringify(res));
-
-        var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-        var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
-        var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
-        var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
-        winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
+        winston.info("ITRF PROXY REQ", stringify(proxyReq));
+        winston.info("ITRF REQ: ", stringify(req));
+        winston.info("ITRF RES: ", stringify(res));
         // proxyReq.setHeader('User', `${targetAuth}`);
-        req.auth = targetAuth;
-
-        winston.info("PROXY REQ", stringify(proxyReq));
-        winston.info("REQ HEADERS: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.auth));
-        winston.info("REQ HEADERS AUTH: ", stringify(req.headers.authorization));
-        winston.info("RES: ", stringify(res));
         //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
     }
 });
 
+var fpcareProxy = proxy({
+    target: process.env.TARGET_URL || "http://localhost:3000",
+    agent: myAgent || http.globalAgent,
+    secure: process.env.SECURE_MODE || false,
+    keepAlive: true,
+    changeOrigin: true,
+    auth: targetFpcareAuth,
+    logLevel: 'info',
+    logProvider: logProvider,
+    //
+    // Listen for the `error` event on `proxy`.
+    //
+    onError: function (err, req, res) {
+        logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
+        res.writeHead(500, {
+            'Content-Type': 'text/plain'
+        });
+
+        res.end('Error with proxy');
+    },
+
+    //
+    // Listen for the `proxyRes` event on `proxy`.
+    //
+    onProxyRes: function (proxyRes, req, res) {
+        winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
+        // Delete set-cookie
+        delete proxyRes.headers["set-cookie"];
+    },
+
+    //
+    // Listen for the `proxyReq` event on `proxy`.
+    //
+    onProxyReq: function(proxyReq, req, res, options) {
+        winston.info("FPCARE PROXY REQ", stringify(proxyReq));
+        winston.info("FPCARE REQ: ", stringify(req));
+        winston.info("FPCARE RES: ", stringify(res));
+        // proxyReq.setHeader('User', `${targetAuth}`);
+        //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
+    }
+});
+
+app.use('/', (req, res, next) => {
+    var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+    var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+    winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
+
+    if (targetAuth === true){
+        return itrfProxy;
+    }
+    else {
+        return fpcareProxy;
+    }
+});
+
+
 // Add in proxy AFTER authorization
-app.use('/', proxy);
+// app.use('/', proxy);
 
 // Start express
 app.listen(8080);
