@@ -194,8 +194,7 @@ var proxy = createProxyMiddleware({
     onProxyReq: function (proxyReq, req, res) {
         winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
         winston.info("REQ HEADERS: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.headers['Authorization']));
-        winston.info("URL", stringify(url));
+        winston.info("REQ HEADERS AUTH: ", stringify(req.headers['Authorization']));
 
         var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
@@ -204,7 +203,7 @@ var proxy = createProxyMiddleware({
 
         winston.info("TARGET PATH", stringify(targetPath));
         
-        req.headers['Authorization'] = `Basic ${Buffer.from(targetPath).toString('base64')}`;
+        proxyReq.setHeader('Authorization', `Bearer ${Buffer.from(targetPath).toString('base64')}`);
 
         winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
         winston.info("REQ HEADERS", stringify(req.headers));
