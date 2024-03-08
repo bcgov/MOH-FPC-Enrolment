@@ -196,7 +196,7 @@ var proxy = createProxyMiddleware({
         // Checks the value of the  proxy request headers in the console log in OpenShift
         // winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
 
-        // Sets two target environment variables for the 
+        // Sets target environment variables for ITRF and for FPCare/FPIncome
         var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
 
