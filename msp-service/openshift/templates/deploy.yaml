@@ -103,6 +103,8 @@ objects:
                   value: ${TARGET_URL}
                 - name: TARGET_USERNAME_PASSWORD
                   value: ${TARGET_USERNAME_PASSWORD}
+                - name: TARGET_USERNAME_PASSWORD_ITRF
+                  value: ${TARGET_USERNAME_PASSWORD_ITRF}
                 - name: MUTUAL_TLS_PEM_KEY_BASE64
                   value: ${MUTUAL_TLS_PEM_KEY_BASE64}
                 - name: MUTUAL_TLS_PEM_KEY_PASSPHRASE
@@ -196,8 +198,12 @@ parameters:
     displayName: TARGET_URL
     required: true
   - name: TARGET_USERNAME_PASSWORD
-    description: Username/password for the remote Maximus URL
+    description: Username/password for the remote URL
     displayName: TARGET_USERNAME_PASSWORD
+    required: true
+  - name: TARGET_USERNAME_PASSWORD_ITRF
+    description: Username/password for the remote URL
+    displayName: TARGET_USERNAME_PASSWORD_ITRF
     required: true
   - name: MUTUAL_TLS_PEM_KEY_BASE64
     description: MUTUAL_TLS_PEM_KEY_BASE64
