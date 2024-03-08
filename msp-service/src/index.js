@@ -203,7 +203,7 @@ var proxy = createProxyMiddleware({
 
         winston.info("TARGET PATH", stringify(targetPath));
         
-        proxyReq.setHeader('Authorization', `Bearer ${Buffer.from(targetPath).toString('base64')}`);
+        proxyReq.setHeader('Authorization', `Basic ${Buffer.from(targetPath).toString('base64')}`);
 
         winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
         winston.info("REQ HEADERS", stringify(req.headers));
