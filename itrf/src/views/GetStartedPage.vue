@@ -170,7 +170,11 @@
         </div>
       </div>
     </PageContent>
-    <ContinueBar :button-label="'Continue'" @continue="nextPage()" cypressId="continue-bar" />
+    <ContinueBar
+      :button-label="'Continue'"
+      @continue="nextPage()"
+      cypressId="continue-bar"
+    />
   </div>
 </template>
 

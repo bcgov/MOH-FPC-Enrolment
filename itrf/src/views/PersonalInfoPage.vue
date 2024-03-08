@@ -76,7 +76,7 @@
               :use-invalid-state="true"
               @input="handleAPIValidationReset"
               @process-date="handleProcessBirthdate($event)"
-              cypressId="birthdate"              
+              cypressId="birthdate"
             />
             <div
               v-if="
@@ -128,7 +128,7 @@
               :input-style="smallStyles"
               :required="true"
               @input="handleAPIValidationReset"
-              cypressId="phn" 
+              cypressId="phn"
             />
             <div
               v-if="v$.phn.$dirty && v$.phn.required.$invalid"

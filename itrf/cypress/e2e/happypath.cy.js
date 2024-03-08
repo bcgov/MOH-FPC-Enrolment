@@ -10,10 +10,10 @@ const testPhn = "9502976289";
 
 const testPhnFormatted =
   testPhn.substring(0, 4) +
-    " " +
-    testPhn.substring(4, 7) +
-    " " +
-    testPhn.substring(7, 10)
+  " " +
+  testPhn.substring(4, 7) +
+  " " +
+  testPhn.substring(7, 10);
 
 describe("happy path", () => {
   it("passes", () => {
