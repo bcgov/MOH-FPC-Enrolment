@@ -16,9 +16,6 @@ var https = require('https'),
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
-var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
-var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
-var targetAuth;
 
 // verbose replacement
 function logProvider(provider) {
@@ -146,8 +143,6 @@ app.use('/', function (req, res, next) {
             }
         }
     }
-    var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-    targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
 
     // OK its valid let it pass thru this event
     next(); // pass control to the next handler
@@ -166,16 +161,28 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
+var targetAuth = function(req, res, next) {
+    var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+    var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+    var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+    var targetPath = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+    winston.info("TARGET PATH", stringify(targetPath));
+    
+    req.headers['Authorization'] = `Basic ${Buffer.from(targetPath).toString('base64')}`;
+    winston.info("REQ HEADERS", stringify(req.headers));
+    winston.info("REQ HEADERS AUTH", stringify(req.headers['Authorization']));
+    next();
+}
+
 var proxy = createProxyMiddleware({
     target: process.env.TARGET_URL || "http://localhost:3000",
     agent: myAgent || http.globalAgent,
     secure: process.env.SECURE_MODE || false,
     keepAlive: true,
-    auth: targetAuth || "username:password",
     changeOrigin: true,
     logLevel: 'info',
     logProvider: logProvider,
-
+    onProxyReq: targetAuth,
     //
     // Listen for the `error` event on `proxy`.
     //
@@ -187,8 +194,6 @@ var proxy = createProxyMiddleware({
 
         res.end('Error with proxy');
     },
-
-
     //
     // Listen for the `proxyRes` event on `proxy`.
     //
@@ -197,19 +202,6 @@ var proxy = createProxyMiddleware({
 
         // Delete set-cookie
         delete proxyRes.headers["set-cookie"];
-    },
-
-    //
-    // Listen for the `proxyReq` event on `proxy`.
-    //
-    onProxyReq: function(proxyReq, req, res, options) {
-        //winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
-    //    logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-        //winston.info('RAW options: ', stringify(options));
-        winston.info("PROXY REQ", stringify(proxyReq));
-        winston.info("REQ: ", stringify(req.headers));
-        winston.info("REQ AUTH: ", stringify(req.auth));
-        winston.info("RES: ", stringify(res));
     }
 });
 
