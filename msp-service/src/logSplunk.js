@@ -1,6 +1,7 @@
 var http = require('http');
 var winston = require('winston');
 var moment = require('moment');
+var hostName = process.env.HOSTNAME ? process.env.HOSTNAME : '';
 function logSplunkError(message) {
     // log locally
     winston.error(message);
@@ -16,7 +17,7 @@ function logSplunkError(message) {
             'Content-Type': 'application/json',
             'Authorization': 'Splunk ' + process.env.SPLUNK_AUTH_TOKEN,
             'Content-Length': Buffer.byteLength(body),
-            'logsource': process.env.HOSTNAME,
+            'logsource': hostName,
             'timestamp': moment().format('DD-MMM-YYYY'),
             'program': 'msp-service',
             'serverity': 'error'
@@ -54,7 +55,7 @@ function logSplunkInfo(message) {
             'Content-Type': 'application/json',
             'Authorization': 'Splunk ' + process.env.SPLUNK_AUTH_TOKEN,
             'Content-Length': Buffer.byteLength(body),
-            'logsource': process.env.HOSTNAME,
+            'logsource': hostName,
             'timestamp': moment().format('DD-MMM-YYYY'),
             'method': 'MSP-Service - Pass Through',
             'program': 'msp-service',

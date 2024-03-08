@@ -11,8 +11,8 @@ var https = require('https'),
     url = require('url'),
     stringify = require('json-stringify-safe'),
     express = require('express'),
-    moment = require('moment');
-    proxy = require('http-proxy-middleware');
+    moment = require('moment'),
+    { createProxyMiddleware } = require('http-proxy-middleware');
 
 const cache = require('./cache');
 const BYPASS_MSP_CHECK = (process.env.BYPASS_MSP_CHECK === 'true') || false;
@@ -143,10 +143,10 @@ app.use('/', function (req, res, next) {
             }
         }
     }
+
     // OK its valid let it pass thru this event
     next(); // pass control to the next handler
 });
-
 
 // Create new HTTPS.Agent for mutual TLS purposes
 if (process.env.USE_MUTUAL_TLS &&
@@ -159,19 +159,15 @@ if (process.env.USE_MUTUAL_TLS &&
 
     var myAgent = new https.Agent(httpsAgentOptions);
 }
-//
-// Create a HTTP Proxy server with a HTTPS target
-//
-var proxy = proxy({
+
+var proxy = createProxyMiddleware({
     target: process.env.TARGET_URL || "http://localhost:3000",
     agent: myAgent || http.globalAgent,
     secure: process.env.SECURE_MODE || false,
     keepAlive: true,
     changeOrigin: true,
-    auth: process.env.TARGET_USERNAME_PASSWORD || "username:password",
     logLevel: 'info',
     logProvider: logProvider,
-
     //
     // Listen for the `error` event on `proxy`.
     //
@@ -183,8 +179,6 @@ var proxy = proxy({
 
         res.end('Error with proxy');
     },
-
-
     //
     // Listen for the `proxyRes` event on `proxy`.
     //
@@ -194,23 +188,82 @@ var proxy = proxy({
         // Delete set-cookie
         delete proxyRes.headers["set-cookie"];
     },
-
     //
     // Listen for the `proxyReq` event on `proxy`.
     //
-    onProxyReq: function(proxyReq, req, res, options) {
-        //winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
-    //    logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-        //winston.info('RAW options: ', stringify(options));
+    onProxyReq: function (proxyReq, req, res) {
+        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
+        winston.info("REQ HEADERS: ", stringify(req.headers));
+        winston.info("REQ HEADERS AUTH: ", stringify(req.headers['Authorization']));
+
+        var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+        var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+        var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+        var targetPath = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+
+        winston.info("TARGET PATH", stringify(targetPath));
+        
+        proxyReq.setHeader('Authorization', `Basic ${Buffer.from(targetPath).toString('base64')}`);
+
+        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
+        winston.info("REQ HEADERS", stringify(req.headers));
+        winston.info("REQ HEADERS AUTH", stringify(req.headers['Authorization']));
     }
 });
+
+// app.use('/', function (req, res, next) {
+//     var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+//     var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+//     winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
+//     return createProxyMiddleware({
+//         target: process.env.TARGET_URL || "http://localhost:3000",
+//         agent: myAgent || http.globalAgent,
+//         secure: process.env.SECURE_MODE || false,
+//         keepAlive: true,
+//         changeOrigin: true,
+//         auth: targetAuth,
+//         logLevel: 'info',
+//         logProvider: logProvider,
+//         //
+//         // Listen for the `error` event on `proxy`.
+//         //
+//         onError: function (err, req, res) {
+//             logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
+//             res.writeHead(500, {
+//                 'Content-Type': 'text/plain'
+//             });
+    
+//             res.end('Error with proxy');
+//         },
+    
+//         //
+//         // Listen for the `proxyRes` event on `proxy`.
+//         //
+//         onProxyRes: function (proxyRes, req, res) {
+//             winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
+//             // Delete set-cookie
+//             delete proxyRes.headers["set-cookie"];
+//         },
+    
+//         //
+//         // Listen for the `proxyReq` event on `proxy`.
+//         //
+//         onProxyReq: function(proxyReq, req, res, options) {
+//             winston.info("PROXY REQ", stringify(proxyReq));
+//             winston.info("REQ: ", stringify(req));
+//             winston.info("REQ AUTH: ", stringify(req.auth));
+//             winston.info("RES: ", stringify(res));
+//             // proxyReq.setHeader('User', `${targetAuth}`);
+//             //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
+//         }
+//     });
+// });
 
 // Add in proxy AFTER authorization
 app.use('/', proxy);
 
 // Start express
 app.listen(8080);
-
 
 /**
  * General deny access handler

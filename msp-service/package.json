@@ -25,9 +25,9 @@
     "colors": "^1.1.2",
     "cron": "^1.8.2",
     "express": "^4.15.0",
-    "http-proxy-middleware": "^0.17.4",
+    "http-proxy-middleware": "^1.0.6",
     "json-stringify-safe": "^5.0.1",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^7.3.0",
     "moment": "^2.20.1",
     "uuid": "^8.3.2",
     "winston": "^2.3.1"
