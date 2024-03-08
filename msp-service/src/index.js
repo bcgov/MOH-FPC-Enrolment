@@ -148,7 +148,6 @@ app.use('/', function (req, res, next) {
     next(); // pass control to the next handler
 });
 
-
 // Create new HTTPS.Agent for mutual TLS purposes
 if (process.env.USE_MUTUAL_TLS &&
     process.env.USE_MUTUAL_TLS == "true") {
@@ -161,19 +160,6 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
-var targetAuth = function(req, res, next) {
-    var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
-    var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
-    var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-    var targetPath = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
-    winston.info("TARGET PATH", stringify(targetPath));
-    
-    req.headers['Authorization'] = `Basic ${Buffer.from(targetPath).toString('base64')}`;
-    winston.info("REQ HEADERS", stringify(req.headers));
-    winston.info("REQ HEADERS AUTH", stringify(req.headers['Authorization']));
-    next();
-}
-
 var proxy = createProxyMiddleware({
     target: process.env.TARGET_URL || "http://localhost:3000",
     agent: myAgent || http.globalAgent,
@@ -182,7 +168,6 @@ var proxy = createProxyMiddleware({
     changeOrigin: true,
     logLevel: 'info',
     logProvider: logProvider,
-    onProxyReq: targetAuth,
     //
     // Listen for the `error` event on `proxy`.
     //
@@ -202,6 +187,28 @@ var proxy = createProxyMiddleware({
 
         // Delete set-cookie
         delete proxyRes.headers["set-cookie"];
+    },
+    //
+    // Listen for the `proxyReq` event on `proxy`.
+    //
+    onProxyReq: function (proxyReq, req, res) {
+        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
+        winston.info("REQ HEADERS: ", stringify(req.headers));
+        winston.info("REQ AUTH: ", stringify(req.headers['Authorization']));
+        winston.info("URL", stringify(url));
+
+        var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
+        var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+        var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+        var targetPath = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
+
+        winston.info("TARGET PATH", stringify(targetPath));
+        
+        req.headers['Authorization'] = `Basic ${Buffer.from(targetPath).toString('base64')}`;
+
+        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
+        winston.info("REQ HEADERS", stringify(req.headers));
+        winston.info("REQ HEADERS AUTH", stringify(req.headers['Authorization']));
     }
 });
 
