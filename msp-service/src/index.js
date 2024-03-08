@@ -160,6 +160,7 @@ if (process.env.USE_MUTUAL_TLS &&
     var myAgent = new https.Agent(httpsAgentOptions);
 }
 
+// Creates the proxy middleware that is used to forward the HTTP requests to the middleware
 var proxy = createProxyMiddleware({
     target: process.env.TARGET_URL || "http://localhost:3000",
     agent: myAgent || http.globalAgent,
@@ -192,72 +193,23 @@ var proxy = createProxyMiddleware({
     // Listen for the `proxyReq` event on `proxy`.
     //
     onProxyReq: function (proxyReq, req, res) {
-        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
-        winston.info("REQ HEADERS: ", stringify(req.headers));
-        winston.info("REQ HEADERS AUTH: ", stringify(req.headers['Authorization']));
+        // Checks the value of the  proxy request headers in the console log in OpenShift
+        // winston.info('RAW proxyReq: ', stringify(proxyReq.headers));
 
+        // Sets target environment variables for ITRF and for FPCare/FPIncome
         var targetItrfAuth = process.env.TARGET_USERNAME_PASSWORD_ITRF;
         var targetFpcareAuth = process.env.TARGET_USERNAME_PASSWORD;
+
+        // Parse the request url to check in which application is the request coming from (either in ITRF or FPC/FPIncome)
         var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
+
+        // Assigns the correct authorization credentials depends on the request to the target path
         var targetPath = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
 
-        winston.info("TARGET PATH", stringify(targetPath));
-        
+        // Sets the header for Authorization - Make sure to add BUFFER in encoding the target to Base64
         proxyReq.setHeader('Authorization', `Basic ${Buffer.from(targetPath).toString('base64')}`);
-
-        winston.info("PROXY REQ", stringify(proxyReq.getHeaders()));
-        winston.info("REQ HEADERS", stringify(req.headers));
-        winston.info("REQ HEADERS AUTH", stringify(req.headers['Authorization']));
     }
 });
-
-// app.use('/', function (req, res, next) {
-//     var isTargetPathItrf = url.parse(req.url).pathname.split("/").indexOf("itrfIntegration") > 0;
-//     var targetAuth = isTargetPathItrf ? targetItrfAuth : targetFpcareAuth;
-//     winston.info("Is Target Path in ITRF? ", stringify(isTargetPathItrf));
-//     return createProxyMiddleware({
-//         target: process.env.TARGET_URL || "http://localhost:3000",
-//         agent: myAgent || http.globalAgent,
-//         secure: process.env.SECURE_MODE || false,
-//         keepAlive: true,
-//         changeOrigin: true,
-//         auth: targetAuth,
-//         logLevel: 'info',
-//         logProvider: logProvider,
-//         //
-//         // Listen for the `error` event on `proxy`.
-//         //
-//         onError: function (err, req, res) {
-//             logSplunkError("proxy error: " + err + "; req.url: " + req.url + "; status: " + res.statusCode);
-//             res.writeHead(500, {
-//                 'Content-Type': 'text/plain'
-//             });
-    
-//             res.end('Error with proxy');
-//         },
-    
-//         //
-//         // Listen for the `proxyRes` event on `proxy`.
-//         //
-//         onProxyRes: function (proxyRes, req, res) {
-//             winston.info('RAW Response from the target: ' + stringify(proxyRes.headers));
-//             // Delete set-cookie
-//             delete proxyRes.headers["set-cookie"];
-//         },
-    
-//         //
-//         // Listen for the `proxyReq` event on `proxy`.
-//         //
-//         onProxyReq: function(proxyReq, req, res, options) {
-//             winston.info("PROXY REQ", stringify(proxyReq));
-//             winston.info("REQ: ", stringify(req));
-//             winston.info("REQ AUTH: ", stringify(req.auth));
-//             winston.info("RES: ", stringify(res));
-//             // proxyReq.setHeader('User', `${targetAuth}`);
-//             //logSplunkInfo('RAW URL: ' + req.url + '; RAW headers: ', stringify(req.headers));
-//         }
-//     });
-// });
 
 // Add in proxy AFTER authorization
 app.use('/', proxy);
