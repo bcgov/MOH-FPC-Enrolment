@@ -14,6 +14,7 @@
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
+              cypressId="firstName"
               @input="handleAPIValidationReset"
             />
             <div
@@ -43,6 +44,7 @@
               :input-style="mediumStyles"
               :required="true"
               @input="handleAPIValidationReset"
+              cypressId="lastName"
             />
             <div
               v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
@@ -74,6 +76,7 @@
               :use-invalid-state="true"
               @input="handleAPIValidationReset"
               @process-date="handleProcessBirthdate($event)"
+              cypressId="birthdate"              
             />
             <div
               v-if="
@@ -125,6 +128,7 @@
               :input-style="smallStyles"
               :required="true"
               @input="handleAPIValidationReset"
+              cypressId="phn" 
             />
             <div
               v-if="v$.phn.$dirty && v$.phn.required.$invalid"
@@ -209,7 +213,7 @@
     <ContinueBar
       :button-label="'Submit'"
       :has-loader="isLoading"
-      cypress-id="continueBar"
+      cypressId="continueBar"
       @continue="nextPage()"
     />
   </div>

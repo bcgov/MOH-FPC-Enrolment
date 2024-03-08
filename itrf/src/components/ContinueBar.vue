@@ -5,6 +5,7 @@
         class="continue-button"
         :label="buttonLabel"
         :has-loader="hasLoader"
+        :data-cy="getCypressValue()"
         @click="onContinue()"
       />
     </div>
@@ -13,12 +14,14 @@
 
 <script>
 import Button from "./Button.vue";
+import cypressMixin from "../mixins/cypress-mixin.js";
 
 export default {
   name: "ContinueBar",
   components: {
     ButtonComponent: Button,
   },
+  mixins: [cypressMixin],
   props: {
     hasLoader: {
       type: Boolean,
