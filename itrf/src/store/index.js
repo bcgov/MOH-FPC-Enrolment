@@ -1,3 +1,5 @@
+import dummyData from "./states/form-dummy-data";
+import settings from "../settings";
 import { createStore } from "vuex";
 import { v4 as uuidv4 } from "uuid";
 
@@ -27,6 +29,7 @@ export const SET_LAST_NAME = "setLastName";
 export const SET_BIRTHDATE = "setBirthdate";
 export const SET_PHN = "setPHN";
 export const SET_APPLICANT_CONSENT = "setApplicantConsent";
+export const SET_REFERENCE_NUMBER = "setReferenceNumber";
 
 export default createStore({
   namespaced: false,
@@ -45,8 +48,12 @@ export default createStore({
       birthdate: null,
       phn: null,
       applicantConsent: null,
-      maintenanceMessage: "",
+      maintenanceMessage: null,
+      referenceNumber: null,
     };
+    if (settings.useDummyData) {
+      Object.assign(state, dummyData);
+    }
     return state;
   },
   mutations: {
@@ -92,6 +99,9 @@ export default createStore({
     setMaintenanceMessage(state, payload) {
       state.maintenanceMessage = payload;
     },
+    setReferenceNumber(state, payload) {
+      state.referenceNumber = payload;
+    },
   },
   actions: {
     resetForm({ commit }) {
@@ -108,6 +118,7 @@ export default createStore({
       commit(SET_BIRTHDATE, null);
       commit(SET_PHN, null);
       commit(SET_APPLICANT_CONSENT, null);
+      commit(SET_REFERENCE_NUMBER, null);
     },
     newForm({ commit }) {
       commit(SET_APPLICATION_UUID, uuidv4());
@@ -123,6 +134,7 @@ export default createStore({
       commit(SET_BIRTHDATE, null);
       commit(SET_PHN, null);
       commit(SET_APPLICANT_CONSENT, null);
+      commit(SET_REFERENCE_NUMBER, null);
     },
   },
   getters: {},

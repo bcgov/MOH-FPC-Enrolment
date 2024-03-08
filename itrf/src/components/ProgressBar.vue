@@ -56,11 +56,11 @@ export default {
   props: {
     currentPath: {
       type: String,
-      default: null
+      default: null,
     },
     routes: {
       type: Array,
-      default: null
+      default: null,
     },
   },
   computed: {

@@ -6,6 +6,7 @@
     <div
       v-for="(element, index) in elements"
       :key="element.label + '-' + index"
+      :data-cy="'ReviewTableElement'"
       class="bcgov-row d-flex"
     >
       <div class="bcgov-table-cell label">
@@ -27,7 +28,7 @@ export default {
   props: {
     elements: {
       type: Array,
-      default: null
+      default: null,
     },
     backgroundColor: {
       type: String,

@@ -14,6 +14,7 @@
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
+              cypressId="firstName"
               @input="handleAPIValidationReset"
             />
             <div
@@ -43,6 +44,7 @@
               :input-style="mediumStyles"
               :required="true"
               @input="handleAPIValidationReset"
+              cypressId="lastName"
             />
             <div
               v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
@@ -74,6 +76,7 @@
               :use-invalid-state="true"
               @input="handleAPIValidationReset"
               @process-date="handleProcessBirthdate($event)"
+              cypressId="birthdate"
             />
             <div
               v-if="
@@ -125,6 +128,7 @@
               :input-style="smallStyles"
               :required="true"
               @input="handleAPIValidationReset"
+              cypressId="phn"
             />
             <div
               v-if="v$.phn.$dirty && v$.phn.required.$invalid"
@@ -209,7 +213,7 @@
     <ContinueBar
       :button-label="'Submit'"
       :has-loader="isLoading"
-      cypress-id="continueBar"
+      cypressId="continueBar"
       @continue="nextPage()"
     />
   </div>
@@ -245,9 +249,9 @@ import {
   SET_FIRST_NAME,
   SET_LAST_NAME,
   SET_PHN,
+  SET_REFERENCE_NUMBER,
 } from "../store";
 import { scrollTo, scrollToError } from "../helpers/scroll";
-import { formatDate } from "../helpers/date";
 
 export default {
   name: "PersonalInfoPage",
@@ -327,11 +331,10 @@ export default {
 
       this.isLoading = true;
 
-      const formattedPhn = this.phn.replace(/ /g, "");
       this.$store.commit(SET_FIRST_NAME, this.firstName);
       this.$store.commit(SET_LAST_NAME, this.lastName);
-      this.$store.commit(SET_BIRTHDATE, formatDate(this.birthdate));
-      this.$store.commit(SET_PHN, formattedPhn);
+      this.$store.commit(SET_BIRTHDATE, this.birthdate);
+      this.$store.commit(SET_PHN, this.phn);
       const formState = this.$store.state;
 
       apiService
@@ -393,16 +396,17 @@ export default {
         .then((response) => {
           // Handle HTTP success.
           const returnCode = response.data.returnCode;
+          this.$store.commit(SET_REFERENCE_NUMBER, response.data.refNumber);
 
           this.isLoading = false;
 
           switch (returnCode) {
-            case "success": // Validation success.
+            case "success": // Submit form success.
               // logService.logInfo(applicationUuid, {
-              //     event: 'validation success (validatePhnName)',
+              //     event: 'submission success (submitForm)',
               //     response: response.data,
               // });
-              this.handleValidationSuccess();
+              this.handleSubmitForm();
               break;
             case "failure": // PHN does not match with the lastname.
               this.isAPIValidationErrorShown = true;
@@ -439,7 +443,6 @@ export default {
           // });
           scrollToError();
         });
-      this.handleSubmitForm();
     },
     handleSubmitForm() {
       const path = routes.SUBMISSION.path;

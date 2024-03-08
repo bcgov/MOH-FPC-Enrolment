@@ -39,7 +39,7 @@ export default {
     },
     modelValue: {
       type: String,
-      default: null
+      default: null,
     },
     id: {
       type: String,

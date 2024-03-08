@@ -1,4 +1,5 @@
 import axios from "axios";
+import { formatDate } from "../helpers/date";
 
 const BASE_API_PATH = "/itrf/api/";
 const VALIDATE_PERSON_URL = BASE_API_PATH + "itrfIntegration/validatePerson";
@@ -12,8 +13,8 @@ class ApiService {
       person: {
         lastName: formState.lastName,
         firstName: formState.firstName,
-        phn: formState.phn,
-        birthDate: formState.birthdate,
+        phn: formState.phn.replace(/ /g, ""),
+        birthDate: formatDate(formState.birthdate),
       },
     };
     return axios.post(
@@ -38,8 +39,8 @@ class ApiService {
       person: {
         lastName: formState.lastName,
         firstName: formState.firstName,
-        phn: formState.phn,
-        birthDate: formState.birthdate,
+        phn: formState.phn.replace(/ /g, ""),
+        birthDate: formatDate(formState.birthdate),
       },
     };
     return axios.post(

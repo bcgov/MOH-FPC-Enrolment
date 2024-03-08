@@ -7,11 +7,13 @@
     "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "vitest",
+    "test:unit": "vitest",
+    "test:e2e": "cypress open",
+    "test:e2e-headless": "cypress run --headless",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "precommit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky itrf/.husky"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
@@ -29,8 +31,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
+    "@vue/test-utils": "^2.4.4",
+    "cypress": "^13.6.6",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-vue": "^9.22.0",
     "husky": "^9.0.11",
     "jsdom": "^23.0.1",

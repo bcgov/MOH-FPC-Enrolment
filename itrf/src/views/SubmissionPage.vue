@@ -51,7 +51,7 @@
 import PageContent from "../components/PageContent.vue";
 import ReviewTable from "../components/ReviewTable.vue";
 import SuccessBox from "../components/SuccessBox.vue";
-import { formatDate } from "../helpers/date.js";
+import { formatDate, formatDateDisplay } from "../helpers/date.js";
 
 export default {
   name: "DeclarationPage",
@@ -69,11 +69,12 @@ export default {
   computed: {
     personalInfoData() {
       const items = [];
-      const firstName = "TEST";
-      const lastName = "DATA";
-      const birthDate = "January 01, 2000";
-      const phn = "9999 999 998";
-      const hasSpouse = "Yes";
+      const firstName = this.$store.state.firstName;
+      const lastName = this.$store.state.lastName;
+      const birthdate = formatDateDisplay(this.$store.state.birthdate);
+      const phn = this.$store.state.phn;
+      const hasSpouse =
+        this.$store.state.applicantHasSpouse == "N" ? "No" : "Yes";
       items.push(
         {
           label: "First name",
@@ -85,7 +86,7 @@ export default {
         },
         {
           label: "Birthdate",
-          value: birthDate,
+          value: birthdate,
         },
         {
           label: "Personal Health Number (PHN)",
@@ -101,6 +102,7 @@ export default {
   },
   created() {
     this.dateSubmitted = formatDate(new Date());
+    this.referenceNumber = this.$store.state.referenceNumber;
   },
   methods: {
     printPage() {
