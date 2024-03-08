@@ -74,6 +74,7 @@
           name="filed-income-tax-return"
           :required="true"
           :items="radioOptionsFiledIncomeTaxReturn"
+          cypressId="filed-income-tax-return"
         />
         <div
           v-if="
@@ -112,6 +113,7 @@
           name="spouse"
           :required="true"
           :items="radioOptionsHasSpouse"
+          cypressId="spouse"
         />
         <div
           v-if="v$.hasSpouse.$dirty && v$.hasSpouse.required.$invalid"
@@ -168,7 +170,7 @@
         </div>
       </div>
     </PageContent>
-    <ContinueBar :button-label="'Continue'" @continue="nextPage()" />
+    <ContinueBar :button-label="'Continue'" @continue="nextPage()" cypressId="continue-bar" />
   </div>
 </template>
 
