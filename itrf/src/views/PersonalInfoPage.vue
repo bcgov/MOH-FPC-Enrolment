@@ -5,7 +5,8 @@
       <div class="container pt-3 pt-sm-5 mb-5">
         <h1>Personal Information</h1>
         <hr />
-        <p>Enter your name as it appears on your BC Services Card</p>
+        <p>Enter your name as it appears on your driver's licence, 
+          BC Services Card or CareCard.</p>
         <div class="row">
           <div class="col-sm-7">
             <InputComponent
@@ -182,12 +183,13 @@
           <div class="col-sm-5">
             <TipBox title="Tip: PHN number" class="mt-2">
               <p>
-                The 10 digit number can be found on the back of your
+                The 10-digit number can be found on the back of your driver's
+                licence,
                 <a
                   href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card"
                   target="_blank"
-                  >BC Services Card</a
-                >.
+                  >BC Services Card</a>
+                or CareCard.
               </p>
               <div class="bcid-container">
                 <div class="bcid-image-container">
