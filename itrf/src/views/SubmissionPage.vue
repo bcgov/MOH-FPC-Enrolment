@@ -24,9 +24,9 @@
           <b>Date submitted: {{ dateSubmitted }}</b>
         </p>
         <SuccessBox>
-          <p><b>Your Income Tax Return Filed form has been submitted.</b></p>
+          <p><b>Your Fair PharmaCare Taxes Filed form has been received.</b></p>
           <p>
-            <b>Reference Number is: {{ referenceNumber }}</b>
+            <b>Reference number is: {{ referenceNumber }}</b>
           </p>
         </SuccessBox>
         <br />
@@ -35,8 +35,10 @@
         <hr />
         <p><b>Print or save this page for your records.</b></p>
         <p>
-          When we have verified your income with the CRA, you will receive a
-          Confirmation of Coverage letter within 1-2 weeks.
+          We will verify your income with the CRA. Please allow two to three 
+          weeks for delivery of your Confirmation of Fair PharmaCare Assistance 
+          letter. This letter will have your deductible and family maximum for
+          {{ yearSubmitted }}.
         </p>
         <br />
 
@@ -63,6 +65,7 @@ export default {
   data: () => {
     return {
       dateSubmitted: null,
+      yearSubmitted: null,
       referenceNumber: "1234567890",
     };
   },
@@ -102,6 +105,7 @@ export default {
   },
   created() {
     this.dateSubmitted = formatDate(new Date());
+    this.yearSubmitted = new Date().getFullYear();
     this.referenceNumber = this.$store.state.referenceNumber;
   },
   methods: {

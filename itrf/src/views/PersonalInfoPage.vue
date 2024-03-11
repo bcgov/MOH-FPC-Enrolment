@@ -5,7 +5,8 @@
       <div class="container pt-3 pt-sm-5 mb-5">
         <h1>Personal Information</h1>
         <hr />
-        <p>Enter your name as it appears on your BC Services Card</p>
+        <p>Enter your name as it appears on your driver's licence, 
+          BC Services Card or CareCard.</p>
         <div class="row">
           <div class="col-sm-7">
             <InputComponent
@@ -14,7 +15,7 @@
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
-              cypressId="firstName"
+              cypress-id="firstName"
               @input="handleAPIValidationReset"
             />
             <div
@@ -43,8 +44,8 @@
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
+              cypress-id="lastName"
               @input="handleAPIValidationReset"
-              cypressId="lastName"
             />
             <div
               v-if="v$.lastName.$dirty && v$.lastName.required.$invalid"
@@ -74,9 +75,9 @@
               :required="true"
               :watch-for-model-change="true"
               :use-invalid-state="true"
+              cypress-id="birthdate"
               @input="handleAPIValidationReset"
               @process-date="handleProcessBirthdate($event)"
-              cypressId="birthdate"
             />
             <div
               v-if="
@@ -127,8 +128,8 @@
               placeholder="1111 111 111"
               :input-style="smallStyles"
               :required="true"
+              cypress-id="phn"
               @input="handleAPIValidationReset"
-              cypressId="phn"
             />
             <div
               v-if="v$.phn.$dirty && v$.phn.required.$invalid"
@@ -182,12 +183,13 @@
           <div class="col-sm-5">
             <TipBox title="Tip: PHN number" class="mt-2">
               <p>
-                The 10 digit number can be found on the back of your
+                The 10-digit number can be found on the back of your driver's
+                licence,
                 <a
                   href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card"
                   target="_blank"
-                  >BC Services Card</a
-                >.
+                  >BC Services Card</a>
+                or CareCard.
               </p>
               <div class="bcid-container">
                 <div class="bcid-image-container">
@@ -213,7 +215,7 @@
     <ContinueBar
       :button-label="'Submit'"
       :has-loader="isLoading"
-      cypressId="continueBar"
+      cypress-id="continueBar"
       @continue="nextPage()"
     />
   </div>

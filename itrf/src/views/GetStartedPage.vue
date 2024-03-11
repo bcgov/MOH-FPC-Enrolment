@@ -4,30 +4,34 @@
     <ProgressBar :routes="stepRoutes" :current-path="$route.path" />
     <PageContent>
       <div class="container pt-3 pt-sm-5 mb-5">
-        <h1>Get Started</h1>
+        <h1>Get started</h1>
         <hr />
         <h2>Welcome</h2>
         <p>
-          The Fair PharmaCare deductible and family maximum for this year are
-          normally calculated using your net income from two years ago. If we
-          are not able to verify your net income with the Canada Revenue Agency
-          (CRA), then your Fair PharmaCare deductible will be set to the default
-          maximum of $10,000. This means that Fair PharmaCare will assist you
-          only after you spend more than $10,000 on eligible prescription drugs
-          and/or medical supplies.
+          Complete this form if you have been asked to let BC PharmaCare know that 
+          you filed your taxes with the Canada Revenue Agency (CRA) for 2022. This 
+          allows PharmaCare to check your income with the CRA and set your Fair
+          PharmaCare deductible and family maximum.
+        </p>
+        <p>
+          Your Fair PharmaCare deductible and family maximum are normally calculated 
+          using your net income from two years ago. If we are not able to verify your 
+          net income with the CRA, your PharmaCare deductible is set to the default 
+          maximum of $10,000. This means Fair PharmaCare will help with costs only 
+          after you spend $10,000 on eligible prescription drugs and/or medical supplies.
         </p>
         <br />
         <h2>You can use this form if</h2>
         <ul>
-          <li>You are registered for Fair PharmaCare.</li>
+          <li>You are registered for Fair PharmaCare</li>
           <li>
-            You have given Fair PharmaCare your consent to verify your net
-            income with the CRA.
+            You have given PharmaCare your consent to verify your net
+            income with the CRA
           </li>
           <li>
             You and your spouse or common-law partner (if applicable) have filed
-            your income tax return with the CRA for the tax year
-            {{ incomeTaxReturnYear }}.
+            your income tax return with the CRA from the tax year
+            {{ incomeTaxReturnYear }}
           </li>
         </ul>
         <br />
@@ -36,9 +40,9 @@
         </h2>
         <p>
           You may not have been able to file taxes in Canada two years ago. You
-          may have worked in another country two years ago or were a minor
-          (under 18) with no income. In this case, you may be required to
-          document your income on the Fair PharmaCare Proof of Income Affidavit.
+          may have worked in another country or you may have been a minor
+          (under 18) with no income. In this case, you may be able to report your 
+          income using the Fair PharmaCare Proof of Income Affidavit. 
           <a
             href="https://www2.gov.bc.ca/assets/gov/health/forms/5357fil.pdf"
             target="_blank"
@@ -48,9 +52,9 @@
           Mainland) to have one sent to you.
         </p>
         <br />
-        <h2>For tax year other than {{ incomeTaxReturnYear }}</h2>
+        <h2>Other tax years</h2>
         <p>
-          If the notification letter you received from HIBC refers to a tax year
+          If you received a letter from PharmaCare / HIBC referring to a tax year 
           other than {{ incomeTaxReturnYear }}, do not use this online form.
           Download and mail the
           <a
@@ -61,12 +65,10 @@
           or contact us for support.
         </p>
         <br />
-        <h2>Income tax return filing</h2>
+        <h2>Taxes filed for {{ incomeTaxReturnYear }}</h2>
         <p>
-          <b
-            >Have you filed your income tax return with CRA for the year
-            {{ incomeTaxReturnYear }}?</b
-          >
+          <b>Have you filed your income tax return with the CRA for the year
+            {{ incomeTaxReturnYear }}?</b>
         </p>
         <Radio
           id="filed-income-tax-return"
@@ -74,7 +76,7 @@
           name="filed-income-tax-return"
           :required="true"
           :items="radioOptionsFiledIncomeTaxReturn"
-          cypressId="filed-income-tax-return"
+          cypress-id="filed-income-tax-return"
         />
         <div
           v-if="
@@ -93,10 +95,8 @@
         >
           <ErrorBox>
             <p>
-              <b
-                >You can't submit this form if you have not filed your taxes for
-                the year {{ incomeTaxReturnYear }}.</b
-              >
+              <b>You can't submit this form if you have not filed your taxes for
+                the year {{ incomeTaxReturnYear }}.</b>
             </p>
             <p>
               If you have an urgent medical need for prescriptions, please
@@ -113,7 +113,7 @@
           name="spouse"
           :required="true"
           :items="radioOptionsHasSpouse"
-          cypressId="spouse"
+          cypress-id="spouse"
         />
         <div
           v-if="v$.hasSpouse.$dirty && v$.hasSpouse.required.$invalid"
@@ -125,10 +125,8 @@
         <br />
         <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
           <p>
-            <b
-              >Have they filed their income tax return with CRA for the year
-              {{ incomeTaxReturnYear }}?</b
-            >
+            <b>Have they filed their income tax return with the CRA for 
+              the year {{ incomeTaxReturnYear }}?</b>
           </p>
           <Radio
             id="spouse-filed-income-tax-return"
@@ -154,11 +152,9 @@
           >
             <ErrorBox>
               <p>
-                <b
-                  >You can't submit this form if your spouse or common-law
+                <b>You can't submit this form if your spouse or common-law
                   partner has not filed their taxes for the year
-                  {{ incomeTaxReturnYear }}.</b
-                >
+                  {{ incomeTaxReturnYear }}.</b>
               </p>
               <p>
                 If you have an urgent medical need for prescriptions, please
@@ -172,8 +168,8 @@
     </PageContent>
     <ContinueBar
       :button-label="'Continue'"
+      cypress-id="continue-bar"
       @continue="nextPage()"
-      cypressId="continue-bar"
     />
   </div>
 </template>
@@ -272,10 +268,10 @@ export default {
     // routes.HOME_PAGE.title
     // );
     this.hasFiledIncomeTaxReturn =
-      this.$store.state.applicantHasFiledIncomeTaxReturn;
+    this.$store.state.applicantHasFiledIncomeTaxReturn;
     this.hasSpouse = this.$store.state.applicantHasSpouse;
     this.hasSpouseFiledIncomeTaxReturn =
-      this.$store.state.spouseHasFiledIncomeTaxReturn;
+    this.$store.state.spouseHasFiledIncomeTaxReturn;
     this.showConsentModal = this.$store.state.isInfoCollectionNoticeOpen;
     this.radioOptionsFiledIncomeTaxReturn = [
       {
