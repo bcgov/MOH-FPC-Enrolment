@@ -179,7 +179,6 @@ import ProgressBar from "../components/ProgressBar.vue";
 import PageContent from "../components/PageContent.vue";
 import Radio from "../components/Radio.vue";
 import ContinueBar from "../components/ContinueBar.vue";
-import { stepRoutes, routes } from "../router/index";
 import pageStateService from "../services/page-state-service.js";
 import spaEnvService from "../services/spa-env-service";
 import ConsentModal from "../components/ConsentModal.vue";
@@ -193,7 +192,20 @@ import {
   SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN,
   SET_MAINTENANCE_MESSAGE,
 } from "../store/index";
-import { scrollTo, scrollToError } from "../helpers/scroll";
+import { 
+  scrollTo,
+  scrollToError,
+  getTopScrollPosition
+} from "../helpers/scroll";
+import {
+  stepRoutes,
+  routes,
+  isEQPath,
+  isPastPath,
+} from "../router/index.js";
+import {
+  getConvertedPath,
+} from "../helpers/url.js";
 
 const validateQuestions = (_value, vm) => {
   if (
@@ -362,6 +374,30 @@ export default {
       this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
     },
   },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)
+      && !isEQPath(to.path)){
+      console.log("IF");
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.PERSONAL_INFO.path
+      );
+      console.log(toPath);
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
+  }
 };
 </script>
 

@@ -4,10 +4,11 @@ import PersonalInfoPage from "../views/PersonalInfoPage.vue";
 import SubmissionPage from "../views/SubmissionPage.vue";
 import SubmissionErrorPage from "../views/SubmissionErrorPage.vue";
 import MaintenancePage from "../views/MaintenancePage.vue";
+import pageStateService from "../services/page-state-service";
 
 export const routes = {
   GET_STARTED: {
-    path: "/",
+    path: "/get-started",
     title: "Get Started",
     name: "GetStarted",
     component: GetStartedPage,
@@ -86,5 +87,24 @@ export const isPastPath = (toPath, fromPath) => {
   }
   return false;
 };
+
+export const isEQPath = (path) => {
+  const eqRoute = eqRoutes.find((route) => route.path === path);
+  return !!eqRoute;
+};
+
+router.beforeEach((to, from, next) => {
+  // Home redirects.
+  if (to.path !== routes.GET_STARTED.path
+    && !pageStateService.isPageVisited(to.path)) {
+    console.log('IF');
+    next({ path: routes.GET_STARTED.path });
+  }
+  else{
+    // Catch-all (navigation).
+    console.log('ELSE');
+    next();
+  }
+});
 
 export default router;

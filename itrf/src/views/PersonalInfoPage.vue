@@ -466,6 +466,30 @@ export default {
       this.isSystemUnavailable = false;
     },
   },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)
+      && !isEQPath(to.path)){
+        console.log("IF 2");
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.PERSONAL_INFO.path
+      );
+      console.log(toPath);
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
+  }
 };
 </script>
 
