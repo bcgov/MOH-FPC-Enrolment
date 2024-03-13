@@ -89,20 +89,21 @@ export const isPastPath = (toPath, fromPath) => {
 };
 
 export const isEQPath = (path) => {
-  const eqRoute = eqRoutes.find((route) => route.path === path);
+  const eqRoute = routeStepOrder.find((route) => route.path === path);
+  console.log(eqRoute);
   return !!eqRoute;
 };
+
+pageStateService.importPageRoutes(routes);
 
 router.beforeEach((to, from, next) => {
   // Home redirects.
   if (to.path !== routes.GET_STARTED.path
     && !pageStateService.isPageVisited(to.path)) {
-    console.log('IF');
     next({ path: routes.GET_STARTED.path });
   }
   else{
     // Catch-all (navigation).
-    console.log('ELSE');
     next();
   }
 });

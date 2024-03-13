@@ -200,7 +200,6 @@ import {
 import {
   stepRoutes,
   routes,
-  isEQPath,
   isPastPath,
 } from "../router/index.js";
 import {
@@ -228,10 +227,6 @@ export default {
     ContinueBar,
     ConsentModal,
     ErrorBox,
-  },
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    next();
   },
   setup() {
     return { v$: useVuelidate() };
@@ -347,12 +342,10 @@ export default {
   methods: {
     nextPage() {
       this.v$.$touch();
-
       if (this.v$.$invalid) {
         scrollToError();
         return;
       }
-
       this.$store.commit(
         SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
         this.hasFiledIncomeTaxReturn,
@@ -363,10 +356,14 @@ export default {
         this.hasSpouseFiledIncomeTaxReturn,
       );
 
-      const path = routes.PERSONAL_INFO.path;
-      pageStateService.setPageComplete(path);
-      pageStateService.visitPage(path);
-      this.$router.push(path);
+      // Navigate to next path.
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.PERSONAL_INFO.path
+      );
+      pageStateService.setPageComplete(toPath);
+      pageStateService.visitPage(toPath);
+      this.$router.push(toPath);
       scrollTo(0);
     },
     handleCloseConsentModal() {
@@ -377,18 +374,15 @@ export default {
   // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)
-      && !isEQPath(to.path)){
-      console.log("IF");
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
       next();
     } else {
       // Navigate to self.
       const topScrollPosition = getTopScrollPosition();
       const toPath = getConvertedPath(
         this.$route.path,
-        routes.PERSONAL_INFO.path
+        routes.GET_STARTED.path
       );
-      console.log(toPath);
       next({
         path: toPath,
         replace: true

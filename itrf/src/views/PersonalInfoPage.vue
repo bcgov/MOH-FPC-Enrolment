@@ -241,7 +241,6 @@ import {
 } from "../helpers/validators";
 import TipBox from "../components/TipBox.vue";
 import ErrorBox from "../components/ErrorBox.vue";
-import { stepRoutes, routes } from "../router/index";
 import pageStateService from "../services/page-state-service.js";
 import { mediumStyles, smallStyles } from "../constants/input-styles";
 import { required } from "@vuelidate/validators";
@@ -253,7 +252,20 @@ import {
   SET_PHN,
   SET_REFERENCE_NUMBER,
 } from "../store";
-import { scrollTo, scrollToError } from "../helpers/scroll";
+import { 
+  scrollTo,
+  scrollToError,
+  getTopScrollPosition
+} from "../helpers/scroll";
+import {
+  stepRoutes,
+  routes,
+  isEQPath,
+  isPastPath,
+} from "../router/index.js";
+import {
+  getConvertedPath,
+} from "../helpers/url.js";
 
 export default {
   name: "PersonalInfoPage",
@@ -266,10 +278,6 @@ export default {
     PhnInput,
     TipBox,
     ErrorBox,
-  },
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    next();
   },
   setup() {
     return { v$: useVuelidate() };
@@ -346,13 +354,16 @@ export default {
           const returnCode = response.data.returnCode;
 
           this.isLoading = false;
-
+          
+          console.log(response);
+          
           switch (returnCode) {
             case "success": // Validation success.
               // logService.logInfo(applicationUuid, {
               //     event: 'validation success (validatePhnName)',
               //     response: response.data,
               // });
+              console.log("1 - Submit form success");
               this.handleValidationSuccess(formState);
               break;
             case "failure": // PHN does not match with the lastname.
@@ -362,6 +373,7 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
+              console.log("1 - PHN does not match with the lastname.");
               break;
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
@@ -370,6 +382,7 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
+              console.log("1 - System unavailable.");
               break;
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
@@ -378,6 +391,7 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
+              console.log("1 - -1 error code, schema error, etc");
           }
         })
         .catch((error) => {
@@ -389,6 +403,7 @@ export default {
           //     status: error.response.status,
           // });
           scrollToError();
+          console.log("1 - Handle HTTP error.");
         });
     },
     handleValidationSuccess(formState) {
@@ -408,6 +423,7 @@ export default {
               //     event: 'submission success (submitForm)',
               //     response: response.data,
               // });
+              console.log("2 - Submit form success.");
               this.handleSubmitForm();
               break;
             case "failure": // PHN does not match with the lastname.
@@ -417,6 +433,7 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
+              console.log("2 - PHN does not match with the lastname.");
               break;
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
@@ -425,6 +442,7 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
+              console.log("2 - System unavailable.");
               break;
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
@@ -432,6 +450,7 @@ export default {
               //     event: 'validation failure (schema error or other unexpected problem)',
               //     response: response.data,
               // });
+              console.log("2 - -1 error code, schema error, etc");
               scrollToError();
           }
         })
@@ -443,14 +462,19 @@ export default {
           //     event: 'HTTP error (validatePhnName endpoint unavailable)',
           //     status: error.response.status,
           // });
+          console.log("2 - Handle HTTP error.");
           scrollToError();
         });
     },
     handleSubmitForm() {
-      const path = routes.SUBMISSION.path;
-      pageStateService.setPageComplete(path);
-      pageStateService.visitPage(path);
-      this.$router.push(path);
+      // Navigate to next path.
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.SUBMISSION.path
+      );
+      pageStateService.setPageComplete(toPath);
+      pageStateService.visitPage(toPath);
+      this.$router.push(toPath);
       scrollTo(0);
     },
     handleBlurField(validationObject) {
@@ -469,9 +493,11 @@ export default {
   // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)
-      && !isEQPath(to.path)){
-        console.log("IF 2");
+    console.log("1: " +(pageStateService.isPageComplete(to.path)));
+    console.log("2: " +(isPastPath(to.path, from.path)));
+    console.log("3: " +(!isEQPath(to.path)));
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
+      console.log('HERE');
       next();
     } else {
       // Navigate to self.
@@ -480,7 +506,6 @@ export default {
         this.$route.path,
         routes.PERSONAL_INFO.path
       );
-      console.log(toPath);
       next({
         path: toPath,
         replace: true

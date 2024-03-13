@@ -9,6 +9,7 @@ export const SET_API_RESPONSE = "setApiResponse";
 export const SET_SUBMISSION_DATE = "setSubmissionDate";
 export const RESET_FORM = "resetForm";
 export const NEW_FORM = "newForm";
+export const HIDE_INFO_COLLECTION_NOTICE = "hideInfoCollectionNotice";
 
 // For Info Collection Notice
 export const SET_IS_INFO_COLLECTION_NOTICE_OPEN =
@@ -104,11 +105,14 @@ export default createStore({
     },
   },
   actions: {
+    hideInfoCollectionNotice({ commit }) {
+      commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
+    },
     resetForm({ commit }) {
       commit(SET_APPLICATION_UUID, uuidv4());
       commit(SET_API_RESPONSE, null);
       commit(SET_SUBMISSION_DATE, null);
-      commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, null);
+      commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, true);
       commit(SET_CAPTCHA_TOKEN, null);
       commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, null);
       commit(SET_APPLICANT_HAS_SPOUSE, null);

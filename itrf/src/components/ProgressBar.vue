@@ -47,6 +47,7 @@
 
 <script>
 import IconChevronSingleLeft from "../assets/IconChevronSingleLeft.vue";
+import { HIDE_INFO_COLLECTION_NOTICE } from "../store";
 
 export default {
   name: "ProgressBar",
@@ -104,6 +105,18 @@ export default {
   },
   methods: {
     onClickLink: function (path) {
+      // const index = this.routes.findIndex(el => el.path.includes(path));
+      // const isPrevRoute = index + 1 < this.currentStepNumber;
+      // if (isPrevRoute) {
+      //   // If they click on log out
+      //   if (index !== 0) {
+      //     // pop up window
+      //     console.log("index: " +index);
+      //     this.$store.dispatch(HIDE_INFO_COLLECTION_NOTICE);
+      //   }
+      //   this.$router.push(path);
+      //   scrollTo(0);
+      // }
       this.$router.push(path);
     },
   },
