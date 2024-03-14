@@ -260,12 +260,8 @@ import {
 import {
   stepRoutes,
   routes,
-  isEQPath,
   isPastPath,
 } from "../router/index.js";
-import {
-  getConvertedPath,
-} from "../helpers/url.js";
 
 export default {
   name: "PersonalInfoPage",
@@ -287,10 +283,7 @@ export default {
     } else {
       // Navigate to self.
       const topScrollPosition = getTopScrollPosition();
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.PERSONAL_INFO.path
-      );
+      const toPath = routes.PERSONAL_INFO.path;
       next({
         path: toPath,
         replace: true
@@ -477,10 +470,7 @@ export default {
     },
     handleSubmitForm() {
       // Navigate to next path.
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.SUBMISSION.path
-      );
+      const toPath = routes.SUBMISSION.path;
       pageStateService.setPageComplete(toPath);
       pageStateService.visitPage(toPath);
       this.$router.push(toPath);

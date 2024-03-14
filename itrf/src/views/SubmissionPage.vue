@@ -55,9 +55,6 @@ import ReviewTable from "../components/ReviewTable.vue";
 import SuccessBox from "../components/SuccessBox.vue";
 import { formatDate, formatDateDisplay } from "../helpers/date.js";
 import pageStateService from "../services/page-state-service.js";
-import {
-  getConvertedPath,
-} from "../helpers/url.js";
 import { routes } from "../router/index.js";
 import { 
   scrollTo
@@ -81,10 +78,7 @@ export default {
       next();
     } else {
       // Navigate to self.
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.GET_STARTED.path
-      );
+      const toPath = routes.GET_STARTED.path;
       next({ path: toPath });
     }
     setTimeout(() => {

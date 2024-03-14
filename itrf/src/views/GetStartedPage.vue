@@ -199,9 +199,6 @@ import {
   routes,
   isPastPath,
 } from "../router/index.js";
-import {
-  getConvertedPath,
-} from "../helpers/url.js";
 
 const validateQuestions = (_value, vm) => {
   if (
@@ -233,10 +230,7 @@ export default {
     } else {
       // Navigate to self.
       const topScrollPosition = getTopScrollPosition();
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.GET_STARTED.path
-      );
+      const toPath = routes.GET_STARTED.path;
       next({
         path: toPath,
         replace: true
@@ -375,10 +369,7 @@ export default {
       );
 
       // Navigate to next path.
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.PERSONAL_INFO.path
-      );
+      const toPath = routes.PERSONAL_INFO.path;
       pageStateService.setPageComplete(toPath);
       pageStateService.visitPage(toPath);
       this.$router.push(toPath);

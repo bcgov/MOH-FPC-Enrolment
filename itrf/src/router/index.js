@@ -88,12 +88,6 @@ export const isPastPath = (toPath, fromPath) => {
   return false;
 };
 
-export const isEQPath = (path) => {
-  const eqRoute = routeStepOrder.find((route) => route.path === path);
-  console.log(eqRoute);
-  return !!eqRoute;
-};
-
 pageStateService.importPageRoutes(routes);
 
 router.beforeEach((to, from, next) => {
