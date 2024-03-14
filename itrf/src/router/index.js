@@ -8,7 +8,7 @@ import pageStateService from "../services/page-state-service";
 
 export const routes = {
   GET_STARTED: {
-    path: "/get-started",
+    path: "/",
     title: "Get Started",
     name: "GetStarted",
     component: GetStartedPage,
