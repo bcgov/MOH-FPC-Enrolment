@@ -36,7 +36,7 @@ export const routes = {
     title: "Maintenance",
     name: "Maintenance",
     component: MaintenancePage,
-  },
+  }
 };
 
 export const stepRoutes = [

@@ -29,9 +29,8 @@
             income with the CRA
           </li>
           <li>
-            You and your spouse or common-law partner (if applicable) have filed
-            your income tax return with the CRA from the tax year
-            {{ incomeTaxReturnYear }}
+            You and your spouse or common-law partner (if applicable) have filed your 
+            {{ incomeTaxReturnYear }} income tax return with the CRA
           </li>
         </ul>
         <br />
@@ -67,8 +66,7 @@
         <br />
         <h2>Taxes filed for {{ incomeTaxReturnYear }}</h2>
         <p>
-          <b>Have you filed your income tax return with the CRA for the year
-            {{ incomeTaxReturnYear }}?</b>
+          <b>Have you filed your {{ incomeTaxReturnYear }} income tax return with the CRA?</b>
         </p>
         <Radio
           id="filed-income-tax-return"
@@ -125,8 +123,7 @@
         <br />
         <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
           <p>
-            <b>Have they filed their income tax return with the CRA for 
-              the year {{ incomeTaxReturnYear }}?</b>
+            <b>Have they filed their {{ incomeTaxReturnYear }} income tax return with the CRA?</b>
           </p>
           <Radio
             id="spouse-filed-income-tax-return"
