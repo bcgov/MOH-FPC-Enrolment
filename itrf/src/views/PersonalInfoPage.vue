@@ -241,7 +241,6 @@ import {
 } from "../helpers/validators";
 import TipBox from "../components/TipBox.vue";
 import ErrorBox from "../components/ErrorBox.vue";
-import { stepRoutes, routes } from "../router/index";
 import pageStateService from "../services/page-state-service.js";
 import { mediumStyles, smallStyles } from "../constants/input-styles";
 import { required } from "@vuelidate/validators";
@@ -253,7 +252,16 @@ import {
   SET_PHN,
   SET_REFERENCE_NUMBER,
 } from "../store";
-import { scrollTo, scrollToError } from "../helpers/scroll";
+import { 
+  scrollTo,
+  scrollToError,
+  getTopScrollPosition
+} from "../helpers/scroll";
+import {
+  stepRoutes,
+  routes,
+  isPastPath,
+} from "../router/index.js";
 
 export default {
   name: "PersonalInfoPage",
@@ -267,9 +275,23 @@ export default {
     TipBox,
     ErrorBox,
   },
+  // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    next();
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = routes.PERSONAL_INFO.path;
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
   },
   setup() {
     return { v$: useVuelidate() };
@@ -346,7 +368,7 @@ export default {
           const returnCode = response.data.returnCode;
 
           this.isLoading = false;
-
+          
           switch (returnCode) {
             case "success": // Validation success.
               // logService.logInfo(applicationUuid, {
@@ -447,10 +469,11 @@ export default {
         });
     },
     handleSubmitForm() {
-      const path = routes.SUBMISSION.path;
-      pageStateService.setPageComplete(path);
-      pageStateService.visitPage(path);
-      this.$router.push(path);
+      // Navigate to next path.
+      const toPath = routes.SUBMISSION.path;
+      pageStateService.setPageComplete(toPath);
+      pageStateService.visitPage(toPath);
+      this.$router.push(toPath);
       scrollTo(0);
     },
     handleBlurField(validationObject) {
@@ -465,7 +488,7 @@ export default {
       this.isAPIValidationErrorShown = false;
       this.isSystemUnavailable = false;
     },
-  },
+  }
 };
 </script>
 

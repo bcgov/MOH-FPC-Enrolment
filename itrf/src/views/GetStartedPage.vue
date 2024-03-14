@@ -29,9 +29,8 @@
             income with the CRA
           </li>
           <li>
-            You and your spouse or common-law partner (if applicable) have filed
-            your income tax return with the CRA from the tax year
-            {{ incomeTaxReturnYear }}
+            You and your spouse or common-law partner (if applicable) have filed your 
+            {{ incomeTaxReturnYear }} income tax return with the CRA
           </li>
         </ul>
         <br />
@@ -67,8 +66,7 @@
         <br />
         <h2>Taxes filed for {{ incomeTaxReturnYear }}</h2>
         <p>
-          <b>Have you filed your income tax return with the CRA for the year
-            {{ incomeTaxReturnYear }}?</b>
+          <b>Have you filed your {{ incomeTaxReturnYear }} income tax return with the CRA?</b>
         </p>
         <Radio
           id="filed-income-tax-return"
@@ -125,8 +123,7 @@
         <br />
         <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
           <p>
-            <b>Have they filed their income tax return with the CRA for 
-              the year {{ incomeTaxReturnYear }}?</b>
+            <b>Have they filed their {{ incomeTaxReturnYear }} income tax return with the CRA?</b>
           </p>
           <Radio
             id="spouse-filed-income-tax-return"
@@ -179,7 +176,6 @@ import ProgressBar from "../components/ProgressBar.vue";
 import PageContent from "../components/PageContent.vue";
 import Radio from "../components/Radio.vue";
 import ContinueBar from "../components/ContinueBar.vue";
-import { stepRoutes, routes } from "../router/index";
 import pageStateService from "../services/page-state-service.js";
 import spaEnvService from "../services/spa-env-service";
 import ConsentModal from "../components/ConsentModal.vue";
@@ -193,7 +189,16 @@ import {
   SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN,
   SET_MAINTENANCE_MESSAGE,
 } from "../store/index";
-import { scrollTo, scrollToError } from "../helpers/scroll";
+import { 
+  scrollTo,
+  scrollToError,
+  getTopScrollPosition
+} from "../helpers/scroll";
+import {
+  stepRoutes,
+  routes,
+  isPastPath,
+} from "../router/index.js";
 
 const validateQuestions = (_value, vm) => {
   if (
@@ -217,9 +222,23 @@ export default {
     ConsentModal,
     ErrorBox,
   },
+  // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    next();
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = routes.GET_STARTED.path;
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
   },
   setup() {
     return { v$: useVuelidate() };
@@ -335,12 +354,10 @@ export default {
   methods: {
     nextPage() {
       this.v$.$touch();
-
       if (this.v$.$invalid) {
         scrollToError();
         return;
       }
-
       this.$store.commit(
         SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
         this.hasFiledIncomeTaxReturn,
@@ -351,17 +368,18 @@ export default {
         this.hasSpouseFiledIncomeTaxReturn,
       );
 
-      const path = routes.PERSONAL_INFO.path;
-      pageStateService.setPageComplete(path);
-      pageStateService.visitPage(path);
-      this.$router.push(path);
+      // Navigate to next path.
+      const toPath = routes.PERSONAL_INFO.path;
+      pageStateService.setPageComplete(toPath);
+      pageStateService.visitPage(toPath);
+      this.$router.push(toPath);
       scrollTo(0);
     },
     handleCloseConsentModal() {
       this.showConsentModal = false;
       this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
     },
-  },
+  }
 };
 </script>
 

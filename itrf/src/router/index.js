@@ -4,6 +4,7 @@ import PersonalInfoPage from "../views/PersonalInfoPage.vue";
 import SubmissionPage from "../views/SubmissionPage.vue";
 import SubmissionErrorPage from "../views/SubmissionErrorPage.vue";
 import MaintenancePage from "../views/MaintenancePage.vue";
+import pageStateService from "../services/page-state-service";
 
 export const routes = {
   GET_STARTED: {
@@ -35,7 +36,7 @@ export const routes = {
     title: "Maintenance",
     name: "Maintenance",
     component: MaintenancePage,
-  },
+  }
 };
 
 export const stepRoutes = [
@@ -86,5 +87,19 @@ export const isPastPath = (toPath, fromPath) => {
   }
   return false;
 };
+
+pageStateService.importPageRoutes(routes);
+
+router.beforeEach((to, from, next) => {
+  // Home redirects.
+  if (to.path !== routes.GET_STARTED.path
+    && !pageStateService.isPageVisited(to.path)) {
+    next({ path: routes.GET_STARTED.path });
+  }
+  else{
+    // Catch-all (navigation).
+    next();
+  }
+});
 
 export default router;

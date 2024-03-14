@@ -54,6 +54,14 @@ import PageContent from "../components/PageContent.vue";
 import ReviewTable from "../components/ReviewTable.vue";
 import SuccessBox from "../components/SuccessBox.vue";
 import { formatDate, formatDateDisplay } from "../helpers/date.js";
+import pageStateService from "../services/page-state-service.js";
+import { routes } from "../router/index.js";
+import { 
+  scrollTo
+} from "../helpers/scroll";
+import {
+  RESET_FORM
+} from '../store/index.js';
 
 export default {
   name: "DeclarationPage",
@@ -61,6 +69,21 @@ export default {
     PageContent,
     ReviewTable,
     SuccessBox,
+  },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    this.$store.dispatch(RESET_FORM);
+    if (to.path === routes.GET_STARTED.path) {
+      next();
+    } else {
+      // Navigate to self.
+      const toPath = routes.GET_STARTED.path;
+      next({ path: toPath });
+    }
+    setTimeout(() => {
+      scrollTo(0);
+    }, 0);
   },
   data: () => {
     return {
@@ -112,7 +135,7 @@ export default {
     printPage() {
       window.print();
     },
-  },
+  }
 };
 </script>
 
