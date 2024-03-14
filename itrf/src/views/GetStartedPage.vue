@@ -225,6 +225,27 @@ export default {
     ConsentModal,
     ErrorBox,
   },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.GET_STARTED.path
+      );
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
+  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -367,27 +388,6 @@ export default {
       this.showConsentModal = false;
       this.$store.commit(SET_IS_INFO_COLLECTION_NOTICE_OPEN, false);
     },
-  },
-  // Required in order to block back navigation.
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
-      next();
-    } else {
-      // Navigate to self.
-      const topScrollPosition = getTopScrollPosition();
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.GET_STARTED.path
-      );
-      next({
-        path: toPath,
-        replace: true
-      });
-      setTimeout(() => {
-        scrollTo(topScrollPosition);
-      }, 0);
-    }
   }
 };
 </script>

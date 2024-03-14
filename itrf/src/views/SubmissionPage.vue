@@ -73,6 +73,24 @@ export default {
     ReviewTable,
     SuccessBox,
   },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    this.$store.dispatch(RESET_FORM);
+    if (to.path === routes.GET_STARTED.path) {
+      next();
+    } else {
+      // Navigate to self.
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.GET_STARTED.path
+      );
+      next({ path: toPath });
+    }
+    setTimeout(() => {
+      scrollTo(0);
+    }, 0);
+  },
   data: () => {
     return {
       dateSubmitted: null,
@@ -123,24 +141,6 @@ export default {
     printPage() {
       window.print();
     },
-  },
-  // Required in order to block back navigation.
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    this.$store.dispatch(RESET_FORM);
-    if (to.path === routes.GET_STARTED.path) {
-      next();
-    } else {
-      // Navigate to self.
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.GET_STARTED.path
-      );
-      next({ path: toPath });
-    }
-    setTimeout(() => {
-      scrollTo(0);
-    }, 0);
   }
 };
 </script>

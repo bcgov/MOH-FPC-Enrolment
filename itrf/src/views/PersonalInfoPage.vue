@@ -279,6 +279,27 @@ export default {
     TipBox,
     ErrorBox,
   },
+  // Required in order to block back navigation.
+  beforeRouteLeave(to, from, next) {
+    pageStateService.setPageIncomplete(from.path);
+    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
+      next();
+    } else {
+      // Navigate to self.
+      const topScrollPosition = getTopScrollPosition();
+      const toPath = getConvertedPath(
+        this.$route.path,
+        routes.PERSONAL_INFO.path
+      );
+      next({
+        path: toPath,
+        replace: true
+      });
+      setTimeout(() => {
+        scrollTo(topScrollPosition);
+      }, 0);
+    }
+  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -355,15 +376,12 @@ export default {
 
           this.isLoading = false;
           
-          console.log(response);
-          
           switch (returnCode) {
             case "success": // Validation success.
               // logService.logInfo(applicationUuid, {
               //     event: 'validation success (validatePhnName)',
               //     response: response.data,
               // });
-              console.log("1 - Submit form success");
               this.handleValidationSuccess(formState);
               break;
             case "failure": // PHN does not match with the lastname.
@@ -373,7 +391,6 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
-              console.log("1 - PHN does not match with the lastname.");
               break;
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
@@ -382,7 +399,6 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
-              console.log("1 - System unavailable.");
               break;
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
@@ -391,7 +407,6 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
-              console.log("1 - -1 error code, schema error, etc");
           }
         })
         .catch((error) => {
@@ -403,7 +418,6 @@ export default {
           //     status: error.response.status,
           // });
           scrollToError();
-          console.log("1 - Handle HTTP error.");
         });
     },
     handleValidationSuccess(formState) {
@@ -423,7 +437,6 @@ export default {
               //     event: 'submission success (submitForm)',
               //     response: response.data,
               // });
-              console.log("2 - Submit form success.");
               this.handleSubmitForm();
               break;
             case "failure": // PHN does not match with the lastname.
@@ -433,7 +446,6 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
-              console.log("2 - PHN does not match with the lastname.");
               break;
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
@@ -442,7 +454,6 @@ export default {
               //     response: response.data,
               // });
               scrollToError();
-              console.log("2 - System unavailable.");
               break;
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
@@ -450,7 +461,6 @@ export default {
               //     event: 'validation failure (schema error or other unexpected problem)',
               //     response: response.data,
               // });
-              console.log("2 - -1 error code, schema error, etc");
               scrollToError();
           }
         })
@@ -462,7 +472,6 @@ export default {
           //     event: 'HTTP error (validatePhnName endpoint unavailable)',
           //     status: error.response.status,
           // });
-          console.log("2 - Handle HTTP error.");
           scrollToError();
         });
     },
@@ -489,31 +498,6 @@ export default {
       this.isAPIValidationErrorShown = false;
       this.isSystemUnavailable = false;
     },
-  },
-  // Required in order to block back navigation.
-  beforeRouteLeave(to, from, next) {
-    pageStateService.setPageIncomplete(from.path);
-    console.log("1: " +(pageStateService.isPageComplete(to.path)));
-    console.log("2: " +(isPastPath(to.path, from.path)));
-    console.log("3: " +(!isEQPath(to.path)));
-    if ((pageStateService.isPageComplete(to.path)) || isPastPath(to.path, from.path)){
-      console.log('HERE');
-      next();
-    } else {
-      // Navigate to self.
-      const topScrollPosition = getTopScrollPosition();
-      const toPath = getConvertedPath(
-        this.$route.path,
-        routes.PERSONAL_INFO.path
-      );
-      next({
-        path: toPath,
-        replace: true
-      });
-      setTimeout(() => {
-        scrollTo(topScrollPosition);
-      }, 0);
-    }
   }
 };
 </script>
