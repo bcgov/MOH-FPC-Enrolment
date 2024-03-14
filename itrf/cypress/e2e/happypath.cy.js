@@ -1,4 +1,4 @@
-const testUrl = "http://172.25.129.209:5173/itrf/"; //change out if needed
+const testUrl = "http://172.25.180.240:5173/itrf/get-started"; //change out if needed
 
 //Dev environment
 const testFirstName = "KDAF";
@@ -20,7 +20,7 @@ describe("happy path", () => {
     cy.visit(testUrl);
     cy.location().should((loc) => {
       expect(loc.href).to.eq(testUrl);
-      expect(loc.pathname).to.eq("/itrf/");
+      expect(loc.pathname).to.eq("/itrf/get-started");
     });
     //Get started page
     cy.get("[data-cy=captchaInput]").type("irobot");
