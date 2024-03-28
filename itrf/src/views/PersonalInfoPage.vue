@@ -379,8 +379,6 @@ export default {
           // Handle HTTP success.
           const returnCode = response.data.returnCode;
 
-          this.isLoading = false;
-
           switch (returnCode) {
             case "success": // Validation success.
               logService.logInfo(this.applicationUuid, {
