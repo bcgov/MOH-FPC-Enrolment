@@ -31,7 +31,7 @@ export default {
     logService.logNavigation(
       this.$store.state.applicationUuid,
       routes.MAINTENANCE.path,
-      routes.MAINTENANCE.title
+      routes.MAINTENANCE.title,
     );
     if (
       this &&

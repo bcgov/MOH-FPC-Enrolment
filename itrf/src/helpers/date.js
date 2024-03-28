@@ -16,7 +16,7 @@ export const formatDateDisplay = (date) => {
 };
 
 export const getBCTimestamp = () => {
-  return formatDateFns(new Date(), 'yyyy-MM-dd HH:mm:ss zzz');
+  return formatDateFns(new Date(), "yyyy-MM-dd HH:mm:ss zzz");
 };
 
 export const getISODateString = (year, month, day) => {

@@ -36,7 +36,7 @@ export const routes = {
     title: "Maintenance",
     name: "Maintenance",
     component: MaintenancePage,
-  }
+  },
 };
 
 export const stepRoutes = [
@@ -92,11 +92,12 @@ pageStateService.importPageRoutes(routes);
 
 router.beforeEach((to, from, next) => {
   // Home redirects.
-  if (to.path !== routes.GET_STARTED.path
-    && !pageStateService.isPageVisited(to.path)) {
+  if (
+    to.path !== routes.GET_STARTED.path &&
+    !pageStateService.isPageVisited(to.path)
+  ) {
     next({ path: routes.GET_STARTED.path });
-  }
-  else{
+  } else {
     // Catch-all (navigation).
     next();
   }
