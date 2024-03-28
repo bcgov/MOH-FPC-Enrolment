@@ -12,6 +12,8 @@
 
 <script>
 import PageContent from "../components/PageContent.vue";
+import logService from "../services/log-service.js";
+import { routes } from "../router/index.js";
 
 export default {
   name: "MaintenancePage",
@@ -25,6 +27,12 @@ export default {
     };
   },
   created() {
+    this.applicationUuid = this.$store.state.applicationUuid;
+    logService.logNavigation(
+      this.$store.state.applicationUuid,
+      routes.MAINTENANCE.path,
+      routes.MAINTENANCE.title
+    );
     if (
       this &&
       this.$store &&

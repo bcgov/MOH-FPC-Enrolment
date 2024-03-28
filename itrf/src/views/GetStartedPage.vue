@@ -177,6 +177,7 @@ import PageContent from "../components/PageContent.vue";
 import Radio from "../components/Radio.vue";
 import ContinueBar from "../components/ContinueBar.vue";
 import pageStateService from "../services/page-state-service.js";
+import logService from "../services/log-service.js";
 import spaEnvService from "../services/spa-env-service";
 import ConsentModal from "../components/ConsentModal.vue";
 import { required } from "@vuelidate/validators";
@@ -255,9 +256,11 @@ export default {
       radioOptionsFiledIncomeTaxReturn: null,
       radioOptionsHasSpouse: null,
       showConsentModal: true,
+      applicationUuid: null,
     };
   },
   async created() {
+    this.applicationUuid = this.$store.state.applicationUuid;
     await spaEnvService
       .loadEnvs()
       .then(() => {
@@ -276,16 +279,16 @@ export default {
         }
       })
       .catch((error) => {
-        // logService.logError(applicationUuid, {
-        // event: 'HTTP error getting values from spa-env-server',
-        // status: error.response.status,
-        // });
+        logService.logError(this.applicationUuid, {
+        event: 'HTTP error getting values from spa-env-server',
+        status: error.response.status,
+        });
       });
-    // logService.logNavigation(
-    // applicationUuid,
-    // routes.HOME_PAGE.path,
-    // routes.HOME_PAGE.title
-    // );
+    logService.logNavigation(
+    this.applicationUuid,
+    routes.GET_STARTED.path,
+    routes.GET_STARTED.title
+    );
     this.hasFiledIncomeTaxReturn =
     this.$store.state.applicantHasFiledIncomeTaxReturn;
     this.hasSpouse = this.$store.state.applicantHasSpouse;

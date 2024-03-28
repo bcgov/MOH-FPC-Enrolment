@@ -62,6 +62,7 @@ import {
 import {
   RESET_FORM
 } from '../store/index.js';
+import logService from "../services/log-service.js";
 
 export default {
   name: "DeclarationPage",
@@ -130,6 +131,12 @@ export default {
     this.dateSubmitted = formatDate(new Date());
     this.yearSubmitted = new Date().getFullYear();
     this.referenceNumber = this.$store.state.referenceNumber;
+
+    logService.logNavigation(
+      this.$store.state.applicationUuid,
+      routes.SUBMISSION.path,
+      routes.SUBMISSION.title
+    );
   },
   methods: {
     printPage() {
