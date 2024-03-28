@@ -6,6 +6,22 @@ import { cloneDeep } from "lodash";
 import formTemplate from "@/store";
 import dummyData from "@/store/states/form-dummy-data";
 import { it, describe, expect, beforeEach, afterEach, vi } from "vitest";
+import logService from "@/services/log-service";
+
+vi
+  .spyOn(logService, "logNavigation")
+  .mockImplementation(() => Promise.resolve("logged"));
+vi
+  .spyOn(logService, "logError")
+  .mockImplementation(() => {
+    Promise.resolve("logged");
+  });
+vi
+  .spyOn(logService, "logInfo")
+  .mockImplementation(() => Promise.resolve("logged"));
+vi
+  .spyOn(logService, "logSubmission")
+  .mockImplementation(() => Promise.resolve("logged"));
 
 describe("GetStartedPage.vue", () => {
   let wrapper = null;

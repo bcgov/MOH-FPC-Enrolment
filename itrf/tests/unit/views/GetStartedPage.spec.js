@@ -7,8 +7,21 @@ import formTemplate from "@/store";
 import dummyData from "@/store/states/form-dummy-data";
 import { it, describe, expect, beforeEach, afterEach, vi } from "vitest";
 import axios from "axios";
+import logService from "@/services/log-service";
 
 vi.mock("axios");
+
+vi
+  .spyOn(logService, "logNavigation")
+  .mockImplementation(() => Promise.resolve("logged"));
+vi
+  .spyOn(logService, "logError")
+  .mockImplementation(() => {
+    Promise.resolve("logged");
+  });
+vi
+  .spyOn(logService, "logInfo")
+  .mockImplementation(() => Promise.resolve("logged"));
 
 const mockAxiosResponse = {
   data: {
