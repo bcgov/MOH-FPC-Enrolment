@@ -53,7 +53,7 @@ function logSplunkInfo(message) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Splunk ' + process.env.SPLUNK_AUTH_TOKEN,
+            'Authorization': 'Api-Token ' + process.env.SPLUNK_AUTH_TOKEN,
             'Content-Length': Buffer.byteLength(body),
             'logsource': hostName,
             'timestamp': moment().format('DD-MMM-YYYY'),
