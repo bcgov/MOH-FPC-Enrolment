@@ -405,6 +405,7 @@ export default {
                 response: response.data,
               });
               scrollToError();
+              this.isLoading = false;
               break;
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
@@ -414,6 +415,7 @@ export default {
                 response: response.data,
               });
               scrollToError();
+              this.isLoading = false;
               break;
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
@@ -423,6 +425,7 @@ export default {
                 response: response.data,
               });
               scrollToError();
+              this.isLoading = false;
           }
         })
         .catch((error) => {
