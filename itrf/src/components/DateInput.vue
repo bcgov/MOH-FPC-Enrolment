@@ -21,12 +21,12 @@
           <!-- We show the blank option so the user can clear out their data.-->
           <option :value="null">Month</option>
           <option
-            v-for="(month, index) in monthList"
+            v-for="(mth, index) in monthList"
             :key="index"
             :data-cy="getCypressValue('Month' + index)"
             :value="index"
           >
-            {{ month }}
+            {{ mth }}
           </option>
         </select>
 

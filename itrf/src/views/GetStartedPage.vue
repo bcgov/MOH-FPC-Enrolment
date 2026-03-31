@@ -10,8 +10,9 @@
         <p>
           Complete this form if you have been asked to let BC PharmaCare know
           that you filed your taxes with the Canada Revenue Agency (CRA) for
-          2022. This allows PharmaCare to check your income with the CRA and set
-          your Fair PharmaCare deductible and family maximum.
+          {{ incomeTaxReturnYear }}. This allows PharmaCare to check your income
+          with the CRA and set your Fair PharmaCare deductible and family
+          maximum.
         </p>
         <p>
           Your Fair PharmaCare deductible and family maximum are normally
@@ -68,10 +69,14 @@
         <br />
         <h2>Taxes filed for {{ incomeTaxReturnYear }}</h2>
         <Radio
-          :label="'Have you filed your ' + incomeTaxReturnYear + ' income tax return with the CRA?'"
-          aria-labelledby="hasFiledIncomeTaxReturn"
           id="filed-income-tax-return"
           v-model="hasFiledIncomeTaxReturn"
+          :label="
+            'Have you filed your ' +
+            incomeTaxReturnYear +
+            ' income tax return with the CRA?'
+          "
+          aria-labelledby="hasFiledIncomeTaxReturn"
           name="filed-income-tax-return"
           :required="true"
           :items="radioOptionsFiledIncomeTaxReturn"
@@ -108,10 +113,10 @@
         </div>
         <br />
         <Radio
-          :label="'Do you have a spouse or common-law partner?'"
-          aria-labelledby="hasSpouse"
           id="spouse"
           v-model="hasSpouse"
+          :label="'Do you have a spouse or common-law partner?'"
+          aria-labelledby="hasSpouse"
           name="spouse"
           :required="true"
           :items="radioOptionsHasSpouse"
@@ -127,10 +132,14 @@
         <br />
         <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
           <Radio
-            :label="'Have they filed their ' + incomeTaxReturnYear + ' income tax return with the CRA?'"
-            aria-labelledby="hasSpouseFiledIncomeTaxReturn"
             id="spouse-filed-income-tax-return"
             v-model="hasSpouseFiledIncomeTaxReturn"
+            :label="
+              'Have they filed their ' +
+              incomeTaxReturnYear +
+              ' income tax return with the CRA?'
+            "
+            aria-labelledby="hasSpouseFiledIncomeTaxReturn"
             name="spouse-filed-income-tax-return"
             :required="true"
             :items="radioOptionsHasSpouseFiledIncomeTaxReturn"
