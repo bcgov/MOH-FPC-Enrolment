@@ -12,10 +12,10 @@
         <div class="row">
           <div class="col-sm-7">
             <InputComponent
+              id="first-name"
               v-model="firstName"
               label="First name"
               aria-label="First name"
-              id="first-name"
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
@@ -44,10 +44,10 @@
               characters.
             </div>
             <InputComponent
+              id="last-name"
               v-model="lastName"
               label="Last name"
               aria-label="Last name"
-              id="last-name"
               :class-name="'mt-3'"
               :input-style="mediumStyles"
               :required="true"
@@ -132,10 +132,10 @@
               Invalid birthdate.
             </div>
             <PhnInput
+              id="personal-health-number"
               v-model="phn"
               label="Personal Health Number (PHN)"
               aria-label="Personal Health Number (PHN)"
-              id="personal-health-number"
               class="mt-3"
               placeholder="1111 111 111"
               :input-style="smallStyles"
