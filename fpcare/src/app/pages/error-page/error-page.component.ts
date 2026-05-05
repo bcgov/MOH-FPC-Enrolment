@@ -3,6 +3,7 @@ import {ErrorPageService} from './error-page.service';
 import {DisplayIcon} from '../../modules/core/components/results-framework/results-framework.component';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-error-page',
   templateUrl: './error-page.component.html',
   styleUrls: ['./error-page.component.scss']

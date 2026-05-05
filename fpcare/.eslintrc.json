@@ -1,0 +1,51 @@
+{
+  "root": true,
+  "ignorePatterns": ["projects/**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@typescript-eslint/recommended"
+      ],
+      "rules": {
+        "@angular-eslint/no-output-on-prefix": "warn",
+        "@angular-eslint/component-selector": [
+          "error",
+          { "type": "element", "style": "kebab-case" }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          { "type": "attribute", "style": "camelCase" }
+        ],
+        "@typescript-eslint/no-unused-expressions": "error",
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/prefer-for-of": "off",
+        "@typescript-eslint/no-empty-function": "warn",
+        "@typescript-eslint/member-ordering": "off",
+        "@angular-eslint/no-empty-lifecycle-method": "warn",
+        "no-bitwise": "error",
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "no-debugger": "error",
+        "no-eval": "error",
+        "no-var": "error",
+        "prefer-const": "error",
+        "radix": "error",
+        "eqeqeq": ["error", "always", { "null": "ignore" }],
+        "no-fallthrough": "error",
+        "no-new-wrappers": "error",
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"]
+      }
+    },
+    {
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "rules": {}
+    }
+  ]
+}

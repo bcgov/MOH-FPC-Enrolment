@@ -1,0 +1,41 @@
+{
+  "name": "moh-common-lib-angular",
+  "version": "1.0.0",
+  "main": "src/public-api.ts",
+  "typings": "src/public-api.ts",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "lint": "ng lint",
+    "prettier": "./node_modules/.bin/prettier --single-quote --write './src/**/*.{ts,js,css,json,scss,html}'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.**.{ts,js,html,scss}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "private": true,
+  "overrides": {
+    "tar": "^7.0.0",
+    "serialize-javascript": "^7.0.0"
+  },
+  "dependencies": {
+    "@angular/common": "^19.2.20",
+    "@angular/compiler": "^19.2.20",
+    "@angular/core": "^19.2.20",
+    "@angular/forms": "^19.2.20",
+    "@angular/platform-browser": "^19.2.20",
+    "@angular/platform-browser-dynamic": "^19.2.20",
+    "@angular/router": "^19.2.20",
+    "@ng-select/ng-select": "^14.7.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.0"
+  },
+  "yalcSig": "d16e7912562ca9ff8fb7bfb09d42b3aa"
+}

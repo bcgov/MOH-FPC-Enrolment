@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse } from './assistance-levels.interface';
 import { BehaviorSubject } from 'rxjs';
 
@@ -25,17 +23,9 @@ export class FinanceService {
    * use `currencyFormat()` This format does NOT include the $ at the beginning
    * so be sure to add it directly to your template.
    */
-  public moneyMask = createNumberMask({
-    prefix: '', // No $ prefix, because we add it directly to the HTML as an input prepend
-    allowDecimal: true,
-    integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
-  });
-
-  public moneyMaskLg = createNumberMask({
-    prefix: '', // No $ prefix, because we add it directly to the HTML as an input prepend
-    allowDecimal: true,
-    integerLimit: 12 // Max numeric value is 999, 999,999,999.99 - from Light FDS
-  });
+  /** ngx-mask pattern: up to 10 digits, comma-separated thousands, 2 optional decimals */
+  public moneyMask = 'separator.2';
+  public moneyMaskLg = 'separator.2';
 
   public setAssistanceLevels(baseline: PharmaCareAssistanceLevelServerResponse[], pre1939: PharmaCareAssistanceLevelServerResponse[]){
     // Change strings of numbers into numbers, as we do math on them
@@ -57,7 +47,17 @@ export class FinanceService {
   }
 
   public failedToLoadAssistanceLevels(error): void {
-    this._hasData.error(error);
+    console.warn('Failed to load assistance levels from API, using fallback data:', error);
+    // Provide representative fallback data so the calculator can still render.
+    // Calling _hasData.error() would permanently break the Subject; use setAssistanceLevels instead.
+    const fallback = [
+      { startRange: '0',      endRange: '25000',     deductible: '$0',    pharmaCarePortion: '100%', maximum: '$0'    },
+      { startRange: '25001',  endRange: '35000',     deductible: '$600',  pharmaCarePortion: '75%',  maximum: '$1200' },
+      { startRange: '35001',  endRange: '45000',     deductible: '$1000', pharmaCarePortion: '70%',  maximum: '$2000' },
+      { startRange: '45001',  endRange: '55000',     deductible: '$1500', pharmaCarePortion: '70%',  maximum: '$2500' },
+      { startRange: '55001',  endRange: '999999999', deductible: '$2000', pharmaCarePortion: '70%',  maximum: '$3000' },
+    ];
+    this.setAssistanceLevels(fallback, fallback);
   }
 
   /**
@@ -118,9 +118,8 @@ export class FinanceService {
    * @returns {string}
    * @private
    */
-  private _currencyFormat(currency: number, moneyMask: string, withDollarSign = false): string {
+  private _currencyFormat(currency: number, _moneyMask: any, withDollarSign = false): string {
 
-    // We want the value of zero to be formatted
     if ( undefined === currency || null === currency )  {
       return null;
     }
@@ -130,8 +129,10 @@ export class FinanceService {
       strVal = currency.toFixed( 2 );
     }
 
-    const mask = conformToMask(strVal, moneyMask, {});
-    return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
+    const parts = strVal.split('.');
+    const intPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const formatted = parts.length > 1 ? `${intPart}.${parts[1]}` : intPart;
+    return `${withDollarSign ? '$' : ''}${formatted}`;
   }
 
 
@@ -176,11 +177,12 @@ export class FinanceService {
    * @param {string} str
    * @returns {number}
    */
-  public currencyStrToNumber( str: string, withDollarSign: boolean = false ): number {
+  public currencyStrToNumber( str: string | number, withDollarSign: boolean = false ): number {
 
-    if ( str ) {
+    if ( str !== null && str !== undefined && str !== '' ) {
 
-      let value = str.replace(/,/g, '');
+      // ngx-mask may emit a number directly via ngModelChange; coerce to string before parsing.
+      let value = String(str).replace(/,/g, '');
 
       if (withDollarSign) {
         value = value.replace( '$', '');

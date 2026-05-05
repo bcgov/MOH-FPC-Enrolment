@@ -3,6 +3,7 @@ import { ValidationComponent, staticImplements } from '../validation-component.i
 import { BaseValidationComponent } from '../base-validation.component';
 
 @Component({
+  standalone: false,
   selector: 'required-validation',
   templateUrl: './required-validation.component.html',
   styleUrls: ['./required-validation.component.scss']

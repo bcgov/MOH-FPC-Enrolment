@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChildrenPageComponent } from './children.component';
 import { CoreModule } from '../../../core/core.module';
 import {FormsModule} from '@angular/forms';
@@ -11,7 +11,7 @@ describe('ChildrenComponent', () => {
   let component: ChildrenPageComponent;
   let fixture: ComponentFixture<ChildrenPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         ChildrenPageComponent

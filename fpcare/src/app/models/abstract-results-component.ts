@@ -1,7 +1,9 @@
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
+import { Directive } from '@angular/core';
 import {DisplayIcon} from '../modules/core/components/results-framework/results-framework.component';
 import {ServerPayload} from './api.model';
 
+@Directive()
 export abstract class AbstractResultsComponent extends Base {
 
   // Any class extending this one, must have a response structure that extends ServerPayload

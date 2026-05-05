@@ -5,6 +5,7 @@ import { growVertical } from '../../../../animations/animations';
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-financial-calculator',
   templateUrl: './financial-calculator.component.html',
   styleUrls: ['./financial-calculator.component.scss'],

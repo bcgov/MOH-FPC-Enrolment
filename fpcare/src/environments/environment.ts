@@ -6,7 +6,7 @@
 export const environment = {
   production: false,
   useDummyData: false,
-  useMockBackend: false,
+  useMockBackend: true,
 
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',
@@ -23,10 +23,10 @@ export const environment = {
   logHTTPRequestsToConsole: true,
 
   /** Do not trigger guards */
-  bypassGuards: true,
+  bypassGuards: false,
 
   /** Bypass maintenance mode / splash page. */
-  bypassSplashPage: false,
+  bypassSplashPage: true,
 
   /** The user is shown a 'Are you sure you want to leave?' prompt when trying to navigate away or close the browser. */
   promptOnExit: false,

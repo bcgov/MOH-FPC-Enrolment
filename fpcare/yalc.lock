@@ -1,0 +1,9 @@
+{
+  "version": "v1",
+  "packages": {
+    "moh-common-lib-angular": {
+      "signature": "d16e7912562ca9ff8fb7bfb09d42b3aa",
+      "file": true
+    }
+  }
+}

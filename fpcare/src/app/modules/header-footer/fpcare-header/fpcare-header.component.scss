@@ -1,9 +1,12 @@
-@import 'variables.scss';
+// Bootstrap mixins and $theme-colors are available via variables.scss's
+// internal @import of bootstrap/scss/mixins and bootstrap/scss/variables.
+@use 'variables' as *;
+@use 'sass:map';
 
 // Header, adds the gold bottom border and shadow
 header nav {
-  background-color: map-get($theme-colors, primary);;
-  border-bottom: 2px solid map-get($theme-colors, secondary);
+  background-color: map.get($theme-colors, primary);
+  border-bottom: 2px solid map.get($theme-colors, secondary);
 
   -webkit-box-shadow: 0 3px 3px 1px rgba(51, 51, 51, 0.5);
   -moz-box-shadow: 0 3px 3px 1px rgba(51, 51, 51, 0.5);

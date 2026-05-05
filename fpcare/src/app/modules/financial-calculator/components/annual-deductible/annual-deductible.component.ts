@@ -2,11 +2,12 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } 
 import { FinanceService } from '../../finance.service';
 import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
 import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import { growVertical } from '../../../../animations/animations';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-annual-deductible',
   templateUrl: './annual-deductible.component.html',
   styleUrls: ['./annual-deductible.component.scss'],

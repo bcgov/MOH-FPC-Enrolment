@@ -1,8 +1,8 @@
 import { Directive, forwardRef, Input } from '@angular/core';
 import { Validator, NG_VALIDATORS, FormControl } from '@angular/forms';
-import * as moment from 'moment';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarFutureDates]',
   providers: [
     {
@@ -45,11 +45,10 @@ export class CalendarFutureDatesDirective {
       day = parseInt(day.toString().slice(0, 2), 10);
     }
 
-    const diff = moment({
-      year: year,
-      month: month - 1, //Moment starts month indice at 0.
-      day: day
-    }).diff(moment(), 'days', true);
+    const inputDate = new Date(year, month - 1, day);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const diff = (inputDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
 
     /**
      * Validate current date as if it's a future date, and reject it when only

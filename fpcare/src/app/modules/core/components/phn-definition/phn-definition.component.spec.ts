@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhnDefinitionComponent } from './phn-definition.component';
 import {ModalModule} from 'ngx-bootstrap/modal';
@@ -8,7 +8,7 @@ describe('PhnDefinitionComponent', () => {
   let component: PhnDefinitionComponent;
   let fixture: ComponentFixture<PhnDefinitionComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         PhnDefinitionComponent,

@@ -13,7 +13,7 @@
 // import { FPCareRequiredDirective } from './fpcare-required.directive';
 // import { Directive, ElementRef, Input, HostListener, HostBinding, Renderer2 } from '@angular/core';
 // import { ContactInformationComponent } from '../pages/contact-information/contact-information.component';
-// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 // import { FormsModule } from '@angular/forms';
 // import { FPCareDateComponent } from '../core/date/date.component';
 // import { ApplicantDataService } from '../services/applicant-data.service';
@@ -30,7 +30,7 @@
 //   let component: ContactInformationComponent;
 //   let fixture: ComponentFixture<ContactInformationComponent>;
 
-//   beforeEach(async(() => {
+//   beforeEach(waitForAsync(() => {
 //     TestBed.configureTestingModule({
 //       imports: [FormsModule, Select2Module, RouterTestingModule],
 //      declarations: [
@@ -53,7 +53,7 @@
 //   });
 
 
-//   it('should have validation errors when leaving first name blank', async(() =>{
+//   it('should have validation errors when leaving first name blank', waitForAsync(() =>{
 //     let validationErrorDe =  fixture.debugElement.query(By.css('.text-danger'));
 //     expect( validationErrorDe ).toBeNull();
 

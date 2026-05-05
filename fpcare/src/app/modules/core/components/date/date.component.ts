@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Base } from 'moh-common-lib';
-import * as moment from 'moment';
+import { Base } from 'moh-common-lib-angular';
 import { SimpleDate } from './simple-date.interface';
 
 export enum MonthName {
@@ -20,6 +19,7 @@ export enum MonthName {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpcare-date',
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
@@ -94,9 +94,9 @@ export class FPCareDateComponent extends Base implements OnInit {
    * Sets the default values to the current clientside date.
    */
   setToToday(): void {
-    this.date.month = moment().month() + 1; //0 is blank/unselected in options list
-    this.date.day = moment().date();
-    this.date.year = moment().year();
+    this.date.month = new Date().getMonth() + 1; //0 is blank/unselected in options list
+    this.date.day = new Date().getDate();
+    this.date.year = new Date().getFullYear();
   }
 
   isValid(): boolean {
@@ -151,11 +151,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   private get moment() {
-    return moment({
-      year: this.date.year,
-      month: this.date.month - 1, //Moment starts month indice at 0.
-      day: this.date.day
-    });
+    return new Date(this.date.year, this.date.month - 1, this.date.day);
   }
 
 }

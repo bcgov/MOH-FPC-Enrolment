@@ -11,18 +11,21 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular/build:application",
           "options": {
-            "deployUrl": "/fpcare/",
             "outputPath": "dist",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": ["zone.js", "@angular/localize/init"],
+            "baseHref": "/fpcare/",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/app/styles"
-              ]
+              ],
+              "sass": {
+                "silenceDeprecations": ["import"]
+              }
             },
             "assets": [
               "src/assets",
@@ -36,15 +39,12 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/fpcare/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -55,15 +55,16 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "options": {
-            "browserTarget": "fpcare:build",
+            "buildTarget": "fpcare:build",
             "port": 4302,
-            "proxyConfig": "src/proxy.conf.json"
+            "proxyConfig": "src/proxy.conf.json",
+            "servePath": "/fpcare/"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fpcare:build:production"
+              "buildTarget": "fpcare:build:production"
             }
           }
         },

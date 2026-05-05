@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ConsentModalComponent } from './consent-modal.component';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ describe('ConsentModalComponent', () => {
   let component: ConsentModalComponent;
   let fixture: ComponentFixture<ConsentModalComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         FormsModule,

@@ -16,11 +16,12 @@ import {
 import {ValidationService} from '../../../../services/validation.service';
 import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import { Address } from 'moh-common-lib';
+import { Address } from 'moh-common-lib-angular';
 import { SpaEnvService } from '../../../../services/spa-env.service';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-mailing-address',
   templateUrl: './mailing-address.component.html',
   styleUrls: ['./mailing-address.component.scss']

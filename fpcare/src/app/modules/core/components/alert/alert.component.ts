@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss']
