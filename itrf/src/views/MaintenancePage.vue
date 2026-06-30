@@ -4,7 +4,7 @@
       <div class="container pt-3 pt-sm-5 mb-5">
         <h1>Maintenance Mode</h1>
         <hr />
-        <p>{{ maintenanceMessage }}</p>
+        <p data-cy="maintenance-message">{{ maintenanceMessage }}</p>
       </div>
     </PageContent>
   </div>
