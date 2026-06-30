@@ -34,8 +34,8 @@ jobs:
         run: npm run test:unit
       - name: LINTing
         run: npm run lint
-      # - name: E2E tests
-      #   run: npm run test:e2e-headless
+      - name: E2E tests
+        run: npm run test:e2e:headless
   build:
     runs-on: ubuntu-latest
     defaults:
