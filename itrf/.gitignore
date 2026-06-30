@@ -9,8 +9,11 @@ lerna-debug.log*
 
 node_modules
 dist
+coverage
 dist-ssr
 *.local
+cypress/downloads/*
+cypress/screenshots/*
 
 # Editor directories and files
 .vscode/*
