@@ -47,7 +47,7 @@
     "sass": "^1.69.5",
     "start-server-and-test": "^3.0.11",
     "vite": "^8.1.2",
-    "vitest": "^1.1.0"
+    "vitest": "^4.1.9"
   },
   "lint-staged": {
     "src/*/*.{js,jsx,ts,tsx,vue}": [
