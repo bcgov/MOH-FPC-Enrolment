@@ -65,7 +65,6 @@ describe("Date helpers", () => {
 
   it("getBCTimestamp", () => {
     const timeStamp = getBCTimestamp();
-    console.log("potato", timeStamp)
     //should match a specific timestamp format
     //eg.  2026-06-30 10:36:46 GMT-7
     const base64Regex =
