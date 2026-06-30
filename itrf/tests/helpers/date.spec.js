@@ -3,6 +3,7 @@ import {
   getISODateString,
   formatDate,
   formatDateDisplay,
+  getBCTimestamp,
   isValidISODateString,
 } from "../../src/helpers/date";
 import { it, describe, expect } from "vitest";
@@ -60,5 +61,16 @@ describe("Date helpers", () => {
     expect(formatDateDisplay(undefined)).toEqual(undefined);
     expect(formatDateDisplay(null)).toEqual(null);
     expect(formatDateDisplay(NaN)).toEqual(NaN);
+  });
+
+  it("getBCTimestamp", () => {
+    const timeStamp = getBCTimestamp();
+    console.log("potato", timeStamp)
+    const base64Regex =
+      /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT-7$/;
+
+    const regexTest = base64Regex.test(timeStamp);
+
+    expect(regexTest).toBe(true);
   });
 });
