@@ -34,7 +34,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.11",
-    "cypress": "^13.6.6",
+    "cypress": "^15.18.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-cypress": "^2.15.1",
