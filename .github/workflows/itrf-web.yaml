@@ -27,15 +27,15 @@ jobs:
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
         with:
-          node-version: "18"
+          node-version: "24"
       - name: Install dependencies
         run: npm ci
       - name: Unit tests
         run: npm run test:unit
       - name: LINTing
         run: npm run lint
-      # - name: E2E tests
-      #   run: npm run test:e2e-headless
+      - name: E2E tests
+        run: npm run test:e2e:headless
   build:
     runs-on: ubuntu-latest
     defaults:
@@ -44,7 +44,7 @@ jobs:
     needs: [test]
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [22.x, 24.x, 26.x]
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1

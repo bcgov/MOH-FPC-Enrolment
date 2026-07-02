@@ -64,7 +64,7 @@ objects:
         sourceStrategy:
           from:
             kind: DockerImage
-            name: registry.redhat.io/ubi9/nodejs-18
+            name: registry.redhat.io/ubi9/nodejs-24
           env:
             - name: BUILD_LOGLEVEL
               value: "5"
