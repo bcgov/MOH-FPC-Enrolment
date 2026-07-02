@@ -12,7 +12,7 @@
     "test:e2e:headless": "start-server-and-test 'vite --host --port 5173' 5173 'cypress run --config baseUrl=http://localhost:5173/itrf/ --env environment=local'",
     "test:e2e:dev": "cypress open --e2e --browser electron --config baseUrl=https://dev.my.gov.bc.ca/itrf/ --env environment=dev",
     "test:e2e:test": "cypress open --e2e --browser electron --config baseUrl=https://test.my.gov.bc.ca/itrf/ --env environment=test",
-    "lint": "eslint .",
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
     "format": "prettier .  --write",
     "precommit": "lint-staged",
     "prepare": "cd .. && husky itrf/.husky"
@@ -32,14 +32,13 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@vitejs/plugin-vue": "^6.0.7",
     "@vue/test-utils": "^2.4.11",
     "cypress": "^15.18.0",
-    "eslint": "^10.6.0",
-    "eslint-plugin-compat": "^7.0.2",
-    "eslint-plugin-cypress": "^6.4.2",
-    "eslint-plugin-vue": "^10.9.2",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^2.15.1",
+    "eslint-plugin-vue": "^9.22.0",
     "husky": "^9.0.11",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.8",
@@ -59,12 +58,5 @@
     "hooks": {
       "pre-commit": "npm precommit"
     }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead",
-    "not Opera > 0",
-    "not op_mini all"
-  ]
+  }
 }
