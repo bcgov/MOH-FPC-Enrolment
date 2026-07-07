@@ -17,13 +17,9 @@ class ApiService {
         birthDate: formatDate(formState.birthdate),
       },
     };
-    return axios.post(
-      VALIDATE_PERSON_URL + `/${formState.applicationUuid}`,
-      jsonPayload,
-      {
-        headers,
-      },
-    );
+    return axios.post(VALIDATE_PERSON_URL + `/${formState.applicationUuid}`, jsonPayload, {
+      headers,
+    });
   }
 
   submitForm(token, formState) {
@@ -48,7 +44,7 @@ class ApiService {
       JSON.stringify(jsonPayload),
       {
         headers,
-      },
+      }
     );
   }
 

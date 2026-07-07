@@ -7,15 +7,20 @@
             <h1 class="mb-0">Confirmation of submission</h1>
           </div>
           <div class="col-3 text-right">
-            <a href="javascript:void(0)" class="print-btn" @click="printPage()"
-              ><b>Print or save as PDF</b>
+            <a
+              href="javascript:void(0)"
+              class="print-btn"
+              @click="printPage()"
+            >
+              <b>Print or save as PDF</b>
               <font-awesome-icon icon="print" />
             </a>
             <div class="tip-container">
-              <font-awesome-icon class="ml-2" icon="info-circle" />
-              <div class="tip">
-                To save as a PDF, in the print window, select “Save as PDF”
-              </div>
+              <font-awesome-icon
+                class="ml-2"
+                icon="info-circle"
+              />
+              <div class="tip">To save as a PDF, in the print window, select “Save as PDF”</div>
             </div>
           </div>
         </div>
@@ -35,9 +40,9 @@
         <hr />
         <p><b>Print or save this page for your records.</b></p>
         <p>
-          We will verify your income with the CRA. Please allow two to three
-          weeks for delivery of your Confirmation of Fair PharmaCare Assistance
-          letter. This letter will have your deductible and family maximum for
+          We will verify your income with the CRA. Please allow two to three weeks for delivery of
+          your Confirmation of Fair PharmaCare Assistance letter. This letter will have your
+          deductible and family maximum for
           {{ yearSubmitted }}.
         </p>
         <br />
@@ -96,8 +101,7 @@ export default {
       const lastName = this.$store.state.lastName;
       const birthdate = formatDateDisplay(this.$store.state.birthdate);
       const phn = this.$store.state.phn;
-      const hasSpouse =
-        this.$store.state.applicantHasSpouse == "N" ? "No" : "Yes";
+      const hasSpouse = this.$store.state.applicantHasSpouse == "N" ? "No" : "Yes";
       items.push(
         {
           label: "First name",
@@ -118,7 +122,7 @@ export default {
         {
           label: "Has a spouse or common-law partner",
           value: hasSpouse,
-        },
+        }
       );
       return items;
     },
@@ -131,7 +135,7 @@ export default {
     logService.logNavigation(
       this.$store.state.applicationUuid,
       routes.SUBMISSION.path,
-      routes.SUBMISSION.title,
+      routes.SUBMISSION.title
     );
   },
   methods: {

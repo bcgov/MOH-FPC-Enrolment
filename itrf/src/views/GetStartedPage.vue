@@ -1,69 +1,67 @@
 <template>
   <div>
-    <ConsentModal v-if="showConsentModal" @close="handleCloseConsentModal" />
-    <ProgressBar :routes="stepRoutes" :current-path="$route.path" />
+    <ConsentModal
+      v-if="showConsentModal"
+      @close="handleCloseConsentModal"
+    />
+    <ProgressBar
+      :routes="stepRoutes"
+      :current-path="$route.path"
+    />
     <PageContent>
       <main class="container pt-3 pt-sm-5 mb-5">
         <h1>Get started</h1>
         <hr />
         <h2>Welcome</h2>
         <p>
-          Complete this form if you have been asked to let BC PharmaCare know
-          that you filed your taxes with the Canada Revenue Agency (CRA) for
-          {{ incomeTaxReturnYear }}. This allows PharmaCare to check your income
-          with the CRA and set your Fair PharmaCare deductible and family
-          maximum.
+          Complete this form if you have been asked to let BC PharmaCare know that you filed your
+          taxes with the Canada Revenue Agency (CRA) for
+          {{ incomeTaxReturnYear }}. This allows PharmaCare to check your income with the CRA and
+          set your Fair PharmaCare deductible and family maximum.
         </p>
         <p>
-          Your Fair PharmaCare deductible and family maximum are normally
-          calculated using your net income from two years ago. If we are not
-          able to verify your net income with the CRA, your PharmaCare
-          deductible is set to the default maximum of $10,000. This means Fair
-          PharmaCare will help with costs only after you spend $10,000 on
-          eligible prescription drugs and/or medical supplies.
+          Your Fair PharmaCare deductible and family maximum are normally calculated using your net
+          income from two years ago. If we are not able to verify your net income with the CRA, your
+          PharmaCare deductible is set to the default maximum of $10,000. This means Fair PharmaCare
+          will help with costs only after you spend $10,000 on eligible prescription drugs and/or
+          medical supplies.
         </p>
         <br />
         <h2>You can use this form if</h2>
         <ul>
           <li>You are registered for Fair PharmaCare</li>
+          <li>You have given PharmaCare your consent to verify your net income with the CRA</li>
           <li>
-            You have given PharmaCare your consent to verify your net income
-            with the CRA
-          </li>
-          <li>
-            You and your spouse or common-law partner (if applicable) have filed
-            your
+            You and your spouse or common-law partner (if applicable) have filed your
             {{ incomeTaxReturnYear }} income tax return with the CRA
           </li>
         </ul>
         <br />
-        <h2>
-          If you were unable to file taxes for year {{ incomeTaxReturnYear }}
-        </h2>
+        <h2>If you were unable to file taxes for year {{ incomeTaxReturnYear }}</h2>
         <p>
-          You may not have been able to file taxes in Canada two years ago. You
-          may have worked in another country or you may have been a minor (under
-          18) with no income. In this case, you may be able to report your
-          income using the Fair PharmaCare Proof of Income Affidavit.
+          You may not have been able to file taxes in Canada two years ago. You may have worked in
+          another country or you may have been a minor (under 18) with no income. In this case, you
+          may be able to report your income using the Fair PharmaCare Proof of Income Affidavit.
           <a
             href="https://www2.gov.bc.ca/assets/gov/health/forms/5357fil.pdf"
             target="_blank"
-            >Download a copy</a
           >
-          or contact us at 1-800-663-7100 (toll-free), 604-683-7151 (Lower
-          Mainland) to have one sent to you.
+            Download a copy
+          </a>
+          or contact us at 1-800-663-7100 (toll-free), 604-683-7151 (Lower Mainland) to have one
+          sent to you.
         </p>
         <br />
         <h2>Other tax years</h2>
         <p>
-          If you received a letter from PharmaCare / HIBC referring to a tax
-          year other than {{ incomeTaxReturnYear }}, do not use this online
-          form. Download and mail the
+          If you received a letter from PharmaCare / HIBC referring to a tax year other than
+          {{ incomeTaxReturnYear }}, do not use this online form. Download and mail the
           <a
             href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan"
             target="_blank"
-            >print form</a
           >
+            print form
+          </a>
           or contact us for support.
         </p>
         <br />
@@ -71,11 +69,7 @@
         <Radio
           id="filed-income-tax-return"
           v-model="hasFiledIncomeTaxReturn"
-          :label="
-            'Have you filed your ' +
-            incomeTaxReturnYear +
-            ' income tax return with the CRA?'
-          "
+          :label="'Have you filed your ' + incomeTaxReturnYear + ' income tax return with the CRA?'"
           aria-labelledby="hasFiledIncomeTaxReturn"
           name="filed-income-tax-return"
           :required="true"
@@ -83,10 +77,7 @@
           cypress-id="filed-income-tax-return"
         />
         <div
-          v-if="
-            v$.hasFiledIncomeTaxReturn.$dirty &&
-            v$.hasFiledIncomeTaxReturn.required.$invalid
-          "
+          v-if="v$.hasFiledIncomeTaxReturn.$dirty && v$.hasFiledIncomeTaxReturn.required.$invalid"
           class="text-danger"
           aria-live="assertive"
         >
@@ -100,14 +91,13 @@
           <ErrorBox>
             <p>
               <b>
-                You can't submit this form if you have not filed your taxes for
-                the year {{ incomeTaxReturnYear }}.
+                You can't submit this form if you have not filed your taxes for the year
+                {{ incomeTaxReturnYear }}.
               </b>
             </p>
             <p>
-              If you have an urgent medical need for prescriptions, please
-              contact us at 1-800-663-7100 (toll-free) or at 604-683-7151 (Lower
-              Mainland).
+              If you have an urgent medical need for prescriptions, please contact us at
+              1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).
             </p>
           </ErrorBox>
         </div>
@@ -130,14 +120,15 @@
           Select an option to answer the question.
         </div>
         <br />
-        <div v-if="hasSpouse === 'Y'" class="ml-4 mb-0">
+        <div
+          v-if="hasSpouse === 'Y'"
+          class="ml-4 mb-0"
+        >
           <Radio
             id="spouse-filed-income-tax-return"
             v-model="hasSpouseFiledIncomeTaxReturn"
             :label="
-              'Have they filed their ' +
-              incomeTaxReturnYear +
-              ' income tax return with the CRA?'
+              'Have they filed their ' + incomeTaxReturnYear + ' income tax return with the CRA?'
             "
             aria-labelledby="hasSpouseFiledIncomeTaxReturn"
             name="spouse-filed-income-tax-return"
@@ -162,15 +153,14 @@
             <ErrorBox>
               <p>
                 <b>
-                  You can't submit this form if your spouse or common-law
-                  partner has not filed their taxes for the year
+                  You can't submit this form if your spouse or common-law partner has not filed
+                  their taxes for the year
                   {{ incomeTaxReturnYear }}.
                 </b>
               </p>
               <p>
-                If you have an urgent medical need for prescriptions, please
-                contact us at 1-800-663-7100 (toll-free) or at 604-683-7151
-                (Lower Mainland).
+                If you have an urgent medical need for prescriptions, please contact us at
+                1-800-663-7100 (toll-free) or at 604-683-7151 (Lower Mainland).
               </p>
             </ErrorBox>
           </div>
@@ -204,11 +194,7 @@ import {
   SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN,
   SET_MAINTENANCE_MESSAGE,
 } from "../store/index";
-import {
-  scrollTo,
-  scrollToError,
-  getTopScrollPosition,
-} from "../helpers/scroll";
+import { scrollTo, scrollToError, getTopScrollPosition } from "../helpers/scroll";
 import { stepRoutes, routes, isPastPath } from "../router/index.js";
 
 const validateQuestions = (_value, vm) => {
@@ -236,10 +222,7 @@ export default {
   // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    if (
-      pageStateService.isPageComplete(to.path) ||
-      isPastPath(to.path, from.path)
-    ) {
+    if (pageStateService.isPageComplete(to.path) || isPastPath(to.path, from.path)) {
       next();
     } else {
       // Navigate to self.
@@ -277,13 +260,10 @@ export default {
     await spaEnvService
       .loadEnvs()
       .then(() => {
-        if (
-          spaEnvService.values &&
-          spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_FLAG === "true"
-        ) {
+        if (spaEnvService.values && spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_FLAG === "true") {
           this.$store.commit(
             SET_MAINTENANCE_MESSAGE,
-            spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_MESSAGE,
+            spaEnvService.values.SPA_ENV_ITRF_MAINTENANCE_MESSAGE
           );
           const toPath = routes.MAINTENANCE.path;
           pageStateService.setPageComplete(toPath);
@@ -300,13 +280,11 @@ export default {
     logService.logNavigation(
       this.applicationUuid,
       routes.GET_STARTED.path,
-      routes.GET_STARTED.title,
+      routes.GET_STARTED.title
     );
-    this.hasFiledIncomeTaxReturn =
-      this.$store.state.applicantHasFiledIncomeTaxReturn;
+    this.hasFiledIncomeTaxReturn = this.$store.state.applicantHasFiledIncomeTaxReturn;
     this.hasSpouse = this.$store.state.applicantHasSpouse;
-    this.hasSpouseFiledIncomeTaxReturn =
-      this.$store.state.spouseHasFiledIncomeTaxReturn;
+    this.hasSpouseFiledIncomeTaxReturn = this.$store.state.spouseHasFiledIncomeTaxReturn;
     this.showConsentModal = this.$store.state.isInfoCollectionNoticeOpen;
     this.radioOptionsFiledIncomeTaxReturn = [
       {
@@ -374,14 +352,11 @@ export default {
         scrollToError();
         return;
       }
-      this.$store.commit(
-        SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN,
-        this.hasFiledIncomeTaxReturn,
-      );
+      this.$store.commit(SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN, this.hasFiledIncomeTaxReturn);
       this.$store.commit(SET_APPLICANT_HAS_SPOUSE, this.hasSpouse);
       this.$store.commit(
         SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN,
-        this.hasSpouseFiledIncomeTaxReturn,
+        this.hasSpouseFiledIncomeTaxReturn
       );
 
       // Navigate to next path.

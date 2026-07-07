@@ -14,9 +14,7 @@
           </div>
         </div>
         <div class="col-md-6 p-3">
-          <p class="step">
-            Step {{ currentStepNumber }} of {{ routes.length - 1 }}
-          </p>
+          <p class="step">Step {{ currentStepNumber }} of {{ routes.length - 1 }}</p>
           <p class="step">{{ currentStepTitle }}</p>
         </div>
       </div>
@@ -35,9 +33,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <p class="step">
-            Step {{ currentStepNumber }} of {{ routes.length }}
-          </p>
+          <p class="step">Step {{ currentStepNumber }} of {{ routes.length }}</p>
           <p class="step">{{ currentStepTitle }}</p>
         </div>
       </div>
@@ -69,10 +65,7 @@ export default {
         return element.path === this.currentPath;
       });
       return {
-        width:
-          (100 / this.routes.length) * index +
-          100 / this.routes.length / 2 +
-          "%",
+        width: (100 / this.routes.length) * index + 100 / this.routes.length / 2 + "%",
       };
     },
     verticalProgressBarStyles() {

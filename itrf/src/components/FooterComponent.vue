@@ -9,43 +9,51 @@
                 <a
                   href="https://www2.gov.bc.ca/gov/content/home/disclaimer"
                   target="_blank"
-                  >Disclaimer</a
                 >
+                  Disclaimer
+                </a>
               </li>
               <li class="d-md-inline-block m-1 px-md-3 py-1">
                 <a
                   href="https://www2.gov.bc.ca/gov/content/home/privacy"
                   target="_blank"
-                  >Privacy</a
                 >
+                  Privacy
+                </a>
               </li>
               <li class="d-md-inline-block m-1 px-md-3 py-1">
                 <a
                   href="https://www2.gov.bc.ca/gov/content/home/accessibility"
                   target="_blank"
-                  >Accessibility</a
                 >
+                  Accessibility
+                </a>
               </li>
               <li class="d-md-inline-block m-1 px-md-3 py-1">
                 <a
                   href="https://www2.gov.bc.ca/gov/content/home/copyright"
                   target="_blank"
-                  >Copyright</a
                 >
+                  Copyright
+                </a>
               </li>
               <li class="d-md-inline-block m-1 px-md-3 py-1">
                 <a
                   href="http://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents-contact-us"
                   target="_blank"
-                  >Contact Us</a
                 >
+                  Contact Us
+                </a>
               </li>
             </ul>
           </div>
           <div class="col-md-1 text-right">
-            <span v-if="version" class="text-right version"
-              >v{{ version }}</span
+            <span
+              v-if="version"
+              class="text-right version"
             >
+              v{{ version }}
+            </span>
           </div>
         </div>
       </div>

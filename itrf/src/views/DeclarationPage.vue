@@ -7,12 +7,12 @@
         <hr />
         <p><b>Please read and click to sign.</b></p>
         <p>
-          I certify that the information given in this application form is true,
-          correct and complete.
+          I certify that the information given in this application form is true, correct and
+          complete.
         </p>
         <p>
-          I certify that I (and my spouse or common-law partner, if applicable)
-          have filed an income return with the CRA for the tax year
+          I certify that I (and my spouse or common-law partner, if applicable) have filed an income
+          return with the CRA for the tax year
           {{ incomeTaxReturnYear }}.
         </p>
         <Checkbox
@@ -24,11 +24,10 @@
         <div class="container info pb-5">
           <InfoBox class="pt-4">
             <p>
-              <b
-                >After clicking the Submit button, do not navigate away from
-                this page. Please wait for the submission process to
-                complete.</b
-              >
+              <b>
+                After clicking the Submit button, do not navigate away from this page. Please wait
+                for the submission process to complete.
+              </b>
             </p>
           </InfoBox>
         </div>

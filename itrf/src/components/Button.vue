@@ -4,7 +4,10 @@
     :data-cy="getCypressValue()"
     :disabled="disabled || hasLoader"
   >
-    <div v-if="hasLoader" class="bcgov-loader-show">
+    <div
+      v-if="hasLoader"
+      class="bcgov-loader-show"
+    >
       <Loader />
     </div>
     {{ label }}

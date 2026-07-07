@@ -39,8 +39,4 @@ const app = createApp({
   ...App,
 });
 
-app
-  .use(store)
-  .use(router)
-  .component("font-awesome-icon", FontAwesomeIcon)
-  .mount("#app");
+app.use(store).use(router).component("font-awesome-icon", FontAwesomeIcon).mount("#app");
