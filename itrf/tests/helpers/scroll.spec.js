@@ -1,8 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-const spyOnWindowScrollTo = vi
-  .spyOn(window, "scrollTo")
-  .mockImplementation(vi.fn);
+const spyOnWindowScrollTo = vi.spyOn(window, "scrollTo").mockImplementation(vi.fn);
 
 describe("Helper scroll.js scrollTo()", () => {
   afterEach(() => {

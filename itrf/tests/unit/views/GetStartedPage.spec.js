@@ -28,15 +28,11 @@ const router = createRouter({
 
 vi.mock("axios");
 
-vi.spyOn(logService, "logNavigation").mockImplementation(() =>
-  Promise.resolve("logged"),
-);
+vi.spyOn(logService, "logNavigation").mockImplementation(() => Promise.resolve("logged"));
 vi.spyOn(logService, "logError").mockImplementation(() => {
   Promise.resolve("logged");
 });
-vi.spyOn(logService, "logInfo").mockImplementation(() =>
-  Promise.resolve("logged"),
-);
+vi.spyOn(logService, "logInfo").mockImplementation(() => Promise.resolve("logged"));
 
 const mockAxiosResponse = {
   data: {
