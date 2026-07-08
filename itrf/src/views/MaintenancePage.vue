@@ -31,14 +31,9 @@ export default {
     logService.logNavigation(
       this.$store.state.applicationUuid,
       routes.MAINTENANCE.path,
-      routes.MAINTENANCE.title,
+      routes.MAINTENANCE.title
     );
-    if (
-      this &&
-      this.$store &&
-      this.$store.state &&
-      this.$store.state.maintenanceMessage
-    ) {
+    if (this && this.$store && this.$store.state && this.$store.state.maintenanceMessage) {
       this.maintenanceMessage = this.$store.state.maintenanceMessage;
     }
   },

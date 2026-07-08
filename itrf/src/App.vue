@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <HeaderComponent :title="pageTitle" image-path="/itrf/images/" />
+    <HeaderComponent
+      :title="pageTitle"
+      image-path="/itrf/images/"
+    />
     <router-view></router-view>
     <FooterComponent :version="version" />
   </div>

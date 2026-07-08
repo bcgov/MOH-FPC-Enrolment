@@ -13,10 +13,7 @@ export const dateDataValidator = (_, vm) => {
   const year = data.year;
   const month = data.month;
   const day = data.day;
-  if (
-    !(year && typeof month === "number" && day) &&
-    (year || typeof month === "number" || day)
-  ) {
+  if (!(year && typeof month === "number" && day) && (year || typeof month === "number" || day)) {
     return false;
   }
   const isoDateString = getISODateString(year, month + 1, day);

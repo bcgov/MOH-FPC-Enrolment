@@ -2,7 +2,10 @@
   <div class="error-box container">
     <div class="row align-items-center">
       <div class="col-md-1 pr-0 text-center text-danger">
-        <font-awesome-icon icon="times-circle" size="3x" />
+        <font-awesome-icon
+          icon="times-circle"
+          size="3x"
+        />
       </div>
       <div class="col-md-10 py-2">
         <slot></slot>

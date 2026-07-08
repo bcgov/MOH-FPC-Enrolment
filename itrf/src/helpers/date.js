@@ -38,14 +38,7 @@ export const isValidISODateString = (isoDateString) => {
     return false;
   }
   const daysInMonth = getDaysInMonth(new Date(year, month - 1));
-  if (
-    year >= 0 &&
-    year <= 9999 &&
-    month >= 1 &&
-    month <= 12 &&
-    day >= 1 &&
-    day <= daysInMonth
-  ) {
+  if (year >= 0 && year <= 9999 && month >= 1 && month <= 12 && day >= 1 && day <= daysInMonth) {
     return isValid(new Date(isoDateString));
   }
   return false;

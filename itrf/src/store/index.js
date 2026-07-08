@@ -11,16 +11,13 @@ export const RESET_FORM = "resetForm";
 export const NEW_FORM = "newForm";
 
 // For Info Collection Notice
-export const SET_IS_INFO_COLLECTION_NOTICE_OPEN =
-  "setIsInfoCollectionNoticeOpen";
+export const SET_IS_INFO_COLLECTION_NOTICE_OPEN = "setIsInfoCollectionNoticeOpen";
 export const SET_CAPTCHA_TOKEN = "setCaptchaToken";
 
 // For Get Started Page
-export const SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN =
-  "setApplicantHasFiledIncomeTaxReturn";
+export const SET_APPLICANT_HAS_FILED_INCOME_TAX_RETURN = "setApplicantHasFiledIncomeTaxReturn";
 export const SET_APPLICANT_HAS_SPOUSE = "setApplicantHasSpouse";
-export const SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN =
-  "setSpouseHasFiledIncomeTaxReturn";
+export const SET_SPOUSE_HAS_FILED_INCOME_TAX_RETURN = "setSpouseHasFiledIncomeTaxReturn";
 export const SET_MAINTENANCE_MESSAGE = "setMaintenanceMessage";
 
 // For Personal Info Page

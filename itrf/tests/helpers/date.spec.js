@@ -20,9 +20,7 @@ describe("Date helpers", () => {
     expect(getISODateString(2021, null, 8)).toEqual("2021-00-08");
     expect(getISODateString(2021, 7, null)).toEqual("2021-07-00");
     expect(getISODateString(null, null, null)).toEqual("0000-00-00");
-    expect(getISODateString(undefined, undefined, undefined)).toEqual(
-      "0000-00-00",
-    );
+    expect(getISODateString(undefined, undefined, undefined)).toEqual("0000-00-00");
     expect(getISODateString(NaN, NaN, NaN)).toEqual("0000-00-00");
   });
 
@@ -67,8 +65,7 @@ describe("Date helpers", () => {
     const timeStamp = getBCTimestamp();
     //should match a specific timestamp format
     //eg.  2026-06-30 10:36:46 GMT-7
-    const base64Regex =
-      /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{1,2}$/;
+    const base64Regex = /^[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} GMT[+-][0-9]{1,2}$/;
 
     const regexTest = base64Regex.test(timeStamp);
 

@@ -7,7 +7,10 @@
       <div class="container">
         <div>
           <div class="logo-container mr-3 d-inline-block align-middle">
-            <a href="https://gov.bc.ca" target="_blank">
+            <a
+              href="https://gov.bc.ca"
+              target="_blank"
+            >
               <img
                 alt="BC Logo"
                 class="print-hide"

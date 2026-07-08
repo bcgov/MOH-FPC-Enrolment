@@ -1,14 +1,14 @@
 <template>
   <div>
-    <ProgressBar :routes="stepRoutes" :current-path="$route.path" />
+    <ProgressBar
+      :routes="stepRoutes"
+      :current-path="$route.path"
+    />
     <PageContent>
       <main class="container pt-3 pt-sm-5 mb-5">
         <h1>Personal Information</h1>
         <hr />
-        <p>
-          Enter your name as it appears on your driver's licence, BC Services
-          Card or CareCard.
-        </p>
+        <p>Enter your name as it appears on your driver's licence, BC Services Card or CareCard.</p>
         <div class="row">
           <div class="col-sm-7">
             <InputComponent
@@ -39,9 +39,8 @@
               class="text-danger"
               aria-live="assertive"
             >
-              First name must begin with a letter and cannot include special
-              characters except hyphens, periods, apostrophes and blank
-              characters.
+              First name must begin with a letter and cannot include special characters except
+              hyphens, periods, apostrophes and blank characters.
             </div>
             <InputComponent
               id="last-name"
@@ -71,9 +70,8 @@
               class="text-danger"
               aria-live="assertive"
             >
-              Last name must begin with a letter and cannot include special
-              characters except hyphens, periods, apostrophes and blank
-              characters.
+              Last name must begin with a letter and cannot include special characters except
+              hyphens, periods, apostrophes and blank characters.
             </div>
             <DateInput
               id="birthdate"
@@ -101,9 +99,7 @@
               Birthdate is required.
             </div>
             <div
-              v-if="
-                v$.birthdate.$dirty && v$.birthdate.dateDataValidator.$invalid
-              "
+              v-if="v$.birthdate.$dirty && v$.birthdate.dateDataValidator.$invalid"
               class="text-danger"
               aria-live="assertive"
             >
@@ -155,8 +151,7 @@
               v-if="
                 v$.phn.$dirty &&
                 !v$.phn.required.$invalid &&
-                (v$.phn.phnValidator.$invalid ||
-                  v$.phn.phnFirstDigitValidator.$invalid)
+                (v$.phn.phnValidator.$invalid || v$.phn.phnFirstDigitValidator.$invalid)
               "
               class="text-danger"
               aria-live="assertive"
@@ -172,14 +167,14 @@
               <ErrorBox>
                 <p><b>Validation error</b></p>
                 <p>
-                  The information provided does not match our records. Please
-                  try again one more time. If the validation result is
-                  unsuccessful a third time, please contact
+                  The information provided does not match our records. Please try again one more
+                  time. If the validation result is unsuccessful a third time, please contact
                   <a
                     href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us"
                     target="_blank"
-                    >Health Insurance BC</a
                   >
+                    Health Insurance BC
+                  </a>
                   to process your Income Tax Return Filed form.
                 </p>
               </ErrorBox>
@@ -194,10 +189,12 @@
           </div>
 
           <div class="col-sm-5">
-            <TipBox title="Tip: PHN number" class="mt-2">
+            <TipBox
+              title="Tip: PHN number"
+              class="mt-2"
+            >
               <p>
-                The 10-digit number can be found on the back of your driver's
-                licence,
+                The 10-digit number can be found on the back of your driver's licence,
                 <a
                   href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents/personal-health-identification/your-bc-services-card"
                   target="_blank"
@@ -243,17 +240,10 @@ import PageContent from "../components/PageContent.vue";
 import ContinueBar from "../components/ContinueBar.vue";
 import InputComponent from "../components/InputComponent.vue";
 import DateInput from "../components/DateInput.vue";
-import {
-  distantPastValidator,
-  birthdate16YearsValidator,
-} from "../components/DateInput.vue";
+import { distantPastValidator, birthdate16YearsValidator } from "../components/DateInput.vue";
 import PhnInput from "../components/PhnInput.vue";
 import { phnValidator } from "../components/PhnInput.vue";
-import {
-  nameValidator,
-  dateDataValidator,
-  phnFirstDigitValidator,
-} from "../helpers/validators";
+import { nameValidator, dateDataValidator, phnFirstDigitValidator } from "../helpers/validators";
 import TipBox from "../components/TipBox.vue";
 import ErrorBox from "../components/ErrorBox.vue";
 import pageStateService from "../services/page-state-service.js";
@@ -267,11 +257,7 @@ import {
   SET_PHN,
   SET_REFERENCE_NUMBER,
 } from "../store";
-import {
-  scrollTo,
-  scrollToError,
-  getTopScrollPosition,
-} from "../helpers/scroll";
+import { scrollTo, scrollToError, getTopScrollPosition } from "../helpers/scroll";
 import { stepRoutes, routes, isPastPath } from "../router/index.js";
 import logService from "../services/log-service.js";
 
@@ -290,10 +276,7 @@ export default {
   // Required in order to block back navigation.
   beforeRouteLeave(to, from, next) {
     pageStateService.setPageIncomplete(from.path);
-    if (
-      pageStateService.isPageComplete(to.path) ||
-      isPastPath(to.path, from.path)
-    ) {
+    if (pageStateService.isPageComplete(to.path) || isPastPath(to.path, from.path)) {
       next();
     } else {
       // Navigate to self.
@@ -338,7 +321,7 @@ export default {
     logService.logNavigation(
       this.$store.state.applicationUuid,
       routes.PERSONAL_INFO.path,
-      routes.PERSONAL_INFO.title,
+      routes.PERSONAL_INFO.title
     );
   },
   validations() {
@@ -410,8 +393,7 @@ export default {
             case "3": // System unavailable.
               this.isSystemUnavailable = true;
               logService.logError(this.applicationUuid, {
-                event:
-                  "validation failure (validatePerson endpoint unavailable)",
+                event: "validation failure (validatePerson endpoint unavailable)",
                 response: response.data,
               });
               scrollToError();
@@ -458,7 +440,7 @@ export default {
                   event: "submission success (submitForm)",
                   response: response.data,
                 },
-                response.data.refNumber,
+                response.data.refNumber
               );
               this.handleSubmitForm();
               break;
@@ -481,8 +463,7 @@ export default {
             default: //-1 error code, schema error, etc
               this.isSystemUnavailable = true;
               logService.logError(this.applicationUuid, {
-                event:
-                  "validation failure (submitForm schema error or other unexpected problem)",
+                event: "validation failure (submitForm schema error or other unexpected problem)",
                 response: response.data,
               });
               scrollToError();

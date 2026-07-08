@@ -1,11 +1,15 @@
 <template>
   <div :class="className">
     <label :for="id">
-      {{ label
-      }}<span v-if="isRequiredAsteriskShown" class="required-asterisk"
-        >*</span
-      > </label
-    ><br />
+      {{ label }}
+      <span
+        v-if="isRequiredAsteriskShown"
+        class="required-asterisk"
+      >
+        *
+      </span>
+    </label>
+    <br />
     <input
       :id="id"
       ref="input"
@@ -63,8 +67,8 @@ export const phnValidator = (value) => {
     }
 
     // Only use the multiplier if weight is greater than zero
-    let result = 0;
     if (weights[i] > 0) {
+      let result;
       // multiply the value against the weight
       result = num * weights[i];
 

@@ -9,7 +9,7 @@ export default defineConfig({
   },
   e2e: {
     experimentalRunAllSpecs: true,
-    setupNodeEvents(on, config) {
+    setupNodeEvents() {
       // implement node event listeners here
     },
   },
