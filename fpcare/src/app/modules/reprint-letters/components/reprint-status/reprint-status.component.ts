@@ -8,6 +8,7 @@ import { Logger } from '../../../../services/logger.service';
 import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-consent-results',
   templateUrl: './reprint-status.component.html',
   styleUrls: ['./reprint-status.component.scss']

@@ -21,6 +21,7 @@ import { Logger } from '../../../../services/logger.service';
 import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-eligibility',
   templateUrl: './eligibility.component.html',
   styleUrls: ['./eligibility.component.scss']

@@ -7,7 +7,7 @@ import {
   EventEmitter,
   SimpleChanges,
 } from '@angular/core';
-import { Base, GeoAddressResult, GeocoderService } from 'moh-common-lib';
+import { Base, GeoAddressResult, GeocoderService } from 'moh-common-lib-angular';
 import { Subject, Observable, of } from 'rxjs';
 import {
   debounceTime,
@@ -23,6 +23,7 @@ import {
 } from '../../../../models/province-names.enum';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-geocoder-input',
   templateUrl: './geocoder-input.component.html',
   styleUrls: ['./geocoder-input.component.scss'],
@@ -59,7 +60,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
       debounceTime(500),
       distinctUntilChanged(),
       // Trigger the network request, get results
-      switchMap((searchPhrase) => this.geocoderService.lookup(searchPhrase)),
+      switchMap((searchPhrase: string) => this.geocoderService.lookup(searchPhrase)),
       // tap(log => console.log('taplog', log)),
       catchError((err) => this.onError(err))
     );

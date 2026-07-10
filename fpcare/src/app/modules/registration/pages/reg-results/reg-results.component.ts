@@ -6,10 +6,10 @@ import {EligibilityPayload, RegistrationPayload, ServerPayload} from '../../../.
 import {PharmaCareAssistanceLevel} from '../../../financial-calculator/assistance-levels.interface';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {growVertical} from '../../../../animations/animations';
-import * as moment from 'moment';
 import {REGISTRATION_STATUS_PATH, REQUEST_REG_STATUS} from '../../../../models/route-paths.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-reg-results',
   templateUrl: './reg-results.component.html',
   styleUrls: ['./reg-results.component.scss'],
@@ -74,7 +74,7 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
    * @returns {string}
    */
   get dateStamp(): string {
-    return moment().format('MMMM DD, YYYY');
+    return new Intl.DateTimeFormat('en-US', { month: 'long', day: '2-digit', year: 'numeric' }).format(new Date());
   }
 
   /**

@@ -5,6 +5,7 @@ import {
 import { NgModel, NgControl } from '@angular/forms';
 
 @Directive({
+  standalone: false,
   selector: '[calendarFieldFormatter]'
 })
 export class CalendarFieldFormatterDirective {

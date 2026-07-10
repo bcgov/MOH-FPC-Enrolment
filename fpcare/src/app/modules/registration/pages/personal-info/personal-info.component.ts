@@ -11,6 +11,7 @@ import {ImageInterface} from '../../../../models/image-interface';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss']

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PhnValidationComponent } from './phn-validation.component';
 
@@ -6,7 +6,7 @@ describe('PhnValidationComponent', () => {
   let component: PhnValidationComponent;
   let fixture: ComponentFixture<PhnValidationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ PhnValidationComponent ]
     })

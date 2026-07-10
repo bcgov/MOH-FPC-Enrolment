@@ -3,6 +3,7 @@ import {staticImplements, ValidationComponent} from '../validation-component.int
 import {BaseValidationComponent} from '../base-validation.component';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-pc-validation',
   templateUrl: './pc-validation.component.html',
   styleUrls: ['./pc-validation.component.scss']

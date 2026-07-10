@@ -1,0 +1,11 @@
+<div class="form-action-bar" [class.disabled]="!canContinue || isLoading">
+  <button
+    class="btn submit"
+    [class.btn-primary]="defaultColor"
+    [class.btn-success]="!defaultColor"
+    [disabled]="!canContinue || isLoading"
+    (click)="onClick()">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+    {{ submitLabel }}
+  </button>
+</div>

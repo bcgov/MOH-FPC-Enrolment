@@ -1,11 +1,12 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Masking, NUMBER, SPACE} from '../../../../models/masking.model';
+import {Masking} from '../../../../models/masking.model';
 import {ControlContainer, NgForm} from '@angular/forms';
 import {ValidationService} from '../../../../services/validation.service';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-sin',
   templateUrl: './sin.component.html',
   styleUrls: ['./sin.component.scss'],
@@ -20,7 +21,7 @@ export class SinComponent extends Masking implements OnInit {
 
   @Output() uniqueSinError: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public mask = [NUMBER, NUMBER, NUMBER, SPACE, NUMBER, NUMBER, NUMBER, SPACE, NUMBER, NUMBER, NUMBER];
+  public mask = '000 000 000';
   public placeholder = '111 111 111';
 
 

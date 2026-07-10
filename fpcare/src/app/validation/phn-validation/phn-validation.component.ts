@@ -5,6 +5,7 @@ import {ValidationService} from '../../services/validation.service';
 import {environment} from 'environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-phn-validation',
   templateUrl: './phn-validation.component.html',
   styleUrls: ['./phn-validation.component.scss']

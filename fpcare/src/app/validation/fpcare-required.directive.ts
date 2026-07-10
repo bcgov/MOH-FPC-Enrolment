@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, HostListener, Renderer2, Inject,
-  ViewContainerRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
+  ViewContainerRef, ComponentRef, AfterViewInit
 } from '@angular/core';
 
 import {ValidationComponent} from './validation-component.interface';
@@ -30,6 +30,7 @@ import {NameValidationComponent} from './name-validation/name-validation.compone
  * to `loadValidationComponents()`
  */
 @Directive({
+  standalone: false,
   selector: '[fpcareRequired]',
   providers: [
     {
@@ -42,7 +43,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   private input: ElementRef;
   private label: ElementRef;
   private view: ViewContainerRef;
-  private factoryResolver: ComponentFactoryResolver;
   /** The CSS class to add to the element with the directive, i.e. form-group */
   private ERROR_CLASS = 'has-error';
   /** A list of all active validation components. Components are created/destroyed when validation fails/passes. */
@@ -54,21 +54,22 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   private validationComponents: ValidationComponent[] = [];
 
   constructor(input: ElementRef, private renderer: Renderer2,
-    @Inject(ViewContainerRef) viewContainerRef,
-    @Inject(ComponentFactoryResolver) factoryResolver) {
+    @Inject(ViewContainerRef) viewContainerRef) {
     this.input = input;
     this.view = viewContainerRef;
-    this.factoryResolver = factoryResolver;
   }
 
   ngAfterViewInit() {
-    if (!this.check(this.input)) {
-      throw new Error(`Unable to initialize FPCareRequiredDirective. Directive \
-      is unable to locate the input and labels. Make sure you have <label \
-      for=\'NAME\'> setup correctly for the input with fpcareRequired.`);
+    try {
+      if (!this.check(this.input)) {
+        console.error(`FPCareRequiredDirective: unable to locate label for input`, this.input.nativeElement);
+        return;
+      }
+      this.validationOptions = this.validationOptions || 'required';
+      this.loadValidationComponents();
+    } catch (e) {
+      console.error('FPCareRequiredDirective.ngAfterViewInit error:', e);
     }
-    this.validationOptions = this.validationOptions || 'required';
-    this.loadValidationComponents();
   }
 
   /** Loads the validation components based off of directive input. Add future validation options here. */
@@ -233,24 +234,11 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
     if (this.activeComponents[componentClass.ERROR_STRING]) {
       return;
     }
-    const component = this.prepareComponent(componentClass);
-    this.insertComponent(component);
-    this.activeComponents[componentClass.ERROR_STRING] = component;
-    return component as ComponentRef<T>;
-  }
-
-  /** Creates a component but does not add it to the view */
-  private prepareComponent<T extends ValidationComponent>(componentClass): ComponentRef<T> {
-    const factory = this.factoryResolver.resolveComponentFactory(componentClass);
-    const component = factory.create(this.view.parentInjector) as ComponentRef<T>;
+    // createComponent() creates the component and inserts it into this.view automatically.
+    const component = this.view.createComponent(componentClass) as ComponentRef<T>;
     (component.instance as ValidationComponent).fieldName = this.labelText;
-
+    this.activeComponents[componentClass.ERROR_STRING] = component;
     return component;
-  }
-
-  /** Inserts an already created component into the view (c.f. prepareComponent()) */
-  private insertComponent(component: ComponentRef<{}>) {
-    this.view.insert(component.hostView);
   }
 
 

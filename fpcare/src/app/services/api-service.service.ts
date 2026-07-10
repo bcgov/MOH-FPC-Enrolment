@@ -1,10 +1,9 @@
-import { AbstractHttpService } from 'moh-common-lib';
+import { AbstractHttpService } from 'moh-common-lib-angular';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { Logger } from './logger.service';
-import * as moment from 'moment';
 import {
   StatusCheckPHN,
   StatusCheckRegNum,
@@ -190,6 +189,9 @@ export class ApiService extends AbstractHttpService {
    * Returns current date in YYYYMMDD, e.g. '20180801'
    */
   private getProcessDate(): string {
-    return moment().format('YYYYMMDD');
+    const d = new Date();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}${mm}${dd}`;
   }
 }

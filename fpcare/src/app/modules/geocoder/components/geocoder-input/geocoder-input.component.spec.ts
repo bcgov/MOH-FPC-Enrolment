@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 
 import { GeocoderInputComponent } from './geocoder-input.component';
-import { GeocoderService } from 'moh-common-lib';
+import { GeocoderService } from 'moh-common-lib-angular';
 import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -18,8 +18,8 @@ describe('GeocoderInputComponent', () => {
   let component: GeocoderInputComponent;
   let fixture: ComponentFixture<GeocoderInputComponent>;
 
-  let lookupSpy;
-  let geoService;
+  let lookupSpy: jest.Mock;
+  let geoService: { lookup: jest.Mock };
 
   // The result when user searches '784 y' - after GeocoderService has processed it
   const yatesResponse = [
@@ -39,9 +39,9 @@ describe('GeocoderInputComponent', () => {
     },
   ];
 
-  beforeEach(async(() => {
-    geoService = jasmine.createSpyObj('GeocoderService', ['lookup']);
-    lookupSpy = geoService.lookup.and.returnValue(of(yatesResponse));
+  beforeEach(waitForAsync(() => {
+    lookupSpy = jest.fn().mockReturnValue(of(yatesResponse));
+    geoService = { lookup: lookupSpy };
 
     TestBed.configureTestingModule({
       declarations: [GeocoderInputComponent],
@@ -66,10 +66,7 @@ describe('GeocoderInputComponent', () => {
   });
 
   it('should not call GeocoderService.lookup() after initialization', () => {
-    expect(lookupSpy.calls.any()).toBe(
-      false,
-      'GeoCoderService.lookup() should not be called on component load'
-    );
+    expect(lookupSpy).not.toHaveBeenCalled();
   });
 
   it('should call GeoCoderService.lookup() on a keyUp event', fakeAsync(() => {
@@ -82,10 +79,7 @@ describe('GeocoderInputComponent', () => {
 
     tick(500); // same as debounceTime()
 
-    expect(lookupSpy.calls.any()).toBe(
-      true,
-      'GeoCoderService.lookup() should be called after KeyUp event'
-    );
+    expect(lookupSpy).toHaveBeenCalled();
   }));
 
   it('should emit an address when one is selected from typeahead', fakeAsync(() => {
@@ -98,29 +92,12 @@ describe('GeocoderInputComponent', () => {
 
     //Check for @Output emit, triggered via the .onSelect() above
     component.addressChange.subscribe((address: FPCAddress) => {
-      expect(address).toBeDefined(
-        'Address should be emitted after calling component.onSelect()'
-      );
-      expect(address._geocoderFullAddress).toBe(
-        typeaheadMatch.item.fullAddress,
-        'Address _geocoderFullAddress should equal typeahead match '
-      );
-      expect(address.street).toBe(
-        typeaheadMatch.item.street,
-        'Address street should match typeahead value'
-      );
-      expect(address.city).toBe(
-        typeaheadMatch.item.city,
-        'Address city should match typeahead value'
-      );
-      expect(address.province).toBe(
-        typeaheadMatch.item.province,
-        'Address province should match typeahead value'
-      );
-      expect(address.country).toBe(
-        typeaheadMatch.item.country,
-        'Address country should match typeahead value'
-      );
+      expect(address).toBeDefined();
+      expect(address._geocoderFullAddress).toBe(typeaheadMatch.item.fullAddress);
+      expect(address.street).toBe(typeaheadMatch.item.street);
+      expect(address.city).toBe(typeaheadMatch.item.city);
+      expect(address.province).toBe(typeaheadMatch.item.province);
+      expect(address.country).toBe(typeaheadMatch.item.country);
     });
 
     // Now that listeners are setup, trigger the user input and kick if off
@@ -144,36 +121,24 @@ describe('GeocoderInputComponent', () => {
     // Check UI
     const el = fixture.nativeElement.querySelector('.geocoder-status');
     fixture.detectChanges();
-    expect(el.textContent).toContain(
-      'No Results',
-      '"No Results" text should be displayed to user'
-    );
+    expect(el.textContent).toContain('No Results');
   });
 
   it('should show an error on network failure', fakeAsync(() => {
     // Force the geocoder service to return an error, then make sure data and UI are updated
-    lookupSpy = geoService.lookup.and.returnValue(throwError('Geocoder error'));
+    lookupSpy.mockReturnValue(throwError('Geocoder error'));
     component.typeaheadList$.subscribe();
 
     // Now that listeners are setup, trigger the user input and kick if off
     component.search = '784 y';
     const keyEvent = new KeyboardEvent('keyup');
-    expect(component.hasError).toBe(
-      false,
-      'should not have error before searching'
-    );
+    expect(component.hasError).toBe(false);
     component.onKeyUp(keyEvent);
     tick(500); // same as debounceTime()
-    expect(component.hasError).toBe(
-      true,
-      'should have error after GeocoderService throws an error'
-    );
+    expect(component.hasError).toBe(true);
 
     const el = fixture.nativeElement.querySelector('.geocoder-status');
     fixture.detectChanges();
-    expect(el.textContent).toContain(
-      'Error',
-      'Error msg should be displayed to user'
-    );
+    expect(el.textContent).toContain('Error');
   }));
 });

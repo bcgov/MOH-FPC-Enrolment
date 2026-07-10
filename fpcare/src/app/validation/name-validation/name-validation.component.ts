@@ -4,6 +4,7 @@ import {BaseValidationComponent} from '../base-validation.component';
 import {ValidationService} from '../../services/validation.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-name-validation',
   templateUrl: './name-validation.component.html',
   styleUrls: ['./name-validation.component.scss']

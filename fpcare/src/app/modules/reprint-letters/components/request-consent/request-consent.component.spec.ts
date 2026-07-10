@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import {RequestConsentComponent} from './request-consent.component';
 import {CoreModule} from '../../../core/core.module';
 import {ComponentData, LetterTypes, RequestTemplateComponent} from '../request-template/request-template.component';
@@ -16,7 +16,7 @@ describe('RequestConsentComponent', () => {
   let component: RequestConsentComponent;
   let fixture: ComponentFixture<RequestConsentComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         RequestConsentComponent,

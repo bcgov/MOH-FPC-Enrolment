@@ -24,6 +24,7 @@ export interface ComponentData {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpcare-request-template',
   templateUrl: './request-template.component.html',
   styleUrls: ['./request-template.component.scss']
