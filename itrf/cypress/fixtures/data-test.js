@@ -1,8 +1,8 @@
 export default {
-  testFirstName: "Vkcvup",
-  testLastName: "Game Wardenxa",
-  testBirthDateDay: "02",
-  testBirthDateMonth: 8, //integer. January = 1, December = 12, etc
-  testBirthDateYear: "2002",
-  testPhn: "9304381176",
+  testFirstName: "Llktusrttlrhzdwydtwq",
+  testLastName: "Qgusaldawxghtktqrletqvbfixhepa",
+  testBirthDateDay: "01",
+  testBirthDateMonth: 10, //integer. January = 1, December = 12, etc
+  testBirthDateYear: "1969",
+  testPhn: "9872595483",
 };
