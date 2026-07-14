@@ -8,6 +8,14 @@ const testPhnFormatted =
   " " +
   envData.testPhn.substring(7, 10);
 
+//dates 01-09 of each month are abbreviated to 1-9 in the review table 
+let testBirthDateDayFormatted;
+if (envData.testBirthDateDay[0] === "0" && envData.testBirthDateDay[1]) {
+  testBirthDateDayFormatted = envData.testBirthDateDay[1]
+} else {
+  testBirthDateDayFormatted = envData.testBirthDateDay
+}
+
 describe("happy path", () => {
   it("passes", () => {
     if (envData.enableIntercepts) {
@@ -101,7 +109,7 @@ describe("happy path", () => {
     });
     cy.get("[data-cy=ReviewTableElement]").contains(envData.testFirstName);
     cy.get("[data-cy=ReviewTableElement]").contains(envData.testLastName);
-    cy.get("[data-cy=ReviewTableElement]").contains(envData.testBirthDateDay);
+    cy.get("[data-cy=ReviewTableElement]").contains(testBirthDateDayFormatted);
     //skipping month because it needs to be converted to a month name
     cy.get("[data-cy=ReviewTableElement]").contains(envData.testBirthDateYear);
     cy.get("[data-cy=ReviewTableElement]").contains(testPhnFormatted);
