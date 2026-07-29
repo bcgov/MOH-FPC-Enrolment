@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/bcgov/MOH-FPC-Enrolment/address-service/#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^1.6.2",
     "easy-soap-request": "^3.2.0",
     "express": "^4.15.0",
     "http-proxy-middleware": "^0.20.0",
