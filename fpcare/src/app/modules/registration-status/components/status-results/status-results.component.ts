@@ -14,6 +14,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
  * if both are set.
  */
 @Component({
+  standalone: false,
   selector: 'fpcare-status-results',
   templateUrl: './status-results.component.html',
   styleUrls: ['./status-results.component.scss']

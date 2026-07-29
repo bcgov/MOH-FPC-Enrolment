@@ -3,14 +3,27 @@
   "compilerOptions": {
     "outDir": "../out-tsc/app",
     "baseUrl": "",
-    "types": []
+    "types": [],
+    "paths": {
+      "@angular/*": ["../node_modules/@angular/*"],
+      "rxjs": ["../node_modules/rxjs/index.js"],
+      "rxjs/*": ["../node_modules/rxjs/*"],
+      "moh-common-lib-angular": ["../node_modules/moh-common-lib-angular/src/public-api.ts"],
+      "ngx-mask": ["../node_modules/ngx-mask/index.d.ts"],
+      "ngx-mask/*": ["../node_modules/ngx-mask/*"],
+      "ngx-bootstrap": ["../node_modules/ngx-bootstrap/index.d.ts"],
+      "ngx-bootstrap/*": ["../node_modules/ngx-bootstrap/*"]
+    }
   },
   "include": [
     "*.ts",
-    "**/*.ts"
+    "**/*.ts",
+    "../node_modules/moh-common-lib-angular/src/**/*.ts"
   ],
   "exclude": [
     "test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "../node_modules/moh-common-lib-angular/node_modules",
+    "../node_modules/moh-common-lib-angular/**/*.spec.ts"
   ]
 }

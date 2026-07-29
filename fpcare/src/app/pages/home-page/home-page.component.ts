@@ -9,6 +9,7 @@ import {
 } from '../../models/route-paths.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-home-page',
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.scss']

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CompletePageComponent } from './complete.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {CoreModule} from '../../../core/core.module';
@@ -12,7 +12,7 @@ describe('CompleteComponent', () => {
   let component: CompletePageComponent;
   let fixture: ComponentFixture<CompletePageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         CompletePageComponent

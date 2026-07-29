@@ -1,0 +1,7 @@
+<nav class="wizard-progress-bar" aria-label="Progress">
+  <ol class="breadcrumb">
+    <li *ngFor="let step of progressSteps" class="breadcrumb-item">
+      <a [routerLink]="step.route">{{ step.title }}</a>
+    </li>
+  </ol>
+</nav>

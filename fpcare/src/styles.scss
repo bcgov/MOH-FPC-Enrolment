@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 // TODO: Remove at end of development - to be used it leave notes of issues encountered
 .todo:before {
   content: 'TODO - Hover to Show';
@@ -42,8 +44,13 @@
 
 
 
+// @import is intentional for both lines below.
+// variables.scss must be @imported (not @used) so its variable declarations land
+// in global scope before Bootstrap loads — Bootstrap's !default variables will
+// only pick up our overrides if they are already set when bootstrap/scss/bootstrap
+// is processed. Switching to @use would break the theme customisation.
 @import "variables.scss";
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 //TODO: Import bootstrap piecemeal
 
@@ -84,26 +91,7 @@
 
 
 
- @import "~font-awesome/scss/variables";
- @import "~font-awesome/scss/mixins";
- $fa-font-path: '~font-awesome/fonts';
- @font-face {
-     font-family: 'FontAwesome';
-     src: url('#{$fa-font-path}/fontawesome-webfont.ttf?v=${fa-version}') format('truetype');
-     font-weight: normal;
-     font-style: normal;
- }
-
- @import "~font-awesome/scss/core";
- @import "~font-awesome/scss/larger";
- @import "~font-awesome/scss/fixed-width";
- @import "~font-awesome/scss/list";
- @import "~font-awesome/scss/bordered-pulled";
- @import "~font-awesome/scss/animated";
- @import "~font-awesome/scss/rotated-flipped";
- @import "~font-awesome/scss/stacked";
- @import "~font-awesome/scss/icons";
- @import "~font-awesome/scss/screen-reader";
+@import "font-awesome/css/font-awesome.min.css";
 
 @import "overrides";
 @import "additions";
@@ -111,18 +99,10 @@
 // Set a base font-size in px to ensure that we don't just use the browser's
 // default text size. We use rems for font-sizes everywhere else.
 html {
-  font-size: 16px;
-
-  // Optional - This may be removed!
-  // Left in because it really demonstrates the value of rem based designs. We
-  // can scale the entire layout, from element sizing to padding, just by
-  // changing font-size here.
-  @include media-breakpoint-up(sm){
-    font-size: 14px;
-  }
+  font-size: 14px;
 }
 
-html, body {
+body {
   @include media-breakpoint-up(md){
     background-color: $gray;
   }
@@ -192,7 +172,7 @@ Special accessibility class to hide things like labels but still have the readab
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-  background-color: desaturate($color-primary, 50%);
+  background-color: color.adjust($color-primary, $saturation: -50%);
   border-color: transparent;
 }
 

@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {
@@ -10,9 +10,9 @@ import {
 import {RegistrationService} from '../../registration.service';
 import {pageRoutes} from '../../registration-page-routing';
 import {environment} from '../../../../../environments/environment';
-import * as moment from 'moment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-registration-requirements',
   templateUrl: './registration-requirements.component.html',
   styleUrls: ['./registration-requirements.component.scss']
@@ -47,7 +47,7 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
   }
 
   ngOnInit() {
-    const year = moment().year();
+    const year = new Date().getFullYear();
     this.benefitYearEx = year;
     this.taxYearEx = year - 2;
   }

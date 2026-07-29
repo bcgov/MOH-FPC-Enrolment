@@ -10,6 +10,7 @@ export enum DisplayIcon {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpcare-results-framework',
   templateUrl: './results-framework.component.html',
   styleUrls: ['./results-framework.component.scss'],

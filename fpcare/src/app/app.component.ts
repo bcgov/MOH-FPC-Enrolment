@@ -5,7 +5,7 @@ import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
 import * as version from '../VERSION.generated';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, NavigationError, NavigationCancel, NavigationStart, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
 import { SplashPageService } from './modules/splash-page/splash-page.service';
@@ -16,6 +16,7 @@ import {ResponseStoreService} from './services/response-store.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -35,7 +36,20 @@ export class AppComponent implements OnInit {
               public splash: SplashPageService,
               public apiService: ApiService,
               private responseStore: ResponseStoreService) {
+    console.log('[App] location.pathname at startup:', location.pathname);
+    console.log('[App] document.baseURI:', document.baseURI);
     this.handleNavigation(location.pathname);
+    this.router.events.subscribe(e => {
+      if (e instanceof NavigationStart) {
+        console.log('[Router] NavigationStart url="' + e.url + '"');
+      } else if (e instanceof NavigationEnd) {
+        console.log('[Router] NavigationEnd url="' + e.url + '"');
+      } else if (e instanceof NavigationError) {
+        console.error('[Router] NavigationError url="' + e.url + '" error:', e.error);
+      } else if (e instanceof NavigationCancel) {
+        console.warn('[Router] NavigationCancel url="' + e.url + '" reason:', e.reason);
+      }
+    });
   }
 
   ngOnInit() {
@@ -62,9 +76,12 @@ export class AppComponent implements OnInit {
 
           if ( payload.success ) {
             this.responseStore.cacheMsgs = payload.messages;
-          } else {
-            this.router.navigate([REGISTRATION_PATH + '/' + REGISTRATION_RESULTS] );
           }
+          // Do not redirect on non-success — API may be unavailable in dev/test environments
+        },
+        (error) => {
+          // Swallow HTTP errors — message cache is best-effort
+          console.warn('getMessages failed (non-fatal):', error);
         }
     );
 
@@ -116,12 +133,12 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.activatedRoute),
-      map(route => {
+      map((route: ActivatedRoute) => {
         while (route.firstChild) route = route.firstChild;
         return route;
       }),
-      filter(route => route.outlet === 'primary'),
-      mergeMap(route => route.data)
+      filter((route: ActivatedRoute) => route.outlet === 'primary'),
+      mergeMap((route: ActivatedRoute) => route.data)
     ).subscribe((data: { title?: string }) => {
       this.setTitle(data.title);
       this.logger.log({

@@ -1,17 +1,20 @@
 $bootstrap-sass-asset-helper: true;
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap";
 
-@import 'variables.scss';
+// Bootstrap mixins (e.g. media-breakpoint-down) are available here because
+// variables.scss internally @imports bootstrap/scss/mixins, which loads them
+// into scope via the legacy @import global cascade.
+@use 'variables' as *;
 
 .container-fluid {
   padding: 0 $container-gutter-size;
 
   @include media-breakpoint-down(md){
-    padding: 0 ($container-gutter-size / 2);
+    padding: 0 calc($container-gutter-size / 2);
   }
 
   @include media-breakpoint-down(sm){
-    padding: 0 ($container-gutter-size / 5);
+    padding: 0 calc($container-gutter-size / 5);
   }
 }
 

@@ -22,6 +22,7 @@ import {environment} from '../../../../../environments/environment';
 import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-complete',
   templateUrl: './complete.component.html',
   styleUrls: ['./complete.component.scss']

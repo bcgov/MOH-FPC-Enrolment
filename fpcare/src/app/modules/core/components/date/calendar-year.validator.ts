@@ -1,8 +1,8 @@
 import {Directive, forwardRef, Input} from '@angular/core';
 import {Validator, NG_VALIDATORS, FormControl} from '@angular/forms';
-import * as moment from 'moment';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarYear][ngModel]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: forwardRef(() => CalendarYearValidatorDirective), multi: true
@@ -27,10 +27,10 @@ export class CalendarYearValidatorDirective {
       year = parseInt( year.toString().slice(0, 4), 10);
     }
 
-    if ( moment().get('y') - year > 150){
+    if ( new Date().getFullYear() - year > 150){
       return {'yearDistantPast': true};
     }
-    if ( year - moment().get('y') > 150){
+    if ( year - new Date().getFullYear() > 150){
       return {'yearDistantFuture': true};
     }
 

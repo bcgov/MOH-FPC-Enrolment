@@ -1,0 +1,42 @@
+.form-action-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1em;
+  background-color: #cdd9e4;
+  transition: background-color .3s;
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  left: 5rem;
+  right: 5rem;
+}
+
+@media (max-width: 767px) {
+  .form-action-bar {
+    left: 0;
+    right: 0;
+  }
+}
+
+.form-action-bar .btn {
+  white-space: normal;
+  word-wrap: break-word;
+  min-width: 10rem;
+}
+
+.submit {
+  min-width: 240px;
+}
+
+.form-action-bar.disabled {
+  background-color: #d5d9dd;
+}
+
+.form-action-bar .btn:disabled,
+.form-action-bar .btn.disabled {
+  opacity: 0.65;
+}

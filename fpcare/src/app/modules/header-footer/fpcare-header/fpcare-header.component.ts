@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-header',
   templateUrl: './fpcare-header.component.html',
   styleUrls: ['./fpcare-header.component.scss']

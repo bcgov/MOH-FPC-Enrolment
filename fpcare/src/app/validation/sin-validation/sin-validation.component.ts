@@ -5,6 +5,7 @@ import {BaseValidationComponent} from '../base-validation.component';
 import {environment} from '../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-sin-validation',
   templateUrl: './sin-validation.component.html',
   styleUrls: ['./sin-validation.component.scss']

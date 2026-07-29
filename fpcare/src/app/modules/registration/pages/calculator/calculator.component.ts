@@ -16,6 +16,7 @@ import {DeductiblePayload} from '../../../../models/api.model';
 
 
 @Component({
+  standalone: false,
   selector: 'fpcare-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.scss']

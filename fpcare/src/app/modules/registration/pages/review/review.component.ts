@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {FPCPerson} from '../../../../models/person.model';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {
   REGISTRATION_ADDRESS,
   REGISTRATION_AUTHORIZE,
@@ -16,6 +16,7 @@ import {FinanceService} from '../../../financial-calculator/finance.service';
 import {CountryNames, ProvinceNames} from '../../../../models/province-names.enum';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']

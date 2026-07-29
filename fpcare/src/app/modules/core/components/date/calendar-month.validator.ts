@@ -1,8 +1,8 @@
 import {Directive, forwardRef, Input} from '@angular/core';
 import {Validator, NG_VALIDATORS, FormControl} from '@angular/forms';
-import * as moment from 'moment';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarMonth][ngModel]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: forwardRef(() => CalendarMonthValidatorDirective), multi: true

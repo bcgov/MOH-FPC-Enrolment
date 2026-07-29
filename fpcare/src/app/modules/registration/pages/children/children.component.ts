@@ -18,6 +18,7 @@ import {
 } from '../../../../models/api.model';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']

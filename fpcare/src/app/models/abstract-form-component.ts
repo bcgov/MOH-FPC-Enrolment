@@ -1,13 +1,14 @@
 import {Router} from '@angular/router';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {NgForm} from '@angular/forms';
-import {QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {Directive, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FPCareDateComponent} from '../modules/core/components/date/date.component';
 
 /**
  * All classes derived from this class must implement DoCheck so that when changes occur the form can be validated to determine
  * whether or not _canContinue is set to true.
  */
+@Directive()
 export abstract class AbstractFormComponent extends Base {
 
   /** Disables all inputs (todo: not implemented) */

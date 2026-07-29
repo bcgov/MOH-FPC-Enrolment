@@ -39,7 +39,7 @@
                 fpcareRequired="required"
                 [ngModel]="income"
                 (ngModelChange)="income = $event; update()"
-                [textMask]="{mask: moneyMask}"
+                [mask]="moneyMask"
                 placeholder="Enter Your Income"
                 required
                 aria-required="true"
@@ -79,7 +79,7 @@
                 fpcareRequired="required"
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
-                [textMask]="{mask: moneyMask}"
+                [mask]="moneyMask"
                 placeholder="Enter Your Spouse's Income"
                 required
                 aria-required="true"
@@ -110,7 +110,7 @@
                 name="ap_disability"
                 [ngModel]="disability"
                 (ngModelChange)="disability = $event; update();"
-                [textMask]="{mask: moneyMask}"
+                [mask]="moneyMask"
                 placeholder="Enter Disability Savings Amounts"
                 autocomplete="off"/>
           </div>
@@ -131,7 +131,7 @@
                   name="sp_disability"
                   [ngModel]="spouseDisability"
                   (ngModelChange)="spouseDisability = $event; update();"
-                  [textMask]="{mask: moneyMask}"
+                  [mask]="moneyMask"
                   placeholder="Enter Disability Savings Amounts"
                   autocomplete="off"/>
         </div>

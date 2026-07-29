@@ -1,8 +1,8 @@
 import {Directive, forwardRef, Input} from '@angular/core';
 import {Validator, NG_VALIDATORS, FormControl} from '@angular/forms';
-import * as moment from 'moment';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarDay][ngModel]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: forwardRef(() => CalendarDayValidatorDirective), multi: true
@@ -31,7 +31,7 @@ export class CalendarDayValidatorDirective implements Validator {
       day = parseInt( day.toString().slice(0, 2), 10);
     }
 
-    let daysInMonth: number = moment(`${this.selectedYear}-${this.selectedMonth}`, 'YYYY-MM').daysInMonth();
+    let daysInMonth: number = new Date(this.selectedYear, this.selectedMonth, 0).getDate();
     if (isNaN(daysInMonth)){
       daysInMonth = 31;
     }

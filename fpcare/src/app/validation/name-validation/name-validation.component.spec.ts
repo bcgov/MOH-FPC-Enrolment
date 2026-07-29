@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NameValidationComponent } from './name-validation.component';
 
@@ -6,7 +6,7 @@ describe('NameValidationComponent', () => {
   let component: NameValidationComponent;
   let fixture: ComponentFixture<NameValidationComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NameValidationComponent ]
     })

@@ -10,7 +10,7 @@ import { FPCareDataService } from '../../services/fpcare-data.service';
  */
 @NgModule({})
 export class FPCareDataModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(): ModuleWithProviders<FPCareDataModule> {
     return {
       ngModule: FPCareDataModule,
       providers: [FPCareDataService]

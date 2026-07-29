@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AbstractHttpService } from 'moh-common-lib';
+import { AbstractHttpService } from 'moh-common-lib-angular';
 import { throwError } from 'rxjs';
-import * as moment from 'moment';
-import {UUID} from 'angular2-uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +18,7 @@ export class Logger extends AbstractHttpService {
    * @memberof LogService
    */
   protected _headers: HttpHeaders = new HttpHeaders({
-    applicationId: UUID.UUID().toString(),
+    applicationId: crypto.randomUUID(),
     logsource: window.location.hostname,
     http_x_forwarded_host: window.location.hostname,
     program: 'fpc',
@@ -121,7 +119,7 @@ export class Logger extends AbstractHttpService {
   }
 
   private setTimestamp(){
-    this._headers = this._headers.set('timestamp', moment().toISOString());
+    this._headers = this._headers.set('timestamp', new Date().toISOString());
   }
 
   private setSeverity(severity: SeverityLevels){

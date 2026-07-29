@@ -1,21 +1,21 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import {FormsModule, NgForm} from '@angular/forms';
-import {TextMaskModule} from 'angular2-text-mask';
-import {SinComponent} from './sin.component';
-import {ValidationService} from '../../../../services/validation.service';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, NgForm } from '@angular/forms';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { SinComponent } from './sin.component';
+import { ValidationService } from '../../../../services/validation.service';
 
 describe('SinComponent', () => {
   let component: SinComponent;
   let fixture: ComponentFixture<SinComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ SinComponent ],
-      imports: [ FormsModule, TextMaskModule ],
+      imports: [ FormsModule, NgxMaskDirective ],
       providers: [
         NgForm,
-        ValidationService
+        ValidationService,
+        provideNgxMask()
       ]
     })
     .compileComponents();

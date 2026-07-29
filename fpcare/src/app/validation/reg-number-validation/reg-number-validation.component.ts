@@ -5,6 +5,7 @@ import {ValidationService} from '../../services/validation.service';
 import { environment } from 'environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-reg-number-validation',
   templateUrl: './reg-number-validation.component.html',
   styleUrls: ['./reg-number-validation.component.scss']

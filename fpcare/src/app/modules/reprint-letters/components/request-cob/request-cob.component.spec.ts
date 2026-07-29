@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequestCobComponent } from './request-cob.component';
 import {FormsModule} from '@angular/forms';
 import {CoreModule} from '../../../core/core.module';
@@ -16,7 +16,7 @@ describe('RequestCobComponent', () => {
   let component: RequestCobComponent;
   let fixture: ComponentFixture<RequestCobComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         RequestCobComponent,

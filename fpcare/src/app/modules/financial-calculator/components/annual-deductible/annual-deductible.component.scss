@@ -1,4 +1,6 @@
-@import 'variables.scss';
+// Bootstrap mixins (e.g. media-breakpoint-up) are available via variables.scss's
+// internal @import of bootstrap/scss/mixins.
+@use 'variables' as *;
 
 .review-deductible {
 

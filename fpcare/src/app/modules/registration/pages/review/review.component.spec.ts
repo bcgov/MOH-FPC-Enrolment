@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewPageComponent } from './review.component';
 import { CoreModule } from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -14,7 +14,7 @@ describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
   let fixture: ComponentFixture<ReviewPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReviewPageComponent

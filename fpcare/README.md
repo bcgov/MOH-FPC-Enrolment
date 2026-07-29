@@ -1,94 +1,228 @@
-# Ministry of Health of the Province of British Columbia - Fair PharmaCare
+# Fair PharmaCare (FPCare)
 
-PharmaCare Revisions for Information Management Enhancements
+BC Ministry of Health — Fair PharmaCare enrolment web application. Allows BC residents to register for PharmaCare and check their registration status.
 
-PharmaCare used [angular-scaffold](https://github.com/bcgov/angular-scaffold) as it's starting off point. The original angular-scaffold readme can be found in `angular-scaffold-readme.md`.
+**Deployed at:** https://my.gov.bc.ca/fpcare
 
-## Setup
+---
 
-### Prerequisites
+## Prerequisites
 
-1. angular-cli `npm i -g @angular/cli`
-2. Node 8.1.x or greater (recommended: 8.9.4+)
+- **Node.js** 20 or later (use [nvm](https://github.com/nvm-sh/nvm) to manage versions)
+- **Angular CLI 19** — install globally:
+  ```bash
+  npm install -g @angular/cli@19
+  ```
 
-Verify angular-cli is installed by running `ng -v`. Since `ng -v` is dependent upon the folder it's executed in (i.e. it looks in `node_modules/`), it's fine if some of the fields show "error."
+Verify with `ng version`.
 
-### Installation
+---
+
+## Installation
+
+Clone and install dependencies:
 
 ```bash
-git clone https://github.com/bcgov/moh-fpcare
-cd moh-fpcare
-npm install
-npm run dev # Runs a local dev server
+git clone https://github.com/bcgov/MOH-FPC-Enrolment
+cd MOH-FPC-Enrolment/fpcare
+npm install --legacy-peer-deps
 ```
 
-## Maitenance Mode / Splash Page
+> **`--legacy-peer-deps` is required.** The project has peer dependency constraints from the Angular 19 upgrade that need this flag.
 
-You need access to OpenShift to enable the splash page. It is controlled via env variables for the "spa-env-server" pod.
+### Restoring symlinks after `npm install`
 
-To enable the splash page:
+`moh-common-lib-angular` is linked from a local source repo. Every `npm install` wipes the symlinks — they must be restored manually:
 
-1. Go to the correct OpenShift environment (e.g. dev/test/prod)
-2. Applications > Deployments > spa-env-server
-3. Environment tab
-4. Set SPA_ENV_FPC_MAINTENANCE_START and SPA_ENV_FPC_MAINTENANCE_END
+```bash
+# 1. Point moh-common-lib-angular to the local source repo
+rm -rf node_modules/moh-common-lib-angular
+ln -s /path/to/moh-common-lib-angular node_modules/moh-common-lib-angular
 
-The spa-env-server will automatically set the maintence mode flag between these times.
+# 2. Symlink @angular/* packages back to fpcare's copies (prevents TS-993004 dual-identity errors)
+CLIB=/path/to/moh-common-lib-angular/node_modules
+FPNM=$(pwd)/node_modules
+for pkg in animations common compiler compiler-cli core forms platform-browser platform-browser-dynamic router; do
+  rm -rf $CLIB/@angular/$pkg
+  ln -s $FPNM/@angular/$pkg $CLIB/@angular/$pkg
+done
 
-You do not need to touch SPA_ENV_FPC_MAINTENANCE_FLAG. It can remain 'false', and the splsah page will still work.
+# 3. Symlink ngx-mask back to fpcare's copy
+rm -rf $CLIB/ngx-mask
+ln -s $FPNM/ngx-mask $CLIB/ngx-mask
+```
 
-SPA_ENV_FPC_MAINTENANCE_MESSAGE is an optional field. If anything is provided it will be displayed on the page below the default splash page. If it is empty, only the default page is shown with no custom message.
+Replace `/path/to/moh-common-lib-angular` with the actual path to the common lib source repo on your machine.
 
-## Versioning Deployments
+---
 
-Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`. These commands
+## Running the Dev Server
 
-1. increment the package version
-2. commit the result
-3. tag the new commit with the new version number
+```bash
+npm start
+# or
+ng serve
+```
 
-After you verify everything is correct, run `git push --follow-tags` to push the new tags to GitHub (or run `npm run push-version`).
+The app is served at **http://localhost:4302/fpcare/**
 
-As such, you should run these commands right before deploying a build and with a clean working directory (i.e. no changes that are uncommitted in git), otherwise they'll fail.
+The dev server proxies API calls to the dev OpenShift environment via `src/proxy.conf.json`. To point at a different backend, update that file.
 
-As this application is not a library/dependency it does not follow semver. Instead, version codes are as follows:
+---
 
-    test-version : 0.1.0 -> 0.2.0 .... 0.10.0 -> 0.11.0
-    prod-version : 1.0.0 -> 2.0.0 .... 10.0.0 -> 11.0.0
+## Building
 
-`src/version.js` is called in the prebuild hook, prior to every `npm run build`. It puts version info into a generated file which is then console.log()'d out.
+**Development build:**
+```bash
+ng build
+# or
+npm run dev-build
+```
+
+**Production build:**
+```bash
+ng build --configuration=production
+```
+
+> The `prebuild` hook automatically runs `node src/version.js` to stamp the current version into the bundle before every build.
+
+Output is written to `dist/`.
+
+---
 
 ## Testing
 
-This app has both unit tests and e2e tests written. The e2e tests are not running at this time due to an issue with private information and our ability to test it.
+Tests run with **Jest** (not Karma). Do not use `ng test`.
 
-### To run unit tests
-
+**Run all tests:**
 ```bash
-npm run test # Runs `ng test`
+npx jest --config jest.config.ts
 ```
 
-### To run e2e tests
-
+**Run a single spec file:**
 ```bash
-npm run e2e # Runs `ng e2e`
+npx jest --config jest.config.ts src/app/path/to/component.spec.ts
 ```
+
+**Run in watch mode (re-runs on file changes):**
+```bash
+npx jest --config jest.config.ts --watch
+```
+
+**Run with coverage report:**
+```bash
+npx jest --config jest.config.ts --coverage
+```
+
+Coverage is collected from `src/app/**/*.ts`, excluding spec files and modules. Output is written to `coverage/`.
+
+### Known exclusions and skips
+
+The following files are excluded from the test run (see `jest.config.ts`):
+
+| File | Reason |
+|---|---|
+| `src/test.ts` | Legacy Karma entry point — not a spec file |
+| `src/app/models/api.model.spec.ts` | All tests commented out (pending restoration) |
+| `src/app/validation/fpcare-required.directive.spec.ts` | All tests commented out (pending restoration) |
+| `src/app/validation/base-validation.component.spec.ts` | Helper/export file only — no tests |
+
+Five tests are currently marked `xit` (skipped) in the eligibility and registration-status components — they require DOM-event-based form validation rather than direct model mutation and are pending a fix.
+
+---
 
 ## Linting
 
-We use tslint for linting, the rules are set in `tslint.json`. Your IDE can be configured to use them (WebStorm does so automatically, VSCode requires an extension). You can also run the lint rules on the entire project with the followign command:
+```bash
+npm run lint
+# or
+npx eslint src --ext .ts,.html
+```
 
-`ng lint`
+---
+
+## Maintenance Mode / Splash Page
+
+The splash page is controlled via OpenShift environment variables on the `spa-env-server` pod.
+
+**To enable maintenance mode:**
+
+1. Go to the target OpenShift environment (dev / test / prod)
+2. Navigate to: Applications → Deployments → `spa-env-server` → Environment tab
+3. Set the following variables:
+
+| Variable | Description |
+|---|---|
+| `SPA_ENV_FPC_MAINTENANCE_START` | Start time for maintenance window |
+| `SPA_ENV_FPC_MAINTENANCE_END` | End time for maintenance window |
+| `SPA_ENV_FPC_MAINTENANCE_MESSAGE` | Optional custom message shown below the default splash |
+
+`spa-env-server` automatically activates maintenance mode between the start and end times. `SPA_ENV_FPC_MAINTENANCE_FLAG` does not need to be set — leave it `false`.
+
+---
+
+## Versioning and Deployments
+
+Before deploying to TEST or PROD, bump the version using one of:
+
+```bash
+npm run test-version   # increments minor: 0.1.0 → 0.2.0
+npm run prod-version   # increments major: 1.0.0 → 2.0.0
+```
+
+These commands automatically increment the version in `package.json`, commit the change, and create a git tag. Run them with a **clean working directory** (no uncommitted changes).
+
+Then push the tags:
+```bash
+npm run push-version
+# or
+git push --follow-tags
+```
+
+Version scheme (not semver):
+- Test releases: minor version (`0.1.0`, `0.2.0`, ...)
+- Prod releases: major version (`1.0.0`, `2.0.0`, ...)
+
+---
+
+## Security
+
+### Dependency vulnerabilities resolved
+
+| Package / Area | Action | Result |
+|---|---|---|
+| `@angular/*` | Upgraded 19.2.10 → 19.2.20 | Closed 50 vulnerabilities (0 remaining in production) |
+| `tar` | Added npm override `^7.0.0` | Closed HIGH-severity vulnerability |
+| `serialize-javascript` | Added npm override `^7.0.0` | Closed HIGH-severity vulnerability |
+| `ngx-bootstrap ^5.5.0` | Removed (was dead code — directives commented out, no active usage) | Eliminated vulnerable package |
+| `karma` and all karma plugins | Removed — replaced with Jest | Eliminated vulnerable test tooling chain |
+
+**Current state:** `npm audit` reports 0 production vulnerabilities. 6 low-severity dev-only vulnerabilities remain via `@angular-builders/jest` → `@tootallnate/once`; these are blocked by the Angular 19 version lock and will clear on an Angular 20 upgrade.
+
+### HTTP / XSRF audit
+
+All HTTP service classes were audited for URL injection and XSRF exposure:
+
+| File | Result |
+|---|---|
+| `api-service.service.ts` | CLEAN — URLs are hardcoded constants from `environment.ts` |
+
+---
 
 ## Application Details
 
+### Tech Stack
+
+- **Angular 19** (`~19.2.20`)
+- **Bootstrap 4** with custom BC Government theme
+- **ngx-mask 19** — input masking
+- **ngx-bootstrap 19** — modal/tooltip components
+- **moh-common-lib-angular** — shared BC MoH component library (linked locally)
+
 ### Pages
 
-Most pages will use the page framework, and form pages will use the action bar.
-
-Layouts can be: `single`, `double`, or `default`.
-
-Anything in an `<aside></aside>` will appear in the right columns if they exist. In the single layout they just function as a normal div.
+Most pages use the page framework layout. Available layouts: `single`, `double`, `default`.
+Content in an `<aside>` renders in the right column for multi-column layouts.
 
 ```html
 <common-page-framework layout="single">
@@ -101,33 +235,25 @@ Anything in an `<aside></aside>` will appear in the right columns if they exist.
 
 ### Dates
 
-Please use SimpleDate for all dates within code so that we do not encounter conversion issues between Date & SimpleDate.
-Date module uses SimpleDate.
+Use `SimpleDate` for all dates in code to avoid conversion issues between `Date` and `SimpleDate`. The date component uses `SimpleDate` internally.
 
-### Validation Module
+### Validation
 
-The fpcareRequired directive takes comma delimited input. If no input added, then defaults to 'required'
+Use the `fpcareRequired` directive for field validation. It accepts a comma-delimited list of validators; defaults to `required` if none provided.
 
-Current validation for input:
-required
-phn-check
-sin-check
+Available validators: `required`, `phn-check`, `sin-check`
 
 ```html
 <div class="form-group">
-  <label for="<input_id>">{Label Text}</label>
+  <label for="phn">PHN</label>
   <input
     class="form-control"
-    id="<input_id - matches label 'for' value>"
+    id="phn"
     fpcareRequired="required,phn-check"
-    ...
   />
 </div>
 ```
 
-### Style Class "todo"
+### API Proxy (local dev)
 
-This class is used to put notes in <aside> so that other developer's can see what is remaining on page or if issues are
-encountered and require a solution that has not been identified.
-
-These items are to be removed when development is complete.
+`src/proxy.conf.json` proxies `/fpcare/api/` to the dev OpenShift backend. Update the `target` URL if you need to point at a different environment.

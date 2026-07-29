@@ -1,11 +1,12 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap/modal';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {ImageInterface} from '../../../../models/image-interface';
 import { defer, fromEvent, Subject, Subscription } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-sample-modal',
   templateUrl: './sample-modal.component.html',
   styleUrls: ['./sample-modal.component.scss']

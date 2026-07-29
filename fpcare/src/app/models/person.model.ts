@@ -1,4 +1,4 @@
-import { Person, SimpleDate } from 'moh-common-lib';
+import { Person, SimpleDate } from 'moh-common-lib-angular';
 import { FPCAddress } from './address.model';
 
 /**

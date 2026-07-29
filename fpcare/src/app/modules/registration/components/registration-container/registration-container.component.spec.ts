@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { pageRoutes } from '../../registration-page-routing';
 
 
@@ -10,7 +10,7 @@ describe('RegistrationContainerComponent', () => {
   let component: RegistrationContainerComponent;
   let fixture: ComponentFixture<RegistrationContainerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RegistrationContainerComponent ],
       imports: [ CoreModule, RouterTestingModule ]

@@ -11,6 +11,7 @@ import { AfterViewInit, Directive, HostListener } from '@angular/core';
  * https://github.com/valor-software/ngx-bootstrap/issues/1819
  */
 @Directive({
+  standalone: false,
   selector: '[fpcModalFocus]',
   exportAs: 'modalFocusReference'
 })

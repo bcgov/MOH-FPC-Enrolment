@@ -8,7 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
-import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
@@ -30,12 +30,16 @@ import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
-import { CaptchaModule } from 'moh-common-lib/captcha';
-import { SharedCoreModule } from 'moh-common-lib';
+import { FpcareFormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
+import { FpcareCoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
+import { FpcareWizardProgressBarComponent } from './components/wizard-progress-bar/wizard-progress-bar.component';
+import { FpcarePageSectionComponent } from './components/page-section/page-section.component';
+import { FpcarePostalCodeComponent } from './components/postal-code/postal-code.component';
+import { FpcareCaptchaComponent } from './components/captcha/captcha.component';
+import { FpcareCommonPageFrameworkComponent } from './components/common-page-framework/common-page-framework.component';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 const componentList = [
-  // AddressValidatorComponent,
   AlertComponent,
   FPCareToggleComponent,
   PhnComponent,
@@ -58,7 +62,14 @@ const componentList = [
   ResultsFrameworkComponent,
   ModalFocusDirective,
   PhnDefinitionComponent,
-  SampleModalComponent
+  SampleModalComponent,
+  FpcareFormActionBarComponent,
+  FpcareCoreBreadcrumbComponent,
+  FpcareWizardProgressBarComponent,
+  FpcarePageSectionComponent,
+  FpcarePostalCodeComponent,
+  FpcareCaptchaComponent,
+  FpcareCommonPageFrameworkComponent
 ];
 
 @NgModule({
@@ -70,27 +81,20 @@ const componentList = [
     ProgressbarModule.forRoot(),
     RouterModule,
     ModalModule.forRoot(),
-    TextMaskModule,
+    NgxMaskDirective,
+    NgxMaskPipe,
     TypeaheadModule,
-    CaptchaModule,
-    SharedCoreModule
   ],
   declarations: [
     componentList
   ],
   exports: [
     componentList,
-    SharedCoreModule
-  ],
-  entryComponents: [
-    RequiredValidationErrorsComponent,
-    PhnValidationComponent,
-    SinValidationComponent,
-    RegNumberValidationComponent,
-    PcValidationComponent,
-    NameValidationComponent
+    NgxMaskDirective,
+    NgxMaskPipe,
   ],
   providers: [
+    provideNgxMask()
   ]
 })
 export class CoreModule { }

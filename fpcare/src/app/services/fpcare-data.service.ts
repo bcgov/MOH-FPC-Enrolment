@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {FPCPerson} from '../models/person.model';
+import { environment } from '../../environments/environment';
 
 /**
  * FPCareDataService is responsible for storing and searching data. It is not
@@ -22,8 +23,9 @@ export class FPCareDataService {
   /** Information for children related to applicant */
   private _dependants: FPCPerson[] = [];
 
-  /** Variable to record whether individual has consented to collection notice */
-  public acceptedCollectionNotice: boolean = false;
+  /** Variable to record whether individual has consented to collection notice.
+   *  Auto-accepted when bypassGuards is enabled (dev/test environments). */
+  public acceptedCollectionNotice: boolean = environment.bypassGuards;
 
   /** Variable to record the letter type if response is not returned by API service */
   public reprintLetterType: string;
