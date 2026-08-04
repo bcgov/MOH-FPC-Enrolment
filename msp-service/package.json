@@ -6,6 +6,12 @@
   "scripts": {
     "build": "NODE_ENV=production gulp",
     "start": "node $NODE_DEBUG_OPTION build/index.js server",
+    "start-local-service": "bin/start-local-service.sh",
+    "start-mock-logger": "nodemon bin/mock-logger.js",
+    "start-mock-api": "nodemon bin/mock-api.js",
+    "start-mock-api-itrf": "nodemon bin/mock-api-itrf.js",
+    "send-test-api-call": "node bin/send-test-api-call.js",
+    "send-test-api-call-itrf": "node bin/send-test-api-call-itrf.js",
     "dev": "npx nodemon --watch src --inspect=0.0.0.0:9229 --exec node ./src/index.js server",
     "test:coverage": "echo \"WARNING: No test specified\" && exit 0",
     "test:lint": "echo \"WARNING: No LINTer specified\" && exit 0",
