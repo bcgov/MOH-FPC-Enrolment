@@ -39,7 +39,7 @@ export const environment = {
 
   /** Link used in app */
   links: {
-    FAQ: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/frequently-asked-questions-about-registration-income-and-consent',
+    FAQ: 'https://www2.gov.bc.ca/gov/content?id=68E2026B228948D1835B091AA6415F91',
     FormularySearch: 'https://pharmacareformularysearch.gov.bc.ca/',
     HIBC: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us',
     MSP: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp',
