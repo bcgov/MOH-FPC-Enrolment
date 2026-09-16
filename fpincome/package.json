@@ -10,7 +10,7 @@
   "homepage": "git+https://github.com/bcgov/MOH-FPC-Enrolment.git/fpincome/README.md",
   "main": "src/main.ts",
   "engines": {
-    "node": ">=22.0.0"
+    "node": ">=22.11.0 <23"
   },
   "scripts": {
     "ng": "ng",
