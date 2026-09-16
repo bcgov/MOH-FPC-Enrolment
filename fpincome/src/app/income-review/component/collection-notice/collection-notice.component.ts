@@ -8,17 +8,18 @@ import {
   EventEmitter,
   ElementRef,
 } from '@angular/core';
-import { ModalDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap/modal';
 import { defer, fromEvent, Subject, Subscription } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'fpir-collection-notice',
   templateUrl: './collection-notice.component.html',
 })
 export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
-  @Input() isDisabled: boolean = false;
-  @Input() buttonLabel: string = 'Continue';
+  @Input() isDisabled = false;
+  @Input() buttonLabel = 'Continue';
   @Output() onHide: EventEmitter<void> = new EventEmitter<void>();
 
   // Read after the ngAfterViewInit
@@ -29,7 +30,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   keyDown$ = defer(() => fromEvent(document, 'keydown')).pipe(
-    tap((event: any) => {
+    tap((event: KeyboardEvent) => {
       // console.log('keyDown: ', event.target );
       const tabElements = this.getElements();
 
@@ -53,7 +54,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
   );
 
   onFocusIn$ = defer(() => fromEvent(document, 'focusin')).pipe(
-    tap((event: any) => {
+    tap((event: FocusEvent) => {
       // console.log('document focus in: ', event.target);
       const tabElements = this.getElements();
 
@@ -105,7 +106,7 @@ export class CollectionNoticeComponent implements AfterViewInit, OnDestroy {
     return false;
   }
 
-  getElements(): Array<HTMLElement> {
+  getElements(): HTMLElement[] {
     const focusElmts =
       'h2, a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])';
 

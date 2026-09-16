@@ -1,7 +1,10 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TextMaskModule } from 'angular2-text-mask';
-import { SharedCoreModule } from 'moh-common-lib';
+import { NgxMaskDirective, provideEnvironmentNgxMask } from 'ngx-mask';
+import {
+  SharedCoreModule,
+  ErrorContainerComponent,
+} from 'moh-common-lib-angular';
 
 import { FinancialInputComponent } from './financial-input.component';
 
@@ -9,17 +12,21 @@ describe('FinancialInputComponent', () => {
   let component: FinancialInputComponent;
   let fixture: ComponentFixture<FinancialInputComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [FinancialInputComponent],
-      imports: [
-        TextMaskModule,
-        SharedCoreModule,
-        FormsModule,
-        ReactiveFormsModule,
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [FinancialInputComponent],
+        imports: [
+          NgxMaskDirective,
+          SharedCoreModule,
+          FormsModule,
+          ReactiveFormsModule,
+          ErrorContainerComponent,
+        ],
+        providers: [provideEnvironmentNgxMask()],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(FinancialInputComponent);

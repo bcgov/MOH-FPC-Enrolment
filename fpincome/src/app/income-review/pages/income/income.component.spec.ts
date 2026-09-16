@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   ComponentFixtureAutoDetect,
@@ -9,8 +9,15 @@ import {
 import { IncomeComponent } from './income.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedCoreModule } from 'moh-common-lib';
-import { TextMaskModule } from 'angular2-text-mask';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  RadioComponent,
+  ErrorContainerComponent,
+  FileUploaderComponent,
+} from 'moh-common-lib-angular';
+import { NgxMaskDirective, provideEnvironmentNgxMask } from 'ngx-mask';
 import {
   clickValue,
   getCheckedValue,
@@ -29,43 +36,37 @@ class MockDataService {
   hasRdspIncome: boolean;
 }
 
-function setInputField(
-  fixture: ComponentFixture<any>,
-  fieldName: string,
-  value: string = null
-) {
-  const _de = getDebugElement(fixture, 'input', fieldName);
-  const el = _de.nativeElement;
-  el.focus();
-  el.value = value;
-  el.dispatchEvent(new Event('input'));
-  el.dispatchEvent(new Event('change'));
-  el.dispatchEvent(new Event('blur'));
-}
-
 describe('IncomeComponent', () => {
   let component: IncomeComponent;
   let fixture: ComponentFixture<IncomeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [IncomeComponent, FinancialInputComponent],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        TextMaskModule,
-      ],
-      providers: [
-        {
-          provide: ComponentFixtureAutoDetect,
-          useValue: true,
-        },
-        { provide: Router, useClass: MockRouter },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [IncomeComponent, FinancialInputComponent],
+        imports: [
+          FormsModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          NgxMaskDirective,
+          PageFrameworkComponent,
+          PageSectionComponent,
+          RadioComponent,
+          ErrorContainerComponent,
+          FileUploaderComponent,
+        ],
+        providers: [
+          provideEnvironmentNgxMask(),
+          {
+            provide: ComponentFixtureAutoDetect,
+            useValue: true,
+          },
+          { provide: Router, useClass: MockRouter },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(IncomeComponent);

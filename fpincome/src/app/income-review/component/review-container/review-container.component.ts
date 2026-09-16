@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 export interface ReviewSectionItemType {
   label: string;
   value: string;
-  extraInfo?: string | { [key: string]: any } | null;
+  extraInfo?: string | Record<string, any> | null;
 }
 export interface ReviewObject {
   heading: string;
@@ -15,6 +15,7 @@ export interface ReviewObject {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpir-review-container',
   templateUrl: './review-container.component.html',
   styleUrls: ['./review-container.component.scss'],

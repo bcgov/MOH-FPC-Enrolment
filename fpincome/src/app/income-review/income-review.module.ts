@@ -8,8 +8,23 @@ import {
   DefaultPageGuardService,
   AbstractPageGuardService,
   LoadPageGuardService,
-} from 'moh-common-lib';
-import { CaptchaModule } from 'moh-common-lib/captcha';
+  CoreBreadcrumbComponent,
+  FormActionBarComponent,
+  WizardProgressBarComponent,
+  ErrorContainerComponent,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  RadioComponent,
+  NameComponent,
+  CityComponent,
+  PhnComponent,
+  PostalCodeComponent,
+  StreetComponent,
+  FileUploaderComponent,
+  ConfirmTemplateComponent,
+  CheckboxComponent,
+} from 'moh-common-lib-angular';
+import { CaptchaModule } from 'moh-common-lib-angular/captcha';
 import { IncomeReviewRoutingModule } from './income-review-routing.module';
 import { IncomeReviewComponent } from './income-review.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -24,7 +39,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReviewContainerComponent } from './component/review-container/review-container.component';
 import { PersonalInfoComponent } from './pages/personal-info/personal-info.component';
 import { IncomeComponent } from './pages/income/income.component';
-import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMaskDirective } from 'ngx-mask';
 import { FinancialInputComponent } from './component/financial-input/financial-input.component';
 
 @NgModule({
@@ -48,7 +63,22 @@ import { FinancialInputComponent } from './component/financial-input/financial-i
     IncomeReviewRoutingModule,
     ModalModule.forRoot(),
     CaptchaModule,
-    TextMaskModule,
+    NgxMaskDirective,
+    CoreBreadcrumbComponent,
+    FormActionBarComponent,
+    WizardProgressBarComponent,
+    ErrorContainerComponent,
+    PageFrameworkComponent,
+    PageSectionComponent,
+    RadioComponent,
+    NameComponent,
+    CityComponent,
+    PhnComponent,
+    PostalCodeComponent,
+    StreetComponent,
+    FileUploaderComponent,
+    ConfirmTemplateComponent,
+    CheckboxComponent,
   ],
   providers: [
     {

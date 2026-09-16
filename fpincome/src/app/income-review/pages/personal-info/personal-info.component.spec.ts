@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   ComponentFixtureAutoDetect,
@@ -9,8 +9,19 @@ import {
 import { PersonalInfoComponent } from './personal-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedCoreModule } from 'moh-common-lib';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  NameComponent,
+  StreetComponent,
+  CityComponent,
+  PostalCodeComponent,
+  PhnComponent,
+  RadioComponent,
+} from 'moh-common-lib-angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import {
   getDebugElement,
   setInput,
@@ -55,25 +66,36 @@ describe('PersonalInfoComponent', () => {
   let component: PersonalInfoComponent;
   let fixture: ComponentFixture<PersonalInfoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [PersonalInfoComponent],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        HttpClientTestingModule,
-      ],
-      providers: [
-        {
-          provide: ComponentFixtureAutoDetect,
-          useValue: true,
-        },
-        { provide: Router, useClass: MockRouter },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PersonalInfoComponent],
+        imports: [
+          FormsModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          HttpClientTestingModule,
+          PageFrameworkComponent,
+          PageSectionComponent,
+          NameComponent,
+          StreetComponent,
+          CityComponent,
+          PostalCodeComponent,
+          PhnComponent,
+          RadioComponent,
+        ],
+        providers: [
+          provideEnvironmentNgxMask(),
+          {
+            provide: ComponentFixtureAutoDetect,
+            useValue: true,
+          },
+          { provide: Router, useClass: MockRouter },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonalInfoComponent);

@@ -17,7 +17,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SplashPageService {
-  public isMaintenanceMode: boolean = false;
+  public isMaintenanceMode = false;
 
   /**
    * We use private BehaviorSubjects to get variables instead of repeating HTTP requests.

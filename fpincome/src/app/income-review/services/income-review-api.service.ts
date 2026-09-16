@@ -3,7 +3,7 @@ import {
   AbstractHttpService,
   CommonImage,
   CommonLogEvents,
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import {
   HttpClient,
   HttpHeaders,
@@ -57,7 +57,7 @@ export class IncomeReviewApiService extends AbstractHttpService {
 
     return new Promise<ServerPayload>((resolve, reject) => {
       this._uploadDocuments(supportDocuments, jsonPayLoad.applicationUUID)
-        .then((attachRes) => {
+        .then(() => {
           return this._submitForm(payload).subscribe(
             (response: ServerPayload) => {
               console.log('submit response: ', response);

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoadPageGuardService } from 'moh-common-lib';
+import { LoadPageGuardService } from 'moh-common-lib-angular';
 
 import { IncomeReviewComponent } from './income-review.component';
 import { incomeReviewPageRoutes } from './income-review-pages.route';

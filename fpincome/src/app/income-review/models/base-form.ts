@@ -2,11 +2,14 @@ import {
   ContainerService,
   AbstractReactForm,
   PageStateService,
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Directive, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 
+// Angular requires an explicit decorator on a base class that uses Angular
+// features (DI, lifecycle hooks) and is extended by @Component classes.
+@Directive()
 export class BaseForm extends AbstractReactForm
   implements OnInit, AfterViewInit, OnDestroy {
   private _subscription: Subscription;
@@ -29,7 +32,7 @@ export class BaseForm extends AbstractReactForm
   }
 
   ngAfterViewInit() {
-    this._subscription = this.containerService.$continueBtn.subscribe((obs) => {
+    this._subscription = this.containerService.$continueBtn.subscribe(() => {
       this.continue();
     });
 

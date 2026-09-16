@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   inject,
@@ -8,11 +8,18 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedCoreModule } from 'moh-common-lib';
-import { CaptchaModule } from 'moh-common-lib/captcha';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  RadioComponent,
+  ErrorContainerComponent,
+} from 'moh-common-lib-angular';
+import { CaptchaModule } from 'moh-common-lib-angular/captcha';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { HomeComponent } from './home.component';
 import { CollectionNoticeComponent } from '../../component/collection-notice/collection-notice.component';
-import { ModalModule } from 'ngx-bootstrap';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import {
@@ -53,24 +60,31 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [HomeComponent, CollectionNoticeComponent],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        HttpClientTestingModule,
-        CaptchaModule,
-        ModalModule.forRoot(),
-      ],
-      providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true },
-        { provide: Router, useClass: MockRouter },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [HomeComponent, CollectionNoticeComponent],
+        imports: [
+          FormsModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          HttpClientTestingModule,
+          CaptchaModule,
+          ModalModule.forRoot(),
+          PageFrameworkComponent,
+          PageSectionComponent,
+          RadioComponent,
+          ErrorContainerComponent,
+        ],
+        providers: [
+          provideEnvironmentNgxMask(),
+          { provide: ComponentFixtureAutoDetect, useValue: true },
+          { provide: Router, useClass: MockRouter },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);

@@ -1,4 +1,4 @@
-import { ApiStatusCodes } from 'moh-common-lib';
+import { ApiStatusCodes } from 'moh-common-lib-angular';
 
 /**
  * Serves as base for both API requests *and* API responses.

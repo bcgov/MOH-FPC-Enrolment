@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { format } from 'date-fns';
-import { Base, ApiStatusCodes, PageStateService } from 'moh-common-lib';
+import { Base, ApiStatusCodes, PageStateService } from 'moh-common-lib-angular';
 
 import {
   SUCCESSFUL_CONFIRMATION_MSG,
@@ -12,6 +12,7 @@ import { ReviewContainerComponent } from '../../component/review-container/revie
 import { environment } from '../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpir-confirmation',
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.scss'],
@@ -30,7 +31,7 @@ export class ConfirmationComponent extends Base implements OnInit {
   // Default to error state
   displayIcon: ApiStatusCodes = ApiStatusCodes.ERROR;
 
-  pageTitle: string = 'Confirmation Message';
+  pageTitle = 'Confirmation Message';
 
   constructor(
     private pageStateService: PageStateService,

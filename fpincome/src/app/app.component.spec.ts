@@ -1,26 +1,29 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { SharedCoreModule } from 'moh-common-lib';
+import { SharedCoreModule, HeaderComponent } from 'moh-common-lib-angular';
 
 import { AppComponent } from './app.component';
 import { APP_TITLE } from './app.constants';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        FormsModule,
-        ReactiveFormsModule,
-      ],
-      declarations: [AppComponent],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          HttpClientTestingModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          FormsModule,
+          ReactiveFormsModule,
+          HeaderComponent,
+        ],
+        declarations: [AppComponent],
+      }).compileComponents();
+    })
+  );
 
   it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);

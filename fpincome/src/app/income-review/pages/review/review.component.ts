@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { INCOME_REVIEW_PAGES } from '../../income-review.constants';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import { ReviewContainerComponent } from '../../component/review-container/review-container.component';
 
 @Component({
+  standalone: false,
   selector: 'fpir-review',
   templateUrl: './review.component.html',
 })
