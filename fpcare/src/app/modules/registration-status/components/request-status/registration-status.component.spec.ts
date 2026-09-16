@@ -1,10 +1,10 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   ComponentFixtureAutoDetect,
   TestBed,
 } from '@angular/core/testing';
-import { FormsModule, NgForm, ValidationErrors } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RegistrationStatusComponent } from './registration-status.component';
@@ -26,11 +26,31 @@ function formHasError(form: NgForm, errorKey: string): boolean {
   );
 }
 
+// Simulate real keystrokes into a masked <input>. FPCareRequiredDirective's
+// NG_VALIDATOR (src/app/validation/fpcare-required.directive.ts) reads
+// nativeElement.value directly rather than the FormControl value, so setting
+// the bound model property (e.g. component.applicant.phn = '...') or even
+// calling control.setValue() directly never updates what the validator sees.
+// Writing through the native HTMLInputElement value setter and dispatching a
+// bubbling 'input' event, one character at a time, goes through the same
+// path a real keystroke does and is the only way to reach the validator with
+// this directive's current implementation.
+function typeIntoInput(input: HTMLInputElement, value: string): void {
+  const nativeValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value'
+  ).set;
+  value.split('').forEach((ch) => {
+    nativeValueSetter.call(input, input.value + ch);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
 describe('RegistrationStatusComponent', () => {
   let component: RegistrationStatusComponent;
   let fixture: ComponentFixture<RegistrationStatusComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         CoreModule,
@@ -88,9 +108,12 @@ describe('RegistrationStatusComponent', () => {
   });
 
   it('invalid PHN', (done) => {
-    component.applicant.phn = '9999999990';
-
     fixture.whenStable().then(() => {
+      const phnInput: HTMLInputElement =
+        fixture.nativeElement.querySelector('fpcare-phn input');
+      typeIntoInput(phnInput, '9999999990');
+      fixture.detectChanges();
+
       expect(component.form.valid).toBe(false);
       expect(
         formHasError(component.form, PhnValidationComponent.ERROR_STRING)

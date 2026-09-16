@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {RegistrationService} from '../../registration.service';
 import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
@@ -6,20 +6,21 @@ import {EligibilityPayload, RegistrationPayload, ServerPayload} from '../../../.
 import {PharmaCareAssistanceLevel} from '../../../financial-calculator/assistance-levels.interface';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {growVertical} from '../../../../animations/animations';
-import * as moment from 'moment';
+import moment from 'moment';
 import {REGISTRATION_STATUS_PATH, REQUEST_REG_STATUS} from '../../../../models/route-paths.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-reg-results',
   templateUrl: './reg-results.component.html',
   styleUrls: ['./reg-results.component.scss'],
   animations: [growVertical]
 })
-export class RegResultsComponent extends AbstractResultsComponent implements OnInit {
+export class RegResultsComponent extends AbstractResultsComponent implements OnInit, AfterViewInit {
 
   public response: EligibilityPayload | RegistrationPayload | ServerPayload = null;
   public assistenceLevel: PharmaCareAssistanceLevel;
-  public pgTitle: string = 'Fair PharmaCare Registration Status';
+  public pgTitle = 'Fair PharmaCare Registration Status';
   public famNumber: string = null;
 
   /** Focuses the next element to the heading of a new page */

@@ -7,8 +7,6 @@ export class ErrorPageService {
 
   private _errorResponse: string;
 
-  constructor() { }
-
   set errorResponse( error: string ) {
     console.log( 'Error occurred: ' + error );
     this._errorResponse = error;

@@ -1,10 +1,10 @@
-import { AbstractHttpService } from 'moh-common-lib';
+import { AbstractHttpService } from 'moh-common-lib-angular';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { Logger } from './logger.service';
-import * as moment from 'moment';
+import moment from 'moment';
 import {
   StatusCheckPHN,
   StatusCheckRegNum,
@@ -29,7 +29,7 @@ export class ApiService extends AbstractHttpService {
     'Cache-Control' : 'private'
   });
   private _token: string;
-  private _clientName: string = 'ppiweb';
+  private _clientName = 'ppiweb';
 
   constructor( protected http: HttpClient, public logService: Logger ){
     super(http);

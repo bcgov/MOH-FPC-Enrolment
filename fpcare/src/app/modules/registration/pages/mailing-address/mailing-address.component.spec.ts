@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MailingAddressPageComponent } from './mailing-address.component';
 import { CoreModule } from '../../../core/core.module';
@@ -13,7 +13,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 describe('MailingAddressComponent', () => {
   let component: MailingAddressPageComponent;
   let fixture: ComponentFixture<MailingAddressPageComponent>;
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         MailingAddressPageComponent,

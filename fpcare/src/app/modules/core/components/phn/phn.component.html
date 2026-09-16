@@ -11,8 +11,9 @@
          required
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"
-         [textMask]="{mask: mask}"
-         [disabled]="disabled" 
+         [mask]="mask"
+         [dropSpecialCharacters]="false"
+         [disabled]="disabled"
          autocomplete="off"/>
 </div>
 

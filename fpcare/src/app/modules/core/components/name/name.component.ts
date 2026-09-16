@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ControlContainer, NgForm} from '@angular/forms';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-name',
   templateUrl: './name.component.html',
   styleUrls: ['./name.component.scss'],
@@ -11,7 +12,7 @@ import { Base } from 'moh-common-lib';
   // up in its parents `this.form`, and will auto-update `this.form.valid`
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm }]
 })
-export class NameComponent extends Base implements OnInit {
+export class NameComponent extends Base {
 
   @Input() label: string;
   @Input() value: string;
@@ -21,9 +22,6 @@ export class NameComponent extends Base implements OnInit {
 
   constructor() {
     super();
-  }
-
-  ngOnInit() {
   }
 
   /**

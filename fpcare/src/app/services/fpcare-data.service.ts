@@ -23,7 +23,7 @@ export class FPCareDataService {
   private _dependants: FPCPerson[] = [];
 
   /** Variable to record whether individual has consented to collection notice */
-  public acceptedCollectionNotice: boolean = false;
+  public acceptedCollectionNotice = false;
 
   /** Variable to record the letter type if response is not returned by API service */
   public reprintLetterType: string;

@@ -23,20 +23,18 @@ export class DummyDataService {
 
   private _regStatusResponse;
 
-  constructor() { }
-
   // Applicant for test purpose - personal info
-  createApplicant( populated: boolean = true ): FPCPerson {
+  createApplicant( populated = true ): FPCPerson {
 
     return populated ? this.createAdult( true, false ) : new FPCPerson();
   }
 
   // Spouse for test purpose - personal info
-  createSpouse( populated: boolean = true ): FPCPerson {
+  createSpouse( populated = true ): FPCPerson {
     return populated ? this.createAdult() : new FPCPerson();
   }
 
-  createAdult( setAddress: boolean = false, setUpdAddress: boolean = false ): FPCPerson {
+  createAdult( setAddress = false, setUpdAddress = false ): FPCPerson {
     const result: FPCPerson = new FPCPerson;
 
     result.name = this.generatePersonName();
@@ -72,7 +70,7 @@ export class DummyDataService {
     return result;
   }
 
-  getStatusResponse(): Object {
+  getStatusResponse(): object {
     return this._regStatusResponse ? this._regStatusResponse : {} ;
   }
 
@@ -89,7 +87,7 @@ export class DummyDataService {
     return `${this.getRandomElFromArray(firstNames)} ${this.getRandomElFromArray(middleInitials)} ${this.getRandomElFromArray(lastNames)}`;
   }
 
-  private generateDateOfBirth( minAge: number = 20, maxAge: number = 80): SimpleDate {
+  private generateDateOfBirth( minAge = 20, maxAge = 80): SimpleDate {
     const today = new Date();
     const minDate = new Date( today.getFullYear() - minAge, 1, today.getDate() - 10);
     const maxDate = new Date( today.getFullYear() - maxAge, 1, today.getDate() - 10);

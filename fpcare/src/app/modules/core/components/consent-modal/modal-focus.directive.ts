@@ -11,23 +11,20 @@ import { AfterViewInit, Directive, HostListener } from '@angular/core';
  * https://github.com/valor-software/ngx-bootstrap/issues/1819
  */
 @Directive({
+  standalone: false,
   selector: '[fpcModalFocus]',
   exportAs: 'modalFocusReference'
 })
 export class ModalFocusDirective implements AfterViewInit {
 
-  allElements: Array<HTMLInputElement>;
-  elements: Array<HTMLInputElement>;
+  allElements: HTMLInputElement[];
+  elements: HTMLInputElement[];
   lastElement: HTMLInputElement;
   firstElement: HTMLInputElement;
   isFirstFocused = false;
   isLastFocused = false;
 
   currentFocus: HTMLInputElement;
-
-
-  constructor() {
-  }
 
   ngAfterViewInit(): void {
     this.getElements();
@@ -137,7 +134,7 @@ export class ModalFocusDirective implements AfterViewInit {
     }
 
 
-    this.currentFocus = <HTMLInputElement>event.target;
+    this.currentFocus = event.target as HTMLInputElement;
 
 
     if (event.target['myTabIndex'] === firstAvailable['myTabIndex']) {

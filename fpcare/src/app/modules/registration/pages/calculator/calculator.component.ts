@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,11 +16,12 @@ import {DeductiblePayload} from '../../../../models/api.model';
 
 
 @Component({
+  standalone: false,
   selector: 'fpcare-calculator',
   templateUrl: './calculator.component.html',
   styleUrls: ['./calculator.component.scss']
 })
-export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
+export class CalculatorPageComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   @ViewChild('taxDocuments', { static: true }) taxDocuments: SampleModalComponent;
 
@@ -33,6 +34,8 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   public totalFamilyRdsp: number;
   /** The text mask responsible for the currency formatting. */
   public moneyMask;
+  /** ngx-mask separatorLimit: caps the integer portion at 9 digits, matching the old integerLimit: 9 */
+  public readonly incomeSeparatorLimit = '999999999';
   /** Formatted currency string for applicant's income */
   public income: string;
   /** Formatted currency string for applicant's spouse's income */
@@ -49,7 +52,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
 
   /** Text displayed on button */
-  public buttonText: string = 'Apply for Fair PharmaCare Assistance';
+  public buttonText = 'Apply for Fair PharmaCare Assistance';
 
   public links = environment.links;
 
@@ -58,7 +61,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
    * true, it's a page treated in isolation. This includes, for example,
    * removing the form continue button.
    */
-  public standalone: boolean = false;
+  public standalone = false;
 
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_ELIGIBILITY;
@@ -272,7 +275,5 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     return 'Were you ' + (this.hasSpouse ? 'or your spouse/common-law partner ' : '') + ' born in 1939 or earlier?';
   }
 
-  get hasSpouseLabel(): string {
-    return 'Do you have a spouse/common-law partner?';
-  }
+  readonly hasSpouseLabel: string = 'Do you have a spouse/common-law partner?';
 }

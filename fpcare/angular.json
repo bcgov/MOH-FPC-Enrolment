@@ -2,23 +2,33 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
-  "defaultProject": "fpcare",
 
   "projects": {
     "fpcare": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "prefix": "fpcare",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "deployUrl": "/fpcare/",
-            "outputPath": "dist",
+            "outputPath": {
+              "base": "dist",
+              "browser": ""
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "src/tsconfig.app.json",
-            "polyfills": "src/polyfills.ts",
+            "preserveSymlinks": true,
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/app/styles"
@@ -31,102 +41,104 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
-            "preserveSymlinks": true
+            "scripts": []
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
               ]
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
             }
-          }
+          },
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "fpcare:build",
             "port": 4302,
-            "proxyConfig": "src/proxy.conf.json"
+            "proxyConfig": "src/proxy.conf.json",
+            "servePath": "/fpcare/"
           },
           "configurations": {
             "production": {
-              "browserTarget": "fpcare:build:production"
+              "buildTarget": "fpcare:build:production"
+            },
+            "development": {
+              "buildTarget": "fpcare:build:development"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "fpcare:build"
+            "buildTarget": "fpcare:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "karmaConfig": "src/test/karma.conf.js",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts",
+              "zone.js/testing"
+            ],
             "tsConfig": "src/tsconfig.spec.json",
-            "scripts": [],
+            "karmaConfig": "src/test/karma.conf.js",
             "stylePreprocessorOptions": {
               "includePaths": [
                 "src/app/styles"
               ]
             },
-            "styles": [
-              "src/styles.scss"
-            ],
             "assets": [
               "src/assets",
               "src/favicon.ico"
-            ]
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": []
-          }
-        },
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "src/test/protractor.conf.js",
-            "devServerTarget": "fpcare:serve"
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }
     }
   },
   "cli": {
-    "warnings": {
-      "typescriptMismatch": false
-    }
-  },
-  "schematics": {
-    "@schematics/angular:component": {
-      "prefix": "fpcare",
-      "styleext": "scss"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "fpcare"
-    }
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

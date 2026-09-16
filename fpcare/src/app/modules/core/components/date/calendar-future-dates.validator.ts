@@ -1,8 +1,9 @@
 import { Directive, forwardRef, Input } from '@angular/core';
-import { Validator, NG_VALIDATORS, FormControl } from '@angular/forms';
-import * as moment from 'moment';
+import { NG_VALIDATORS, FormControl } from '@angular/forms';
+import moment from 'moment';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarFutureDates]',
   providers: [
     {
@@ -15,7 +16,7 @@ export class CalendarFutureDatesDirective {
   /** One of "future", "past". Determines what validation errors are generated.*/
   @Input() validateCalendarFutureDates: string;
 
-  validate(control: FormControl): { [key: string]: boolean; } {
+  validate(control: FormControl): Record<string, boolean> {
 
     if (!this.validateCalendarFutureDates) { return null; }
 

@@ -1,12 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Base } from 'moh-common-lib';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Base } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss']
 })
-export class FPCareToggleComponent extends Base implements OnInit {
+export class FPCareToggleComponent extends Base {
 
   @Input() data: boolean;
   @Input() label: string;
@@ -14,9 +15,6 @@ export class FPCareToggleComponent extends Base implements OnInit {
 
   constructor() {
     super();
-  }
-
-  ngOnInit() {
   }
 
 }

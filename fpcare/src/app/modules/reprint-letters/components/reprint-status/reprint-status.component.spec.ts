@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReprintStatusComponent } from './reprint-status.component';
 import {CoreModule} from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -8,7 +8,7 @@ describe('ConsentResultsComponent', () => {
   let component: ReprintStatusComponent;
   let fixture: ComponentFixture<ReprintStatusComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         ReprintStatusComponent

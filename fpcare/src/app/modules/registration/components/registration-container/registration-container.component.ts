@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { pageRoutes } from '../../registration-page-routing';
-import { WizardProgressItem } from 'moh-common-lib';
+import type { WizardProgressItem } from 'moh-common-lib-angular';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-registration-component',
   templateUrl: './registration-container.component.html',
   styleUrls: ['./registration-container.component.scss']
 })
 export class RegistrationContainerComponent implements OnInit {
-
-  constructor() { }
 
   ngOnInit() {
     // Interface for wizard progress items

@@ -1,17 +1,22 @@
 //List of constants used for masking inputs
-import { Base } from 'moh-common-lib';
-import {EventEmitter, Input, Output} from '@angular/core';
+import { Base } from 'moh-common-lib-angular';
+import {Directive, EventEmitter, Input, Output} from '@angular/core';
 
 export const LETTER = /[A-Z]/i; //Ignore case here, then upperCase it via pipe.
 export const NUMBER = /\d/;
 export const SPACE = ' ';
 
+/**
+ * Selector-less @Directive() so this abstract base class can be extended by
+ * real Angular components while declaring its own @Input/@Output.
+ */
+@Directive()
 export class Masking extends Base {
 
   @Input() value: string;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() disabled: boolean = false;
+  @Input() disabled = false;
 
   constructor() {
     super();

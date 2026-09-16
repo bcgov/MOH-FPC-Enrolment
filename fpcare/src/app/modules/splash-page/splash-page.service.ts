@@ -3,7 +3,7 @@ import { SpaEnvService, SpaEnvResponse } from '../../services/spa-env.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { filter, distinctUntilChanged } from 'rxjs/operators';
+import { distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Responsible for determing if the splash page (aka maintenance mode) is
@@ -45,7 +45,7 @@ export class SplashPageService {
   }
 
   public load(): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       if (this.loaded) {
         resolve(this.maintenanceMode);
       }

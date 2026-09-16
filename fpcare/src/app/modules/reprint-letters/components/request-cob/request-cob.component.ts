@@ -3,6 +3,7 @@ import {ComponentData, LetterTypes} from '../request-template/request-template.c
 import {STANDALONE_CALCULATOR} from '../../../../models/route-paths.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-request-cob',
   templateUrl: './request-cob.component.html',
   styleUrls: ['./request-cob.component.scss']
@@ -15,8 +16,5 @@ export class RequestCobComponent {
     label: 'Request Confirmation',
     letterType: LetterTypes.COB_LETTER
   };
-
-  constructor() {
-  }
 
 }

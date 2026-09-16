@@ -1,17 +1,18 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output, EventEmitter, ChangeDetectorRef, OnDestroy, OnChanges} from '@angular/core';
 import { FinanceService } from '../../finance.service';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import { growVertical } from '../../../../animations/animations';
 import { Subscription } from 'rxjs';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-financial-calculator',
   templateUrl: './financial-calculator.component.html',
   styleUrls: ['./financial-calculator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [growVertical]
 })
-export class FinancialCalculatorComponent implements OnInit {
+export class FinancialCalculatorComponent implements OnInit, OnDestroy, OnChanges {
 
   /** A number in dollars corresponding to total family income. If and only if they have a spouse the spouse's income will be included. */
   @Input() income: number;
@@ -28,14 +29,14 @@ export class FinancialCalculatorComponent implements OnInit {
   private _adjustedIncomeDisplay: string;
 
   /** Place holder when values are undefined */
-  private _zeroAmountStr: string = '0';
+  private _zeroAmountStr = '0';
 
   /** A number in dollars, used to determine what level of PharmaCare coverage. */
   public adjustedIncomeAmount: number;
 
   /** Finance Service is still loading data. */
-  public isLoadingData: boolean = true;
-  public errorLoadingData: boolean = false;
+  public isLoadingData = true;
+  public errorLoadingData = false;
   private financeHasData$: Subscription;
 
   /**
@@ -75,7 +76,7 @@ export class FinancialCalculatorComponent implements OnInit {
     this.financeHasData$ = this.financeService.hasData.subscribe(hasData => {
       this.isLoadingData = !hasData;
       this.cd.detectChanges();
-    }, (_onError) => {
+    }, () => {
       this.isLoadingData = true;
       this.errorLoadingData = true;
       this.cd.detectChanges();
@@ -89,7 +90,7 @@ export class FinancialCalculatorComponent implements OnInit {
   }
 
   private currencyFormat(input: number): string {
-    return this.financeService.currencyFormatLg(input);
+    return this.financeService.currencyFormat(input);
   }
 
   ngOnChanges(changes: SimpleChanges) {

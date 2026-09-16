@@ -1,11 +1,12 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Masking, NUMBER, SPACE} from '../../../../models/masking.model';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, OnChanges, OnDestroy} from '@angular/core';
+import {Masking} from '../../../../models/masking.model';
 import {ControlContainer, NgForm} from '@angular/forms';
 import {ValidationService} from '../../../../services/validation.service';
 import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-phn',
   templateUrl: './phn.component.html',
   styleUrls: ['./phn.component.scss'],
@@ -14,19 +15,19 @@ import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
   // up in its parents `this.form`, and will auto-update `this.form.valid`
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm }]
 })
-export class PhnComponent extends Masking implements OnInit {
+export class PhnComponent extends Masking implements OnInit, OnChanges, OnDestroy {
 
   @Input() phnList: string[] = [];
 
   @Output() uniquePhnError: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  public mask = [NUMBER, NUMBER, NUMBER, NUMBER, SPACE, NUMBER, NUMBER, NUMBER, SPACE, NUMBER, NUMBER, NUMBER];
+  public mask = '0000 000 000';
   public placeholder = '1111 111 111';
-  public uniquePhnErrMsg: string = 'Personal Health Number (PHN) was already used for another family member.';
+  public uniquePhnErrMsg = 'Personal Health Number (PHN) was already used for another family member.';
 
-  public uniquePhns: boolean = true;
+  public uniquePhns = true;
 
-  private _regex: RegExp = /^[0-9 ]*$/;
+  private _regex = /^[0-9 ]*$/;
 
   /**
    * We use rxjs for performance benefits to reduce the calls to checking uniqueness of PHNs

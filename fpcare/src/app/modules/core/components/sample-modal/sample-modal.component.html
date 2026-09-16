@@ -10,7 +10,7 @@
     <div class="modal-content">
       <div class="modal-header modal-header-primary">
         <h2 class="modal-title pull-left" id="samplesModalTitle" aria-label="Tax documents samples" tabindex="0">{{title}}</h2>
-        <i class="pull-right text-danger fa fa-2x fa-times" (click)="closeModal()" aria-label="Close" tabindex="0"></i>
+        <i class="pull-right text-danger fa fa-2x fa-times" (click)="closeModal()" (keyup.enter)="closeModal()" aria-label="Close" tabindex="0"></i>
       </div>
 
       <div class="modal-body">

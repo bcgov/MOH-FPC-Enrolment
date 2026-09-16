@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SplashPageService } from '../../splash-page.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
 import { environment } from 'environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-splash-page',
   templateUrl: './splash-page.component.html',
   styleUrls: ['./splash-page.component.scss']
 })
-export class SplashPageComponent implements OnInit {
+export class SplashPageComponent implements OnInit, OnDestroy {
 
   constructor(private splashService: SplashPageService, private router: Router) { }
 

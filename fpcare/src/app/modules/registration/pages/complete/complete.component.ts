@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -22,17 +22,18 @@ import {environment} from '../../../../../environments/environment';
 import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-complete',
   templateUrl: './complete.component.html',
   styleUrls: ['./complete.component.scss']
 })
-export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
+export class CompletePageComponent extends AbstractFormComponent implements OnInit, AfterViewInit  {
 
   /** Page to navigate to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
-  public applicantAgreement: boolean = false;
-  public spouseAgreement: boolean = false;
+  public applicantAgreement = false;
+  public spouseAgreement = false;
   public links = environment.links;
 
   /** Focuses the next element to the heading of a new page */
@@ -87,9 +88,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * Label for button depending on the whether the applicant has children
    * @returns {string}
    */
-  get buttonLabel(): string {
-    return 'Submit Application';
-  }
+  readonly buttonLabel: string = 'Submit Application';
 
   /**
    * Check to verify whether user can continue or not

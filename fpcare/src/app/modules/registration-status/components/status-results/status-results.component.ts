@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import {
   StatusCheckPHNPayload,
@@ -14,11 +14,12 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
  * if both are set.
  */
 @Component({
+  standalone: false,
   selector: 'fpcare-status-results',
   templateUrl: './status-results.component.html',
   styleUrls: ['./status-results.component.scss']
 })
-export class StatusResultsComponent extends AbstractResultsComponent {
+export class StatusResultsComponent extends AbstractResultsComponent implements OnInit {
 
   public response:  StatusCheckRegNumberPayload | StatusCheckPHNPayload = null;
 

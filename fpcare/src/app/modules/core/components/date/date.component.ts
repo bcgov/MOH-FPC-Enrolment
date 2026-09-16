@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Base } from 'moh-common-lib';
-import * as moment from 'moment';
+import { Base } from 'moh-common-lib-angular';
+import moment from 'moment';
 import { SimpleDate } from './simple-date.interface';
 
 export enum MonthName {
@@ -20,6 +20,7 @@ export enum MonthName {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpcare-date',
   templateUrl: './date.component.html',
   styleUrls: ['./date.component.scss']
@@ -31,7 +32,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   /** Sets the default values to the client-side current date. */
   @Input() useCurrentDate = false;
   @Input() disabled: boolean;
-  @Input() label: string = 'date';
+  @Input() label = 'date';
 
   @Input() date: SimpleDate;
   @Output() onDateChange: EventEmitter<SimpleDate> = new EventEmitter<SimpleDate>();

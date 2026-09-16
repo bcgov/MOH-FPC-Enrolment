@@ -20,8 +20,6 @@ export class ValidationService {
   public static MAX_STREET_LENGTH = 50; // Size of ADDR_LINE_1 + ADDR_LINE_2
   public static MAX_CITY_LENGTH = 25;
 
-  constructor() { }
-
   /**
    * Determines whether the entries in the list are unique
    * @param {string[]} list
@@ -38,7 +36,7 @@ export class ValidationService {
    * @param phn Empty value (null, undefined, empty string) are treated as invalid.
    * @param isBCPhn
    */
-  static validatePHN (phn: string, isBCPhn: boolean = true, allowEmptyValue: boolean = false): boolean {
+  static validatePHN (phn: string, isBCPhn = true, allowEmptyValue = false): boolean {
     // pre req checks
     if (phn === null || phn === undefined || phn.trim().length < 1){
       return allowEmptyValue;

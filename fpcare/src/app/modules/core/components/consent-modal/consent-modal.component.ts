@@ -1,11 +1,12 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
 import {growVertical} from '../../../../animations/animations';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-consent-modal',
   templateUrl: './consent-modal.component.html',
   styleUrls: ['./consent-modal.component.scss'],
@@ -16,7 +17,7 @@ export class ConsentModalComponent extends Base implements OnInit {
   public captchaApiBaseUrl;
   public links = environment.links;
 
-  private _agreeCheck: boolean = false;
+  private _agreeCheck = false;
   private _hasToken = false;
 
   @ViewChild('informationCollectionModal', { static: true }) public informationCollectionModal: ModalDirective;

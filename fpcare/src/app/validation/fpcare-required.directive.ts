@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, HostListener, Renderer2, Inject,
-  ViewContainerRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
+  ViewContainerRef, ComponentRef, ComponentFactoryResolver, AfterViewInit, AfterViewChecked
 } from '@angular/core';
 
 import {ValidationComponent} from './validation-component.interface';
@@ -30,6 +30,7 @@ import {NameValidationComponent} from './name-validation/name-validation.compone
  * to `loadValidationComponents()`
  */
 @Directive({
+  standalone: false,
   selector: '[fpcareRequired]',
   providers: [
     {
@@ -37,7 +38,7 @@ import {NameValidationComponent} from './name-validation/name-validation.compone
     }
   ]
 })
-export class FPCareRequiredDirective implements AfterViewInit, Validator {
+export class FPCareRequiredDirective implements AfterViewInit, Validator, AfterViewChecked {
 
   private input: ElementRef;
   private label: ElementRef;
@@ -65,7 +66,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
     if (!this.check(this.input)) {
       throw new Error(`Unable to initialize FPCareRequiredDirective. Directive \
       is unable to locate the input and labels. Make sure you have <label \
-      for=\'NAME\'> setup correctly for the input with fpcareRequired.`);
+      for='NAME'> setup correctly for the input with fpcareRequired.`);
     }
     this.validationOptions = this.validationOptions || 'required';
     this.loadValidationComponents();
@@ -145,10 +146,11 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
    * @param {AbstractControl} control
    * @returns {{[key: string]: any} | null}
    */
-  validate(control: AbstractControl): {[key: string]: any} | null {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- required by the Validator interface signature
+  validate(control: AbstractControl): Record<string, any> | null {
 
     /** An object matching the Angular spec of {validationError: false} for every failure. */
-    const validationFailures: { [key: string]: boolean } = {};
+    const validationFailures: Record<string, boolean> = {};
     this.validationComponents.map(validationComponent => {
       const isInvalid = !validationComponent.validate(this.input);
       if (isInvalid){
@@ -176,7 +178,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
   setInvalid(validationComponent) {
     this.renderer.addClass(this.formGroupElement, this.ERROR_CLASS);
-    const comp = this.addComponent(validationComponent);
+    this.addComponent(validationComponent);
   }
 
   setValid(validationComponent) {
@@ -249,7 +251,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   }
 
   /** Inserts an already created component into the view (c.f. prepareComponent()) */
-  private insertComponent(component: ComponentRef<{}>) {
+  private insertComponent(component: ComponentRef<unknown>) {
     this.view.insert(component.hostView);
   }
 
@@ -272,7 +274,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 }
 
 // Debounce function decorator. If you need to use this elsewhere, refactor it into a different file.
-export function debounce(delay: number = 300): MethodDecorator {
+export function debounce(delay = 300): MethodDecorator {
   return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
     let timeout = null;
 

@@ -8,7 +8,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
-import { TextMaskModule } from 'angular2-text-mask';
+import { NgxMaskDirective, provideEnvironmentNgxMask } from 'ngx-mask';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
@@ -30,8 +30,17 @@ import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
-import { CaptchaModule } from 'moh-common-lib/captcha';
-import { SharedCoreModule } from 'moh-common-lib';
+import { CaptchaModule } from 'moh-common-lib-angular/captcha';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  FormActionBarComponent,
+  PostalCodeComponent,
+  WizardProgressBarComponent,
+  PageSectionComponent,
+  CoreBreadcrumbComponent,
+  AddressValidatorComponent,
+} from 'moh-common-lib-angular';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 
 const componentList = [
@@ -70,27 +79,34 @@ const componentList = [
     ProgressbarModule.forRoot(),
     RouterModule,
     ModalModule.forRoot(),
-    TextMaskModule,
+    NgxMaskDirective,
     TypeaheadModule,
     CaptchaModule,
-    SharedCoreModule
+    SharedCoreModule,
+    PageFrameworkComponent,
+    FormActionBarComponent,
+    PostalCodeComponent,
+    WizardProgressBarComponent,
+    PageSectionComponent,
+    CoreBreadcrumbComponent,
+    AddressValidatorComponent
   ],
   declarations: [
     componentList
   ],
   exports: [
     componentList,
-    SharedCoreModule
-  ],
-  entryComponents: [
-    RequiredValidationErrorsComponent,
-    PhnValidationComponent,
-    SinValidationComponent,
-    RegNumberValidationComponent,
-    PcValidationComponent,
-    NameValidationComponent
+    SharedCoreModule,
+    PageFrameworkComponent,
+    FormActionBarComponent,
+    PostalCodeComponent,
+    WizardProgressBarComponent,
+    PageSectionComponent,
+    CoreBreadcrumbComponent,
+    AddressValidatorComponent
   ],
   providers: [
+    provideEnvironmentNgxMask()
   ]
 })
 export class CoreModule { }

@@ -1,10 +1,10 @@
 import {
-  Directive, HostListener, HostBinding,
-  ElementRef, Input, Output, EventEmitter
+  Directive, HostListener,
+  Input, Output, EventEmitter
 } from '@angular/core';
-import { NgModel, NgControl } from '@angular/forms';
 
 @Directive({
+  standalone: false,
   selector: '[calendarFieldFormatter]'
 })
 export class CalendarFieldFormatterDirective {

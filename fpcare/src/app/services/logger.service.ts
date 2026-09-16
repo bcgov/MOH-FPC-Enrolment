@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AbstractHttpService } from 'moh-common-lib';
+import { AbstractHttpService } from 'moh-common-lib-angular';
 import { throwError } from 'rxjs';
-import * as moment from 'moment';
-import {UUID} from 'angular2-uuid';
+import moment from 'moment';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class Logger extends AbstractHttpService {
    * @memberof LogService
    */
   protected _headers: HttpHeaders = new HttpHeaders({
-    applicationId: UUID.UUID().toString(),
+    applicationId: uuidv4(),
     logsource: window.location.hostname,
     http_x_forwarded_host: window.location.hostname,
     program: 'fpc',

@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {FPCPerson} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
@@ -11,11 +11,12 @@ import {ImageInterface} from '../../../../models/image-interface';
 import {environment} from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
+export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   @ViewChild('sinSample', { static: false }) sinSample: SampleModalComponent;
 
@@ -136,17 +137,13 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    *
    * @returns {string}
    */
-  get labelGivenName(): string {
-    return 'First Name';
-  }
+  readonly labelGivenName: string = 'First Name';
 
   /**
    *
    * @returns {string}
    */
-  get labelSurname(): string {
-    return 'Last Name';
-  }
+  readonly labelSurname: string = 'Last Name';
 
   /**
    *
