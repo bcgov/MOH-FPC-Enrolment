@@ -161,7 +161,7 @@ export class FinanceService {
     let value = String(str).replace(/,/g, '');
 
     if (withDollarSign) {
-      value = value.replace( '$', '');
+      value = value.replace(/\$/g, '');
     }
     return Number(value);
   }
