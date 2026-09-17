@@ -54,6 +54,7 @@ export const pageRoutes: Routes = [
     },
     {
         path: '',
-        redirectTo: REGISTRATION_FINANCIAL
+        redirectTo: REGISTRATION_FINANCIAL,
+        pathMatch: 'full'
     }
 ];

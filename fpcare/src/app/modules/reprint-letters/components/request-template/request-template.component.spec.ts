@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import {ComponentData, LetterTypes, RequestTemplateComponent} from './request-template.component';
 import {FormsModule} from '@angular/forms';
 import {CoreModule} from '../../../core/core.module';
@@ -14,7 +14,7 @@ describe('RequestTemplateComponent', () => {
   let component: RequestTemplateComponent;
   let fixture: ComponentFixture<RequestTemplateComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [
         RequestTemplateComponent

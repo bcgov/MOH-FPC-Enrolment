@@ -1,9 +1,9 @@
 import {Component, ElementRef, Input} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {BaseValidationComponent} from '../base-validation.component';
-import {ValidationService} from '../../services/validation.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-name-validation',
   templateUrl: './name-validation.component.html',
   styleUrls: ['./name-validation.component.scss']
@@ -12,7 +12,7 @@ import {ValidationService} from '../../services/validation.service';
 export class NameValidationComponent extends BaseValidationComponent {
   @Input() public fieldName = 'DEFAULT_FIELD_NAME'; //should be overwritten at runtime, but write unit tests to check!
 
-  static regex: RegExp = /^[a-zA-Z][a-zA-Z\-.' ]*$/;
+  static regex = /^[a-zA-Z][a-zA-Z\-.' ]*$/;
 
   public static ERROR_STRING = 'fpc-name';
 

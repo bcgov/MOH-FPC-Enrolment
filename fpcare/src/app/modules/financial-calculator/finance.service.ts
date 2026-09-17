@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse } from './assistance-levels.interface';
 import { BehaviorSubject } from 'rxjs';
 
@@ -18,24 +16,12 @@ export class FinanceService {
   /** Subscribe to this observable to check it's true prior to accessing this.PharmacareAssistanceLevels / Pre1939 */
   public hasData = this._hasData.asObservable();
 
-  constructor() { }
-
   /**
-   * An input mask for currency formatting. If you just want to format a string
-   * use `currencyFormat()` This format does NOT include the $ at the beginning
-   * so be sure to add it directly to your template.
+   * ngx-mask pattern for currency input fields. If you just want to format a
+   * string use `currencyFormat()`. This format does NOT include the $ at the
+   * beginning so be sure to add it directly to your template.
    */
-  public moneyMask = createNumberMask({
-    prefix: '', // No $ prefix, because we add it directly to the HTML as an input prepend
-    allowDecimal: true,
-    integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
-  });
-
-  public moneyMaskLg = createNumberMask({
-    prefix: '', // No $ prefix, because we add it directly to the HTML as an input prepend
-    allowDecimal: true,
-    integerLimit: 12 // Max numeric value is 999, 999,999,999.99 - from Light FDS
-  });
+  public moneyMask = 'separator.2';
 
   public setAssistanceLevels(baseline: PharmaCareAssistanceLevelServerResponse[], pre1939: PharmaCareAssistanceLevelServerResponse[]){
     // Change strings of numbers into numbers, as we do math on them
@@ -71,7 +57,7 @@ export class FinanceService {
    * @returns {PharmaCareAssistanceLevel}
    * @memberof FinanceService
    */
-  public findAssistanceLevel(familyNetIncome: number = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
+  public findAssistanceLevel(familyNetIncome = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
 
     if ( !this.PharmaCareAssistanceLevels  || !this.Pre1939PharmaCareAssistanceLevels ) {
       console.error( 'Assistance levels not loaded', this.PharmaCareAssistanceLevels, this.Pre1939PharmaCareAssistanceLevels );
@@ -88,57 +74,46 @@ export class FinanceService {
   }
 
   /**
-   * Format values upto $999,999,999.99
+   * Format a currency value with thousands separators and, when the value
+   * has a fractional part, exactly 2 decimal places.
    * @param {number} currency
    * @param {boolean} withDollarSign
    * @returns {string}
    */
   public currencyFormat(currency: number, withDollarSign = false): string {
 
-    return this._currencyFormat(currency, this.moneyMask, withDollarSign );
-  }
-
-
-  /**
-   * Format values larger than $999,999,999.99
-   * @param {number} currency
-   * @param {boolean} withDollarSign
-   * @returns {string}
-   */
-  public currencyFormatLg(currency: number, withDollarSign = false): string {
-
-    return this._currencyFormat(currency, this.moneyMaskLg, withDollarSign );
+    return this._currencyFormat(currency, withDollarSign );
   }
 
   /**
-   * Format values to currency
+   * Format values to currency: thousands separators, and exactly 2 decimal
+   * places only when the input value itself has a fractional part.
    * @param {number} currency
-   * @param {string} moneyMask
    * @param {boolean} withDollarSign
    * @returns {string}
    * @private
    */
-  private _currencyFormat(currency: number, moneyMask: string, withDollarSign = false): string {
+  private _currencyFormat(currency: number, withDollarSign = false): string {
 
     // We want the value of zero to be formatted
     if ( undefined === currency || null === currency )  {
       return null;
     }
 
-    let strVal = currency.toString();
-    if ( decimalsRegex.exec( strVal ) ) {
-      strVal = currency.toFixed( 2 );
-    }
+    const hasDecimals = decimalsRegex.exec( currency.toString() ) !== null;
+    const formatted = new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: hasDecimals ? 2 : 0,
+      maximumFractionDigits: hasDecimals ? 2 : 0,
+    }).format(currency);
 
-    const mask = conformToMask(strVal, moneyMask, {});
-    return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
+    return `${withDollarSign ? '$' : ''}${formatted}`;
   }
 
 
   // BUSINESS RULE METHODS ----------------------------------------------------
   // The below methods are defined in Functional Requirement Documents
 
-  public calculateFamilyNetIncome(applicantIncome: number = 0, spouseIncome: number = 0) {
+  public calculateFamilyNetIncome(applicantIncome = 0, spouseIncome = 0) {
     //Family Net Income = Applicant's Net Income (I01) + Spouse's Net Income (I03)
 
     /**
@@ -150,8 +125,8 @@ export class FinanceService {
     return Number( familyNetIncome.toFixed(2) );
   }
 
-  public calculateFamilyRdsp(applicantRdsp: number = 0, spouseRdsp: number = 0) {
-    // Family RDSP amount (I05) = Applicants  RDSP amount  + Spouses  RDSP amount
+  public calculateFamilyRdsp(applicantRdsp = 0, spouseRdsp = 0) {
+    // Family RDSP amount (I05) = Applicants  RDSP amount  + Spouses  RDSP amount
     /**
      * ST17305 Fix
      * There is some bug in typescript that causes incorrect values to be calculated when one number has 2 decimals
@@ -173,21 +148,21 @@ export class FinanceService {
 
   /**
    * Convert the currency string to a numeric
-   * @param {string} str
+   * @param {string|number} str
    * @returns {number}
    */
-  public currencyStrToNumber( str: string, withDollarSign: boolean = false ): number {
+  public currencyStrToNumber( str: string | number, withDollarSign = false ): number {
 
-    if ( str ) {
-
-      let value = str.replace(/,/g, '');
-
-      if (withDollarSign) {
-        value = value.replace( '$', '');
-      }
-      return Number(value);
+    if ( str === null || str === undefined || str === '' ) {
+      return null;
     }
 
-    return null;
+    // ngx-mask can emit a number directly via ngModelChange; coerce to string before parsing.
+    let value = String(str).replace(/,/g, '');
+
+    if (withDollarSign) {
+      value = value.replace(/\$/g, '');
+    }
+    return Number(value);
   }
 }

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DemoPageComponent } from './pages/demo-page/demo-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import {
-  REGISTRATION_PATH,
   REGISTRATION_STATUS_PATH,
   REPRINT_LETTERS_PATH,
   STANDALONE_CALCULATOR,

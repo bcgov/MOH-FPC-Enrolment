@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChildren, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChildren, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { FPCPerson } from '../../../../models/person.model';
@@ -16,16 +16,17 @@ import {
 import {ValidationService} from '../../../../services/validation.service';
 import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import { Address } from 'moh-common-lib';
+import { Address } from 'moh-common-lib-angular';
 import { SpaEnvService } from '../../../../services/spa-env.service';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-mailing-address',
   templateUrl: './mailing-address.component.html',
   styleUrls: ['./mailing-address.component.scss']
 })
-export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
+export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
   readonly addressValidatorUrl = environment.addressUrl;
 
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
@@ -37,7 +38,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
   private _postalCode: string[];
 
-  public isPostalMatch: boolean = true;
+  public isPostalMatch = true;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router

@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   ComponentFixtureAutoDetect,
   TestBed,
@@ -14,11 +14,31 @@ import { ValidationService } from '../../../../services/validation.service';
 import { RegistrationService } from '../../registration.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+// Simulate real keystrokes into a masked <input>. FPCareRequiredDirective's
+// NG_VALIDATOR (src/app/validation/fpcare-required.directive.ts) reads
+// nativeElement.value directly rather than the FormControl value, so setting
+// the bound model property (e.g. component.applicant.phn = '...') or even
+// calling control.setValue() directly never updates what the validator sees.
+// Writing through the native HTMLInputElement value setter and dispatching a
+// bubbling 'input' event, one character at a time, goes through the same
+// path a real keystroke does and is the only way to reach the validator with
+// this directive's current implementation.
+function typeIntoInput(input: HTMLInputElement, value: string): void {
+  const nativeValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value'
+  ).set;
+  value.split('').forEach((ch) => {
+    nativeValueSetter.call(input, input.value + ch);
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
 describe('EligibilityComponent - Single Applicant', () => {
   let component: EligibilityPageComponent;
   let fixture: ComponentFixture<EligibilityPageComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [EligibilityPageComponent],
       imports: [
@@ -73,10 +93,14 @@ describe('EligibilityComponent - Single Applicant', () => {
   });
 
   it('required data populated can continue', (done) => {
-    component.applicant.phn = '9999 999 998';
     component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
 
     fixture.whenStable().then(() => {
+      const phnInput: HTMLInputElement =
+        fixture.nativeElement.querySelector('fpcare-phn input');
+      typeIntoInput(phnInput, '9999999998');
+      fixture.detectChanges();
+
       expect(component.canContinue()).toBeTruthy();
 
       done();
@@ -89,7 +113,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
   let fixture: ComponentFixture<EligibilityPageComponent>;
   let dataService: FPCareDataService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [EligibilityPageComponent],
       imports: [
@@ -172,12 +196,18 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
   });
 
   it('required data populated can continue', (done) => {
-    component.applicant.phn = '9999 999 998';
     component.applicant.sDateOfBirth = { year: 1989, month: 4, day: 1 };
-    component.spouse.phn = '9999 999 973';
     component.spouse.sDateOfBirth = { year: 1990, month: 5, day: 30 };
 
     fixture.whenStable().then(() => {
+      // DOM order matches template order: applicant's fpcare-phn first, spouse's second.
+      const phnInputs: HTMLInputElement[] = Array.from(
+        fixture.nativeElement.querySelectorAll('fpcare-phn input')
+      );
+      typeIntoInput(phnInputs[0], '9999999998');
+      typeIntoInput(phnInputs[1], '9999999973');
+      fixture.detectChanges();
+
       expect(component.canContinue()).toBeTruthy();
 
       done();

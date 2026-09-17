@@ -5,9 +5,9 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  SimpleChanges,
+  SimpleChanges, OnChanges,
 } from '@angular/core';
-import { Base, GeoAddressResult, GeocoderService } from 'moh-common-lib';
+import { Base, GeocoderService, type GeoAddressResult } from 'moh-common-lib-angular';
 import { Subject, Observable, of } from 'rxjs';
 import {
   debounceTime,
@@ -23,22 +23,23 @@ import {
 } from '../../../../models/province-names.enum';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-geocoder-input',
   templateUrl: './geocoder-input.component.html',
   styleUrls: ['./geocoder-input.component.scss'],
 })
-export class GeocoderInputComponent extends Base implements OnInit {
-  @Input() label: string = 'Address Lookup';
+export class GeocoderInputComponent extends Base implements OnInit, OnChanges {
+  @Input() label = 'Address Lookup';
   @Input() address: FPCAddress = new FPCAddress();
   @Output() addressChange = new EventEmitter<FPCAddress>();
 
   /** The string in the box the user has typed */
   public search: string;
   /** Is the Geocoder API request still in progress? */
-  public isTypeaheadLoading: boolean = false;
+  public isTypeaheadLoading = false;
   /** Geocoder API has returned and has no results, an empty array. */
-  public hasNoResults: boolean = false;
-  public hasError: boolean = false;
+  public hasNoResults = false;
+  public hasError = false;
 
   /** Similar to this.address, but we can null it when user is searching for new addresses */
   public selectedAddress: FPCAddress;
@@ -61,7 +62,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
       // Trigger the network request, get results
       switchMap((searchPhrase) => this.geocoderService.lookup(searchPhrase)),
       // tap(log => console.log('taplog', log)),
-      catchError((err) => this.onError(err))
+      catchError(() => this.onError())
     );
   }
 
@@ -75,7 +76,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
     }
   }
 
-  onError(err): Observable<GeoAddressResult[]> {
+  onError(): Observable<GeoAddressResult[]> {
     this.hasError = true;
     // Empty array simulates no result response, nothing for typeahead to iterate over
     return of([]);

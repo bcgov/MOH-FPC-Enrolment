@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   fakeAsync,
@@ -7,7 +7,7 @@ import {
 } from '@angular/core/testing';
 
 import { GeocoderInputComponent } from './geocoder-input.component';
-import { GeocoderService } from 'moh-common-lib';
+import { GeocoderService } from 'moh-common-lib-angular';
 import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -39,7 +39,7 @@ describe('GeocoderInputComponent', () => {
     },
   ];
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     geoService = jasmine.createSpyObj('GeocoderService', ['lookup']);
     lookupSpy = geoService.lookup.and.returnValue(of(yatesResponse));
 

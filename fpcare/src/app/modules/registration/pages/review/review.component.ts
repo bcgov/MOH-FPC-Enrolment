@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {FPCPerson} from '../../../../models/person.model';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {
   REGISTRATION_ADDRESS,
   REGISTRATION_AUTHORIZE,
@@ -16,11 +16,12 @@ import {FinanceService} from '../../../financial-calculator/finance.service';
 import {CountryNames, ProvinceNames} from '../../../../models/province-names.enum';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-review',
   templateUrl: './review.component.html',
   styleUrls: ['./review.component.scss']
 })
-export class ReviewPageComponent extends Base implements OnInit {
+export class ReviewPageComponent extends Base implements OnInit, AfterViewInit {
 
   /** Focuses the next element to the heading of a new page */
   @ViewChild('heading', { static: true }) heading: ElementRef<HTMLInputElement>;
@@ -304,7 +305,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   /** Navigates to a route then automatically scrolls to the top of the page. */
   private navigate(page: string){
     this.router.navigate([ REGISTRATION_PATH + '/' + page])
-      .then((data) => {
+      .then(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
   }

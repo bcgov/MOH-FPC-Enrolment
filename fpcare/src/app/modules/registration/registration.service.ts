@@ -17,7 +17,7 @@ export class RegistrationService {
   /**
    * Used for front-end errors.
    */
-  public internalError: boolean = false;
+  public internalError = false;
 
   constructor( private router: Router ) {}
 
@@ -96,8 +96,8 @@ export class RegistrationService {
    */
   setPersonInterfaceForReg( person: FPCPerson,
                             personType: PersonType,
-                            netIncome: number = 0,
-                            rdsp: number = 0 ): PersonInterface {
+                            netIncome = 0,
+                            rdsp = 0 ): PersonInterface {
 
     let famMember: PersonInterface;
 

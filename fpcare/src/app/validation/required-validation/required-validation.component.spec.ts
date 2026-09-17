@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RequiredValidationErrorsComponent } from './required-validation.component';
 import { mockValue } from '../base-validation.component.spec';
 
@@ -6,7 +6,7 @@ describe('RequiredErrorAlertComponent', () => {
   let component: RequiredValidationErrorsComponent;
   let fixture: ComponentFixture<RequiredValidationErrorsComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RequiredValidationErrorsComponent ]
     })

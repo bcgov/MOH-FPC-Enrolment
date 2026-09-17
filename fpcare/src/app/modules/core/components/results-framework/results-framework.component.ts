@@ -10,14 +10,15 @@ export enum DisplayIcon {
 }
 
 @Component({
+  standalone: false,
   selector: 'fpcare-results-framework',
   templateUrl: './results-framework.component.html',
   styleUrls: ['./results-framework.component.scss'],
 })
 export class ResultsFrameworkComponent {
   @Input() displayIcon: DisplayIcon = DisplayIcon.SUCCESS;
-  @Input() hasBody: boolean = true;
-  @Input() displayPrint: boolean = false;
+  @Input() hasBody = true;
+  @Input() displayPrint = false;
 
   public links = environment.links;
 

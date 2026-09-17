@@ -16,6 +16,7 @@ import {ResponseStoreService} from './services/response-store.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -188,7 +189,7 @@ export class AppComponent implements OnInit {
 
 
     /** A simple debounce. Detect if user is inactive, then calls purge() */
-    const checkInactive = (event) => {
+    const checkInactive = () => {
       clearTimeout(timeout);
       timeout = setTimeout(purge, timeLimit);
     };
@@ -231,7 +232,7 @@ export class AppComponent implements OnInit {
    * Applicant is either registered or not registered
    * @param {TestScenario} testScenario
    */
-  statusCheckApplicant( testScenario: TestScenario, usePhn: boolean = true ): void {
+  statusCheckApplicant( testScenario: TestScenario, usePhn = true ): void {
     const phn =  (testScenario === TestScenario.Reg ? '9999999181' : '9999999142');
     const famNumber = (testScenario === TestScenario.Reg ? 'A99999991' : 'A88888880');
 

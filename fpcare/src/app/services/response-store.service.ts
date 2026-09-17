@@ -25,8 +25,6 @@ export class ResponseStoreService {
 
   public cacheMsgs: MessageInterface[];
 
-  constructor() { }
-
   private _statusCheckRegNumber: StatusCheckRegNumberPayload;
   private _statusCheckPHN: StatusCheckPHNPayload;
 

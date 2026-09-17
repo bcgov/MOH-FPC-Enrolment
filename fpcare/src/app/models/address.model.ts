@@ -1,4 +1,4 @@
-import { Address } from 'moh-common-lib';
+import { Address } from 'moh-common-lib-angular';
 
 export class FPCAddress extends Address {
 

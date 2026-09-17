@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren, ElementRef, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren, ElementRef, ViewChild, AfterViewInit} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -21,11 +21,12 @@ import { Logger } from '../../../../services/logger.service';
 import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-eligibility',
   templateUrl: './eligibility.component.html',
   styleUrls: ['./eligibility.component.scss']
 })
-export class EligibilityPageComponent extends AbstractFormComponent implements OnInit {
+export class EligibilityPageComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;

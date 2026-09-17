@@ -1,10 +1,10 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {ValidationService} from '../../services/validation.service';
 import {BaseValidationComponent} from '../base-validation.component';
-import {environment} from '../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-sin-validation',
   templateUrl: './sin-validation.component.html',
   styleUrls: ['./sin-validation.component.scss']

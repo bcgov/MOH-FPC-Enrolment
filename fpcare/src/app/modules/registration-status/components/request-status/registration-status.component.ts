@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {AfterViewInit, Component, ViewChild, ElementRef} from '@angular/core';
 import { FPCPerson } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
@@ -12,11 +12,12 @@ import {ValidationService} from '../../../../services/validation.service';
 import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-registration-status',
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
+export class RegistrationStatusComponent extends AbstractFormComponent implements AfterViewInit {
 
   /** Access to date component */
   @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
@@ -53,9 +54,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     this.applicant.fpcRegNumber = value.toUpperCase();
   }
 
-  ngOnInit() {
-
-  }
 
   ngAfterViewInit() {
     // Individual has not consented to collection notice

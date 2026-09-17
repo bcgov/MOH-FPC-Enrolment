@@ -3,7 +3,8 @@ import { ValidationComponent, staticImplements } from '../validation-component.i
 import { BaseValidationComponent } from '../base-validation.component';
 
 @Component({
-  selector: 'required-validation',
+  standalone: false,
+  selector: 'fpcare-required-validation',
   templateUrl: './required-validation.component.html',
   styleUrls: ['./required-validation.component.scss']
 })

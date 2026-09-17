@@ -1,17 +1,16 @@
 import {Component, ElementRef} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {BaseValidationComponent} from '../base-validation.component';
-import {ValidationService} from '../../services/validation.service';
-import { environment } from 'environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-reg-number-validation',
   templateUrl: './reg-number-validation.component.html',
   styleUrls: ['./reg-number-validation.component.scss']
 })
 @staticImplements<ValidationComponent>()
 export class RegNumberValidationComponent extends BaseValidationComponent {
-  static regex: RegExp = /^[A][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
+  static regex = /^[A][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
   public static ERROR_STRING = 'fpc-regnumber';
 

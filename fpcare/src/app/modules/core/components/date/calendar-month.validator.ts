@@ -1,8 +1,8 @@
-import {Directive, forwardRef, Input} from '@angular/core';
-import {Validator, NG_VALIDATORS, FormControl} from '@angular/forms';
-import * as moment from 'moment';
+import {Directive, forwardRef} from '@angular/core';
+import {NG_VALIDATORS, FormControl} from '@angular/forms';
 
 @Directive({
+  standalone: false,
   selector: '[validateCalendarMonth][ngModel]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: forwardRef(() => CalendarMonthValidatorDirective), multi: true
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 })
 export class CalendarMonthValidatorDirective {
 
-  validate(control: FormControl): {[key: string]: boolean; }  {
+  validate(control: FormControl): Record<string, boolean>  {
 
     // Get value out of control
     const month: string =  control.value;

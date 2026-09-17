@@ -1,16 +1,17 @@
-import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, AfterViewInit, OnDestroy} from '@angular/core';
 import {ModalDirective} from 'ngx-bootstrap/modal';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import {ImageInterface} from '../../../../models/image-interface';
 import { defer, fromEvent, Subject, Subscription } from 'rxjs';
 import { takeUntil, tap } from 'rxjs/operators';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-sample-modal',
   templateUrl: './sample-modal.component.html',
   styleUrls: ['./sample-modal.component.scss']
 })
-export class SampleModalComponent extends Base implements OnInit {
+export class SampleModalComponent extends Base implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() title: string;
   @Input() images: ImageInterface[];
@@ -93,7 +94,7 @@ export class SampleModalComponent extends Base implements OnInit {
     this.samplesModal.hide();
   }
 
-  getElements(): Array<HTMLElement> {
+  getElements(): HTMLElement[] {
     const focusElmts =
       'button, i, h2';
 

@@ -20,7 +20,7 @@
           <h2>Child #{{children.indexOf(child)+1}}</h2>
         </div>
         <div class="col">
-          <i class="fa fa-times fa-lg mr-3 pointer text-danger align-icon" tabindex="0" aria-label="Remove Child" (click)="removeChild( i )"></i>
+          <i class="fa fa-times fa-lg mr-3 pointer text-danger align-icon" tabindex="0" aria-label="Remove Child" (click)="removeChild( i )" (keyup.enter)="removeChild( i )"></i>
         </div>
       </div>
 

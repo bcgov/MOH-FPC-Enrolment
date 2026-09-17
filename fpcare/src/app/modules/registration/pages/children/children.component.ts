@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {FPCPerson} from '../../../../models/person.model';
 import {Router} from '@angular/router';
@@ -18,16 +18,17 @@ import {
 } from '../../../../models/api.model';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
-export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
+export class ChildrenPageComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Indicates whether or not the same PHNs has been used for another family member */
   public uniquePhnError = false;
 
-  private _dependentMandatory: boolean = false;
+  private _dependentMandatory = false;
   private _childList: PersonInterface[];
 
   /** Page to naviage to when continue process */

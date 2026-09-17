@@ -1,25 +1,26 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef, OnDestroy, OnChanges } from '@angular/core';
 import { FinanceService } from '../../finance.service';
 import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
 import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Base } from 'moh-common-lib';
+import { Base } from 'moh-common-lib-angular';
 import { growVertical } from '../../../../animations/animations';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
+  standalone: false,
   selector: 'fpcare-annual-deductible',
   templateUrl: './annual-deductible.component.html',
   styleUrls: ['./annual-deductible.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [growVertical]
 })
-export class AnnualDeductibleComponent extends Base implements OnInit {
+export class AnnualDeductibleComponent extends Base implements OnInit, OnDestroy, OnChanges {
   /** A number of the user's family net income, used to lookup PharmaCare assistance levels */
   @Input() familyNetIncome: number;
   /** Used to load different PharmaCare assistance level values */
   @Input() bornBefore1939: boolean;
 
-  @Input() isReview: boolean = false;
+  @Input() isReview = false;
 
   /**
    * The main data object, retrieved via lookup using familyNetIncome. Used in calclations.
@@ -29,11 +30,11 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
 
 
   /** Currency formatted dollar amount */
-  public deductible: string = '10,000';
+  public deductible = '10,000';
   /** A percentage value (without the % symbol) of the portion PharmaCare pays after deductible is met  */
   public pharmaCarePortion: number;
   /** A currency formatted dollar amount of the max */
-  public maximum: string = '10,000';
+  public maximum = '10,000';
 
   /** Percentage width of deductible portion of progress bar */
   public deductibleRatio = 50;
@@ -59,7 +60,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
         distinctUntilChanged(),
         debounceTime(200),
       )
-      .subscribe(_ => {
+      .subscribe(() => {
 
         // * Idea - Instead of checking each time for this, we could just setup
         // * progressBarChange to have a delayUntil on financeService.hasData
@@ -157,9 +158,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     return (this.pharmaCareLevel ? this.pharmaCareLevel.deductible : 10000 );
   }
 
-  get deductibleTitle(): string {
-    return 'Level of Coverage';
-  }
+  readonly deductibleTitle: string = 'Level of Coverage';
 
   isMaximuxZero(): boolean {
     return ( this.financeService.currencyStrToNumber(this.maximum) === 0 );

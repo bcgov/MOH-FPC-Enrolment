@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate, CanLoad, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanDeactivate } from '@angular/router';
 import { SplashPageService } from './splash-page.service';
 
 export interface CanComponentDeactivate {

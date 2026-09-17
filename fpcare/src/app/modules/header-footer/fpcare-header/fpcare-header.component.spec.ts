@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FPCareHeaderComponent } from './fpcare-header.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -7,7 +7,7 @@ describe('FPCareHeaderComponent', () => {
   let component: FPCareHeaderComponent;
   let fixture: ComponentFixture<FPCareHeaderComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ FPCareHeaderComponent ],
       imports: [RouterTestingModule]
