@@ -1,29 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { ReviewObject } from '../component/review-container/review-container.component';
 import { ServerPayload } from '../models/review-income-api';
 import { formatISO } from 'date-fns';
-import { Person, Address, CommonImage } from 'moh-common-lib';
+import { Person, Address, CommonImage } from 'moh-common-lib-angular';
 import { INCOME_REVIEW_PAGES } from '../income-review.constants';
-import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { conformToMask } from 'angular2-text-mask';
-
-export const createCurrencyMask = (opts = {}) => {
-  const numberMask = createNumberMask({
-    allowDecimal: false,
-    requireDecimal: false,
-    includeThousandsSeparator: true,
-    thousandsSeparatorSymbol: ',',
-    decimalSymbol: '.',
-    decimalLimit: 0,
-    ...opts,
-  });
-
-  return (rawValue) => {
-    const mask = numberMask(rawValue);
-    return mask;
-  };
-};
+import { NgxMaskService } from 'ngx-mask';
 
 export enum FpcDocumentTypes {
   SupportDocument = 'SUPPORTDOCUMENT',
@@ -33,7 +15,7 @@ export class Registrant extends Person {
   phn: string;
 
   // consent declaration
-  consent: boolean = false;
+  consent = false;
 
   incomeStr: string;
   rdspIncomeStr: string;
@@ -57,7 +39,7 @@ export class IncomeReviewDataService {
    * TODO: Discussion with Jam how we want to do this (i.e. like MSP or FPCARE)
    *       Should be like MSP <URL>/UUID - may need new service in Openshift
    */
-  readonly applicationUUID: string = UUID.UUID();
+  readonly applicationUUID: string = uuidv4();
 
   // Labels for calculate income, review and confirmation pages
 
@@ -109,15 +91,10 @@ export class IncomeReviewDataService {
 
   applicationResponse: ServerPayload;
 
-  // Masks for displaying currency
-  private _incomeMask = createCurrencyMask({
-    integerLimit: 6,
-    prefix: '',
-  });
-  private _incomeTotalMask = createCurrencyMask({
-    integerLimit: 9,
-    prefix: '',
-  });
+  // Masks for displaying currency - ngx-mask 'separator.0' mask, values are
+  // the separatorLimit (max value, one 9 per allowed digit)
+  private readonly _incomeMask = '999999';
+  private readonly _incomeTotalMask = '999999999';
 
   // Payload for application
   get applicationPayload() {
@@ -231,9 +208,9 @@ export class IncomeReviewDataService {
     return this._incomeTotalMask;
   }
 
-  constructor() {}
+  constructor(private _maskApplierService: NgxMaskService) {}
 
-  incomeLabel(isReview: boolean = false) {
+  incomeLabel(isReview = false) {
     if (this.isLastYearIncome === true) {
       return isReview === true
         ? this.netIncomeLabel
@@ -243,7 +220,7 @@ export class IncomeReviewDataService {
     return this.grossIncomeLabel;
   }
 
-  spouseIncomeLabel(isReview: boolean = false) {
+  spouseIncomeLabel(isReview = false) {
     const tag = `spouse's `;
 
     if (this.isLastYearIncome === true) {
@@ -260,13 +237,13 @@ export class IncomeReviewDataService {
     return tag.concat(this.grossIncomeLabel);
   }
 
-  rdspIncomeLabel(isReview: boolean = false) {
+  rdspIncomeLabel(isReview = false) {
     return isReview === true
       ? this.rdspLabel
       : this.rdspLabel.replace(')', ` of your Notice of Assessment)`);
   }
 
-  spouseRdspIncomeLabel(isReview: boolean = false) {
+  spouseRdspIncomeLabel(isReview = false) {
     const tag = `spouse's `;
 
     return tag.concat(
@@ -280,7 +257,7 @@ export class IncomeReviewDataService {
     return this._currencyFormat(value, this._incomeTotalMask);
   }
 
-  getPersonalInformationSection(printView: boolean = false): ReviewObject {
+  getPersonalInformationSection(printView = false): ReviewObject {
     const obj = {
       heading: 'Personal Information',
       isPrintView: printView,
@@ -319,7 +296,7 @@ export class IncomeReviewDataService {
     return obj;
   }
 
-  getIncomeSection(printView: boolean = false): ReviewObject {
+  getIncomeSection(printView = false): ReviewObject {
     let count = 1;
     const obj = {
       heading: this.incomeHeading,
@@ -413,7 +390,7 @@ export class IncomeReviewDataService {
     return obj;
   }
 
-  getSupportDocsSection(printView: boolean = false): ReviewObject {
+  getSupportDocsSection(printView = false): ReviewObject {
     return {
       heading: 'Supporting Documents',
       isPrintView: printView,
@@ -451,15 +428,13 @@ export class IncomeReviewDataService {
     return _value;
   }
 
-  private _currencyFormat(
-    currency: number,
-    mask: (rawValue: any) => any
-  ): string {
+  private _currencyFormat(currency: number, separatorLimit: string): string {
     // Rounding issue in mask
     const _currency = isNaN(currency) ? 0 : Math.round(currency * 100) / 100;
     const _strValue = _currency.toFixed();
-    const _mask = conformToMask(_strValue, mask, {});
-    return _mask.conformedValue;
+    this._maskApplierService.thousandSeparator = ',';
+    this._maskApplierService.separatorLimit = separatorLimit;
+    return this._maskApplierService.applyMask(_strValue, 'separator.0');
   }
 
   private _stripFormatting(value: string) {

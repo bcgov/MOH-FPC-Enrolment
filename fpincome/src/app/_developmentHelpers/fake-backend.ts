@@ -32,7 +32,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
           if (request.url.includes(environment.api.envServerUrl)) {
             console.log('Fake-backend for spa-env');
-            payload = this.fakebackendService.getEnvSpaValues(request);
+            payload = this.fakebackendService.getEnvSpaValues();
           }
 
           if (request.url.includes(environment.api.loggingURL)) {
@@ -67,7 +67,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
   }
 }
 
-export let fakeBackendProvider = {
+export const fakeBackendProvider = {
   // use fake backend in place of Http service for backend-less development
   provide: HTTP_INTERCEPTORS,
   useClass: FakeBackendInterceptor,

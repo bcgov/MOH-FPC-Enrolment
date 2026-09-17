@@ -1,9 +1,14 @@
 import { Component, AfterViewInit, OnDestroy } from '@angular/core';
-import { Container, ContainerService, PageStateService } from 'moh-common-lib';
+import {
+  Container,
+  ContainerService,
+  PageStateService,
+} from 'moh-common-lib-angular';
 import { incomeReviewPageRoutes } from './income-review-pages.route';
 import { INCOME_REVIEW_PAGES } from './income-review.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpir-income-review',
   templateUrl: './income-review.component.html',
 })

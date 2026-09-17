@@ -1,5 +1,4 @@
 const fs = require('fs');
-/* tslint:disable */
 
 // This files is called in the npm pre-build hooks. It creates a generated
 // version file which can be loaded by app.component.ts to log out.

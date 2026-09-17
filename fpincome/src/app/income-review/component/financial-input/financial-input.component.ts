@@ -2,18 +2,19 @@ import { Component, Input, OnInit, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'fpir-financial-input',
   templateUrl: './financial-input.component.html',
   styleUrls: ['./financial-input.component.scss'],
-  // tslint:disable-next-line: no-host-metadata-property
   host: {
     '(change)': '_onChange($event.target.value)',
     '(blur)': '_onTouched()',
   },
 })
 export class FinancialInputComponent implements OnInit, ControlValueAccessor {
-  @Input() disabled: boolean = false;
-  @Input() moneyMask: any = null;
+  @Input() disabled = false;
+  // ngx-mask 'separator.0' separatorLimit value (max value, e.g. '999999')
+  @Input() moneyMask: string = null;
   @Input() tabIndex: number;
 
   // Not used as form - used to display
@@ -33,12 +34,17 @@ export class FinancialInputComponent implements OnInit, ControlValueAccessor {
   readonly _prefix = 'finance-';
 
   _value: number = null;
-  _textMask: any;
   _name: string;
 
   // Required for implementing ControlValueAccessor
-  _onChange = (_: any) => {};
-  _onTouched = (_?: any) => {};
+  // The template calls _onChange with the input value, so the parameter stays
+  // in the signature; it is unused until registerOnChange supplies the real handler.
+  _onChange = (value: any) => {
+    void value;
+  };
+  _onTouched = () => {
+    // No-op default until registerOnTouched supplies the real handler.
+  };
 
   constructor(@Optional() @Self() public control: NgControl) {
     if (this.control !== null) {
@@ -56,14 +62,10 @@ export class FinancialInputComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this._textMask = {};
-
-    if (this.moneyMask) {
-      this._textMask = { mask: this.moneyMask };
-    }
-
     // Retreive name of the control
-    this._name = this.control ? this.control.name : this._prefix + this._id;
+    this._name = this.control
+      ? String(this.control.name)
+      : this._prefix + this._id;
   }
 
   // Required for implementing ControlValueAccessor

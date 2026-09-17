@@ -7,8 +7,8 @@ import {
 import { environment } from '../../environments/environment';
 import { HttpRequest } from '@angular/common/http';
 import { parseISO } from 'date-fns/fp';
-import { isAfter, isBefore } from 'date-fns/esm';
-import { ApiStatusCodes } from 'moh-common-lib';
+import { isAfter, isBefore } from 'date-fns';
+import { ApiStatusCodes } from 'moh-common-lib-angular';
 
 @Injectable({
   providedIn: 'root',
@@ -24,10 +24,12 @@ export class FakeBackendService {
       environment.developmentMode.mockBackend.maintModeEnd,
   };
 
-  constructor() {}
+  constructor() {
+    // No initialization required; DI-only constructor.
+  }
 
   // Return splash page values
-  getEnvSpaValues(request: HttpRequest<any>): any {
+  getEnvSpaValues(): SpaEnvResponse {
     if (
       this._splashPageValues.SPA_ENV_FPIR_MAINTENANCE_START &&
       this._splashPageValues.SPA_ENV_FPIR_MAINTENANCE_END

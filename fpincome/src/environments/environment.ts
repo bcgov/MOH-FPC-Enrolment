@@ -28,7 +28,6 @@ export const environment = {
       'http://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp/bc-residents-contact-us',
     serviceCanada: 'https://www.canada.ca/',
     fpcRegister:
-      // tslint:disable-next-line: max-line-length
       'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/register-for-fair-pharmacare',
     incomeStmt:
       'https://www.canada.ca/en/revenue-agency/services/e-services/e-services-individuals/a-proof-income-statement-option-print.html',

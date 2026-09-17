@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { filter, map, mergeMap } from 'rxjs/operators';
 
-import { CommonLogEvents } from 'moh-common-lib';
+import { CommonLogEvents } from 'moh-common-lib-angular';
 
 import { APP_TITLE, TAB_APP_TITLE } from './app.constants';
 import { SplunkLoggingService } from './services/splunk-logging.service';
@@ -11,6 +11,7 @@ import { SplashPageService } from './services/splash-page.service';
 import * as version from '../version.GENERATED';
 
 @Component({
+  standalone: false,
   selector: 'fpir-root',
   templateUrl: './app.component.html',
 })
@@ -24,12 +25,14 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private splashPageService: SplashPageService
   ) {
-    version.success
-      ? console.log(
-          '%c' + version.message,
-          'color: #036; font-size: 20px; background-color: white;'
-        )
-      : console.error(version.message);
+    if (version.success) {
+      console.log(
+        '%c' + version.message,
+        'color: #036; font-size: 20px; background-color: white;'
+      );
+    } else {
+      console.error(version.message);
+    }
   }
 
   ngOnInit() {

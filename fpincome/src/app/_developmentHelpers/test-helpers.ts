@@ -1,8 +1,6 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NavigationExtras } from '@angular/router';
-
 export const partialRequiredMsg = 'is required';
 
 export function getDebugInlineError(de: DebugElement) {
@@ -103,7 +101,7 @@ export function clickValue(de: DebugElement, value: any) {
 export class MockRouter {
   url = '/';
 
-  navigate(commands: any[], extra?: NavigationExtras): Promise<boolean> {
+  navigate(commands: any[]): Promise<boolean> {
     return new Promise<boolean>((resolve) => {
       this.url = commands[0];
       return resolve(true);

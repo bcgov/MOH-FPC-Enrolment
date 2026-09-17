@@ -1,21 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReviewContainerComponent } from './review-container.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FinancialInputComponent } from '../financial-input/financial-input.component';
-import { TextMaskModule } from 'angular2-text-mask';
-import { SharedCoreModule } from 'moh-common-lib';
+import { NgxMaskDirective, provideEnvironmentNgxMask } from 'ngx-mask';
+import { SharedCoreModule } from 'moh-common-lib-angular';
 
 describe('ReviewContainerComponent', () => {
   let component: ReviewContainerComponent;
   let fixture: ComponentFixture<ReviewContainerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ReviewContainerComponent, FinancialInputComponent],
-      imports: [RouterTestingModule, TextMaskModule, SharedCoreModule],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [ReviewContainerComponent, FinancialInputComponent],
+        imports: [RouterTestingModule, NgxMaskDirective, SharedCoreModule],
+        providers: [provideEnvironmentNgxMask()],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewContainerComponent);

@@ -13,7 +13,7 @@ import {
   CommonImageError,
   ContainerService,
   PageStateService,
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import {
   FpcDocumentTypes,
   IncomeReviewDataService,
@@ -22,6 +22,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { environment } from '../../../../environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'fpir-income',
   templateUrl: './income.component.html',
   styleUrls: ['./income.component.scss'],
@@ -55,10 +56,10 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   readonly uploadInstructions =
     'Click add, or drag and drop file into this box';
 
-  incomeLineNumber: number = 1;
-  spouseIncomeLineNumber: number = 2;
+  incomeLineNumber = 1;
+  spouseIncomeLineNumber = 2;
 
-  updateIncomeTotalValue: boolean = false;
+  updateIncomeTotalValue = false;
   errorMessage: string = null;
 
   /** Focuses the next element to the heading of a new page */
@@ -323,7 +324,7 @@ export class IncomeComponent extends BaseForm implements OnInit, AfterViewInit {
   }
 
   continue() {
-    this.markAllInputsTouched();
+    this.markAllInputsTouched(null);
 
     // Work around since file uploader is not compatiable with reactive forms
     // and it is not designed as a custom form control

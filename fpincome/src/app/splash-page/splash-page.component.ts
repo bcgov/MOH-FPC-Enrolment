@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { MAINT_FLAG_TRUE } from '../app.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpir-splash-page',
   templateUrl: './splash-page.component.html',
 })

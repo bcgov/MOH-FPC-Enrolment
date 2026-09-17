@@ -11,12 +11,13 @@ import {
   ContainerService,
   PageStateService,
   commonValidatePostalcode,
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { INCOME_REVIEW_PAGES } from '../../income-review.constants';
 
 @Component({
+  standalone: false,
   selector: 'fpir-personal-info',
   templateUrl: './personal-info.component.html',
 })
@@ -143,7 +144,7 @@ export class PersonalInfoComponent extends BaseForm
   }
 
   continue() {
-    this.markAllInputsTouched();
+    this.markAllInputsTouched(null);
 
     if (this.canContinue()) {
       this.navigate(INCOME_REVIEW_PAGES.INCOME.fullpath);
@@ -178,7 +179,7 @@ export class PersonalInfoComponent extends BaseForm
     this.formGroup.updateValueAndValidity({ onlySelf: false });
   }
 
-  checkDuplicatePhn(onSpouse: boolean = true) {
+  checkDuplicatePhn(onSpouse = true) {
     if (
       this.incomeReviewDataService.applicant.hasPhn &&
       this.incomeReviewDataService.spouse.hasPhn

@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   ComponentFixtureAutoDetect,
@@ -9,8 +9,19 @@ import {
 import { PersonalInfoComponent } from './personal-info.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SharedCoreModule } from 'moh-common-lib';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  NameComponent,
+  StreetComponent,
+  CityComponent,
+  PostalCodeComponent,
+  PhnComponent,
+  RadioComponent,
+} from 'moh-common-lib-angular';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import {
   getDebugElement,
   setInput,
@@ -55,25 +66,36 @@ describe('PersonalInfoComponent', () => {
   let component: PersonalInfoComponent;
   let fixture: ComponentFixture<PersonalInfoComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [PersonalInfoComponent],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        HttpClientTestingModule,
-      ],
-      providers: [
-        {
-          provide: ComponentFixtureAutoDetect,
-          useValue: true,
-        },
-        { provide: Router, useClass: MockRouter },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [PersonalInfoComponent],
+        imports: [
+          FormsModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          HttpClientTestingModule,
+          PageFrameworkComponent,
+          PageSectionComponent,
+          NameComponent,
+          StreetComponent,
+          CityComponent,
+          PostalCodeComponent,
+          PhnComponent,
+          RadioComponent,
+        ],
+        providers: [
+          provideEnvironmentNgxMask(),
+          {
+            provide: ComponentFixtureAutoDetect,
+            useValue: true,
+          },
+          { provide: Router, useClass: MockRouter },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PersonalInfoComponent);
@@ -167,7 +189,7 @@ describe('PersonalInfoComponent', () => {
     }
   ));
 
-  it('should be no able to continue when spouse data is not entered (spouse)', () => {
+  it('should be no able to continue when spouse data is not entered (spouse)', async () => {
     // Set values for elements on page
     setInputField(fixture, 'common-name', 'firstName', 'ApplicantWithSpouse');
     setInputField(fixture, 'common-name', 'lastName', 'TestWithSpouse');
@@ -177,25 +199,24 @@ describe('PersonalInfoComponent', () => {
     setInputField(fixture, 'common-postal-code', 'postalCode', 'V9V9Y9');
     setHasSpouse(fixture, 'true');
     fixture.detectChanges();
+    await fixture.whenRenderingDone();
 
-    fixture.whenRenderingDone().then(() => {
-      expect(component.canContinue()).toBeFalsy();
-      component.continue();
-      fixture.detectChanges();
+    expect(component.canContinue()).toBeFalsy();
+    component.continue();
+    fixture.detectChanges();
 
-      expect(getInputErrorMsg(fixture, 'common-name', 'spFirstName')).toContain(
-        partialRequiredMsg
-      );
-      expect(getInputErrorMsg(fixture, 'common-name', 'spLastName')).toContain(
-        partialRequiredMsg
-      );
-      expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toContain(
-        partialRequiredMsg
-      );
-    });
+    expect(getInputErrorMsg(fixture, 'common-name', 'spFirstName')).toContain(
+      partialRequiredMsg
+    );
+    expect(getInputErrorMsg(fixture, 'common-name', 'spLastName')).toContain(
+      partialRequiredMsg
+    );
+    expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toContain(
+      partialRequiredMsg
+    );
   });
 
-  it('should indicate duplicate PHNs when same PHN entered for both spouse and applicant', () => {
+  it('should indicate duplicate PHNs when same PHN entered for both spouse and applicant', async () => {
     const partialErrorMsg = 'already used for another family member';
 
     // Set values for elements on page
@@ -203,33 +224,32 @@ describe('PersonalInfoComponent', () => {
     setInputField(fixture, 'common-phn', 'phn', '9999999998');
 
     fixture.detectChanges();
-    fixture.whenRenderingDone().then(() => {
-      setInputField(fixture, 'common-phn', 'spPhn', '9999999998');
-      fixture.detectChanges();
+    await fixture.whenRenderingDone();
 
-      expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toContain(
-        partialErrorMsg
-      );
+    setInputField(fixture, 'common-phn', 'spPhn', '9999999998');
+    fixture.detectChanges();
 
-      setInputField(fixture, 'common-phn', 'spPhn', '9999999927');
-      fixture.detectChanges();
+    expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toContain(
+      partialErrorMsg
+    );
 
-      fixture.whenRenderingDone().then(() => {
-        expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toBe('');
+    setInputField(fixture, 'common-phn', 'spPhn', '9999999927');
+    fixture.detectChanges();
+    await fixture.whenRenderingDone();
 
-        setInputField(fixture, 'common-phn', 'phn', '9999999927');
-        fixture.detectChanges();
+    expect(getInputErrorMsg(fixture, 'common-phn', 'spPhn')).toBe('');
 
-        expect(getInputErrorMsg(fixture, 'common-phn', 'phn')).toContain(
-          partialErrorMsg
-        );
-      });
-    });
+    setInputField(fixture, 'common-phn', 'phn', '9999999927');
+    fixture.detectChanges();
+
+    expect(getInputErrorMsg(fixture, 'common-phn', 'phn')).toContain(
+      partialErrorMsg
+    );
   });
 
   it('should be able to continue when data entered (spouse)', inject(
     [Router],
-    (mockRouter: MockRouter) => {
+    async (mockRouter: MockRouter) => {
       // Set values for elements on page
       setInputField(
         fixture,
@@ -244,26 +264,25 @@ describe('PersonalInfoComponent', () => {
       setInputField(fixture, 'common-postal-code', 'postalCode', 'V9V8V9');
       setHasSpouse(fixture, 'true');
       fixture.autoDetectChanges();
+      await fixture.whenRenderingDone();
 
-      fixture.whenRenderingDone().then(() => {
-        setInputField(
-          fixture,
-          'common-name',
-          'spFirstName',
-          'Spouse-for-applicant'
-        );
-        setInputField(fixture, 'common-name', 'spLastName', 'Test-two');
-        setInputField(fixture, 'common-phn', 'spPhn', '9999999998');
-        fixture.detectChanges();
+      setInputField(
+        fixture,
+        'common-name',
+        'spFirstName',
+        'Spouse-for-applicant'
+      );
+      setInputField(fixture, 'common-name', 'spLastName', 'Test-two');
+      setInputField(fixture, 'common-phn', 'spPhn', '9999999998');
+      fixture.detectChanges();
 
-        expect(component.canContinue()).toBeTruthy();
-        component.continue();
-        expect(mockRouter.url).toBe(INCOME_REVIEW_PAGES.INCOME.fullpath);
-      });
+      expect(component.canContinue()).toBeTruthy();
+      component.continue();
+      expect(mockRouter.url).toBe(INCOME_REVIEW_PAGES.INCOME.fullpath);
     }
   ));
 
-  it('Should display error when invalid characters are entered in name fields', () => {
+  it('Should display error when invalid characters are entered in name fields', async () => {
     const partialInvalidCharMsg =
       ' must begin with a letter and cannot include special ' +
       'characters except hyphens, periods, apostrophes and blank characters.';
@@ -278,24 +297,23 @@ describe('PersonalInfoComponent', () => {
 
     setHasSpouse(fixture, 'true');
     fixture.autoDetectChanges();
+    await fixture.whenRenderingDone();
 
-    fixture.whenRenderingDone().then(() => {
-      setInputField(fixture, 'common-name', 'spFirstName', 'Spouse=this903$');
-      setInputField(fixture, 'common-name', 'spLastName', 'This*^)naem');
-      fixture.detectChanges();
+    setInputField(fixture, 'common-name', 'spFirstName', 'Spouse=this903$');
+    setInputField(fixture, 'common-name', 'spLastName', 'This*^)naem');
+    fixture.detectChanges();
 
-      expect(getInputErrorMsg(fixture, 'common-name', 'firstName')).toContain(
-        partialInvalidCharMsg
-      );
-      expect(getInputErrorMsg(fixture, 'common-name', 'lastName')).toContain(
-        partialInvalidCharMsg
-      );
-      expect(getInputErrorMsg(fixture, 'common-name', 'spFirstName')).toContain(
-        partialInvalidCharMsg
-      );
-      expect(getInputErrorMsg(fixture, 'common-name', 'spLastName')).toContain(
-        partialInvalidCharMsg
-      );
-    });
+    expect(getInputErrorMsg(fixture, 'common-name', 'firstName')).toContain(
+      partialInvalidCharMsg
+    );
+    expect(getInputErrorMsg(fixture, 'common-name', 'lastName')).toContain(
+      partialInvalidCharMsg
+    );
+    expect(getInputErrorMsg(fixture, 'common-name', 'spFirstName')).toContain(
+      partialInvalidCharMsg
+    );
+    expect(getInputErrorMsg(fixture, 'common-name', 'spLastName')).toContain(
+      partialInvalidCharMsg
+    );
   });
 });

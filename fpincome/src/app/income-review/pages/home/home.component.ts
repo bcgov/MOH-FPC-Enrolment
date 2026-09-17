@@ -7,16 +7,17 @@ import {
 } from '@angular/core';
 import { BaseForm } from '../../models/base-form';
 import { Router } from '@angular/router';
-import { ContainerService, PageStateService } from 'moh-common-lib';
+import { ContainerService, PageStateService } from 'moh-common-lib-angular';
 import { INCOME_REVIEW_PAGES } from '../../income-review.constants';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import { CollectionNoticeComponent } from '../../component/collection-notice/collection-notice.component';
 import { environment } from '../../../../environments/environment';
-import { UUID } from 'angular2-uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { IncomeReviewApiService } from '../../services/income-review-api.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
+  standalone: false,
   selector: 'fpir-home',
   templateUrl: './home.component.html',
 })
@@ -35,10 +36,10 @@ export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
   readonly successMessage = 'You can proceed to the form now.';
 
   // Use the UUID as a cryptographic client nonce to avoid replay attacks.
-  nonce: string = UUID.UUID();
+  nonce: string = uuidv4();
 
   // Radio button questions
-  isRegisteredQuestion: string = 'Are you registered for Fair PharmaCare?';
+  isRegisteredQuestion = 'Are you registered for Fair PharmaCare?';
   isIncomeLessQuestion: string =
     'Is your gross income for this year or your net income for last year at least 10% less than ' +
     'your income from two years ago?';
@@ -119,7 +120,7 @@ export class HomeComponent extends BaseForm implements OnInit, AfterViewInit {
   }
 
   continue() {
-    this.markAllInputsTouched();
+    this.markAllInputsTouched(null);
     if (
       this.canContinue() &&
       this.incomeReviewDataService.informationCollectionNoticeConsent &&

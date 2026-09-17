@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { CommonLogger } from 'moh-common-lib';
-import { UUID } from 'angular2-uuid';
+import { CommonLogger } from 'moh-common-lib-angular';
+import { v4 as uuidv4 } from 'uuid';
 
 import { environment } from '../../environments/environment';
 
@@ -15,6 +15,6 @@ export class SplunkLoggingService extends CommonLogger {
     this.setURL(environment.api.loggingURL);
     this.programName = 'fpincome';
     // generate session per refresh as no state persists.
-    this.applicationId = UUID.UUID();
+    this.applicationId = uuidv4();
   }
 }

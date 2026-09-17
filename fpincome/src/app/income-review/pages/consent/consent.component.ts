@@ -12,7 +12,7 @@ import {
   PageStateService,
   CommonLogEvents,
   ApiStatusCodes,
-} from 'moh-common-lib';
+} from 'moh-common-lib-angular';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import {
   FORM_SUBMIT_LABEL,
@@ -24,6 +24,7 @@ import { SplunkLoggingService } from '../../../services/splunk-logging.service';
 import { ServerPayload } from '../../models/review-income-api';
 
 @Component({
+  standalone: false,
   selector: 'fpir-consent',
   templateUrl: './consent.component.html',
 })
@@ -119,7 +120,7 @@ export class ConsentComponent extends BaseForm
   }
 
   continue() {
-    this.markAllInputsTouched();
+    this.markAllInputsTouched(null);
 
     /**
      * NOTE: Work-around until checkbox component is fixed in library, not compatiable with reactive forms

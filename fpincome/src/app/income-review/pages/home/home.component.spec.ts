@@ -1,5 +1,5 @@
 import {
-  async,
+  waitForAsync,
   ComponentFixture,
   TestBed,
   inject,
@@ -8,12 +8,22 @@ import {
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedCoreModule } from 'moh-common-lib';
-import { CaptchaModule } from 'moh-common-lib/captcha';
+import {
+  SharedCoreModule,
+  PageFrameworkComponent,
+  PageSectionComponent,
+  RadioComponent,
+  ErrorContainerComponent,
+} from 'moh-common-lib-angular';
+import { CaptchaModule } from 'moh-common-lib-angular/captcha';
+import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { HomeComponent } from './home.component';
 import { CollectionNoticeComponent } from '../../component/collection-notice/collection-notice.component';
-import { ModalModule } from 'ngx-bootstrap';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
 import { IncomeReviewDataService } from '../../services/income-review-data.service';
 import {
   getDebugElement,
@@ -53,24 +63,31 @@ describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [HomeComponent, CollectionNoticeComponent],
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        RouterTestingModule,
-        SharedCoreModule,
-        HttpClientTestingModule,
-        CaptchaModule,
-        ModalModule.forRoot(),
-      ],
-      providers: [
-        { provide: ComponentFixtureAutoDetect, useValue: true },
-        { provide: Router, useClass: MockRouter },
-      ],
-    }).compileComponents();
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.configureTestingModule({
+        declarations: [HomeComponent, CollectionNoticeComponent],
+        imports: [
+          FormsModule,
+          ReactiveFormsModule,
+          RouterTestingModule,
+          SharedCoreModule,
+          HttpClientTestingModule,
+          CaptchaModule,
+          ModalModule.forRoot(),
+          PageFrameworkComponent,
+          PageSectionComponent,
+          RadioComponent,
+          ErrorContainerComponent,
+        ],
+        providers: [
+          provideEnvironmentNgxMask(),
+          { provide: ComponentFixtureAutoDetect, useValue: true },
+          { provide: Router, useClass: MockRouter },
+        ],
+      }).compileComponents();
+    })
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeComponent);
@@ -90,19 +107,48 @@ describe('HomeComponent', () => {
     expect(button.nativeElement.disabled).toBeTruthy();
   });
 
-  it('should be able to close the collection notice when button is enabled', () => {
+  it('should be able to close the collection notice when button is enabled', async () => {
+    const httpMock = TestBed.inject(HttpTestingController);
+
+    // The captcha's answer input lives inside the captcha's own form, so its
+    // NgModel registers through NgForm.addControl, which defers setUpControl
+    // to a microtask. Until that runs, the value accessor's onChange is still
+    // a no-op: setInput's typed value never reaches `answer`, answerChanged
+    // sees an empty string, and no verify request is issued.
+    await fixture.whenStable();
+
+    // Drive the captcha to a valid token the way a real user would: type a
+    // 6-character answer, then respond to the verification request the
+    // captcha issues, so `onValidToken` actually fires.
     setInput(fixture.debugElement, 'answer', 'irobot');
     fixture.detectChanges();
-    fixture.whenRenderingDone().then(() => {
-      const button = getCollectionNoticeButton(fixture);
-      expect(button.nativeElement.disabled).toBeFalsy();
 
-      button.nativeElement.click();
-      fixture.detectChanges();
+    const verifyReq = httpMock.expectOne(
+      `${component.captchaApiUrl}/verify/captcha`
+    );
+    verifyReq.flush({ valid: true, jwt: 'test-jwt' });
 
-      const dialog = getDebugElement(fixture, 'fpir-collection-notice .modal');
-      expect(dialog.nativeElement.visable).toBeFalsy();
-    });
+    await fixture.whenRenderingDone();
+    fixture.detectChanges();
+
+    const button = getCollectionNoticeButton(fixture);
+    expect(button.nativeElement.disabled).toBeFalsy();
+
+    // `isShown` is ngx-bootstrap's own open/closed flag, and it flips
+    // synchronously on click. The modal is animated, so the display and
+    // aria-hidden attributes lag by the 300ms transition.
+    // Asserted as exactly true and false so that a renamed getter reading
+    // undefined fails here instead of passing.
+    expect(
+      component.infoCollectionModal.collectionNoticeModal.isShown
+    ).toBeTrue();
+
+    button.nativeElement.click();
+    fixture.detectChanges();
+
+    expect(
+      component.infoCollectionModal.collectionNoticeModal.isShown
+    ).toBeFalse();
   });
 
   // Logic test for continuing
