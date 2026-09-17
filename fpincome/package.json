@@ -43,7 +43,7 @@
     "bootstrap": "^4.5.3",
     "date-fns": "^4.1.0",
     "font-awesome": "^4.7.0",
-    "moh-common-lib-angular": "^2.1.0",
+    "moh-common-lib-angular": "^2.2.0",
     "mygovbc-bootstrap-theme": "^0.4.1",
     "ngx-bootstrap": "^19.0.2",
     "ngx-mask": "^19.0.7",
