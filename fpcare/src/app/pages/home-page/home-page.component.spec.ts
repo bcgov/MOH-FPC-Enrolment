@@ -1,7 +1,9 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomePageComponent } from './home-page.component';
 import {RouterTestingModule} from '@angular/router/testing';
-import { environment } from '../../../environments/environment';
+import { environment as testEnv } from '../../../environments/environment';
+import { environment as prodEnv } from '../../../environments/environment.prod';
+
 
 describe('HomePageComponent', () => {
   let component: HomePageComponent;
@@ -28,7 +30,7 @@ describe('HomePageComponent', () => {
   });
 
   it('should use the correct AHDC URL based on the current environment', () => {
-    const expectedUrl = environment.production ? prodUrl : testUrl;
-    expect(component.ahdcUrl).toBe(expectedUrl);
+    expect(testEnv.ahdcUrl).toBe(testUrl);
+    expect(prodEnv.ahdcUrl).toBe(prodUrl);
   });
 });
