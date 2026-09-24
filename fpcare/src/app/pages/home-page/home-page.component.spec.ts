@@ -32,5 +32,7 @@ describe('HomePageComponent', () => {
   it('should use the correct AHDC URL based on the current environment', () => {
     expect(testEnv.ahdcUrl).toBe(testUrl);
     expect(prodEnv.ahdcUrl).toBe(prodUrl);
+    expect(component.ahdcUrl).toBe(testEnv.ahdcUrl);
+    expect(fixture.nativeElement.querySelector('a').getAttribute('href')).toBe(testEnv.ahdcUrl);
   });
 });
