@@ -3,7 +3,7 @@ import { HomePageComponent } from './home-page.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import { environment } from '../../../environments/environment';
 
-fdescribe('HomePageComponent', () => {
+describe('HomePageComponent', () => {
   let component: HomePageComponent;
   let fixture: ComponentFixture<HomePageComponent>;
   const testUrl = 'https://test.my.gov.bc.ca/ahdc';
