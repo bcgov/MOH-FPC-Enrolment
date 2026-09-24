@@ -105,7 +105,7 @@ export class AppComponent implements OnInit {
 
   handleNavigation(url){
     if (url.includes("/registration") && !url.includes("/registration-status")) {
-      location.assign('https://my.gov.bc.ca/ahdc');
+      location.assign(environment.ahdcUrl);
     }
   }
 
