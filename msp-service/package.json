@@ -1,6 +1,6 @@
 {
-  "name": "msp-service",
-  "version": "1.2.0",
+  "name": "fpc msp-service",
+  "version": "1.2.1",
   "description": "",
   "main": "index.js",
   "scripts": {
