@@ -7,7 +7,6 @@ import {
   REPRINT_LETTERS_PATH,
   REQUEST_REG_STATUS
 } from '../../models/route-paths.constants';
-import { environment } from '../../../environments/environment';
 
 @Component({
   standalone: false,
@@ -21,6 +20,6 @@ export class HomePageComponent {
   public requestConsent: string = '/' + REPRINT_LETTERS_PATH + '/' + REPRINT_CONSENT;
   public requestRegStatus: string = '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
   public registration: string = '/' + REGISTRATION_PATH +  '/' + REGISTRATION_REQUIREMENTS;
-  public ahdcUrl = environment.ahdcUrl;
+  public ahdcUrl = window.location.href.replace('/fpcare', '/ahdc');
 
 }
