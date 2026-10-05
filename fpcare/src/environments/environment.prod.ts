@@ -8,7 +8,7 @@ export const environment = {
   loggingURL: '/fpcare/api/logging',
   envServerUrl: '/fpcare/api/env',
   addressUrl: '/fpcare/api/address',
-  ahdcUrl: 'https://my.gov.bc.ca/ahdc',
+  ahdcUrl: 'https://test.my.gov.bc.ca/ahdc',
   logHTTPRequestsToConsole: false,
   bypassSplashPage: false,
   bypassGuards: false,
