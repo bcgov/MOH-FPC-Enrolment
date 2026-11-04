@@ -56,7 +56,8 @@ export class SpaEnvService extends AbstractHttpService {
 
   constructor(protected http: HttpClient, private logService: Logger) {
     super(http);
-    this.loadEnvs();
+    // The request is only sent on subscribe; without it maintenance mode never loads.
+    this.loadEnvs().subscribe(response => this._values.next(response));
   }
 
   public getValues(): SpaEnvResponse {

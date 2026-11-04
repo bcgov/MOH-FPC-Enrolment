@@ -14,6 +14,17 @@ describe("HomePage", () => {
         consoleErrors.push(args.join(" "));
       });
     });
+    cy.intercept("POST", "/fpcare/api/env", {
+      statusCode: 200,
+      body: {
+        SPA_ENV_FPC_MAINTENANCE_FLAG: "false",
+        SPA_ENV_FPC_MAINTENANCE_START: "",
+        SPA_ENV_FPC_MAINTENANCE_END: "",
+        SPA_ENV_FPC_MAINTENANCE_MESSAGE: "",
+        SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR: "false",
+      },
+    });
+
     cy.visit("/");
   });
 
